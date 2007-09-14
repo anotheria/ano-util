@@ -7,11 +7,7 @@
 
 	<property name="src" value="${basedir}/java"/>
 
-	<property name="lib.project" value="${basedir}/lib"/>
-
-
 	<property name="dist.dir" value="${basedir}/dist"/>
-	<property name="lib.dest" value="${dist.dir}/lib"/>
 	
 	<property name="javadoc.dest" value="${basedir}/../javadoc"/>
 	
@@ -30,9 +26,6 @@
 	<target name="compile" depends="prepare">
 		<javac destdir="${classes.dir}" srcdir="${src}" debug="on" deprecation="off" optimize="on">
 			<classpath>
-				<fileset dir="${lib.project}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</javac>
 	</target>
@@ -50,9 +43,6 @@
 	</target>
 
 	<target name="dist" depends="jar">
-	    <copy todir="${lib.dest}">
-	      <fileset dir="${lib.project}"/>
-	    </copy>
 	</target>
 	
 	<target name="all" depends="dist"/>
@@ -62,13 +52,8 @@
 	    <javadoc source="1.5" packagenames="de.payback.pt.*" 
 	    	private="true" author="true"
 	    	sourcepath="${src}" destdir="${javadoc.dest}/${project.name}" 
-	    	bottom="Copyright &#169; 2007 Loyalty Partners. All Rights Reserved.&lt;br/&gt;"
+	    	bottom="Copyright &#169; 1998-2007 Anotheria.net. All Rights Reserved.&lt;br/&gt;"
 		>
-		<classpath>
-	        <fileset dir="${lib.project}">
-	          <include name="**/*.jar"/>
-	        </fileset>
-	      </classpath>
 	      <tag name="created" scope="all" description="Created: " />
 	      <link href="http://java.sun.com/j2se/1.5.0/docs/api"/>
 	    </javadoc>
