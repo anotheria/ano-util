@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<project name="ano-util" default="all" basedir=".">
+	
+	<property name="output.dir" value="${basedir}/build"/>
+	<property name="classes.dir" value="${output.dir}/classes"/>
+
+	<property name="src" value="${basedir}/java"/>
+
+	<property name="lib.project" value="${basedir}/lib"/>
+
+
+	<property name="dist.dir" value="${basedir}/dist"/>
+	<property name="lib.dest" value="${dist.dir}/lib"/>
+	
+	<property name="javadoc.dest" value="${basedir}/../javadoc"/>
+	
+	<property name="project.name" value="ano-util"/>
+	<property name="target.jar.name" value="ano-util.jar"/>
+	
+	<target name="clean">
+		<delete dir="${output.dir}"/>
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+	</target>
+	
+	<target name="compile" depends="prepare">
+		<javac destdir="${classes.dir}" srcdir="${src}" debug="on" deprecation="off" optimize="on">
+			<classpath>
+				<fileset dir="${lib.project}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="jar" depends="compile">
+		<jar jarfile="${dist.dir}/${target.jar.name}">
+         	<fileset dir="${classes.dir}">
+         		<include name="**/*"/>
+         	</fileset>
+		</jar>
+	</target>
+	
+	<target name="dist.clean" depends="clean">
+		<delete dir="${dist.dir}"/>
+	</target>
+
+	<target name="dist" depends="jar">
+	    <copy todir="${lib.dest}">
+	      <fileset dir="${lib.project}"/>
+	    </copy>
+	</target>
+	
+	<target name="all" depends="dist"/>
+	
+	<target name="javadoc" depends="compile">
+		<mkdir dir="${javadoc.dest}/${project.name}"/>
+	    <javadoc source="1.5" packagenames="de.payback.pt.*" 
+	    	private="true" author="true"
+	    	sourcepath="${src}" destdir="${javadoc.dest}/${project.name}" 
+	    	bottom="Copyright &#169; 2007 Loyalty Partners. All Rights Reserved.&lt;br/&gt;"
+		>
+		<classpath>
+	        <fileset dir="${lib.project}">
+	          <include name="**/*.jar"/>
+	        </fileset>
+	      </classpath>
+	      <tag name="created" scope="all" description="Created: " />
+	      <link href="http://java.sun.com/j2se/1.5.0/docs/api"/>
+	    </javadoc>
+	</target>
+</project>
