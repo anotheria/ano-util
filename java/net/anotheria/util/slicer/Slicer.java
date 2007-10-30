@@ -3,7 +3,7 @@ package net.anotheria.util.slicer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Slicer <T> {
+public class Slicer {
 	
 	public static final int FIRST_PAGE = 1;
 	
@@ -13,7 +13,7 @@ public class Slicer <T> {
 	 * @param data the data to slice.
 	 * @return
 	 */
-	public Slice<T> slice(Segment segment, List<T> data){
+	public static <T> Slice<T> slice(Segment segment, List<T> data){
 		int totalElements = data.size();
 		
 		Slice<T> ret = new Slice<T>(segment);
@@ -54,7 +54,7 @@ public class Slicer <T> {
 		segment.setElementsPerSlice(4);
 		segment.setSliceNumber(6);
 		
-		List<Integer> ret = new Slicer<Integer>().slice(segment, data).getSliceData();
+		List<Integer> ret = Slicer.slice(segment, data).getSliceData();
 		
 		System.out.println(ret);
 	}
