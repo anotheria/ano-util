@@ -11,6 +11,7 @@ public class CopyDirContents {
 	private static int files = 0, dirs = 0;
 	private static long bytes = 0;
 	private static long time = System.currentTimeMillis();
+	private static int skipped = 0;
 
 	public static void main(String a[]) throws IOException{
 		File src = new File("/storage/BAK_EXT_DISK");
@@ -26,7 +27,7 @@ public class CopyDirContents {
 		long duration = now - time;
 		double throughtput = (double)bytes/duration*1000;
 		double mbs = throughtput/1024/1024;
-		System.out.println("Copied dirs: "+dirs+", files: "+files+", bytes: "+bytes+" in "+duration+", throughtput: "+throughtput+" bytes/second, "+mbs+" MB/s");
+		System.out.println("Copied dirs: "+dirs+", files: "+files+", bytes: "+bytes+" in "+duration+", throughtput: "+throughtput+" bytes/second, "+mbs+" MB/s, skiped: "+skipped);
 	}
 	
 	public static void copy(File src, File dest) throws IOException{
@@ -56,8 +57,13 @@ public class CopyDirContents {
 			printInfo();
 		//System.out.println("Copying file: "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
 		if (dest.exists()){
-			System.out.println("File exists, "+dest.getAbsolutePath()+", skipping.");
+			//System.out.println("File exists, "+dest.getAbsolutePath()+", skipping.");
+			skipped++;
+			if (skipped/1000*1000==skipped)
+				printInfo();
+			return;
 		}
+		System.out.println("Copying file: "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
 		FileInputStream fIn = new FileInputStream(src);
 		FileOutputStream fOut = new FileOutputStream(dest);
 		copy(fIn, fOut);
