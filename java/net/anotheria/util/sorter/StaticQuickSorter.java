@@ -1,36 +1,28 @@
 package net.anotheria.util.sorter;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 
 /**
  *  just an implementation of the well known QuickSort Algorithm
- *
- *@author     Chris Hoffmann
- *@created    October 21, 2000
  */
-public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
-
-
+public class StaticQuickSorter{
 
 	/**
-	 *  sorts an Enumeration with the QuickSort Algorithm and returns a sorted Vector
-	 *
-	 *@param  source  the Enumeration you want to sort
-	 *@param  sType   how you want to sort
-	 *@return         a sorted Vector containing the Objects of the Enumeration
+	 * Sorts a collection of comparables
+	 * @param <T> extends IComparable
+	 * @param source collection to sort
+	 * @param sType the sort type (sort method and order).
+	 * @return
 	 */
-	public List<T> sort(Enumeration<T> source, SortType sType) {
-		List<T> ret = new ArrayList<T>();
-		while (source.hasMoreElements()) {
-			ret.add(source.nextElement());
-		}
-		return sort(ret, sType);
+	public static<T extends IComparable> List<T> sort(Collection<T> source, SortType sType) {
+		ArrayList<T> tmp = new ArrayList<T>(source.size());
+		tmp.addAll(source);
+		return sort(tmp, sType);
 	}
-
 
 	/**
 	 *  sorts a List with the QuickSort Algorithm
@@ -39,22 +31,24 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 	 *@param  sType   SortType  ...  how you wanna sort the Vector
 	 *@return         the sorted Vector
 	 */
-	public List<T> sort(List<T> source, SortType sType) {
+	public static<T extends IComparable> List<T> sort(List<T> source, SortType sType) {
 		boolean sortOrder = sType.sortOrder;
 		int sortAfter = sType.getSortBy();
-        SortType tmp = new SortType(sType.getSortBy(),!sType.sortOrder);
-        if(isSorted(source,sType)){
+        
+        if(isSorted(source, sType)){
 		    return source;
 		}
-        if(isSorted(source,tmp)){
-            return (upsideDown(source));
+        
+        if(isSorted(source, sType.reverse())){
+        	return (upsideDown(source));
 		}
-		boolean wanted = sortOrder == SortType.ASC;
+
+        boolean wanted = sortOrder == SortType.ASC;
 		sort(source, 0, source.size() - 1, wanted, sortAfter);
 		return source;
 	}
 
-	private void sort(List<T> source, int start, int end, boolean wanted, int sortAfter) {
+	private static<T extends IComparable> void sort(List<T> source, int start, int end, boolean wanted, int sortAfter) {
 		int mid;
 		if (start < end) {
 			mid = partition(source, start, end, wanted, sortAfter);
@@ -63,7 +57,7 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 		}
 	}
 
-    private List<T> upsideDown(List<T> src){
+    private static<T extends IComparable> List<T> upsideDown(List<T> src){
         if(src == null)
             return null;
         List<T> ret = new ArrayList<T>(src.size());
@@ -73,7 +67,7 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
         return ret;
     }
 
-    private boolean isSorted(List<T> src, SortType type){
+    private static <T extends IComparable> boolean isSorted(List<T> src, SortType type){
         boolean wanted = (type.sortOrder == SortType.ASC);
         int sortAfter = type.getSortBy();
         Iterator<T> elements = src.iterator();
@@ -91,7 +85,7 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
         return true;
     }
 
-	private int partition(List<T> source, int start, int end, boolean wanted, int sortAfter) {
+	private static<T extends IComparable> int partition(List<T> source, int start, int end, boolean wanted, int sortAfter) {
 		int left;
 		int right;
 		T partElement = source.get(end);
@@ -118,14 +112,14 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 		return left;
 	}
 
-	private void swap(List<T> source, int i, int j) {
+	private static<T extends IComparable> void swap(List<T> source, int i, int j) {
 		T tmp = source.get(i);
 		source.set(i, source.get(j));
 		source.set(j, tmp);
 	}
 
 
-	private int compare(T a, T b, int sortAfter) {
+	private static<T extends IComparable> int compare(T a, T b, int sortAfter) {
 		return a.compareTo(b, sortAfter);
 	}
 }

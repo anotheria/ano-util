@@ -74,6 +74,10 @@ public class SortType implements Serializable{
     public boolean getSortOrder(){
     	return sortOrder;
     }
+    
+    public SortType reverse(){
+    	return new SortType(getSortBy(), !getSortOrder());
+    }
 
     /**
      * Returns the string representation of the object.

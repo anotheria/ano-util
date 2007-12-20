@@ -27,7 +27,7 @@ public class ExecutionTimer {
 	private static final int METHOD_TIME = 2;
 	private static final int METHOD_CREATION = 3;
 
-	private Hashtable timers;
+	private Hashtable<String, TimerEntry> timers;
 	private int nextID;
 
 	private String name;
@@ -36,7 +36,7 @@ public class ExecutionTimer {
 	 * Creates a new ExecutionTimer.
 	 */
     public ExecutionTimer(String name) {
-		timers = new Hashtable();
+		timers = new Hashtable<String, TimerEntry>();
 		nextID = 1;
 		this.name = name;
     }
@@ -86,10 +86,10 @@ public class ExecutionTimer {
 	 * Returns the sum of the single execution times.
 	 */
 	public long getTotalExecutionTime(){
-		Enumeration e = timers.elements();
+		Enumeration<TimerEntry> e = timers.elements();
 		long sum = 0;
 		while(e.hasMoreElements()){
-		    TimerEntry entry = (TimerEntry) e.nextElement();
+		    TimerEntry entry = e.nextElement();
 			sum += entry.getTime();
 		}
 		return sum;
@@ -98,21 +98,21 @@ public class ExecutionTimer {
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their keys.
 	 */
-	public Vector getExecutionTimerEntriesOrderedByKeys(){
+	public Vector<TimerEntry> getExecutionTimerEntriesOrderedByKeys(){
 		return sortVector(getTimerEntriesVector(), METHOD_KEY);
 	}
 
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their creation order.
 	 */
-	public Vector getExecutionTimerEntriesOrderedByCreation(){
+	public Vector<TimerEntry> getExecutionTimerEntriesOrderedByCreation(){
 		return sortVector(getTimerEntriesVector(), METHOD_CREATION);
 	}
 
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their execution time (fastest first).
 	 */
-	public Vector getExecutionTimerEntriesOrderedByTime(){
+	public Vector<TimerEntry> getExecutionTimerEntriesOrderedByTime(){
 		return sortVector(getTimerEntriesVector(), METHOD_TIME);
 	}
 
@@ -137,10 +137,10 @@ public class ExecutionTimer {
 	}
 
 	private void printExecutionTimes(int method){
-	    Vector v = sortVector(getTimerEntriesVector(), method);
+	    Vector<TimerEntry> v = sortVector(getTimerEntriesVector(), method);
 		System.out.println("============= "+name+" =============");
 		for (int i=0; i<v.size(); i++){
-		    System.out.println( ((TimerEntry)v.elementAt(i)).toString(method) );
+		    System.out.println( v.elementAt(i).toString(method) );
 		}
 		System.out.print("=============");
 		for (int t=0;t<name.length()+2;t++)
@@ -149,7 +149,7 @@ public class ExecutionTimer {
 	}
 
 
-	private Vector sortVector(Vector src, int method){
+	private Vector<TimerEntry> sortVector(Vector<TimerEntry> src, int method){
 	    boolean changed = true;
 		while(changed){
 		    changed = false;
@@ -181,9 +181,9 @@ public class ExecutionTimer {
 		}
 	}
 
-	private Vector getTimerEntriesVector(){
-	    Vector ret = new Vector();
-		Enumeration e = timers.elements();
+	private Vector<TimerEntry> getTimerEntriesVector(){
+	    Vector<TimerEntry> ret = new Vector<TimerEntry>();
+		Enumeration<TimerEntry> e = timers.elements();
 		while(e.hasMoreElements())
 			ret.addElement(e.nextElement());
 		return ret;

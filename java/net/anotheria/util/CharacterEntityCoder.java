@@ -8,13 +8,13 @@ import java.util.Vector;
  * Performs html and xml encoding.
  */
 public class CharacterEntityCoder {
-	private static final Hashtable entities;
-	private static final Vector htmlEntities;
-	private static final Hashtable html2xmlEntities;
+	private static final Hashtable<Character, String> entities;
+	private static final Vector<String[]> htmlEntities;
+	private static final Hashtable<String,String> html2xmlEntities;
 	
 	
 	static {
-		entities = new Hashtable();
+		entities = new Hashtable<Character, String>();
 		entities.put(new Character('\n'), "&#010;");
 		entities.put(new Character('\r'), "&#013;");
 		entities.put(new Character('\t'), "&#009;");

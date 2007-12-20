@@ -19,9 +19,9 @@ public abstract class AbstractSorter<T extends IComparable> implements Sorter<T>
  	 * Transfers a list into array.
  	 * The list should include only objects of type IComparable.
  	 */
- 	public static IComparable[] list2array(List src){
-   		IComparable[] tmp = new IComparable[1];
-   		return (IComparable[])src.toArray(tmp);
+ 	public static<T extends IComparable> IComparable[] list2array(List<T> src){
+ 		IComparable[] tmp = new IComparable[1];
+   		return src.toArray(tmp);
    	}
 
     /**
