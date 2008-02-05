@@ -2,6 +2,7 @@ package net.anotheria.util.xml;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XMLNode {
@@ -14,6 +15,9 @@ public class XMLNode {
 	
 	public XMLNode(String aName){
 		name = aName;
+	
+		attributes = new ArrayList<XMLAttribute>();
+		nodes = new ArrayList<XMLNode>();
 	}
 
 	
@@ -60,17 +64,61 @@ public class XMLNode {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public void setContent(boolean content){
+		setContent(""+content);
+	}
+	
+	public void setContent(float content){
+		setContent(""+content);
+	}
+
+	public void setContent(double content){
+		setContent(""+content);
+	}
+
+	public void setContent(long content){
+		setContent(""+content);
+	}
+
+	public void setContent(int content){
+		setContent(""+content);
+	}
+	
+	public void setContent(List l ){
+		setContent(l.toString());
+	}
 
 	public String toString(){
 		return "name: "+name+", "+" attributes: "+attributes+", nodes: "+nodes;
 	}
 	
-	public void write(OutputStreamWriter writer) throws IOException{
-		writer.write(XMLHelper.entag(getName()));
+	private String createAttributeString(){
+		String ret = "";
+		if (attributes == null || attributes.size()==0)
+			return ret;
+		
+		for (XMLAttribute a : attributes){
+			ret += " "+a.toXMLString();
+		}
+		
+		
+		return ret;
+	}
+	
+	
+	
+	public void write(OutputStreamWriter writer, int tabs) throws IOException{
+		String attributeString = createAttributeString();
+		String ident = XMLHelper.makeIdent(tabs);
+		writer.write(ident+XMLHelper.entag(getName()+attributeString));
 		
 		for (XMLNode child : nodes)
-			child.write(writer);
+			child.write(writer, tabs+1);
 		
-		writer.write(XMLHelper.detag(getName()));
+		if (content!=null)
+			writer.write(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
+		
+		writer.write(ident+XMLHelper.detag(getName()));
 	}
 }

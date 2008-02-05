@@ -8,6 +8,10 @@ public class XMLAttribute {
 		
 	}
 	
+	public XMLAttribute(String name, int  value){
+		this(name, ""+value);
+	}
+
 	public XMLAttribute(String name, String value){
 		this.name = name;
 		this.value = value;
@@ -33,5 +37,7 @@ public class XMLAttribute {
 		this.value = value;
 	}
 
-
+	public String toXMLString(){
+		return getName()+"="+XMLHelper.quote(getValue());
+	}
 }

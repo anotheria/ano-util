@@ -40,9 +40,9 @@ public class XMLTree {
 	}
 	
 	public void write(OutputStreamWriter writer) throws IOException{
-		writer.write("<?xml version="+XMLHelper.quote(version)+" encoding="+XMLHelper.quote(encoding)+"?>");
+		writer.write("<?xml version="+XMLHelper.quote(version)+" encoding="+XMLHelper.quote(encoding)+"?>\n");
 		if (root!=null)
-			root.write(writer);
+			root.write(writer, 0);
 	}
 
 }
