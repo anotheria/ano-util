@@ -41,6 +41,34 @@ public class StringUtils{
    		return v;
     }
     
+	public static final List<String> tokenize2list(String source, char delimiter, char escapeChar){
+		List<String> ret = new ArrayList<String>();
+  		StringBuffer currentS = new StringBuffer();
+		char c;
+		boolean skipNext = false;
+		for ( int i=0;i<source.length() ;i++ ){
+			c = source.charAt(i);
+			if (!skipNext && c==escapeChar){
+				skipNext = true;
+				continue;
+			}
+			if (!skipNext && c==delimiter ){
+				if ( currentS.length()>0 ){
+					ret.add(currentS.toString());
+				}else{
+				    ret.add(new String(""));
+				}
+				currentS=new StringBuffer();
+			}else{
+				currentS.append(c);
+			}
+			skipNext = false;
+		}
+		if ( currentS!=null && currentS.length()>0 )
+			ret.add(currentS.toString());
+   		return ret;
+    }
+    
     public static final List<String> tokenize2list(String source, char delimiter){
     	return Arrays.asList(tokenize(source, delimiter));
     }
@@ -59,7 +87,11 @@ public class StringUtils{
 		}
 		return ret;
 	}/*end fun tokenize()*/
-
+	
+	public static final String[] tokenize(String source, char delimiter, char escapeChar){
+		return tokenize2list(source, delimiter, escapeChar).toArray(new String[0]);
+	}
+	
 	/**
 	 *Returns a source String with all occurences of 'c' removed.
 	 *removeChar("Leon's Power Tools", ' ') will return "Leon'sPowerTools".
@@ -569,7 +601,7 @@ public class StringUtils{
 				continue;
 			}
 
-			if (c==escapeChar){
+			if (!skipNext && c==escapeChar){
 				skipNext = true;
 				continue;
 			}
