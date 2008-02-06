@@ -466,6 +466,7 @@ public class StringUtils{
 			s = s+fillString;
 		return s;			
 	}
+
 	
 	public static List<String> extractTags(String source, char tagStart, char tagEnd){
 		ArrayList<String> ret = new ArrayList<String>();
@@ -537,6 +538,86 @@ public class StringUtils{
 		return src.substring(fromBeginn, src.length()-fromEnd);
 	}
 
+	//Added 6.02.08
+	
+	public static boolean isSurroundedWith(String src, char starting, char ending){
+		return src.startsWith("" + starting) && src.endsWith("" + ending);
+	}
+	
+	public static String removeSurround(String src){
+		return StringUtils.strip(src, 1, 1);
+	}
+	
+	public static String surroundWith(String src, char starting, char ending){
+		src = src.trim();
+		return starting + src + ending;
+	}
+	
+	
+	public static List<String> extractSuperTags(String source, char tagStart, char tagEnd, char escapeChar){
+		ArrayList<String> ret = new ArrayList<String>();
+		
+		String currentTag = "";
+		int inTag = 0;
+		boolean skipNext = false;
+		char c;
+		for (int i=0, l=source.length(); i<l; i++){
+			c = source.charAt(i);
+			
+			if (skipNext){
+				skipNext = false;
+				continue;
+			}
+
+			if (c==escapeChar){
+				skipNext = true;
+				continue;
+			}
+			
+			if (c==tagStart)
+				inTag++;
+			
+			if(inTag >= 1)
+				currentTag += c;
+			
+			if (c==tagEnd){
+				if(inTag == 1){
+					ret.add(currentTag);
+					currentTag = "";
+					inTag = 0;
+					continue;
+				}
+				if(inTag>0)
+					inTag--;
+			}
+		}
+		
+		return ret;
+	}
+	
+
+	public static String substringFromEnd(String src, int indexFromEnd){
+		if (src.length() <= indexFromEnd)
+			return "";
+		int end = src.length() - indexFromEnd;
+		return src.substring(0, end);
+	}
+	
+	public static String concatenateTokens(List<String> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
+		String ret = "";
+		boolean begin = true;
+		for(String t:tokens){
+			t = t.trim();
+			if(t.length() == 0)
+				continue;
+			if(!begin)
+				ret += delimiter;
+			ret += surroundWith(t, tokenStartingTag, tokenEndingTag);
+			begin = false;
+		}
+		return ret;
+	}
+	
 	public static void main(String a[]){
 		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
 		List<String> tags = extractTagsWithEscapeChar(testString, '{', '}', '\\'); 
@@ -544,6 +625,36 @@ public class StringUtils{
 		for (String t: tags){
 			System.out.println(t+" -> "+strip(t,1,1));
 		}
+		test2();
+		test3();
+		test4();
+	}
+	
+	public static void test3(){
+		System.out.println("TESTING SURROUNDING:");
+		String hello = "{Hello!}";
+		System.out.println("Is surrounded "+hello+" with {}:"+ isSurroundedWith(hello, '{', '}'));
+		System.out.println("Remove surround {}:" +(hello = removeSurround(hello)));
+		System.out.println("Srround with []:" + surroundWith(hello, '[', ']'));
+	}
+	public static void test4(){
+		System.out.println("TESTING concatenateTokens():");
+	List<String> hellos = new ArrayList<String>(4);
+	hellos.add("Hello, World!");
+	hellos.add("Hello, People!");
+	hellos.add("Hello, Aliens!");
+	System.out.println("Concatenate Hellos Tokens with delimiter , and surround with <>:" + concatenateTokens(hellos, ',', '<', '>'));
+	}
+	
+	public static void test2(){
+		System.out.println("TESTING excractSuperTags()");
+		String source = "ads{f{asd{2}fasd}a{qqq}sd}f";
+		char tagStart = '{';
+		char tagEnd = '}';
+		char escapeChar = '|';
+		List<String> tags = extractSuperTags(source, tagStart, tagEnd, escapeChar);
+		for(String t: tags)
+			System.out.println(t);
 	}
 
 }
