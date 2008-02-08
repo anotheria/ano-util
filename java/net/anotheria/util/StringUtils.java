@@ -48,11 +48,18 @@ public class StringUtils{
 		boolean skipNext = false;
 		for ( int i=0;i<source.length() ;i++ ){
 			c = source.charAt(i);
-			if (!skipNext && c==escapeChar){
+			if(skipNext){
+				if(c != delimiter)
+					currentS.append(escapeChar);
+				currentS.append(c);
+				skipNext = false;
+				continue;
+			}
+			if (c==escapeChar){
 				skipNext = true;
 				continue;
 			}
-			if (!skipNext && c==delimiter ){
+			if (c==delimiter ){
 				if ( currentS.length()>0 ){
 					ret.add(currentS.toString());
 				}else{
@@ -588,7 +595,6 @@ public class StringUtils{
 	
 	public static List<String> extractSuperTags(String source, char tagStart, char tagEnd, char escapeChar){
 		ArrayList<String> ret = new ArrayList<String>();
-		
 		String currentTag = "";
 		int inTag = 0;
 		boolean skipNext = false;
@@ -598,10 +604,15 @@ public class StringUtils{
 			
 			if (skipNext){
 				skipNext = false;
+				if(inTag >= 1){
+					if(c != tagStart && c != tagEnd)
+						currentTag += escapeChar;
+					currentTag += c;
+				}
 				continue;
 			}
 
-			if (!skipNext && c==escapeChar){
+			if (c==escapeChar){
 				skipNext = true;
 				continue;
 			}
@@ -651,15 +662,16 @@ public class StringUtils{
 	}
 	
 	public static void main(String a[]){
-		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
-		List<String> tags = extractTagsWithEscapeChar(testString, '{', '}', '\\'); 
-		System.out.println("Tags: "+tags);
-		for (String t: tags){
-			System.out.println(t+" -> "+strip(t,1,1));
-		}
+//		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
+//		List<String> tags = extractTagsWithEscapeChar(testString, '{', '}', '\\'); 
+//		System.out.println("Tags: "+tags);
+//		for (String t: tags){
+//			System.out.println(t+" -> "+strip(t,1,1));
+//		}
 		test2();
-		test3();
-		test4();
+//		test3();
+//		test4();
+//		test5();
 	}
 	
 	public static void test3(){
@@ -678,14 +690,31 @@ public class StringUtils{
 	System.out.println("Concatenate Hellos Tokens with delimiter , and surround with <>:" + concatenateTokens(hellos, ',', '<', '>'));
 	}
 	
+	
 	public static void test2(){
 		System.out.println("TESTING excractSuperTags()");
-		String source = "ads{f{asd{2}fasd}a{qqq}sd}f";
+		String source = "{if:{equals:{mp:persons_size}:2}:Gender{mp:gender2}Age{mp:age2}}";
 		char tagStart = '{';
 		char tagEnd = '}';
-		char escapeChar = '|';
+		char escapeChar = '\\';
 		List<String> tags = extractSuperTags(source, tagStart, tagEnd, escapeChar);
 		for(String t: tags)
+			System.out.println(t);
+		
+//		String src = "{if:true:mumu|:bubu}";
+//		MatchedProfilesProcessor p = new MatchedProfilesProcessor();
+//		p.setAccountId("267");
+//		VariablesUtility.addProcessor(MatchedProfilesProcessor.PREFIX, p);
+//		System.out.println(VariablesUtility.replaceVariables(null, src));
+//		List<String> t = StringUtils.extractSuperTags(src,'{','}','|');
+//		for(String s:t)
+//			System.out.println(s);
+	}
+	
+	public static void test5(){
+		String src = "if:true:mumu|:bubu";
+		String[] ts = tokenize(src, ':', '|');
+		for(String t:ts)
 			System.out.println(t);
 	}
 
