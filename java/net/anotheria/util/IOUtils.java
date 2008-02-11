@@ -49,5 +49,15 @@ public class IOUtils {
         System.out.println(s);
         
     }
+    
+    public static String readlineFromStdIn() throws IOException{
+    	StringBuilder ret = new StringBuilder();
+    	int c;
+    	while( (c=System.in.read())!='\n' && c!=-1){
+    		if (c!='\r')
+    			ret.append((char)c);
+    	}
+    	return ret.toString();
+    }
 }
 
