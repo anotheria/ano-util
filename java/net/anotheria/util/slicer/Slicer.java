@@ -57,6 +57,16 @@ public class Slicer {
 		List<Integer> ret = Slicer.slice(segment, data).getSliceData();
 		
 		System.out.println(ret);
+		
+		Slice<Integer> slice = new Slice<Integer>(new Segment(0, 1));
+		slice.setTotalNumberOfSlices(1);
+		while(slice.hasNextSlice()){
+			slice = Slicer.slice(new Segment(slice.getCurrentSlice() + 1, 5), data);
+			System.out.print("Slice "+slice.getCurrentSlice()+": ");
+			for(int i:slice.getSliceData())
+				System.out.print(i + ",");
+			System.out.println();
+		}
 	}
 	
 }

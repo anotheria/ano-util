@@ -588,7 +588,6 @@ public class StringUtils{
 	}
 	
 	public static String surroundWith(String src, char starting, char ending){
-		src = src.trim();
 		return starting + src + ending;
 	}
 	
@@ -605,8 +604,6 @@ public class StringUtils{
 			if (skipNext){
 				skipNext = false;
 				if(inTag >= 1){
-					if(c != tagStart && c != tagEnd)
-						currentTag += escapeChar;
 					currentTag += c;
 				}
 				continue;
