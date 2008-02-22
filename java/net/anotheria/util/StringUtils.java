@@ -2,9 +2,11 @@ package net.anotheria.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * StringUtils -
@@ -593,37 +595,40 @@ public class StringUtils{
 	
 	
 	public static List<String> extractSuperTags(String source, char tagStart, char tagEnd, char escapeChar){
-		ArrayList<String> ret = new ArrayList<String>();
-		String currentTag = "";
+		
+		List<String> index = indexSuperTags(source, tagStart, tagEnd);
+		List<String> ret = new ArrayList<String>();
+		for(String tag: index)
+			if(tag.charAt(0) == tagStart)
+				ret.add(tag);
+		return ret;
+	}
+	
+	public static List<String> indexSuperTags(String source, char tagStart, char tagEnd){
+		List<String> ret = new ArrayList<String>();
+		StringBuilder currentTag = new StringBuilder();
+		
 		int inTag = 0;
-		boolean skipNext = false;
 		char c;
+		
 		for (int i=0, l=source.length(); i<l; i++){
 			c = source.charAt(i);
-			
-			if (skipNext){
-				skipNext = false;
-				if(inTag >= 1){
-					currentTag += c;
-				}
-				continue;
-			}
-
-			if (c==escapeChar){
-				skipNext = true;
-				continue;
-			}
-			
-			if (c==tagStart)
+						
+			if (c==tagStart){
 				inTag++;
-			
-			if(inTag >= 1)
-				currentTag += c;
+				if(inTag == 1){
+					if(currentTag.length() > 0)
+						ret.add(currentTag.toString());
+					currentTag = new StringBuilder();
+				}
+			}
+							
+			currentTag.append(c);
 			
 			if (c==tagEnd){
 				if(inTag == 1){
-					ret.add(currentTag);
-					currentTag = "";
+					ret.add(currentTag.toString());
+					currentTag = new StringBuilder();
 					inTag = 0;
 					continue;
 				}
@@ -631,11 +636,48 @@ public class StringUtils{
 					inTag--;
 			}
 		}
+		if(currentTag.length() > 0)
+			ret.add(currentTag.toString());
+		return ret;
+	}
+
+	  public static final List<String> tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
+		  Set<Character> delimitersHash = new HashSet<Character>(delimiters.length);
+		  for(char del: delimiters)
+			  delimitersHash.add(del);
+		  
+		  List<String> ret = new ArrayList<String>();
+		StringBuilder currentTag = new StringBuilder();
 		
+		int inEscape = 0;
+		char c;
+
+		for (int i = 0, l = source.length(); i < l; i++) {
+			c = source.charAt(i);
+
+			if (c == escapeStart)
+				inEscape++;
+
+			if(inEscape < 1 && delimitersHash.contains(c)) {
+				if (currentTag.length() > 0) {
+					ret.add(currentTag.toString());
+					currentTag = new StringBuilder();
+					continue;
+				}
+			}
+
+			currentTag.append(c);
+
+			if (c == escapeEnd) {
+				if (inEscape > 0)
+					inEscape--;
+			}
+		}
+		if (currentTag.length() > 0)
+			ret.add(currentTag.toString());
 		return ret;
 	}
 	
-
 	public static String substringFromEnd(String src, int indexFromEnd){
 		if (src.length() <= indexFromEnd)
 			return "";
@@ -658,6 +700,7 @@ public class StringUtils{
 		return ret;
 	}
 	
+	
 	public static void main(String a[]){
 //		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
 //		List<String> tags = extractTagsWithEscapeChar(testString, '{', '}', '\\'); 
@@ -665,10 +708,17 @@ public class StringUtils{
 //		for (String t: tags){
 //			System.out.println(t+" -> "+strip(t,1,1));
 //		}
-		test2();
+//		test2();
 //		test3();
 //		test4();
 //		test5();
+		test6();
+	}
+	
+	public static void test6(){
+		String source = "Hello! You have {mc:count:0} new matching. Details {if:{equals:{mp:persons_size}:2}:Gender{mp:gender2}Age{mp:age2}}";
+		List<String> index = indexSuperTags(source, '{', '}');
+		System.out.println(concatenateTokens(index, ',', '<', '>'));
 	}
 	
 	public static void test3(){
