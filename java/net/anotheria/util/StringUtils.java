@@ -2,6 +2,7 @@ package net.anotheria.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -23,7 +24,7 @@ public class StringUtils{
     public static final Vector<String> tokenize2vector(String source, char delimiter){
 		Vector<String> v;
 		v = new Vector<String>();
-  		StringBuffer currentS = new StringBuffer();
+  		StringBuilder currentS = new StringBuilder();
 		char c;
 		for ( int i=0;i<source.length() ;i++ ){
 			c = source.charAt(i);
@@ -33,7 +34,7 @@ public class StringUtils{
 				}else{
 				    v.addElement(new String(""));
 				}
-				currentS=new StringBuffer();
+				currentS=new StringBuilder();
 			}else{
 				currentS.append(c);
 			}
@@ -590,7 +591,11 @@ public class StringUtils{
 	}
 	
 	public static String surroundWith(String src, char starting, char ending){
-		return starting + src + ending;
+		StringBuilder ret = new StringBuilder();
+		ret.append(starting);
+		ret.append(src);
+		ret.append(ending);
+		return ret.toString();
 	}
 	
 	
@@ -685,19 +690,19 @@ public class StringUtils{
 		return src.substring(0, end);
 	}
 	
-	public static String concatenateTokens(List<String> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
-		String ret = "";
+	public static String concatenateTokens(Collection<String> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
+		StringBuilder ret = new StringBuilder();
 		boolean begin = true;
 		for(String t:tokens){
 			t = t.trim();
 			if(t.length() == 0)
 				continue;
 			if(!begin)
-				ret += delimiter;
-			ret += surroundWith(t, tokenStartingTag, tokenEndingTag);
+				ret.append(delimiter);
+			ret.append(surroundWith(t, tokenStartingTag, tokenEndingTag));
 			begin = false;
 		}
-		return ret;
+		return ret.toString();
 	}
 	
 	
