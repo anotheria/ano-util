@@ -583,7 +583,7 @@ public class StringUtils{
 	//Added 6.02.08
 	
 	public static boolean isSurroundedWith(String src, char starting, char ending){
-		return src.startsWith("" + starting) && src.endsWith("" + ending);
+		return (src.charAt(0)== starting )&& (src.charAt(src.length()-1) == ending);
 	}
 	
 	public static String removeSurround(String src){
@@ -690,10 +690,11 @@ public class StringUtils{
 		return src.substring(0, end);
 	}
 	
-	public static String concatenateTokens(Collection<String> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
+	public static<T> String concatenateTokens(Collection<T> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
 		StringBuilder ret = new StringBuilder();
 		boolean begin = true;
-		for(String t:tokens){
+		for(T _t:tokens){
+			String t = _t instanceof String ? (String)_t : ""+_t; 
 			t = t.trim();
 			if(t.length() == 0)
 				continue;
