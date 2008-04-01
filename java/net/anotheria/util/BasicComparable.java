@@ -1,5 +1,7 @@
 package net.anotheria.util;
 
+import java.util.List;
+
 import net.anotheria.util.sorter.IComparable;
 
 /**
@@ -85,6 +87,18 @@ public abstract class BasicComparable implements IComparable{
 		return a == null ? 
 				(b == null ? 0 : -1) : 
 				(b == null ? 1 : a.compareToIgnoreCase(b));
+	}
+	
+	/**
+	 * Compares two List.
+	 * @param a first List to compare.
+	 * @param b second List to compare.
+	 * @return 0 if a.size==b.size, -1 if a.size<b.size or +1 if a.size>b.size.
+	 */
+	public static final <T> int compareList(List<T> a, List<T> b){
+		return a.size() < b.size() ? 
+			-1 : a.size() == b.size() ? 
+			0 : 1;						
 	}
 	
 	public static void main(String a[]){
