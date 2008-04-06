@@ -1,5 +1,6 @@
 package net.anotheria.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.anotheria.util.sorter.IComparable;
@@ -96,16 +97,30 @@ public abstract class BasicComparable implements IComparable{
 	 * @return 0 if a.size==b.size, -1 if a.size<b.size or +1 if a.size>b.size.
 	 */
 	public static final <T> int compareList(List<T> a, List<T> b){
-		return a.size() < b.size() ? 
-			-1 : a.size() == b.size() ? 
-			0 : 1;						
+		return a == null ? 
+				(b == null ? 0 : -1 ) : 
+				(b == null ? 1 : compareInt(a.size(), b.size()));
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void main(String a[]){
 		System.out.println(compareString("a","b"));
 		System.out.println(compareString("a",""));
 		System.out.println(compareString("a",null));
 		System.out.println(compareString(null,"b"));
 		System.out.println(compareString(null,null));
+		
+		
+		List la = new ArrayList(); la.add("a"); la.add("b"); la.add("c");
+		List lb = new ArrayList(); lb.add("a"); lb.add("b"); lb.add("c"); lb.add("d");
+		List lc = new ArrayList(); 
+		System.out.println("CompareLists");
+		System.out.println(compareList(null, null));
+		System.out.println(compareList(null, lb));
+		System.out.println(compareList(la, null));
+		System.out.println(compareList(la, lb));
+		System.out.println(compareList(la, lc));
+		
+		
 	}
 }
