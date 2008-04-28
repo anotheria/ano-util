@@ -11,6 +11,8 @@
 	
 	<property name="javadoc.dest" value="${basedir}/../javadoc"/>
 	
+	<property name="lib.project" value="${basedir}/lib"/>
+
 	<property name="project.name" value="ano-util"/>
 	<property name="target.jar.name" value="ano-util.jar"/>
 	
@@ -26,6 +28,9 @@
 	<target name="compile" depends="prepare">
 		<javac destdir="${classes.dir}" srcdir="${src}" debug="on" deprecation="off" optimize="on">
 			<classpath>
+				<fileset dir="${lib.project}">
+					<include name="**/*.jar"/>
+				</fileset>
 			</classpath>
 		</javac>
 	</target>
