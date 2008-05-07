@@ -706,6 +706,21 @@ public class StringUtils{
 		return ret.toString();
 	}
 	
+	public static<T> String concatenateTokens(Collection<T> tokens, String delimiterSequence){
+		StringBuilder ret = new StringBuilder();
+		boolean begin = true;
+		for(T _t:tokens){
+			String t = _t instanceof String ? (String)_t : ""+_t; 
+			t = t.trim();
+			if(t.length() == 0)
+				continue;
+			if(!begin)
+				ret.append(delimiterSequence);
+			ret.append(t);
+			begin = false;
+		}
+		return ret.toString();
+	}	
 	
 	public static void main(String a[]){
 //		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
