@@ -2,6 +2,8 @@ package net.anotheria.util.xml;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,8 +107,36 @@ public class XMLNode {
 		
 		return ret;
 	}
+
+	public void write(PrintStream writer, int tabs) throws IOException{
+		String attributeString = createAttributeString();
+		String ident = XMLHelper.makeIdent(tabs);
+		writer.println(ident+XMLHelper.entag(getName()+attributeString));
+		
+		for (XMLNode child : nodes)
+			child.write(writer, tabs+1);
+		
+		if (content!=null)
+			writer.println(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
+		
+		writer.println(ident+XMLHelper.detag(getName()));
+	} 
+
 	
-	
+	public void write(PrintWriter writer, int tabs) throws IOException{
+		String attributeString = createAttributeString();
+		String ident = XMLHelper.makeIdent(tabs);
+		writer.write(ident+XMLHelper.entag(getName()+attributeString));
+		
+		for (XMLNode child : nodes)
+			child.write(writer, tabs+1);
+		
+		if (content!=null)
+			writer.write(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
+		
+		writer.write(ident+XMLHelper.detag(getName()));
+	}
+
 	
 	public void write(OutputStreamWriter writer, int tabs) throws IOException{
 		String attributeString = createAttributeString();
