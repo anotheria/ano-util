@@ -50,11 +50,18 @@
 	<target name="dist" depends="jar">
 	</target>
 	
+	<target name="deploy" depends="dist">
+		<copy todir="${basedir}/../ano-libs/lib">
+			<fileset file="${dist.dir}/${target.jar.name}"></fileset>
+		</copy>
+	</target>
+
+	
 	<target name="all" depends="dist"/>
 	
 	<target name="javadoc" depends="compile">
 		<mkdir dir="${javadoc.dest}/${project.name}"/>
-	    <javadoc source="1.5" packagenames="de.payback.pt.*" 
+	    <javadoc source="1.6" packagenames="net.anotheria.util.*" 
 	    	private="true" author="true"
 	    	sourcepath="${src}" destdir="${javadoc.dest}/${project.name}" 
 	    	bottom="Copyright &#169; 1998-2007 Anotheria.net. All Rights Reserved.&lt;br/&gt;"
