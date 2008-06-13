@@ -97,6 +97,21 @@ public class NumberUtils {
 	}
 
 	/**
+	 * Often needed by different packages
+	 * Return a time string in form of hh:mm.
+	 */
+	public static String makeTimeString12H(long time){
+		Date date = new Date(time);
+		int hour = date.hour;
+		String t = "am";
+		if (hour>12){
+			hour-=12;
+			t = "pm";
+		}
+		return itoa(hour)+":"+ itoa(date.min)+" "+t;
+	}
+
+	/**
 	 * Returns the given size in bytes as short string (Kb, Mb, B)...
 	 * @param size the size in bytes
 	 * @return the corresponding string
@@ -205,6 +220,6 @@ public class NumberUtils {
 		System.out.println(makeSizeString(Integer.MAX_VALUE));
 		System.out.println(size);
 		System.out.println(makeSizeString(size));*/
-		System.out.println(getDotedNumber(123456789));
+		System.out.println((makeTimeString12H(System.currentTimeMillis()+1000L*60*60*5)));
 	}
 }
