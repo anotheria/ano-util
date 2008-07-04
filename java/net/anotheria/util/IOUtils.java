@@ -1,5 +1,6 @@
 package net.anotheria.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,16 +11,30 @@ import java.io.IOException;
  * @created on Feb 8, 2005
  */
 public class IOUtils {
-    public static final byte[] readFileAtOnce(String filename) throws IOException{
+    
+	public static final byte[] readFileAtOnce(File file) throws IOException{
+        FileInputStream fIn = new FileInputStream(file);
+        return readFileAtOnce(fIn);		
+	}
+	
+	public static final byte[] readFileAtOnce(String filename) throws IOException{
         FileInputStream fIn = new FileInputStream(filename);
-        byte[] ret = new byte[fIn.available()];
+        return readFileAtOnce(fIn);
+    }
+	
+	private static final byte[] readFileAtOnce(FileInputStream fIn) throws IOException{
+		byte[] ret = new byte[fIn.available()];
         fIn.read(ret);
         fIn.close();
         return ret;
-    }
+	}
     
     public static final String readFileAtOnceAsString(String filename) throws IOException{
         return new String(readFileAtOnce(filename));
+    }
+    
+    public static final String readFileAtOnceAsString(File file) throws IOException{
+        return new String(readFileAtOnce(file));
     }
     
     /**
