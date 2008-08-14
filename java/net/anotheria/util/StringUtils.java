@@ -722,6 +722,39 @@ public class StringUtils{
 		return ret.toString();
 	}	
 	
+	public static String replaceUmlauts(String src){
+		  StringBuilder ret = new StringBuilder();
+		  for(int i=0; i<src.length(); i++){
+		     char c = src.charAt(i);
+		     switch(c){
+		       case '\u00e4':
+		        ret.append("ae");
+		         break;
+		       case '\u00f6':
+		         ret.append("oe");
+		         break;
+		       case '\u00fc':
+		         ret.append("ue");
+		         break;
+		       case '\u00c4':
+		         ret.append("Ae");
+		         break;
+		       case '\u00d6':
+		         ret.append("Oe");
+		       break;
+		       case '\u00dC':
+		         ret.append("Ue");
+		       break;
+		       case '\u00df':
+		         ret.append("ss");
+		       break;
+		       default:
+		         ret.append(c);
+		     }
+		}
+		return ret.toString();
+	}
+	
 	public static void main(String a[]){
 //		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
 //		List<String> tags = extractTagsWithEscapeChar(testString, '{', '}', '\\'); 
@@ -733,7 +766,7 @@ public class StringUtils{
 //		test3();
 //		test4();
 //		test5();
-		test6();
+		test7();
 	}
 	
 	public static void test6(){
@@ -741,6 +774,14 @@ public class StringUtils{
 		List<String> index = indexSuperTags(source, '{', '}');
 		System.out.println(concatenateTokens(index, ',', '<', '>'));
 	}
+	
+	public static void test7(){
+		System.out.println("Replacing umlauts");
+		String source = "† € … Ÿ Š š §";
+		System.out.println("Source string:" + source);
+		System.out.println("Replaced string: " + replaceUmlauts(source));
+	}
+	
 	
 	public static void test3(){
 		System.out.println("TESTING SURROUNDING:");
