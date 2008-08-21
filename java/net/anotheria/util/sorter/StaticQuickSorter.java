@@ -78,7 +78,7 @@ public class StaticQuickSorter{
             return true;
         while(elements.hasNext()){
             comp2 = elements.next();
-            if(wanted ? compare(comp,comp2,sortAfter) > 0 : compare(comp,comp2,sortAfter) < 0)
+            if(wanted ? comp.compareTo(comp2,sortAfter) > 0 : comp.compareTo(comp2,sortAfter) < 0)
                 return false;
             comp = comp2;
         }
@@ -92,12 +92,12 @@ public class StaticQuickSorter{
 		left = start - 1;
 		right = end;
 		for (; ; ) {
-			while (wanted ? compare(partElement, source.get(++left), sortAfter) > 0 : compare(partElement, source.get(++left), sortAfter) < 0) {
+			while (wanted ? partElement.compareTo(source.get(++left), sortAfter) > 0 : partElement.compareTo(source.get(++left), sortAfter) < 0) {
 				if (left == end) {
 					break;
 				}
 			}
-			while (wanted ? compare(partElement, source.get(--right), sortAfter) < 0 : compare(partElement, source.get(--right), sortAfter) > 0) {
+			while (wanted ? partElement.compareTo(source.get(--right), sortAfter) < 0 : partElement.compareTo(source.get(--right), sortAfter) > 0) {
 				if (right == start) {
 					break;
 				}
@@ -119,7 +119,7 @@ public class StaticQuickSorter{
 	}
 
 
-	private static<T extends IComparable> int compare(T a, T b, int sortAfter) {
-		return a.compareTo(b, sortAfter);
-	}
+/*	private static<T extends IComparable> int compare(T a, T b, int sortAfter) {
+*		return a.compareTo(b, sortAfter);
+*	}*/
 }
