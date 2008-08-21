@@ -98,7 +98,7 @@ public class NumberUtils {
 
 	/**
 	 * Often needed by different packages
-	 * Return a time string in form of hh:mm.
+	 * Return a time string in form of hh:mm am/pm.
 	 */
 	public static String makeTimeString12H(long time){
 		Date date = new Date(time);
