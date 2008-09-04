@@ -5,7 +5,7 @@ package net.anotheria.util.queue;
  * @author lrosenberg
  * Created on 08.11.2004
  */
-public interface ITimestampedQueue extends IQueue{
+public interface ITimestampedQueue<T> extends IQueue<T>{
 	
 	public long getLastPutTimestamp();
 	

@@ -14,7 +14,7 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	private int counter;
 	private Logger log;
 	private static Logger defaultLog;
-	private IQueue queue;
+	private IQueue<T> queue;
 	private IQueueWorker<T> worker;
 	public static final long DEF_SLEEP_TIME = 50;
 	public static final int DEF_QUEUE_SIZE = 1000;
@@ -22,6 +22,10 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	private long sleepTime;
 	private int overflowCount;
 	private int throwAwayCount;
+	
+	private IQueueFactory<T> queueFactory = new StandardQueueFactory<T>();
+	
+	
 	
 	private AtomicBoolean stopAfterQueueProcessing;
 	private AtomicBoolean stopImmediately;
@@ -58,7 +62,7 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	}
 	
 	public void init(){
-		queue = QueueFactory.createQueue(queueSize);
+		queue = queueFactory.createQueue(queueSize);
 		stopAfterQueueProcessing = new AtomicBoolean(false);
 		stopImmediately = new AtomicBoolean(false);
 	}
@@ -221,6 +225,14 @@ public class QueuedProcessor <T extends Object> extends Thread{
 
 	public void logOutInfo() {
 		log.info(name + ": " + counter + " elements worked, stat: " + queue.toString() + ", OC:" + overflowCount + ", TAC:" + throwAwayCount);
+	}
+
+	public IQueueFactory<T> getQueueFactory() {
+		return queueFactory;
+	}
+
+	public void setQueueFactory(IQueueFactory<T> queueFactory) {
+		this.queueFactory = queueFactory;
 	}
 
 }

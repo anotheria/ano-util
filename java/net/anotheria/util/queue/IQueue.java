@@ -5,7 +5,7 @@ package net.anotheria.util.queue;
  * @author lrosenberg
  * Created on 22.06.2004
  */
-public interface IQueue {
+public interface IQueue<T> {
 	/**
 	 * Returns true if the queue contains elements.
 	 * @return
@@ -21,12 +21,12 @@ public interface IQueue {
 	 * the queue afterwards.
 	 * @return
 	 */
-	public Object nextElement();
+	public T nextElement();
 	/**
 	 * Puts an element into the queue.
 	 * @param o
 	 */
-	public void putElement(Object o) throws QueueOverflowException;
+	public void putElement(T o) throws QueueOverflowException;
 	/**
 	 * Adds a queue listener to the queue.
 	 * @param listener

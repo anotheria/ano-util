@@ -5,7 +5,7 @@ package net.anotheria.util.queue;
  * @author lrosenberg
  * Created on 08.11.2004
  */
-public class TimestampedQueueImpl extends QueueImpl implements ITimestampedQueue{
+public class TimestampedQueueImpl<T> extends QueueImpl<T> implements ITimestampedQueue<T>{
 	
 	private long lastPut;
 	private long lastGet;
@@ -18,7 +18,7 @@ public class TimestampedQueueImpl extends QueueImpl implements ITimestampedQueue
 	/* (non-Javadoc)
 	 * @see de.friendscout.vincent.util.IQueue#nextElement()
 	 */
-	public Object nextElement() {
+	public T nextElement() {
 		lastGet = System.currentTimeMillis();
 		return super.nextElement();
 	}
@@ -26,7 +26,7 @@ public class TimestampedQueueImpl extends QueueImpl implements ITimestampedQueue
 	/* (non-Javadoc)
 	 * @see de.friendscout.vincent.util.IQueue#putElement(java.lang.Object)
 	 */
-	public void putElement(Object o) {
+	public void putElement(T o) {
 		lastPut = System.currentTimeMillis();
 		super.putElement(o);
 	}

@@ -8,10 +8,10 @@ import java.util.List;
  * @author lrosenberg
  * Created on 22.06.2004
  */
-public class QueueImpl implements IQueue{
+public class QueueImpl<T> implements IQueue<T>{
 	
 	
-	private List listeners;
+	private List<IQueueListener> listeners;
 	
 	private int currentElement;
 	private int lastElement;
@@ -21,7 +21,7 @@ public class QueueImpl implements IQueue{
 	
 	
 	QueueImpl(int size){
-		listeners = new ArrayList();
+		listeners = new ArrayList<IQueueListener>();
 		currentElement = -1;
 		lastElement = -1;
 		this.size = size;
@@ -33,7 +33,7 @@ public class QueueImpl implements IQueue{
 	 * @see de.friendscout.vincent.util.IQueue#addListener(de.friendscout.vincent.util.IQueueListener)
 	 */
 	public void addListener(IQueueListener listener) {
-		listeners.add(listeners);
+		listeners.add(listener);
 	}
 
 	/** Not implemented.
@@ -55,13 +55,13 @@ public class QueueImpl implements IQueue{
 	/* (non-Javadoc)
 	 * @see de.friendscout.vincent.util.IQueue#nextElement()
 	 */
-	public synchronized Object nextElement() {
+	public synchronized T nextElement() {
 		if (!hasElements())
 			throw new RuntimeException("No elements");
 		currentElement++;
 		if (currentElement >= size)
 			currentElement = 0;
-		Object ret = elements[currentElement];
+		T ret = (T)elements[currentElement];
 		elements[currentElement] = null;
 		return ret; 
 	}
@@ -69,7 +69,7 @@ public class QueueImpl implements IQueue{
 	/**
 	 * Puts a new element in the queue. If the queue is full a runtime exception ("Queue overflow.") is thrown.
 	 */
-	public synchronized void putElement(Object o){
+	public synchronized void putElement(T o){
 		lastElement++;
 		if (lastElement==size)
 			lastElement=0;
