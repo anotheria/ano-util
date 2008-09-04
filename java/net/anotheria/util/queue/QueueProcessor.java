@@ -60,7 +60,7 @@ public class QueueProcessor <T extends Object> extends Thread{
 	private Lock lock = new ReentrantLock();
 	private Condition notFull  = lock.newCondition(); 
 	
-	public void addToQueueWithBlocking(T element) {
+	public void addToQueueAndWait(T element) {
 		lock.lock();
 		try {
 			try{
@@ -76,7 +76,11 @@ public class QueueProcessor <T extends Object> extends Thread{
 		}
 	}
 
-	public void addToQueueWithRefusing(T element) throws UnrecoverableQueueOverflowException{
+	public void addToQueue(T element) throws UnrecoverableQueueOverflowException{
+		addToQueueDontWait(element);
+	}
+	
+	public void addToQueueDontWait(T element) throws UnrecoverableQueueOverflowException{
 		lock.lock();
 		try{
 			if(stopAfterQueueProcessing.get())
