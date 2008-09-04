@@ -102,7 +102,9 @@ public class QueuedProcessor <T extends Object> extends Thread{
 				return;
 			}catch(QueueOverflowException e){
 				try{
-					queue.wait();
+					synchronized(queue){
+						queue.wait();
+					}
 				}catch(InterruptedException ignored){}
 			}
 		}
