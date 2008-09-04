@@ -79,7 +79,7 @@ public class QueuedProcessor <T extends Object> extends Thread{
      * necessary for space in the queue to become available 
 	 * @param element the element to add
 	 */
-	public void addToQueueAndWait(T element) {
+	public void addToQueueAndWaitDenisStyle(T element) {
 		lock.lock();
 		try {
 			try{
@@ -92,6 +92,19 @@ public class QueuedProcessor <T extends Object> extends Thread{
 			queue.putElement(element);
 		} finally {
 			lock.unlock();
+		}
+	}
+
+	public void addToQueueAndWait(T element) {
+		while(true){
+			try{
+				queue.putElement(element);
+				return;
+			}catch(QueueOverflowException e){
+				try{
+					queue.wait();
+				}catch(InterruptedException ignored){}
+			}
 		}
 	}
 
@@ -153,6 +166,7 @@ public class QueuedProcessor <T extends Object> extends Thread{
 						lock.lock();
 						try{
 							element = (T) queue.nextElement();
+							queue.notify();
 							notFull.signal();
 						}finally{
 							lock.unlock();
