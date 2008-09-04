@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 
 
-public class QueueRunner <T extends Object> extends Thread{
+public class QueuedProcessor <T extends Object> extends Thread{
 	private String name;
 	private int counter;
 	private Logger log;
@@ -28,10 +28,10 @@ public class QueueRunner <T extends Object> extends Thread{
 	
 	
 	static {
-		defaultLog = Logger.getLogger(QueueRunner.class);
+		defaultLog = Logger.getLogger(QueuedProcessor.class);
 	}
 
-	public QueueRunner(String aName, IQueueWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
 		super(aName);
 		setDaemon(true);
 		
@@ -49,11 +49,11 @@ public class QueueRunner <T extends Object> extends Thread{
 		init();
 	}
 
-	public QueueRunner(String aName, IQueueWorker<T> aWorker, Logger log) {
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger log) {
 		this(aName, aWorker, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
 	}
 
-	public QueueRunner(String aName, IQueueWorker<T> aWorker) {
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker) {
 		this(aName, aWorker, defaultLog);
 	}
 	
@@ -170,7 +170,7 @@ public class QueueRunner <T extends Object> extends Thread{
 			try {
 				log.error("run ", ttt);
 			} catch (Exception e) {
-				System.out.println(QueueRunner.class + " Can't log!!!");
+				System.out.println(QueuedProcessor.class + " Can't log!!!");
 				ttt.printStackTrace();
 			}
 		}
