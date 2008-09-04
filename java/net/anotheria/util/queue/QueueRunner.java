@@ -9,13 +9,13 @@ import org.apache.log4j.Logger;
 
 
 
-public class QueueProcessor <T extends Object> extends Thread{
+public class QueueRunner <T extends Object> extends Thread{
 	private String name;
 	private int counter;
 	private Logger log;
 	private static Logger defaultLog;
 	private IQueue queue;
-	private IWorker<T> worker;
+	private IQueueWorker<T> worker;
 	public static final long DEF_SLEEP_TIME = 50;
 	public static final int DEF_QUEUE_SIZE = 1000;
 	private int queueSize;
@@ -28,10 +28,10 @@ public class QueueProcessor <T extends Object> extends Thread{
 	
 	
 	static {
-		defaultLog = Logger.getLogger(QueueProcessor.class);
+		defaultLog = Logger.getLogger(QueueRunner.class);
 	}
 
-	public QueueProcessor(String aName, IWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
+	public QueueRunner(String aName, IQueueWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
 		super(aName);
 		setDaemon(true);
 		
@@ -49,11 +49,11 @@ public class QueueProcessor <T extends Object> extends Thread{
 		init();
 	}
 
-	public QueueProcessor(String aName, IWorker<T> aWorker, Logger log) {
+	public QueueRunner(String aName, IQueueWorker<T> aWorker, Logger log) {
 		this(aName, aWorker, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
 	}
 
-	public QueueProcessor(String aName, IWorker<T> aWorker) {
+	public QueueRunner(String aName, IQueueWorker<T> aWorker) {
 		this(aName, aWorker, defaultLog);
 	}
 	
@@ -153,11 +153,7 @@ public class QueueProcessor <T extends Object> extends Thread{
 						}finally{
 							lock.unlock();
 						}
-						if (element == null) {
-							log.error("Event to send is NULL, skipped.");
-						} else {
-							worker.doWork(element);
-						}
+						worker.doWork(element);
 					} catch (Exception e) {
 						log.error("myChannel.push", e);
 					}
@@ -174,7 +170,7 @@ public class QueueProcessor <T extends Object> extends Thread{
 			try {
 				log.error("run ", ttt);
 			} catch (Exception e) {
-				System.out.println(QueueProcessor.class + " Can't log!!!");
+				System.out.println(QueueRunner.class + " Can't log!!!");
 				ttt.printStackTrace();
 			}
 		}
