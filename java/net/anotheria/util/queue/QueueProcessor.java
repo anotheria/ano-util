@@ -18,6 +18,7 @@ public class QueueProcessor <T extends Object> extends Thread{
 	private IWorker<T> worker;
 	public static final long DEF_SLEEP_TIME = 50;
 	public static final int DEF_QUEUE_SIZE = 1000;
+	private int queueSize;
 	private long sleepTime;
 	private int overflowCount;
 	private int throwAwayCount;
@@ -30,12 +31,14 @@ public class QueueProcessor <T extends Object> extends Thread{
 		defaultLog = Logger.getLogger(QueueProcessor.class);
 	}
 
-	public QueueProcessor(String aName, IWorker<T> aWorker, int queueSize, long aSleepTime, Logger aLog) {
+	public QueueProcessor(String aName, IWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
 		super(aName);
 		setDaemon(true);
+		
+		queueSize = aQueueSize;
 		sleepTime = aSleepTime;
 		worker = aWorker;
-		queue = QueueFactory.createQueue(queueSize);
+		
 
 		log = aLog;
 		if (log == null) {
@@ -43,9 +46,7 @@ public class QueueProcessor <T extends Object> extends Thread{
 			log = defaultLog;
 		}
 		
-		stopAfterQueueProcessing = new AtomicBoolean(false);
-		stopImmediately = new AtomicBoolean(false);
-		
+		init();
 	}
 
 	public QueueProcessor(String aName, IWorker<T> aWorker, Logger log) {
@@ -56,10 +57,24 @@ public class QueueProcessor <T extends Object> extends Thread{
 		this(aName, aWorker, defaultLog);
 	}
 	
+	public void init(){
+		queue = QueueFactory.createQueue(queueSize);
+		stopAfterQueueProcessing = new AtomicBoolean(false);
+		stopImmediately = new AtomicBoolean(false);
+	}
+
+	public void reset(){
+		init();
+	}
 	
 	private Lock lock = new ReentrantLock();
 	private Condition notFull  = lock.newCondition(); 
 	
+	/**
+	 * Inserts the specified element at the tail of the processing queue, waiting if
+     * necessary for space in the queue to become available 
+	 * @param element the element to add
+	 */
 	public void addToQueueAndWait(T element) {
 		lock.lock();
 		try {
@@ -76,10 +91,20 @@ public class QueueProcessor <T extends Object> extends Thread{
 		}
 	}
 
+	/**
+	 * @param element
+	 * @throws UnrecoverableQueueOverflowException
+	 */
 	public void addToQueue(T element) throws UnrecoverableQueueOverflowException{
 		addToQueueDontWait(element);
 	}
 	
+	/**
+	 * Inserts the specified element at the tail of the processing queue if the queue is not full
+     * 
+	 * @param element
+	 * @throws UnrecoverableQueueOverflowException if the processing queue is full
+	 */
 	public void addToQueueDontWait(T element) throws UnrecoverableQueueOverflowException{
 		lock.lock();
 		try{
@@ -108,7 +133,7 @@ public class QueueProcessor <T extends Object> extends Thread{
 			lock.unlock();
 		}
 	}
-
+	
 	@Override
 	public void run() {
 		try {
@@ -155,14 +180,23 @@ public class QueueProcessor <T extends Object> extends Thread{
 		}
 	}
 
+	/**
+	 * Deny queueing and sends signal to stop the QueueProcessor running Thread after all elements that already in processing queue will be worked.
+	 */
 	public void stopAfterQueueProcessing(){
 		stopAfterQueueProcessing.set(true);
 	}
 	
+	/**
+	 * Sends signal to stop the QueueProcessor running Thread after working current element.
+	 */
 	public void stopImmediately(){
 		stopImmediately.set(true);
 	}
 	
+	/**
+	 * @return true if processing was stopped by calling stopAfterQueueProcessing() or stopImmediately().
+	 */
 	public boolean isStopped(){
 		return stopImmediately.get() || stopAfterQueueProcessing.get();
 	}
