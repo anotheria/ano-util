@@ -152,9 +152,9 @@ public class QueuedProcessor <T extends Object> extends Thread{
 			while (!stopImmediately.get()) {				
 				if (queue.hasElements()) {
 					counter++;
-					if ((counter / 100 * 100) == counter) {
-						logOutInfo();
-					}
+//					if ((counter / 100 * 100) == counter) {
+//						logOutInfo();
+//					}
 					try {
 						T element = null;
 						synchronized (queue) {
