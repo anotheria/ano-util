@@ -140,11 +140,11 @@ public class QueuedProcessor <T extends Object> extends Thread{
 				shutdown.set(true);
 				try {
 					synchronized (shutdown) {
-						System.out.println("Wait while queue processing complete...");
+						log.info("Wait while queue processing complete...");
 						shutdown.wait();						
 					}
 				} catch (InterruptedException ignored) {}
-				System.out.println("Processor is shutted down!");
+				log.info("Processor is shutted down!");
 			}
 		});
 		try {
@@ -163,11 +163,11 @@ public class QueuedProcessor <T extends Object> extends Thread{
 						}
 						worker.doWork(element);
 					} catch (Exception e) {
-						log.error("myChannel.push", e);
+						log.error("Failure while working under element: ", e);
 					}
 				} else {
 					if(shutdown.get()){
-						System.out.println("Queue is empty. Processing completed!");
+						log.info("Queue is empty. Processing completed!");
 						synchronized (shutdown) {
 							shutdown.notify();						
 						}
