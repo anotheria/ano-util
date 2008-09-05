@@ -24,7 +24,6 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	private IQueueFactory<T> queueFactory;
 	private AtomicBoolean stopImmediately;
 	
-	
 	static {
 		defaultLog = Logger.getLogger(QueuedProcessor.class);
 	}
@@ -133,6 +132,21 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	
 	@Override
 	public void run() {
+		final AtomicBoolean shutdown = new AtomicBoolean(false);
+		Runtime.getRuntime().addShutdownHook(new Thread(){
+			@Override
+			public void run(){
+				System.out.println("Shutdown hook!");
+				shutdown.set(true);
+				try {
+					synchronized (shutdown) {
+						System.out.println("waiting for queue processed completely");
+						shutdown.wait();						
+					}
+				} catch (InterruptedException ignored) {}
+				System.out.println("Hook exit.");
+			}
+		});
 		try {
 			counter = 0;
 			while (!stopImmediately.get()) {				
@@ -152,6 +166,13 @@ public class QueuedProcessor <T extends Object> extends Thread{
 						log.error("myChannel.push", e);
 					}
 				} else {
+					if(shutdown.get()){
+						System.out.println("Queue is empty.");
+						synchronized (shutdown) {
+							shutdown.notify();						
+						}
+						break;
+					}
 					try {
 						sleep(sleepTime);
 					} catch (InterruptedException ignored) {
