@@ -136,15 +136,15 @@ public class QueuedProcessor <T extends Object> extends Thread{
 		Runtime.getRuntime().addShutdownHook(new Thread(){
 			@Override
 			public void run(){
-				System.out.println("Shutdown hook!");
+				log.info("Shutting down processor!");
 				shutdown.set(true);
 				try {
 					synchronized (shutdown) {
-						System.out.println("waiting for queue processed completely");
+						System.out.println("Wait while queue processing complete...");
 						shutdown.wait();						
 					}
 				} catch (InterruptedException ignored) {}
-				System.out.println("Hook exit.");
+				System.out.println("Processor is shutted down!");
 			}
 		});
 		try {
@@ -167,7 +167,7 @@ public class QueuedProcessor <T extends Object> extends Thread{
 					}
 				} else {
 					if(shutdown.get()){
-						System.out.println("Queue is empty.");
+						System.out.println("Queue is empty. Processing completed!");
 						synchronized (shutdown) {
 							shutdown.notify();						
 						}
