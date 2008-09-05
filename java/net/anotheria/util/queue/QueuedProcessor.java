@@ -24,10 +24,6 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	private int throwAwayCount;
 	
 	private IQueueFactory<T> queueFactory = new StandardQueueFactory<T>();
-	
-	
-	
-	private AtomicBoolean stopAfterQueueProcessing;
 	private AtomicBoolean stopImmediately;
 	
 	
@@ -63,7 +59,6 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	
 	public void init(){
 		queue = queueFactory.createQueue(queueSize);
-		stopAfterQueueProcessing = new AtomicBoolean(false);
 		stopImmediately = new AtomicBoolean(false);
 	}
 
@@ -71,29 +66,11 @@ public class QueuedProcessor <T extends Object> extends Thread{
 		init();
 	}
 	
-	private Lock lock = new ReentrantLock();
-	private Condition notFull  = lock.newCondition(); 
-	
 	/**
 	 * Inserts the specified element at the tail of the processing queue, waiting if
      * necessary for space in the queue to become available 
 	 * @param element the element to add
 	 */
-	public void addToQueueAndWaitDenisStyle(T element) {
-		lock.lock();
-		try {
-			try{
-				while(queue.size() - 1 <= queue.getElementCount()){
-					notFull.await();
-				}
-			}catch(InterruptedException e){
-				notFull.signal();
-			}
-			queue.putElement(element);
-		} finally {
-			lock.unlock();
-		}
-	}
 
 	public void addToQueueAndWait(T element) {
 		while(true){
@@ -125,31 +102,24 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	 * @throws UnrecoverableQueueOverflowException if the processing queue is full
 	 */
 	public void addToQueueDontWait(T element) throws UnrecoverableQueueOverflowException{
-		lock.lock();
-		try{
-			if(stopAfterQueueProcessing.get())
-				throw new RuntimeException("Queueing is stopped!");
-			try {
-				queue.putElement(element);
-			} catch (QueueOverflowException e1) {
-				overflowCount++;
-				// ok, first exception, we try to recover
-				synchronized (this) {
-					try {
-						Thread.sleep(100);
-					} catch (Exception ignored) {
-					}
-				}
+		try {
+			queue.putElement(element);
+		} catch (QueueOverflowException e1) {
+			overflowCount++;
+			// ok, first exception, we try to recover
+			synchronized (this) {
 				try {
-					queue.putElement(element);
-				} catch (QueueOverflowException e2) {
-					throwAwayCount++;
-					log.error("couldn't recover from queue overflow, throwing away " + element);
-					throw new UnrecoverableQueueOverflowException("Element: " + element + ", stats:" + getStatsString());
+					Thread.sleep(100);
+				} catch (Exception ignored) {
 				}
 			}
-		}finally{
-			lock.unlock();
+			try {
+				queue.putElement(element);
+			} catch (QueueOverflowException e2) {
+				throwAwayCount++;
+				log.error("couldn't recover from queue overflow, throwing away " + element);
+				throw new UnrecoverableQueueOverflowException("Element: " + element + ", stats:" + getStatsString());
+			}
 		}
 	}
 	
@@ -165,21 +135,15 @@ public class QueuedProcessor <T extends Object> extends Thread{
 					}
 					try {
 						T element = null;
-						lock.lock();
-						try{
+						synchronized (queue) {
 							element = (T) queue.nextElement();
 							queue.notify();
-							notFull.signal();
-						}finally{
-							lock.unlock();
 						}
 						worker.doWork(element);
 					} catch (Exception e) {
 						log.error("myChannel.push", e);
 					}
 				} else {
-					if(stopAfterQueueProcessing.get())
-						break;
 					try {
 						sleep(sleepTime);
 					} catch (InterruptedException ignored) {
@@ -195,13 +159,6 @@ public class QueuedProcessor <T extends Object> extends Thread{
 			}
 		}
 	}
-
-	/**
-	 * Deny queueing and sends signal to stop the QueueProcessor running Thread after all elements that already in processing queue will be worked.
-	 */
-	public void stopAfterQueueProcessing(){
-		stopAfterQueueProcessing.set(true);
-	}
 	
 	/**
 	 * Sends signal to stop the QueueProcessor running Thread after working current element.
@@ -214,7 +171,7 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	 * @return true if processing was stopped by calling stopAfterQueueProcessing() or stopImmediately().
 	 */
 	public boolean isStopped(){
-		return stopImmediately.get() || stopAfterQueueProcessing.get();
+		return stopImmediately.get();
 	}
 	
 	/**
