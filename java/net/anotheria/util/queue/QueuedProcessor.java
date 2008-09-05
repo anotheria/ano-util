@@ -1,9 +1,6 @@
 package net.anotheria.util.queue;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.log4j.Logger;
 
@@ -23,7 +20,8 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	private int overflowCount;
 	private int throwAwayCount;
 	
-	private IQueueFactory<T> queueFactory = new StandardQueueFactory<T>();
+	private final IQueueFactory<T> DEF_QUEUE_FACTORY = new StandardQueueFactory<T>();
+	private IQueueFactory<T> queueFactory;
 	private AtomicBoolean stopImmediately;
 	
 	
@@ -31,13 +29,15 @@ public class QueuedProcessor <T extends Object> extends Thread{
 		defaultLog = Logger.getLogger(QueuedProcessor.class);
 	}
 
-	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory, int aQueueSize, long aSleepTime, Logger aLog) {
 		super(aName);
 		setDaemon(true);
 		
 		queueSize = aQueueSize;
 		sleepTime = aSleepTime;
 		worker = aWorker;
+
+		queueFactory = aQueueFactory == null ? DEF_QUEUE_FACTORY : aQueueFactory;
 		
 
 		log = aLog;
@@ -49,14 +49,22 @@ public class QueuedProcessor <T extends Object> extends Thread{
 		init();
 	}
 
-	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger log) {
-		this(aName, aWorker, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory, Logger log) {
+		this(aName, aWorker,  aQueueFactory, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
 	}
 
-	public QueuedProcessor(String aName, IQueueWorker<T> aWorker) {
-		this(aName, aWorker, defaultLog);
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger log) {
+		this(aName, aWorker,  null, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
+	}
+
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory) {
+		this(aName, aWorker, aQueueFactory, defaultLog);
 	}
 	
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker) {
+		this(aName, aWorker, null, defaultLog);
+	}
+
 	public void init(){
 		queue = queueFactory.createQueue(queueSize);
 		stopImmediately = new AtomicBoolean(false);
