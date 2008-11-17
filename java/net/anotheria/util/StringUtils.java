@@ -664,6 +664,7 @@ public class StringUtils{
 				inEscape++;
 
 			if(inEscape < 1 && delimitersHash.contains(c)) {
+				//New token is starting...
 				if (currentTag.length() > 0) {
 					ret.add(currentTag.toString());
 					currentTag = new StringBuilder();
@@ -683,6 +684,51 @@ public class StringUtils{
 		return ret;
 	}
 	
+	 /*
+	  Do the same as tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) with small bug fix for the case when escapeStart equals to escapeEnd.
+	  Original tokenize method is used in VariableProcessor so any changes in it must be well tested before go to life. That's why this duplication method was created.
+	 */
+	public static final List<String> _tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
+		boolean quotingMode = escapeStart == escapeEnd;  
+		Set<Character> delimitersHash = new HashSet<Character>(delimiters.length);
+		  for(char del: delimiters)
+			  delimitersHash.add(del);
+		  
+		  List<String> ret = new ArrayList<String>();
+		StringBuilder currentTag = new StringBuilder();
+		
+		int inEscape = 0;
+		char c;
+
+		for (int i = 0, l = source.length(); i < l; i++) {
+			c = source.charAt(i);
+
+			if (c == escapeStart)
+				inEscape++;
+
+			if(inEscape < 1 && delimitersHash.contains(c)) {
+				//New token is starting...
+				if (currentTag.length() > 0) {
+					ret.add(currentTag.toString());
+					currentTag = new StringBuilder();
+					continue;
+				}
+			}
+
+			currentTag.append(c);
+
+			if (c == escapeEnd) {
+				if(quotingMode && inEscape == 2)
+					inEscape = 0;
+				if(!quotingMode && inEscape > 0)
+					inEscape--;
+			}
+		}
+		if (currentTag.length() > 0)
+			ret.add(currentTag.toString());
+		return ret;
+	}  
+	  
 	public static String substringFromEnd(String src, int indexFromEnd){
 		if (src.length() <= indexFromEnd)
 			return "";
