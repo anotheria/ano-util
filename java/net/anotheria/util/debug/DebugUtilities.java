@@ -21,15 +21,15 @@ public class DebugUtilities {
 	 * Prints out a list to the stdout.
 	 * @param l
 	 */
-	public static final void printList(List  l){
+	public static final void printList(List<?>  l){
 		System.out.println(listToString(l));
 	}
 	
 	/**
 	 * returns the string-representation of a list
 	 */
-	public static String listToString(List l) {
-		StringBuffer result = new StringBuffer();
+	public static String listToString(List<?> l) {
+		StringBuilder result = new StringBuilder();
 		if( l!= null) {
 			if(l.size() > 0) {
 				for (int i=0; i<l.size(); i++){
@@ -48,7 +48,7 @@ public class DebugUtilities {
 	 * Prints out a list to the stdout.
 	 * @param l
 	 */
-	public static final void printBinaryList(List  l){
+	public static final void printBinaryList(List<?>  l){
 		for (int i=0; i<l.size(); i++){
 			System.out.println(""+(i+1)+"\t"+Long.toBinaryString(Long.parseLong(l.get(i).toString())));
 		}
