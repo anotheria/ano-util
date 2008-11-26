@@ -112,7 +112,7 @@ public class CharacterEntityCoder {
 		entities.put(new Character((char) 0x1f), "&#031");
 */				
 		
-		htmlEntities = new Vector();
+		htmlEntities = new Vector<String[]>();
 		htmlEntities.addElement((new String[] {"&", "&amp;"}));
 		htmlEntities.addElement((new String[] {"\"", "&quot;"}));
 		htmlEntities.addElement((new String[] {"§", "&sect;"}));
@@ -178,7 +178,7 @@ public class CharacterEntityCoder {
 		htmlEntities.addElement((new String[] {"ÿ", "&yuml;"}));
 		htmlEntities.addElement((new String[] {"-", "&mdash;"}));
 
-		html2xmlEntities = new Hashtable();
+		html2xmlEntities = new Hashtable<String,String>();
 		html2xmlEntities.put("&amp;",   "&#038;");
 		html2xmlEntities.put("&ouml;",  "&#246;");
 		html2xmlEntities.put("&auml;",  "&#228;");
@@ -281,9 +281,9 @@ public class CharacterEntityCoder {
 	* returns dencoded String from XML
 	**/
 	public static final String decodeString(String s) {
-		Enumeration e=entities.keys();
+		Enumeration<Character> e=entities.keys();
 		while (e.hasMoreElements()) {
-			Character o = (Character) e.nextElement();
+			Character o = e.nextElement();
 			String n = (String) entities.get(o);
 			int j = n.length();
 			String s1 ="";
@@ -332,10 +332,10 @@ public class CharacterEntityCoder {
 
 	public static final String htm2xml(String s){
 		//System.out.println("HTML: "+s);
-		Enumeration e = html2xmlEntities.keys();
+		Enumeration<String> e = html2xmlEntities.keys();
 		while(e.hasMoreElements()){
-			String htmString = (String) e.nextElement();
-			String xmlString = (String) html2xmlEntities.get(htmString);
+			String htmString = e.nextElement();
+			String xmlString = html2xmlEntities.get(htmString);
 			int j = htmString.length();
 			int lastI=0;
 			String replaced="";
@@ -357,9 +357,9 @@ public class CharacterEntityCoder {
 	}
 	
 	public static void main(String a[]){
-		Enumeration e = entities.keys();
+		Enumeration<Character> e = entities.keys();
 		while(e.hasMoreElements()){
-			Character c = (Character)e.nextElement();
+			Character c = e.nextElement();
 			System.out.println(c+" "+ (int)c.charValue());
 		}
 	}
