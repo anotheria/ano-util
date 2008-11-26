@@ -139,16 +139,21 @@ public class XMLNode {
 
 	
 	public void write(OutputStreamWriter writer, int tabs) throws IOException{
-		String attributeString = createAttributeString();
-		String ident = XMLHelper.makeIdent(tabs);
-		writer.write(ident+XMLHelper.entag(getName()+attributeString));
-		
-		for (XMLNode child : nodes)
-			child.write(writer, tabs+1);
-		
-		if (content!=null)
-			writer.write(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
-		
-		writer.write(ident+XMLHelper.detag(getName()));
+		try{
+			System.out.println("writing "+getName()+" attr: "+attributes);
+			String attributeString = createAttributeString();
+			String ident = XMLHelper.makeIdent(tabs);
+			writer.write(ident+XMLHelper.entag(getName()+attributeString));
+			
+			for (XMLNode child : nodes)
+				child.write(writer, tabs+1);
+			
+			if (content!=null)
+				writer.write(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
+			
+			writer.write(ident+XMLHelper.detag(getName()));
+		}catch(Throwable t){
+			t.printStackTrace();
+		}
 	}
 }
