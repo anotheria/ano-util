@@ -90,7 +90,7 @@ public class StringUtils{
 	  */
 	public static final String[] tokenize(String source, char delimiter){
 		String[] ret;
-		Vector v = tokenize2vector(source, delimiter);
+		Vector<String> v = tokenize2vector(source, delimiter);
 		ret = new String[v.size()];
 		for ( int i=0;i<v.size() ;i++ ){
 			ret[i] = (String) v.elementAt(i);
@@ -148,9 +148,9 @@ public class StringUtils{
 	  *Builds a hash table from the String like *(TYPE : MESSAGE + CR)
 	  *useful for http requests etc.
 	  */
-	public static Hashtable buildHashTable(String source){
+	public static Hashtable<String,String> buildHashTable(String source){
 	    source = removeChar(source,'\r');
-		Hashtable ret = new Hashtable(charCount(source,'\n'));
+		Hashtable<String, String> ret = new Hashtable<String, String>(charCount(source,'\n'));
 		String[] lines = tokenize(source,'\n');
 		for ( int i=0;i<java.lang.reflect.Array.getLength(lines) ;i++ ){
 		    /*String[] uline = tokenize(lines[i],':');
@@ -250,8 +250,8 @@ public class StringUtils{
  	/**
      *Reverses the order in the Vector.
      */
- 	public static Vector reverse(Vector v){
-  		Vector ret = new Vector(v.size());
+ 	public static <T> Vector<T> reverse(Vector<T> v){
+  		Vector<T> ret = new Vector<T>(v.size());
     	for (int i=v.size()-1; i>=0; i--)
      		ret.addElement(v.elementAt(i));
        	return ret;
