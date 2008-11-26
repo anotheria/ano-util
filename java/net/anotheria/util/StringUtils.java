@@ -3,9 +3,11 @@ package net.anotheria.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -148,18 +150,18 @@ public class StringUtils{
 	  *Builds a hash table from the String like *(TYPE : MESSAGE + CR)
 	  *useful for http requests etc.
 	  */
-	public static Hashtable<String,String> buildHashTable(String source){
+	public static Map<String,String> buildHashTable(String source){
+		return Collections.synchronizedMap(buildParameterMap(source, '\n', ':'));
+	}
+
+	public static Map<String,String> buildParameterMap(String source, char lineDelimiter, char parameterDelimiter){
 	    source = removeChar(source,'\r');
-		Hashtable<String, String> ret = new Hashtable<String, String>(charCount(source,'\n'));
-		String[] lines = tokenize(source,'\n');
-		for ( int i=0;i<java.lang.reflect.Array.getLength(lines) ;i++ ){
-		    /*String[] uline = tokenize(lines[i],':');
-			if ( java.lang.reflect.Array.getLength(uline)==2 ){
-			    ret.put(uline[0].trim(),uline[1].trim());
-			}*/
-			StringPair sp = splitString(lines[i],':');
+		String[] lines = tokenize(source, lineDelimiter);
+		Map<String, String> ret = new HashMap<String, String>(lines.length);
+		for ( int i=0;i<lines.length ;i++ ){
+			StringPair sp = splitString(lines[i], parameterDelimiter);
 			if ( sp.first!=null && sp.second!=null )
-				ret.put(sp.first.trim(),sp.second.trim());
+				ret.put(sp.first.trim(), sp.second.trim());
 		}
 		return ret;
 	}
@@ -213,7 +215,7 @@ public class StringUtils{
 	 * @param map replace map
 	 * @return a source string where all chars that are members of map keys are replaced with the interlocking values
 	 **/
-	public static String replace(String source, Hashtable map){
+	public static String replace(String source, Map<String,String> map){
   		String dest = new String("");
 		int i = 0;
 		while ( i<source.length() ){
