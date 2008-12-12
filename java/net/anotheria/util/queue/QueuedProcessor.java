@@ -52,13 +52,18 @@ public class QueuedProcessor <T extends Object> extends Thread{
 		this(aName, aWorker,  aQueueFactory, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
 	}
 
-	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger log) {
-		this(aName, aWorker,  null, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, Logger aLog) {
+		this(aName, aWorker,  null, aQueueSize, DEF_SLEEP_TIME, aLog);
+	}
+	
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger aLog) {
+		this(aName, aWorker,  null, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, aLog);
 	}
 
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory) {
 		this(aName, aWorker, aQueueFactory, defaultLog);
 	}
+	
 	
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker) {
 		this(aName, aWorker, null, defaultLog);
@@ -145,6 +150,7 @@ public class QueuedProcessor <T extends Object> extends Thread{
 					}
 				} catch (InterruptedException ignored) {}
 				log.info("Processor is shutted down!");
+				log.info("Stats: " + getStatsString());
 			}
 		});
 		try {
