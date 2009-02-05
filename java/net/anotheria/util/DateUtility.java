@@ -16,9 +16,8 @@
  ** -------------------------------------------------------------------------  */
 package  net.anotheria.util;
 
-import java.util.GregorianCalendar;
 import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.GregorianCalendar;
 
 /**
  * put your documentation comment here
@@ -132,17 +131,13 @@ public abstract class DateUtility {
         int offset = -(calLOC.get(Calendar.HOUR_OF_DAY) - calSRC.get(Calendar.HOUR_OF_DAY))*60*60*1000;
         calSRC.set(Calendar.ZONE_OFFSET, offset);
         calSRC.setTimeZone(calLOC.getTimeZone());
-        //System.out.println("Bevor change of offset =>" + date.get(Calendar.MONTH));
         date.set(Calendar.ZONE_OFFSET, offset);
-        //System.out.println("After change of offset =>" + date.get(Calendar.MONTH));
-        TimeZone tz = TimeZone.getDefault();
         return  date;
     }
 
     /**
      * put your documentation comment here
      * @param d
-     * @return
      */
     public static String toDateOnly (Date d) {
         String ret = "";
@@ -270,6 +265,10 @@ public abstract class DateUtility {
             kw++;
         }
         return  d;
+    }
+    
+    public static void main(String a[]){
+    	System.out.println(new Date(1228661649039L));
     }
 }
 /* ------------------------------------------------------------------------- *
