@@ -48,7 +48,7 @@ public class StringUtils{
     
 	public static final List<String> tokenize2list(String source, char delimiter, char escapeChar){
 		List<String> ret = new ArrayList<String>();
-  		StringBuffer currentS = new StringBuffer();
+  		StringBuilder currentS = new StringBuilder();
 		char c;
 		boolean skipNext = false;
 		for ( int i=0;i<source.length() ;i++ ){
@@ -70,7 +70,7 @@ public class StringUtils{
 				}else{
 				    ret.add(new String(""));
 				}
-				currentS=new StringBuffer();
+				currentS=new StringBuilder();
 			}else{
 				currentS.append(c);
 			}
@@ -803,18 +803,6 @@ public class StringUtils{
 		return ret.toString();
 	}
 	
-	public static String normalize(String src){
-		StringBuilder ret = new StringBuilder();
-		for(char c:src.toCharArray())
-			ret.append(isLatinDigitOrLetter(c)? c: '_');
-		return ret.toString();
-	}
-	
-	public static boolean isLatinDigitOrLetter(char ch){
-//		ch = Character.toLowerCase(ch);
-		return (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >='A' && ch <= 'Z');
-	}
-	
 	public static void main(String a[]){
 //		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
 //		List<String> tags = extractTagsWithEscapeChar(testString, '{', '}', '\\'); 
@@ -826,7 +814,7 @@ public class StringUtils{
 //		test3();
 //		test4();
 //		test5();
-		test8();
+		test7();
 	}
 	
 	public static void test6(){
@@ -885,17 +873,6 @@ public class StringUtils{
 		String[] ts = tokenize(src, ':', '|');
 		for(String t:ts)
 			System.out.println(t);
-	}
-	
-	public static void test8(){
-		String str = "04afFZ+ˆ";
-		System.out.println("Source string: " + str);
-		System.out.println();
-		for(char ch: str.toCharArray())
-			System.out.println("Is '" + ch + "' Latin digit or letter: " + isLatinDigitOrLetter(ch));
-		System.out.println();
-		str = normalize(str);
-		System.out.println("Normalized string: " + str);
 	}
 
 }
