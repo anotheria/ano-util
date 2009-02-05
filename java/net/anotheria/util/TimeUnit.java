@@ -2,8 +2,8 @@ package net.anotheria.util;
 
 public enum TimeUnit {
 	
-	MILLISECOND(1L),
-	SECOND(1000*MILLISECOND.getMillis()),
+	MILLISECOND(1),
+	SECOND(1000),
 	MINUTE(60*SECOND.getMillis()),
 	HOUR(60*MINUTE.getMillis()),
 	DAY(24*HOUR.getMillis()),
