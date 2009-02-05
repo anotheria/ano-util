@@ -30,10 +30,10 @@ public class InsertSorter<T extends IComparable> extends AbstractSorter<T>{
         while(e.hasMoreElements()){
 			T c = e.nextElement();
 			if (list==null){
-       			list = new ListEntry(c);
+       			list = new ListEntry<T>(c);
           		continue;
          	}
-          	ListEntry<T> le = new ListEntry(c);
+          	ListEntry<T> le = new ListEntry<T>(c);
           	if (list.value.compareTo(le.value,method)>=0){
            		le.next = list;
              	list = le;
@@ -58,7 +58,7 @@ public class InsertSorter<T extends IComparable> extends AbstractSorter<T>{
 
  	}
 
-  	public List sort(List v, SortType method){
+  	public List<T> sort(List<T> v, SortType method){
    		//return sort(v.iterator(), method);
    		throw new RuntimeException("Sorry, yet unsupported method");
    	}

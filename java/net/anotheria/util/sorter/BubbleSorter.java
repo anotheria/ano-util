@@ -40,7 +40,7 @@ public class BubbleSorter<T extends IComparable> extends AbstractSorter<T>{
        	boolean changed;
         if (source==null || source.size()==0)
         	return source;
-        IComparable[] data = list2array(source);
+        T[] data = list2array(source);
 
         boolean wanted = sortOrder == SortType.ASC ;//? true : false;
         int l = java.lang.reflect.Array.getLength(data);
