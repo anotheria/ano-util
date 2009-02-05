@@ -51,13 +51,17 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory, Logger log) {
 		this(aName, aWorker,  aQueueFactory, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, log);
 	}
+	
+	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
+		this(aName, aWorker,  null, aQueueSize, aSleepTime, aLog);
+	}
 
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, Logger aLog) {
-		this(aName, aWorker,  null, aQueueSize, DEF_SLEEP_TIME, aLog);
+		this(aName, aWorker,  aQueueSize, DEF_SLEEP_TIME, aLog);
 	}
 	
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger aLog) {
-		this(aName, aWorker,  null, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, aLog);
+		this(aName, aWorker, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, aLog);
 	}
 
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory) {
