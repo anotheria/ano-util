@@ -19,6 +19,22 @@ public enum TimeUnit {
 		return inMills;
 	}
 	
+//	public static long minutesToMillis(int minutes){
+//		return minutes * MINUTE.getMillis();
+//	}
+//	
+//	public static long hoursToMillis(int hours){
+//		return hours * HOUR.getMillis();
+//	}
+//	
+//	public static long daysToMillis(int days){
+//		return days * DAY.getMillis();
+//	}
+//	
+//	public static long weeksToMillis(int weeks){
+//		return weeks * WEEK.getMillis();
+//	}
+	
 	public static void main(String[] args) {
 		System.out.println(4*WEEK.inMills);
 		System.out.println(4*(7*(24*(60*(60*1000L)))));

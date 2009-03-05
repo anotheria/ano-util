@@ -770,6 +770,10 @@ public class StringUtils{
 		return ret.toString();
 	}	
 	
+	public static String concatenateTokens(String delimiterSequence, Object... tokens){
+		return concatenateTokens(Arrays.asList(tokens), delimiterSequence);
+	}
+	
 	public static String replaceUmlauts(String src){
 		  StringBuilder ret = new StringBuilder();
 		  for(int i=0; i<src.length(); i++){
@@ -812,9 +816,9 @@ public class StringUtils{
 //		}
 //		test2();
 //		test3();
-//		test4();
+		test4();
 //		test5();
-		test7();
+//		test7();
 	}
 	
 	public static void test6(){
@@ -823,12 +827,6 @@ public class StringUtils{
 		System.out.println(concatenateTokens(index, ',', '<', '>'));
 	}
 	
-	public static void test7(){
-		System.out.println("Replacing umlauts");
-		String source = "† € … Ÿ Š š §";
-		System.out.println("Source string:" + source);
-		System.out.println("Replaced string: " + replaceUmlauts(source));
-	}
 	
 	
 	public static void test3(){
@@ -845,6 +843,8 @@ public class StringUtils{
 	hellos.add("Hello, People!");
 	hellos.add("Hello, Aliens!");
 	System.out.println("Concatenate Hellos Tokens with delimiter , and surround with <>:" + concatenateTokens(hellos, ',', '<', '>'));
+	
+	System.out.println(concatenateTokens(".", "1","2","3"));
 	}
 	
 	
