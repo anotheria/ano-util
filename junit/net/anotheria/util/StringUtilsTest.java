@@ -10,3 +10,4 @@ public class StringUtilsTest {
 		assertEquals("abc___efg", StringUtils.normalize(test));
 	}
 }
+ 
