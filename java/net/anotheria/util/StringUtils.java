@@ -18,7 +18,7 @@ import java.util.Vector;
  * @author Leon Rosenberg
  */
 
-public class StringUtils{
+public final class StringUtils{
 
 	/**
   	 *Return a Vector with tokens from the source string tokenized using the delimiter char.
@@ -231,13 +231,13 @@ public class StringUtils{
  	public static StringPair splitString(String source,char delimiter){
 		int del_pos = source.indexOf((int)delimiter);
 		if ( del_pos==-1 )
-		    return (new StringUtils()).new StringPair();
-		return (new StringUtils()).new StringPair(source.substring(0,del_pos),source.substring(del_pos+1,source.length()));
+		    return new StringPair();
+		return new StringPair(source.substring(0,del_pos),source.substring(del_pos+1,source.length()));
 
 	}
 
 
-	public class StringPair{
+	private static class StringPair{
 	    public String first,second;
 		StringPair(String first,String second){
 			this.first = first;
@@ -816,7 +816,6 @@ public class StringUtils{
 //		}
 //		test2();
 //		test3();
-		test4();
 //		test5();
 //		test7();
 	}
@@ -835,16 +834,6 @@ public class StringUtils{
 		System.out.println("Is surrounded "+hello+" with {}:"+ isSurroundedWith(hello, '{', '}'));
 		System.out.println("Remove surround {}:" +(hello = removeSurround(hello)));
 		System.out.println("Srround with []:" + surroundWith(hello, '[', ']'));
-	}
-	public static void test4(){
-		System.out.println("TESTING concatenateTokens():");
-	List<String> hellos = new ArrayList<String>(4);
-	hellos.add("Hello, World!");
-	hellos.add("Hello, People!");
-	hellos.add("Hello, Aliens!");
-	System.out.println("Concatenate Hellos Tokens with delimiter , and surround with <>:" + concatenateTokens(hellos, ',', '<', '>'));
-	
-	System.out.println(concatenateTokens(".", "1","2","3"));
 	}
 	
 	
@@ -868,12 +857,6 @@ public class StringUtils{
 //			System.out.println(s);
 	}
 	
-	public static void test5(){
-		String src = "if:true:mumu|:bubu";
-		String[] ts = tokenize(src, ':', '|');
-		for(String t:ts)
-			System.out.println(t);
-	}
 	
 	public static String normalize(String s){
 		if (s==null || s.length()==0)
@@ -888,6 +871,11 @@ public class StringUtils{
 		}
 		return ret.toString();
 	}
+
+	private StringUtils(){
+		//prevent from instantiation
+	}
+	
 
 }
 
