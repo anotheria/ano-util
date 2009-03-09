@@ -874,6 +874,20 @@ public class StringUtils{
 		for(String t:ts)
 			System.out.println(t);
 	}
+	
+	public static String normalize(String s){
+		if (s==null || s.length()==0)
+			return s;
+		StringBuilder ret = new StringBuilder(s.length());
+		for (int i=0; i<s.length(); i++){
+			char c = s.charAt(i);
+			if (Character.isLetter(c))
+				ret.append(c);
+			else
+				ret.append('_');
+		}
+		return ret.toString();
+	}
 
 }
 
