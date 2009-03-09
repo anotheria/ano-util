@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(value=Suite.class)
-@SuiteClasses(value={IdCodeGeneratorTest.class, StringUtilsTest.class} )
+@SuiteClasses(value={IdCodeGeneratorTest.class, StringUtilsTest.class, BasicComparableTest.class} )
 public class AnoUtilTestSuite {
 
 }
