@@ -807,57 +807,6 @@ public final class StringUtils{
 		return ret.toString();
 	}
 	
-	public static void main(String a[]){
-//		String testString = "Hi, hallo bla {xyz} und{abc}\n{21344}{erer}erere\\{bla{\\r}";
-//		List<String> tags = extractTagsWithEscapeChar(testString, '{', '}', '\\'); 
-//		System.out.println("Tags: "+tags);
-//		for (String t: tags){
-//			System.out.println(t+" -> "+strip(t,1,1));
-//		}
-//		test2();
-//		test3();
-//		test5();
-//		test7();
-	}
-	
-	public static void test6(){
-		String source = "Hello! You have {mc:count:0} new matching. Details {if:{equals:{mp:persons_size}:2}:Gender{mp:gender2}Age{mp:age2}}";
-		List<String> index = indexSuperTags(source, '{', '}');
-		System.out.println(concatenateTokens(index, ',', '<', '>'));
-	}
-	
-	
-	
-	public static void test3(){
-		System.out.println("TESTING SURROUNDING:");
-		String hello = "{Hello!}";
-		System.out.println("Is surrounded "+hello+" with {}:"+ isSurroundedWith(hello, '{', '}'));
-		System.out.println("Remove surround {}:" +(hello = removeSurround(hello)));
-		System.out.println("Srround with []:" + surroundWith(hello, '[', ']'));
-	}
-	
-	
-	public static void test2(){
-		System.out.println("TESTING excractSuperTags()");
-		String source = "{if:{equals:{mp:persons_size}:2}:Gender{mp:gender2}Age{mp:age2}}";
-		char tagStart = '{';
-		char tagEnd = '}';
-		char escapeChar = '\\';
-		List<String> tags = extractSuperTags(source, tagStart, tagEnd, escapeChar);
-		for(String t: tags)
-			System.out.println(t);
-		
-//		String src = "{if:true:mumu|:bubu}";
-//		MatchedProfilesProcessor p = new MatchedProfilesProcessor();
-//		p.setAccountId("267");
-//		VariablesUtility.addProcessor(MatchedProfilesProcessor.PREFIX, p);
-//		System.out.println(VariablesUtility.replaceVariables(null, src));
-//		List<String> t = StringUtils.extractSuperTags(src,'{','}','|');
-//		for(String s:t)
-//			System.out.println(s);
-	}
-	
-	
 	public static String normalize(String s){
 		if (s==null || s.length()==0)
 			return s;
