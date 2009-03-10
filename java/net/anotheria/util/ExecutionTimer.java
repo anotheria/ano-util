@@ -1,25 +1,9 @@
-/* ------------------------------------------------------------------------- *
-  $Source: /work/cvs/ano-util/java/net/anotheria/util/ExecutionTimer.java,v $
-  $Author: lro $
-  $Date: 2004/03/29 09:39:04 $
-  $Revision: 1.2 $
-
-
-  Copyright 2002-2004 by Anotheria.net, Berlin, Germany
-  All rights reserved.
-
-  This software is the confidential and proprietary information
-  of Anotheria.net. ("Confidential Information").  You
-  shall not disclose such Confidential Information and shall use
-  it only in accordance with the terms of the license agreement
-  you entered into with Anotheria.net.
-  See www.anotheria.net for details.
-** ------------------------------------------------------------------------- */
 package net.anotheria.util;
 
 import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExecutionTimer {
 
@@ -28,7 +12,7 @@ public class ExecutionTimer {
 	private static final int METHOD_CREATION = 3;
 
 	private Hashtable<String, TimerEntry> timers;
-	private int nextID;
+	private AtomicInteger nextID = new AtomicInteger(0);
 
 	private String name;
 
@@ -37,7 +21,6 @@ public class ExecutionTimer {
 	 */
     public ExecutionTimer(String name) {
 		timers = new Hashtable<String, TimerEntry>();
-		nextID = 1;
 		this.name = name;
     }
 
@@ -208,7 +191,7 @@ public class ExecutionTimer {
 		 */
 		TimerEntry(String key){
 			this.key = key;
-			id = nextID++;
+			id = nextID.incrementAndGet();
 			start();
 			previousTime = 0L;
 		}
@@ -284,45 +267,5 @@ public class ExecutionTimer {
 		}
 	}
 	
-	public static void main(String a []) throws Exception{
-		ExecutionTimer t = new ExecutionTimer("1");
-		t.startExecution("sleep");
-		Thread.sleep(500);
-		t.stopExecution("sleep");
-		t.printExecutionTimesOrderedByCreation();
-		t.continueExecution("sleep");
-		Thread.sleep(500);
-		t.stopExecution("sleep");
-		t.printExecutionTimesOrderedByCreation();
-		t.continueExecution("sleep");
-		Thread.sleep(500);
-		t.stopExecution("sleep");
-		t.printExecutionTimesOrderedByCreation();
-	}
-
 
 }
-/* ------------------------------------------------------------------------- *
-  $Log: ExecutionTimer.java,v $
-  Revision 1.2  2004/03/29 09:39:04  lro
-  *** empty log message ***
-
-  Revision 1.1  2004/02/06 21:41:49  lro
-  *** empty log message ***
-
-  Revision 1.1.1.1  2004/02/04 16:31:11  lro
-  initial checkin
-
-  Revision 1.1  2004/01/30 22:06:41  cvs
-  *** empty log message ***
-
-  Revision 1.1.1.1  2002/02/05 16:26:21  another
-  no message
-
-
-** ------------------------------------------------------------------------- */
-
-
-
-
-

@@ -206,7 +206,7 @@ public abstract class DateUtility {
      * Returns the date which lies one week after given date.
      */
     public static Date nextWeek (Date d) {
-        Date d2 = new Date(d.toMill() + (7*24*60*60*1000));
+        Date d2 = new Date(d.toMill() + (7L*24*60*60*1000));
         return  d2;
     }
 

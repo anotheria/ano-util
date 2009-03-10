@@ -155,6 +155,10 @@ public class Date implements Serializable{
             return false;
         return true;
     }
+    
+    public boolean isValid(){
+    	return isValid(this);
+    }
 
     /**
      * Returns the string representation of this date.

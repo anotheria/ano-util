@@ -1,10 +1,9 @@
 package net.anotheria.util;
 
 /**
- * @author another
- *
+ * @author lrosenberg
  */
-public class NumberUtils {
+public final class NumberUtils {
 
 	/**
 	 * Constants for month names.
@@ -215,11 +214,5 @@ public class NumberUtils {
 		return ret.toString();
 	}
 	
-	public static void main(String a[]){
-		/*long size = 1024L*1024*1024*16;
-		System.out.println(makeSizeString(Integer.MAX_VALUE));
-		System.out.println(size);
-		System.out.println(makeSizeString(size));*/
-		System.out.println((makeTimeString12H(System.currentTimeMillis()+1000L*60*60*5)));
-	}
+	private NumberUtils(){}
 }
