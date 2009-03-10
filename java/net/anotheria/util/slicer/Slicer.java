@@ -44,29 +44,4 @@ public class Slicer {
 		
 		return ret;
 	}
-	
-	public static void main(String a[]){
-		List<Integer> data = new ArrayList<Integer>(20);
-		for (int i=0; i<22; i++)
-			data.add(i+1);
-		
-		Segment segment = new Segment();
-		segment.setElementsPerSlice(4);
-		segment.setSliceNumber(6);
-		
-		List<Integer> ret = Slicer.slice(segment, data).getSliceData();
-		
-		System.out.println(ret);
-		
-		Slice<Integer> slice = new Slice<Integer>(new Segment(0, 1));
-		slice.setTotalNumberOfSlices(1);
-		while(slice.hasNextSlice()){
-			slice = Slicer.slice(new Segment(slice.getCurrentSlice() + 1, 5), data);
-			System.out.print("Slice "+slice.getCurrentSlice()+": ");
-			for(int i:slice.getSliceData())
-				System.out.print(i + ",");
-			System.out.println();
-		}
-	}
-	
 }
