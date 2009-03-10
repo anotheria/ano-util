@@ -47,6 +47,12 @@ public class IdCodeGeneratorTest {
 		for (int i = 0; i<code.length(); i++){
 			assertFalse(pattern.indexOf(code.charAt(i))==-1);
 		}
-		
+	}
+	
+	@Test public void defaultLength(){
+		String code = IdCodeGenerator.generateCode();
+		assertEquals("Default length is broken", IdCodeGenerator.CODE_LENGTH, code.length());
+		assertTrue("Default length is null", code!=null);
+		assertTrue("Default length is zero", code.length()!=0);
 	}
 }

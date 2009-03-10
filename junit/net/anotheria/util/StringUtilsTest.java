@@ -68,5 +68,8 @@ public class StringUtilsTest {
 	}
 	
 
+	@Test public void removeImgTag(){
+		assertEquals("blabla", StringUtils.removeImgTag("bla<img src=\"xxx\">bla"));
+	}
 }
  
