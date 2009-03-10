@@ -5,9 +5,7 @@ import org.junit.Test;
 
 public class CharacterEntityCoderTest {
 	@Test public void testHtmlEncodeString(){
-		assertEquals("&ouml;", CharacterEntityCoder.htmlEncodeString("š"));
-		assertEquals("&Šuml;", CharacterEntityCoder.htmlEncodeString("Š"));
-		assertEquals("&Ÿuml;", CharacterEntityCoder.htmlEncodeString("Ÿ"));
-		assertEquals("&tzlig;", CharacterEntityCoder.htmlEncodeString("§"));
+		assertEquals("&quot;", CharacterEntityCoder.htmlEncodeString("\""));
+		assertEquals("&amp;", CharacterEntityCoder.htmlEncodeString("&"));
 	}
 }
