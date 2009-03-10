@@ -355,13 +355,4 @@ public class CharacterEntityCoder {
 		//System.out.println("XML: "+s);
 		return s;
 	}
-	
-	public static void main(String a[]){
-		Enumeration<Character> e = entities.keys();
-		while(e.hasMoreElements()){
-			Character c = e.nextElement();
-			System.out.println(c+" "+ (int)c.charValue());
-		}
-	}
-
 }

@@ -309,7 +309,7 @@ public final class StringUtils{
 	public static String getStringWith(String src, String toSearch, int start){
 		//System.out.println("search:"+toSearch+"in:"+src);
 		int ind = src.indexOf(toSearch, start);
-		//lastIndex = ind;
+		//lastIndex = ind; 
 		if (ind==-1)
 			return "";
 		return src.substring(ind);
