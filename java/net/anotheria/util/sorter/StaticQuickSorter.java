@@ -9,7 +9,7 @@ import java.util.List;
 /**
  *  just an implementation of the well known QuickSort Algorithm
  */
-public class StaticQuickSorter{
+public final class StaticQuickSorter{
 
 	/**
 	 * Sorts a collection of comparables
@@ -118,8 +118,6 @@ public class StaticQuickSorter{
 		source.set(j, tmp);
 	}
 
-
-/*	private static<T extends IComparable> int compare(T a, T b, int sortAfter) {
-*		return a.compareTo(b, sortAfter);
-*	}*/
+	//prevent from instantiation
+	private StaticQuickSorter(){}
 }

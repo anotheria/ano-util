@@ -21,7 +21,7 @@ public abstract class AbstractSorter<T extends IComparable> implements Sorter<T>
  	 */
  	@SuppressWarnings("unchecked")
  	public static<T extends IComparable> T[] list2array(List<T> src){
- 		T[] tmp = (T[])new Object[0];
+ 		T[] tmp = (T[])new IComparable[0];
    		return src.toArray(tmp);
    	}
 

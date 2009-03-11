@@ -38,7 +38,10 @@ public class Slicer {
 		
 		if (endIndex>totalElements)
 			endIndex = totalElements;
-			
+		
+		if (endIndex<startIndex)
+			throw new AssertionError("EndIndex greater as StartIndex: "+endIndex+" > "+startIndex);
+		
 		List<T> sliced = data.subList(startIndex, endIndex);
 		ret.setSliceData(sliced);
 		
