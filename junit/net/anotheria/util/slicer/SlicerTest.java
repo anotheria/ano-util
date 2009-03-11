@@ -21,6 +21,8 @@ public class SlicerTest {
 		assertEquals(2, last.getSliceData().size());
 		assertFalse(last.isFirstSlice());
 		assertTrue(last.isLastPage());
+		assertFalse(last.hasNextSlice());
+		assertTrue(last.hasPrevSlice());
 
 		
 		Slice<Integer> first = Slicer.slice(new Segment(1, 5), data);
@@ -32,6 +34,8 @@ public class SlicerTest {
 		assertEquals(5, first.getElementsPerSlice());
 		assertTrue(first.isFirstSlice());
 		assertFalse(first.isLastPage());
+		assertTrue(first.hasNextSlice());
+		assertFalse(first.hasPrevSlice());
 		
 		Slice<Integer> second = Slicer.slice(new Segment(2, 5), data);
 		assertEquals(5, second.getSliceData().size());
@@ -42,5 +46,25 @@ public class SlicerTest {
 		assertEquals(5, second.getElementsPerSlice());
 		assertFalse(second.isFirstSlice());
 		assertFalse(second.isLastPage());
+		assertTrue(second.hasNextSlice());
+		assertTrue(second.hasPrevSlice());
+		
+		assertNotNull(second.toString());
+		assertNotNull(first.toString());
+		assertNotNull(last.toString());
+	}
+	
+	@Test public void testOverflow(){
+		List<Integer> data = new ArrayList<Integer>(5);
+		for (int i=0; i<5; i++)
+			data.add(i+1);
+		Slice<Integer> second = Slicer.slice(new Segment(2, 5), data);
+		assertEquals(0, second.getSliceData().size());
+		
+		try{
+			Slicer.slice(new Segment(-1, 5), data);
+			fail("Negative page numbers must throw errors");
+		}catch(AssertionError error){}
+		
 	}
 }

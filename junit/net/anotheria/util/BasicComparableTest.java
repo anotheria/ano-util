@@ -68,4 +68,23 @@ public class BasicComparableTest {
 		
 	}
 
+	@Test public void testFloat(){
+		float a = 10.1f;
+		float b = 15.2f;
+		
+		assertTrue(BasicComparable.compareFloat(a, b)<0);
+		assertTrue(BasicComparable.compareFloat(a, a)==0);
+		assertTrue(BasicComparable.compareFloat(b, b)==0);
+		assertTrue(BasicComparable.compareFloat(b, a)>0);
+	}
+
+	@Test public void testDouble(){
+		double a = 10.1;
+		double b = 15.2;
+		
+		assertTrue(BasicComparable.compareDouble(a, b)<0);
+		assertTrue(BasicComparable.compareDouble(a, a)==0);
+		assertTrue(BasicComparable.compareDouble(b, b)==0);
+		assertTrue(BasicComparable.compareDouble(b, a)>0);
+	}
 }
