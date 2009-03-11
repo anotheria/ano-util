@@ -58,9 +58,7 @@ public abstract class BasicComparable implements IComparable{
 	 * @return 0 if a==b, -1 if a<b or +1 if a>b.
 	 */
 	public static final int compareFloat(float a, float b){
-		return a < b ? 
-			-1 : a == b ? 
-			0 : 1;						
+		return Float.compare(a, b);			
 	}
 	
 	/**
@@ -70,9 +68,7 @@ public abstract class BasicComparable implements IComparable{
 	 * @return 0 if a==b, -1 if a<b or +1 if a>b.
 	 */
 	public static final int compareDouble(double a, double b){
-		return a < b ? 
-			-1 : a == b ? 
-			0 : 1;						
+		return Double.compare(a, b); 
 	}
 
 	/**

@@ -266,11 +266,7 @@ public abstract class DateUtility {
         }
         return  d;
     }
-    
-    public static void main(String a[]){
-    	System.out.println(new Date(1228661649039L));
-    }
-}
+ }
 /* ------------------------------------------------------------------------- *
  $Log: DateUtility.java,v $
  Revision 1.1  2004/02/06 21:41:49  lro
