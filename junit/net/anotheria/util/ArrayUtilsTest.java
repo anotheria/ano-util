@@ -1,14 +1,15 @@
 package net.anotheria.util;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-
-import com.sun.tools.javac.code.Attribute.Array;
 
 public class ArrayUtilsTest {
 	
@@ -30,7 +31,8 @@ public class ArrayUtilsTest {
 	public static Integer[] integerSortedArray2;
 	public static Integer[] integerUnsortedArray1;
 	public static Integer[] integerUnsortedArray2;
-	public static List<TestObject> testObjectsList1;
+	public static List<String> stringList;
+	public static List<TestObject> testObjectsList;
 	
 	static{
 		intSortedArray1 = new int[]{1,2,3,4,5};
@@ -41,13 +43,17 @@ public class ArrayUtilsTest {
 		integerSortedArray2 = new Integer[]{6,7,8,9,10,11};
 		integerUnsortedArray1 = new Integer[]{1,2,4,3,5};
 		integerUnsortedArray1 = new Integer[]{6,8,9,7,11};
-        testObjectsList1 = new ArrayList<TestObject>();
-        for(int i: intSortedArray1)
-        	testObjectsList1.add(new TestObject(i + ""));
+        
+		stringList = new ArrayList<String>();
+		testObjectsList = new ArrayList<TestObject>();
+        for(int i: intSortedArray1){
+        	testObjectsList.add(new TestObject(i + ""));
+        	stringList.add(Integer.toString(i));
+        }
 
         System.out.println("Test int array1: " + ArrayUtils.toString(intSortedArray1));
         System.out.println("Test Integer array1: " + ArrayUtils.toString(integerSortedArray1));
-        System.out.println("Test Objects List1: " + testObjectsList1);
+        System.out.println("Test Objects List1: " + testObjectsList);
 	}
 	
 	@Test public void toStringList(){
@@ -63,11 +69,16 @@ public class ArrayUtilsTest {
 			assertEquals(Integer.toString(integerSortedArray1[i]), stringList2.get(i));
 		assertEquals(stringList1, stringList2);
 		
-		List<String> stringList3 = ArrayUtils.toStringList(testObjectsList1);
-		assertEquals(testObjectsList1.size(), stringList3.size());
-		for(int i = 0; i < testObjectsList1.size(); i++)
-			assertEquals(testObjectsList1.get(i).toString(), stringList3.get(i));
+		List<String> stringList3 = ArrayUtils.toStringList(testObjectsList);
+		assertEquals(testObjectsList.size(), stringList3.size());
+		for(int i = 0; i < testObjectsList.size(); i++)
+			assertEquals(testObjectsList.get(i).toString(), stringList3.get(i));
 		assertEquals(stringList1, stringList3);
+	}
+	
+	@Test public void parseStringList(){
+		int[] array = ArrayUtils.parseStringListAsInt(stringList);
+		assertTrue(Arrays.equals(intSortedArray1, array));
 	}
 	
 	@Test public void toXArray(){
@@ -177,5 +188,7 @@ public class ArrayUtilsTest {
 		assertTrue(ArrayUtils.isSorted(1,2,3,4,5,6,10));
 		assertFalse(ArrayUtils.isSorted(2,3,4,11,5,6,10));
 	}
+	
+	
 }
  

@@ -65,7 +65,7 @@ public class ArrayUtils {
 		return ret;
 	}
 	
-	public static int[] parseStringList(List<String> stringList){
+	public static int[] parseStringListAsInt(List<String> stringList){
 		int[] ret = new int[stringList.size()];
 		for(int i = 0; i < stringList.size(); i++)
 			ret[i] = Integer.parseInt(stringList.get(i));
