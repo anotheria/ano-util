@@ -122,10 +122,10 @@ public class ArrayUtils {
 	 * @return the array of elements that the array1 and the array2 have in common
 	 */
 	public static int[] intersection(int[] array1, int[] array2){
-		if(!isSorted(array1) || !isSorted(array2))
-			throw new RuntimeException("Arrays must be sorted!");
 		if(array1.length == 0 || array2.length == 0)
 			return new int[0];
+		if(!isSorted(array1) || !isSorted(array2))
+			throw new RuntimeException("Arrays must be sorted: array1 " + toString(array1) + ", array2 " + toString(array2));
 		int position1 = 0;
 		int position2 = 0;
 		
