@@ -1,9 +1,11 @@
 package net.anotheria.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * TODO Please remain lrosenberg to comment IOUtils.java
@@ -57,7 +59,17 @@ public class IOUtils {
         in.close();
         return result.toString();
     }
-
+    
+    public static final String readFileBufferedAsString(File file, String charset) throws IOException{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
+		StringBuffer result = new StringBuffer();
+		char[] cbuf = new char[2048];
+		while(reader.read(cbuf) > 0)
+			result.append(cbuf);
+		reader.close();
+		return result.toString();
+    }
+    
     public static void main(String a[]) throws Exception{
         String s = readFileAtOnceAsString("/opt/projects/datingr4p1/build/local.properties");
         System.out.println(s.length()+" bytes read");

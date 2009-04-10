@@ -49,14 +49,18 @@ public class CSVParser {
 	}
 	
 	private static DataRow parseRow(String row, char valuesSeparator){
-		List<String> tokens = StringUtils._tokenize(row, '"', '"', valuesSeparator);
-		DataRow ret = new DataRow();
-		for(String t: tokens){
-			if(StringUtils.isSurroundedWith(t, '"', '"'))
-				t = StringUtils.removeSurround(t);
-			ret.addCell(new DataCell(t));
+		try{
+			List<String> tokens = StringUtils._tokenize(row, '"', '"', valuesSeparator);
+			DataRow ret = new DataRow();
+			for(String t: tokens){
+				if(StringUtils.isSurroundedWith(t, '"', '"'))
+					t = StringUtils.removeSurround(t);
+				ret.addCell(new DataCell(t));
+			}
+			return ret;
+		}catch(RuntimeException e){
+			throw new RuntimeException("Could not parse CSV Row: " + row, e);
 		}
-		return ret;
 	}
 	
 	private static DataHeader toDataHeader(DataRow headerRow){

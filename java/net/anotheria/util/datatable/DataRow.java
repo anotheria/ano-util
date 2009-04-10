@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.anotheria.util.StringUtils;
-
 public class DataRow  implements Iterable<DataCell>{
 
 	private List<DataCell> cells;
 	
 	public DataRow(){
-		this(10);
+		this(15);
 	}
 
 	public DataRow(int initialCapacity){
@@ -45,9 +43,10 @@ public class DataRow  implements Iterable<DataCell>{
 	
 	@Override
 	public String toString(){
-		String ret = "[";
-		ret += StringUtils.concatenateTokens(cells, ";");
-		ret += "]";
+//		String ret = "[";
+//		ret += StringUtils.concatenateTokens(cells, ";");
+//		ret += "]";
+		String ret = cells.toString();
 		return ret;
 	}
 }
