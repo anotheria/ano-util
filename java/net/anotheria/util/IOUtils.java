@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
+import net.anotheria.util.io.UnicodeReader;
 
 /**
  * TODO Please remain lrosenberg to comment IOUtils.java
@@ -61,11 +62,12 @@ public class IOUtils {
     }
     
     public static final String readFileBufferedAsString(File file, String charset) throws IOException{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
+		BufferedReader reader = new BufferedReader(new UnicodeReader(new FileInputStream(file), charset));
 		StringBuffer result = new StringBuffer();
 		char[] cbuf = new char[2048];
-		while(reader.read(cbuf) > 0)
-			result.append(cbuf);
+		int read;
+		while((read = reader.read(cbuf)) > 0)
+			result.append(cbuf, 0, read);
 		reader.close();
 		return result.toString();
     }
