@@ -5,7 +5,7 @@ public final class HexDecoder {
 	/**
 	 * Converts a byte to hex digit and writes to the supplied buffer
 	 */
-	public static void byte2hex(byte b, StringBuffer buf) {
+	public static void byte2hex(byte b, StringBuilder buf) {
 		char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'A', 'B', 'C', 'D', 'E', 'F' };
 		int high = ((b & 0xf0) >> 4);
@@ -19,7 +19,7 @@ public final class HexDecoder {
 	 * Converts a byte array to hex string
 	 */
 	public static String toHexString(byte[] block) {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 
 		int len = block.length;
 
