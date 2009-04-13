@@ -342,32 +342,14 @@ public class Date implements Serializable{
 	public int getYear() {
 		return year;
 	}
+	
+	public String toISO8601Timestamp(){
+		return NumberUtils.makeISO8601TimestampString(toMill());
+	}
+
+	public String toISO8601Date(){
+		return NumberUtils.makeISO8601DateString(toMill());
+	}
 
 }
 
-
-/* ------------------------------------------------------------------------- *
-  $Log: Date.java,v $
-  Revision 1.4  2005/01/07 12:15:34  lro
-  *** empty log message ***
-
-  Revision 1.3  2005/01/06 18:35:02  lro
-  added seconds
-
-  Revision 1.2  2004/08/19 08:53:23  lro
-  *** empty log message ***
-
-  Revision 1.1  2004/02/06 21:41:49  lro
-  *** empty log message ***
-
-  Revision 1.1.1.1  2004/02/04 16:31:10  lro
-  initial checkin
-
-  Revision 1.1  2004/01/30 22:06:41  cvs
-  *** empty log message ***
-
-  Revision 1.1.1.1  2002/02/05 16:26:21  another
-  no message
-
-
-** ------------------------------------------------------------------------- */
