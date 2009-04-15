@@ -417,7 +417,7 @@ public final class StringUtils{
 
  	
  	public static final String removeCComments(String src){
- 		StringBuffer ret = new StringBuffer();
+ 		StringBuilder ret = new StringBuilder();
  		
  		boolean inComments = false;
  		
@@ -446,17 +446,22 @@ public final class StringUtils{
  	}
  	
  	public static final String removeCPPComments(String src){
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
  		
 		boolean inComments = false;
+		boolean inQuotes = false;
  		
 		for (int i=0; i<src.length(); i++){
 			char c = src.charAt(i);
 			if (inComments){
-				if (c=='\n')
+				if (c=='\n'){
 						inComments = false;
+						inQuotes = false;
+				}
 			}else{
-				if (c=='/'){
+				if (c=='"')
+					inQuotes=!inQuotes;
+				if (!inQuotes && c=='/'){
 					if (src.charAt(i+1)=='/'){
 						inComments = true;
 						i++;
