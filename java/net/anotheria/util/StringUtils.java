@@ -698,21 +698,21 @@ public final class StringUtils{
 	public static final List<String> _tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
 		boolean quotingMode = escapeStart == escapeEnd;  
 		Set<Character> delimitersHash = new HashSet<Character>(delimiters.length);
-		  for(char del: delimiters)
-			  delimitersHash.add(del);
-		  
-		  List<String> ret = new ArrayList<String>();
-		StringBuilder currentTag = new StringBuilder();
 		
+		for(char del: delimiters)
+			delimitersHash.add(del);
+		List<String> ret = new ArrayList<String>();
+		StringBuilder currentTag = new StringBuilder();
+
 		int inEscape = 0;
 		char c;
-
+		
 		for (int i = 0, l = source.length(); i < l; i++) {
 			c = source.charAt(i);
-
+		
 			if (c == escapeStart)
 				inEscape++;
-
+		
 			if(inEscape < 1 && delimitersHash.contains(c)) {
 				//New token is starting...
 				if (currentTag.length() > 0) {
@@ -721,9 +721,9 @@ public final class StringUtils{
 					continue;
 				}
 			}
-
+		
 			currentTag.append(c);
-
+		
 			if (c == escapeEnd) {
 				if(quotingMode && inEscape == 2)
 					inEscape = 0;
