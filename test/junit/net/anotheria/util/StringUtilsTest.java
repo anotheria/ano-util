@@ -9,8 +9,8 @@ import org.junit.Test;
 
 public class StringUtilsTest {
 	@Test public void normalize(){
-		String test = "abc123efg mümüß M*^&M_";
-		assertEquals("abc123efg_m_m___M___M_", StringUtils.normalize(test));
+		String test = "abc123efg mümüßz MA*^&ZM_";
+		assertEquals("abc123efg_m_m__z_MA___ZM_", StringUtils.normalize(test));
 	}
 
 	@Test public void concatenate(){
