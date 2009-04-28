@@ -1,73 +1,10 @@
 <?xml version="1.0"?>
 
 <project name="ano-util" default="all" basedir=".">
-	
-	<property name="output.dir" value="${basedir}/build"/>
-	<property name="classes.dir" value="${output.dir}/classes"/>
+	<import file="../build/basic-project.xml"/>	
 
-	<property name="src" value="${basedir}/java"/>
-
-	<property name="dist.dir" value="${basedir}/dist"/>
-	
-	<property name="javadoc.dest" value="${basedir}/../javadoc"/>
-	
-	<property name="lib.project" value="${basedir}/lib"/>
-
-	<property name="project.name" value="ano-util"/>
-	<property name="target.jar.name" value="ano-util.jar"/>
-	
-	<target name="clean">
-		<delete dir="${output.dir}"/>
-	</target>
-
-	<target name="prepare">
-		<mkdir dir="${dist.dir}"/>
-		<mkdir dir="${classes.dir}"/>
-	</target>
-	
-	<target name="compile" depends="prepare">
-		<javac destdir="${classes.dir}" srcdir="${src}" debug="on" deprecation="off" optimize="on">
-			<classpath>
-				<fileset dir="${lib.project}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-		</javac>
-	</target>
-	
-	<target name="jar" depends="compile">
-		<jar jarfile="${dist.dir}/${target.jar.name}">
-         	<fileset dir="${classes.dir}">
-         		<include name="**/*"/>
-         	</fileset>
-		</jar>
-	</target>
-	
-	<target name="dist.clean" depends="clean">
-		<delete dir="${dist.dir}"/>
-	</target>
-
-	<target name="dist" depends="jar">
-	</target>
-	
-	<target name="deploy" depends="dist">
-		<copy todir="${basedir}/../ano-libs/lib">
-			<fileset file="${dist.dir}/${target.jar.name}"></fileset>
-		</copy>
-	</target>
-
-	
-	<target name="all" depends="dist"/>
-	
-	<target name="javadoc" depends="compile">
-		<mkdir dir="${javadoc.dest}/${project.name}"/>
-	    <javadoc source="1.6" packagenames="net.anotheria.util.*" 
-	    	private="true" author="true"
-	    	sourcepath="${src}" destdir="${javadoc.dest}/${project.name}" 
-	    	bottom="Copyright &#169; 1998-2007 Anotheria.net. All Rights Reserved.&lt;br/&gt;"
-		>
-	      <tag name="created" scope="all" description="Created: " />
-	      <link href="http://java.sun.com/j2se/1.5.0/docs/api"/>
-	    </javadoc>
-	</target>
+	<!-- 
+		checkout svn://svn.anotheria.net/opensource/build/trunk as ../build 
+		in order for this build script to work.
+	-->
 </project>
