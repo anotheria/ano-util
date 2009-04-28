@@ -31,6 +31,44 @@ public class StringUtilsTest {
 		assertEquals("Array length is not 4 (tokenize doesn't work?)", 4, StringUtils.tokenize("if:true:mumu:bubu", ':').length);
 	}
 	
+	@Test public void _tokenize(){
+		String srcSimple = "token0:token1:token2";		
+		List<String> ts = StringUtils._tokenize(srcSimple, '"','"',':');
+		assertEquals("Array length is not 3 (tokenize doesn't work?)", 3, ts.size());
+		assertEquals("Wrong token 0 (tokenize doesn't work?)", "token0", ts.get(0));
+		assertEquals("Wrong token 1 (tokenize doesn't work?)", "token1", ts.get(1));
+		assertEquals("Wrong token 2 (tokenize doesn't work?)", "token2", ts.get(2));
+
+		String srcWithEscape = "token0:\"token1:escaped\":token2";
+		ts = StringUtils._tokenize(srcWithEscape, '"','"',':');
+		assertEquals("Array length is not 3 (escape doesn't work?)", 3, ts.size());
+		assertEquals("Wrong token 0 (tokenize doesn't work?)", "token0", ts.get(0));
+		assertEquals("Wrong token 1 (tokenize doesn't work?)", "\"token1:escaped\"", ts.get(1));
+		assertEquals("Wrong token 2 (tokenize doesn't work?)", "token2", ts.get(2));
+		
+		
+		String srcWithEmptyToken = "token0::token2";
+		ts = StringUtils._tokenize(srcWithEmptyToken, '"','"',':');
+		assertEquals("Array length is not 3 (skipping empty tokens doesn't work?)", 2, ts.size());
+		assertEquals("Wrong token 0 (tokenize doesn't work?)", "token0", ts.get(0));
+//		assertEquals("Wrong token 1 (tokenize doesn't work?)", "token1:escaped", ts.get(1));
+		assertEquals("Wrong token 2 (tokenize doesn't work?)", "token2", ts.get(1));
+		
+		ts = StringUtils._tokenize(srcWithEmptyToken, '"','"',false,':');
+		assertEquals("Array length is not 3 (empty tokens is skipped?)", 3, ts.size());
+		assertEquals("Wrong token 0 (tokenize doesn't work?)", "token0", ts.get(0));
+		assertEquals("Wrong token 1 (tokenize doesn't work?)", "", ts.get(1));
+		assertEquals("Wrong token 2 (tokenize doesn't work?)", "token2", ts.get(2));
+		
+		String srcComplex = "token0:\"token1:escaped\"::token3:";
+		ts = StringUtils._tokenize(srcComplex, '"','"',false,':');
+		assertEquals("Array length is not 3 (tokenize doesn't work?)", 4, ts.size());
+		assertEquals("Wrong token 0 (tokenize doesn't work?)", "token0", ts.get(0));
+		assertEquals("Wrong token 1 (tokenize doesn't work?)", "\"token1:escaped\"", ts.get(1));
+		assertEquals("Wrong token 1 (tokenize doesn't work?)", "", ts.get(2));
+		assertEquals("Wrong token 2 (tokenize doesn't work?)", "token3", ts.get(3));
+	}
+	
 	@Test public void testSurrounding(){
 		String hello = "{Hello!}";
 		assertTrue(StringUtils.isSurroundedWith(hello, '{', '}'));

@@ -50,7 +50,7 @@ public class CSVParser {
 	
 	private static DataRow parseRow(String row, char valuesSeparator){
 		try{
-			List<String> tokens = StringUtils._tokenize(row, '"', '"', valuesSeparator);
+			List<String> tokens = StringUtils._tokenize(row, '"', '"', false,valuesSeparator);
 			DataRow ret = new DataRow();
 			for(String t: tokens){
 				if(StringUtils.isSurroundedWith(t, '"', '"'))

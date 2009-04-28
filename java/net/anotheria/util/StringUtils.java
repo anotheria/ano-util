@@ -590,7 +590,7 @@ public final class StringUtils{
 	//Added 6.02.08
 	
 	public static boolean isSurroundedWith(String src, char starting, char ending){
-		return (src.charAt(0)== starting )&& (src.charAt(src.length()-1) == ending);
+		return src.length() > 0 && (src.charAt(0)== starting )&& (src.charAt(src.length()-1) == ending);
 	}
 	
 	public static String removeSurround(String src){
@@ -695,7 +695,12 @@ public final class StringUtils{
 	  Do the same as tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) with small bug fix for the case when escapeStart equals to escapeEnd.
 	  Original tokenize method is used in VariableProcessor so any changes in it must be well tested before go to life. That's why this duplication method was created.
 	 */
-	public static final List<String> _tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
+	
+	  public static final List<String> _tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
+		  return _tokenize(source, escapeStart, escapeEnd, true, delimiters);
+	  }
+	  
+	  public static final List<String> _tokenize(String source, char escapeStart, char escapeEnd, boolean skipEmptyTokens, char... delimiters) {
 		boolean quotingMode = escapeStart == escapeEnd;  
 		Set<Character> delimitersHash = new HashSet<Character>(delimiters.length);
 		
@@ -714,12 +719,12 @@ public final class StringUtils{
 				inEscape++;
 		
 			if(inEscape < 1 && delimitersHash.contains(c)) {
-				//New token is starting...
-				if (currentTag.length() > 0) {
+//				New token is starting...
+				if (!skipEmptyTokens || currentTag.length() > 0)
 					ret.add(currentTag.toString());
-					currentTag = new StringBuilder();
-					continue;
-				}
+				currentTag.setLength(0);
+//				currentTag = new StringBuilder();
+				continue;
 			}
 		
 			currentTag.append(c);
@@ -830,6 +835,8 @@ public final class StringUtils{
 		//prevent from instantiation
 	}
 	
-
+	public static boolean isEmpty(String src){
+		return src == null || src.length() == 0;
+	}
+	
 }
-
