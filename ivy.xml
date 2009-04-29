@@ -1,0 +1,13 @@
+<ivy-module version="2.0">
+    <info organisation="anotheria.net" module="ano-util"/>
+	<configurations >
+		<conf name="jar" />
+	</configurations>	
+	<publications>
+		<artifact name="ano-util" type="jar" ext="jar" conf="jar"/>
+    </publications>
+    <dependencies>
+        <dependency org="org.apache" name="log4j" rev="stable" transitive="false"/>
+        <dependency org="blowfish" name="BlowfishJ" rev="stable" transitive="false"/>
+    </dependencies>
+</ivy-module>
