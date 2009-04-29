@@ -1,6 +1,5 @@
 package net.anotheria.util;
 
-import junit.framework.JUnit4TestAdapter;
 import net.anotheria.util.crypt.CryptToolTest;
 import net.anotheria.util.slicer.SlicerTest;
 import net.anotheria.util.sorter.SorterTest;
