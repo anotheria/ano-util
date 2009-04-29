@@ -82,6 +82,7 @@ public class CryptToolTest {
 		assertFalse(crypted.length()==0);
 		
 		String decrypted = new String(crypt.decrypt(crypted.getBytes())).trim();
+		System.out.println("Trying to check whether "+message+" is equal to "+decrypted);
 		assertEquals(message, decrypted);
 
 	}
