@@ -823,7 +823,7 @@ public final class StringUtils{
 		StringBuilder ret = new StringBuilder(s.length());
 		for (int i=0; i<s.length(); i++){
 			char c = s.charAt(i);
-			if ((65 <= c  && c <= 90) || (97 <= c  && c <= 122) || Character.isDigit(c))
+			if (/*(65 <= c  && c <= 90) || (97 <= c  && c <= 122)*/ Character.isLetter(c) || Character.isDigit(c))
 				ret.append(c);
 			else
 				ret.append('_');
