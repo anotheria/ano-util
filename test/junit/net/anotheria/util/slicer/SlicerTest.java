@@ -20,7 +20,7 @@ public class SlicerTest {
 		Slice<Integer> last = Slicer.slice(segment, data);
 		assertEquals(2, last.getSliceData().size());
 		assertFalse(last.isFirstSlice());
-		assertTrue(last.isLastPage());
+		assertTrue(last.isLastSlice());
 		assertFalse(last.hasNextSlice());
 		assertTrue(last.hasPrevSlice());
 
@@ -33,7 +33,7 @@ public class SlicerTest {
 		assertEquals(1, first.getCurrentSlice());
 		assertEquals(5, first.getElementsPerSlice());
 		assertTrue(first.isFirstSlice());
-		assertFalse(first.isLastPage());
+		assertFalse(first.isLastSlice());
 		assertTrue(first.hasNextSlice());
 		assertFalse(first.hasPrevSlice());
 		
@@ -45,7 +45,7 @@ public class SlicerTest {
 		assertEquals(2, second.getCurrentSlice());
 		assertEquals(5, second.getElementsPerSlice());
 		assertFalse(second.isFirstSlice());
-		assertFalse(second.isLastPage());
+		assertFalse(second.isLastSlice());
 		assertTrue(second.hasNextSlice());
 		assertTrue(second.hasPrevSlice());
 		
