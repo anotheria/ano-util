@@ -2,16 +2,19 @@ package net.anotheria.util.slicer;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Slicer is an utility for cutting large amount of data in slices needed for paging.
+ * @author lrosenberg
+ */
 public class Slicer {
-	
+
 	public static final int FIRST_PAGE = 1;
 	
 	/**
 	 * Returns the requested slice of the data if available.
 	 * @param request slice request, i.e. number of elements per page and current page number.
 	 * @param data the data to slice.
-	 * @return
+	 * @return a typed Slice.
 	 */
 	public static <T> Slice<T> slice(Segment segment, List<T> data){
 		int totalElements = data.size();

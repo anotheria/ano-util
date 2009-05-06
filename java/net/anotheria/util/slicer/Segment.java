@@ -1,5 +1,9 @@
 package net.anotheria.util.slicer;
 
+/**
+ * Used as parameter class in a slice request.
+ * @author lrosenberg
+ */
 public class Segment {
 	/**
 	 * The requested slice number.
@@ -7,10 +11,15 @@ public class Segment {
 	private int sliceNumber;
 	
 	/**
-	 * Number of the elements in a slice.
+	 * Number of the elements per slice (number of items on a page).
 	 */
 	private int elementsPerSlice;
 	
+	/**
+	 * Creates a new Segment with given slice number and elements per page.
+	 * @param aSliceNumber
+	 * @param anElementsPerSlice
+	 */
 	public Segment(int aSliceNumber, int anElementsPerSlice){
 		sliceNumber = aSliceNumber;
 		elementsPerSlice = anElementsPerSlice;
@@ -37,7 +46,7 @@ public class Segment {
 		this.sliceNumber = sliceNumber;
 	}
 	
-	public String toString(){
+	@Override public String toString(){
 		return "SliceNumber: "+getSliceNumber()+", ElementsPerSlice: "+getElementsPerSlice();
 	}
 
