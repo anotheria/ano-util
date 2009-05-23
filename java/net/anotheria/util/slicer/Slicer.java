@@ -8,8 +8,6 @@ import java.util.List;
  */
 public class Slicer {
 
-	public static final int FIRST_PAGE = 1;
-	
 	/**
 	 * Returns the requested slice of the data if available.
 	 * @param request slice request, i.e. number of elements per page and current page number.
