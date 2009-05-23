@@ -4,8 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * An utility for handling of arrays.
+ * @author denis
+ *
+ */
 public class ArrayUtils {
 
+	/**
+	 * Merges two arrays in a third array.
+	 * @param <T>
+	 * @param firstArray
+	 * @param secondArray
+	 * @return
+	 */
 	public static <T> T[] mergeArrays(T[] firstArray, T[] secondArray) {
 		T[] ret = Arrays.copyOf(firstArray, firstArray.length + secondArray.length);
 		for(int i = firstArray.length; i < ret.length; i++)
