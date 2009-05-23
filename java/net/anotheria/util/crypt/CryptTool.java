@@ -7,15 +7,31 @@ import java.util.Map;
 import net.anotheria.util.StringUtils;
 import BlowfishJ.BlowfishECB;
 
+/***
+ * A tool to encrypt and decrypt strings using Blowfish algorithm.
+ * @author lrosenberg
+ *
+ */
 public class CryptTool {
-	private BlowfishECB cipher;
+	/**
+	 * The underlying blowfish implementation.
+	 */
+	private final BlowfishECB cipher;
 
+	/**
+	 * Create a new crypttool with the given key.
+	 * @param key the key to use for en- and decode.
+	 */
 	public CryptTool(String key) {
 		byte[] raw = key.getBytes();
 		cipher = new BlowfishECB(raw);
 	}
 
-	/* Returns a crypted byte array */
+	/**
+	 * Returns a byte array containing the encrypted version of the string.
+	 * @param toEncrypt
+	 * @return
+	 */
 	public byte[] encrypt(String toEncrypt) {
 		toEncrypt = padMod(toEncrypt, 8);		
 		byte[] toEncryptB = toEncrypt.getBytes();	
@@ -23,7 +39,11 @@ public class CryptTool {
 		return toEncryptB;
 	}
 
-	/* Returns a crypted string in hex */
+	/**
+	 * Returns a HEX version of the encrypted string.
+	 * @param toEncrypt the string to encrypt.
+	 * @return
+	 */
 	public String encryptToHex(String toEncrypt) {
 		byte[] encrypted = encrypt(toEncrypt);
 		return HexDecoder.toHexString(encrypted);
@@ -36,7 +56,7 @@ public class CryptTool {
 
 	public String decryptFromHex(String toDecrypt) {
 		byte[] decrypted = decrypt(HexDecoder.fromHexString(toDecrypt));
-		return (new String(decrypted));
+		return new String(decrypted);
 	}
 
 	public String decryptFromHexTrim(String toDecrypt) {
@@ -55,6 +75,11 @@ public class CryptTool {
 		return source;
 	}
 	
+	/**
+	 * Encrypts a map of key value pairs to a single string to use as html parameter or similar.
+	 * @param parameters a map with parameters.
+	 * @return a string version of the map.
+	 */
 	public String encryptParameterMap(Map<String,String> parameters){
 		Iterator<String> keys = parameters.keySet().iterator();
 		String toEncode = ""; 
@@ -70,6 +95,11 @@ public class CryptTool {
 		return encryptToHex(toEncode);
 	}
 	
+	/**
+	 * Decrypts a previously encoded parameter map and returns it as map of key-value pairs.
+	 * @param str the string to decode.
+	 * @return a map with decrypted parameters.
+	 */
 	public Map<String,String> decryptParameterMap(String str){
 		String decrypted = decryptFromHex(str);
 		decrypted = decrypted.trim();
