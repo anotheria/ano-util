@@ -16,7 +16,7 @@ public final class RemoveNewLines {
 	 * @param a do you need a comment on that?
 	 * @throws Exception if something happens.
 	 */
-	public static void main(String a[]) throws Exception{
+	public static void main(String[] a) throws Exception{
 		String s = IOUtils.readFileAtOnceAsString(a[0]);
 		s = StringUtils.removeChar(s, '\r');
 		FileOutputStream fOut = new FileOutputStream(a[0]);
