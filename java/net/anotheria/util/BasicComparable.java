@@ -13,7 +13,7 @@ public abstract class BasicComparable implements IComparable{
 	 * Compares two ints.
 	 * @param a first int to compare.
 	 * @param b second int to compare.
-	 * @return 0 if a==b, -1 if a<b or +1 if a>b.
+	 * @return 0 if a==b, -1 if a&lt;b or +1 if a&gt;b.
 	 */
 	public static final int compareInt(int a, int b){
 		return a < b ? 
@@ -25,7 +25,7 @@ public abstract class BasicComparable implements IComparable{
 	 * Compares two longs.
 	 * @param a first long to compare.
 	 * @param b second long to compare.
-	 * @return 0 if a==b, -1 if a<b or +1 if a>b.
+	 * @return 0 if a==b, -1 if a&lt;b or +1 if a&gt;b.
 	 */
 	public static final int compareLong(long a, long b){
 		return a < b ? 
@@ -55,7 +55,7 @@ public abstract class BasicComparable implements IComparable{
 	 * Compares two floats.
 	 * @param a first float to compare.
 	 * @param b second float to compare.
-	 * @return 0 if a==b, -1 if a<b or +1 if a>b.
+	 * @return 0 if a==b, -1 if a&lt;b or +1 if a>b.
 	 */
 	public static final int compareFloat(float a, float b){
 		return Float.compare(a, b);			
