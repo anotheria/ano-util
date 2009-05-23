@@ -65,7 +65,7 @@ public abstract class BasicComparable implements IComparable{
 	 * Compares two doubles.
 	 * @param a first double to compare.
 	 * @param b second double to compare.
-	 * @return 0 if a==b, -1 if a<b or +1 if a>b.
+	 * @return 0 if a==b, -1 if a&lt;b or +1 if a&gt;b.
 	 */
 	public static final int compareDouble(double a, double b){
 		return Double.compare(a, b); 
@@ -89,7 +89,7 @@ public abstract class BasicComparable implements IComparable{
 	 * Compares two List.
 	 * @param a first List to compare.
 	 * @param b second List to compare.
-	 * @return 0 if a.size==b.size, -1 if a.size<b.size or +1 if a.size>b.size.
+	 * @return 0 if a.size==b.size, -1 if a.size&lt;b.size or +1 if a.size&gt;b.size.
 	 */
 	public static final <T> int compareList(List<T> a, List<T> b){
 		return a == null ? 
