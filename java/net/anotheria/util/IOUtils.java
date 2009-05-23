@@ -16,8 +16,6 @@ import net.anotheria.util.io.UnicodeReader;
  */
 public class IOUtils {
     
-	//THIS IS A DUMMY CHANGE !!!
-	
 	public static final byte[] readFileAtOnce(File file) throws IOException{
         FileInputStream fIn = new FileInputStream(file);
         return readFileAtOnce(fIn);		
