@@ -1,6 +1,7 @@
 package net.anotheria.util;
 
 /**
+ * A collection of useful utility methods for handling numbers, dates and currencies.
  * @author lrosenberg
  */
 public final class NumberUtils {
@@ -168,7 +169,7 @@ public final class NumberUtils {
 	public static long parseDateString(String str){
 		if (str.length()==0)
 			return 0;
-		String t[] = StringUtils.tokenize(str, '.');
+		String[] t = StringUtils.tokenize(str, '.');
 		int d,m,y;
 		d = Integer.parseInt(t[0]);
 		m = Integer.parseInt(t[1]);

@@ -9,26 +9,26 @@ package net.anotheria.util;
 import java.util.Random;
 
 /**
- * @author another
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * A simple utility for creation of safe passwords.
  */
 public class PasswordGenerator {
 	
-	static int rangeBegin[] = {
+	private final static int rangeBegin[] = {
 		33,
 		65,
 		97, 
 	};
 	
-	static int rangeEnd[] = {
+	private final static int rangeEnd[] = {
 		59,
 		90,
 		122, 
 	};
-	
-	static char CHARS[];
+
+	/**
+	 * Internal holder for useable characters.
+	 */
+	private final static char CHARS[];
 
 	static{
 		int sum = 0;
@@ -45,6 +45,11 @@ public class PasswordGenerator {
 		
 	}
 	
+	/**
+	 * Generates a password of given length.
+	 * @param length the length of the password.
+	 * @return a string of the given length.
+	 */
 	public static String generate(int length){
 		Random rnd = new Random();
 		rnd.setSeed(System.currentTimeMillis());
@@ -56,9 +61,5 @@ public class PasswordGenerator {
 		
 		return ret;
 		
-	}
-	
-	public static void main(String args[]){
-		System.out.println(generate(8));
 	}
 }
