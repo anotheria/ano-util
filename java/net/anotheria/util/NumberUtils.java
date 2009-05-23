@@ -205,6 +205,12 @@ public final class NumberUtils {
 		return ret;
 	}
 	
+	/**
+	 * Returns true if the number parameter can pass a luhn check. 
+	 * @see http://en.wikipedia.org/wiki/Luhn_check for details on luhn algorithm.
+	 * @param aNumber the number to check.
+	 * @return true if the number passes the check or false otherwise.
+	 */
 	public static boolean luhnCheckNumber(String aNumber){
 		int sum = 0;
 		int l = aNumber.length()-1;
@@ -212,7 +218,7 @@ public final class NumberUtils {
 		for (int i=0; i<aNumber.length(); i++){
 			int n = aNumber.charAt(l-i)-'0';
 			if (n<0 || n>10)
-				throw new RuntimeException("Not a digit: "+aNumber.charAt(l-i)+" in "+aNumber+" at "+(l-i));
+				throw new IllegalArgumentException("Not a digit: "+aNumber.charAt(l-i)+" in "+aNumber+" at "+(l-i));
 			if (doDouble){
 				int tmp = n*2;
 				sum += tmp%10;
@@ -226,6 +232,12 @@ public final class NumberUtils {
 		return sum % 10 == 0;
 	}
 	
+	/**
+	 * Returns a string representation of the parameter in which each three digit part of the number is separated by a '.'. 
+	 * For example 123456 -> 123.456. 1234567 -> 1.234.567 and so on.
+	 * @param number the number to transform.
+	 * @return transfored (doted) version of the parameter.
+	 */
 	public static String getDotedNumber(long number){
 		String n = StringUtils.reverseString(""+number);
 		StringBuilder ret = new StringBuilder();
