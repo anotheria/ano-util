@@ -131,15 +131,32 @@ public final class NumberUtils {
 			
 	}
 
+	/**
+	 * Returns a short date string in form of "YY.MM.DD" or "YYYY.MM.DD" depending on the year parameter.  
+	 * @param day day parameter.
+	 * @param month month parameter.
+	 * @param year year parameter.
+	 * @return a string of form: "year.month.day", at least digits for each value.
+	 */
 	public static String getDateString(int day, int month, int year){
 		return itoa(day,2)+"."+itoa(month,2)+"."+itoa(year,2);
 	}
-	
+
+	/**
+	 * Returns the ISO8601 confirmant date string for the given time. 
+	 * @param millis the time in millis since 01.01.1970.
+	 * @return string in form of YYYY-MM-DD.
+	 */
 	public static String makeISO8601DateString(long millis){
 		Date d = new Date(millis);
 		return itoa(d.year,4)+"-"+itoa(d.month)+"-"+itoa(d.day);
 	}
 	
+	/**
+	 * Creates an ISO8601 confirm timestamp string in form of YYYY-MM-DDTHH:MM:SS,zzz.
+	 * @param millis time in millis.
+	 * @return string that represents the time parameter as iso8601 timestamp.
+	 */
 	public static String makeISO8601TimestampString(long millis){
 		String ret = makeISO8601DateString(millis);
 		Date d = new Date(millis);
@@ -169,6 +186,12 @@ public final class NumberUtils {
 		return getCurrencyValue((double)aValue);
 	}
 
+	/**
+	 * Returns rounded value as currency value (2 digits precision). This method uses 
+	 * dot as separator regardless of the locale.
+	 * @param aValue the value to convert.
+	 * @return a currency value like 20.02.
+	 */
 	public static String getCurrencyValue(double aValue){
 		aValue += 0.005;
 		int tmp = (int)(aValue*100);
@@ -214,5 +237,8 @@ public final class NumberUtils {
 		return ret.toString();
 	}
 	
+	/**
+	 * Ensure class can't be instantiated.
+	 */
 	private NumberUtils(){}
 }
