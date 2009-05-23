@@ -1,15 +1,18 @@
 package net.anotheria.util;
 
 /**
- * @author another
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- * To enable and disable the creation of type comments go to
- * Window>Preferences>Java>Code Generation.
+ * The subject in the subject observer pattern.
  */
 public interface ISubject {
-	public void addObserver(IObserver observer);
-	public void removeObserver(IObserver observer);
+	/**
+	 * Adds an observer to this subject.
+	 * @param observer the observer to add.
+	 */
+	void addObserver(IObserver observer);
+	/**
+	 * Removes an observer from this subject.
+	 * @param observer the observer to remove.
+	 */
+	void removeObserver(IObserver observer);
 }
  
