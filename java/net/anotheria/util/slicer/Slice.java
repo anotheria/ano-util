@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Slice<T> {
 	/**
-	 * The requested segment
+	 * The requested segment.
 	 */
 	private Segment segment;
 	/**
@@ -27,15 +27,21 @@ public class Slice<T> {
 	
 	/**
 	 * Creates a new slice for the given segment.
-	 * @param aSegment
+	 * @param aSegment the requested segment.
 	 */
 	public Slice(Segment aSegment){
 		segment = aSegment;
 	}
 	
+	/**
+	 * Returns the segment this slice has been initialized with.
+	 * @return
+	 */
 	public Segment getSegment() {
 		return segment;
 	}
+	
+	
 	void setSegment(Segment aSegment) {
 		segment = aSegment;
 	}
@@ -74,6 +80,10 @@ public class Slice<T> {
 		return segment.getElementsPerSlice();
 	}
 
+	/**
+	 * Returns the data contained in this slice.
+	 * @return a list with data items for this slice.
+	 */
 	public List<T> getSliceData() {
 		return sliceData;
 	}
