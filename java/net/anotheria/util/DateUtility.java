@@ -249,7 +249,7 @@ public abstract class DateUtility {
     }
 
     /**
-     * put your documentation comment here
+     * Returns the date for the first day of a "calendar week" for a given year.
      * @param week
      * @param year
      * @return
@@ -267,23 +267,4 @@ public abstract class DateUtility {
         return  d;
     }
     
-    public static void main(String a[]){
-    	System.out.println(new Date(1237666199259L));
-    }
  }
-/* ------------------------------------------------------------------------- *
- $Log: DateUtility.java,v $
- Revision 1.1  2004/02/06 21:41:49  lro
- *** empty log message ***
-
- Revision 1.1.1.1  2004/02/04 16:31:11  lro
- initial checkin
-
- Revision 1.1  2004/01/30 22:06:41  cvs
- *** empty log message ***
-
- Revision 1.1.1.1  2002/02/05 16:26:21  another
- no message
-
- ** ------------------------------------------------------------------------- */
-
