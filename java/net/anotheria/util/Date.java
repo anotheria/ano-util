@@ -54,10 +54,7 @@ public class Date implements Serializable{
     
     /** String array of month used for printing via <code>toString()</code> method*/
     public static final String[] MONTH     = {null,"Jan","Feb","Mar","Apr","Mai","Jun",
-                                               "Jul","Aug","Sep","Okt","Nov","Dec"};
-
-	public static final String[] FULLMONTH_DE = {null, "Januar", "Februar", "März", "April",
- 		"Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"};
+                                               "Jul","Aug","Sep","Oct","Nov","Dec"};
 
     /** Maximum nubers of days in month in a not leapyear*/
     public static final int[]  DAY_OF_MONTH= {-1,31,28,31,30,31,30,31,31,30,31,30,31};
@@ -91,6 +88,10 @@ public class Date implements Serializable{
         this.w_day = calcDay(day,month,year);
     }
 
+    /**
+     * Creates a new date object which correspongs to the given time in millis since 01.01.1970.
+     * @param millis
+     */
     public Date(long millis){
         java.util.Date d = new java.util.Date(millis);
         GregorianCalendar cal = new GregorianCalendar();
@@ -156,15 +157,18 @@ public class Date implements Serializable{
         return true;
     }
     
+    /**
+     * Returns true if this date is a valid date. For example 30 Februar is not a valid date.
+     * @return
+     */
     public boolean isValid(){
     	return isValid(this);
     }
 
     /**
      * Returns the string representation of this date.
-     * changed by L.R. 30.06.2000.
      */
-    public String toString(){
+    @Override public String toString(){
 		String ret = w_day;
  		ret+=" "+NumberUtils.itoa(day, 2) + ".";
 		ret+= NumberUtils.itoa(month,2)+"."+year;
@@ -288,7 +292,7 @@ public class Date implements Serializable{
         return d.getTime();
     }
 
-	public boolean equals(Object o){
+	@Override public boolean equals(Object o){
  		return ( o instanceof Date ) ? 
  			((Date)o).toMill()==toMill() : 
  			false;
@@ -343,10 +347,17 @@ public class Date implements Serializable{
 		return year;
 	}
 	
+	/**
+	 * Returns the ISO8601 timestamp of this date.
+	 * @return
+	 */
 	public String toISO8601Timestamp(){
 		return NumberUtils.makeISO8601TimestampString(toMill());
 	}
 
+	/**
+	 * Returns this date as ISO8601 format.
+	 */
 	public String toISO8601Date(){
 		return NumberUtils.makeISO8601DateString(toMill());
 	}
