@@ -8,13 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLNode {
+	/**
+	 * Subnodes of this node.
+	 */
 	private List<XMLNode> nodes;
+	/**
+	 * Attributes of the node.
+	 */
 	private List<XMLAttribute> attributes;
 	
+	/**
+	 * The name of the node.
+	 */
 	private String name;
+	/**
+	 * The content of the node.
+	 */
 	private String content;
 	
-	
+	/**
+	 * Creates a new XMLNode.
+	 * @param aName
+	 */
 	public XMLNode(String aName){
 		name = aName;
 	
@@ -91,7 +106,7 @@ public class XMLNode {
 		setContent(l.toString());
 	}
 
-	public String toString(){
+	@Override public String toString(){
 		return "name: "+name+", "+" attributes: "+attributes+", nodes: "+nodes;
 	}
 	
