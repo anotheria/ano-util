@@ -47,8 +47,8 @@ public class ExecutionTimerTest {
 		assertEquals(10, timer.getExecutionTimerEntriesOrderedByKeys().size());
 		assertEquals(10, timer.getExecutionTimerEntriesOrderedByTime().size());
 		
-		assertTrue(timer.getTotalExecutionTime()>1000-20);
-		assertTrue(timer.getTotalExecutionTime()<1000+20);
+		assertTrue(timer.getTotalExecutionTime()>1000-50);
+		assertTrue(timer.getTotalExecutionTime()<1000+50);
 
 		timer.printExecutionTimesOrderedByCreation();
 		timer.printExecutionTimesOrderedByTime();
