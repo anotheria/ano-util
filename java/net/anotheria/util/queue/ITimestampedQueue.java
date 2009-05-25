@@ -1,14 +1,21 @@
 package net.anotheria.util.queue;
 
 /**
- * TODO Please remind lrosenberg to comment this class.
+ * A queue that stores timestamps of operations.
  * @author lrosenberg
  * Created on 08.11.2004
  */
 public interface ITimestampedQueue<T> extends IQueue<T>{
+	/**
+	 * Returns the time of the last put.
+	 * @return
+	 */
+	long getLastPutTimestamp();
 	
-	public long getLastPutTimestamp();
-	
-	public long getLastGetTimestamp();
+	/**
+	 * Returns the time of the last get.
+	 * @return
+	 */
+	long getLastGetTimestamp();
 
 }

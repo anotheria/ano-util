@@ -14,31 +14,21 @@ public class TimestampedQueueImpl<T> extends QueueImpl<T> implements ITimestampe
 		super(size);
 	}
 	
-	
-	/* (non-Javadoc)
-	 * @see de.friendscout.vincent.util.IQueue#nextElement()
-	 */
-	public T nextElement() {
+	@Override public T nextElement() {
 		lastGet = System.currentTimeMillis();
 		return super.nextElement();
 	}
 
-	/* (non-Javadoc)
-	 * @see de.friendscout.vincent.util.IQueue#putElement(java.lang.Object)
-	 */
-	public void putElement(T o) {
+	@Override public void putElement(T o) {
 		lastPut = System.currentTimeMillis();
 		super.putElement(o);
 	}
 	
-	public long getLastPutTimestamp(){
+	@Override public long getLastPutTimestamp(){
 		return lastPut;
 	}
 	
-	public long getLastGetTimestamp(){
+	@Override public long getLastGetTimestamp(){
 		return lastGet;
 	}
-	
-	
-
 }

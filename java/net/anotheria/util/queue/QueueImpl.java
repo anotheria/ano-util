@@ -10,16 +10,34 @@ import java.util.List;
  */
 public class QueueImpl<T> implements IQueue<T>{
 	
-	
+	/**
+	 * Listeners of the queue.
+	 */
 	private List<IQueueListener> listeners;
 	
+	/**
+	 * Current queue element.
+	 */
 	private int currentElement;
+	/**
+	 * Last queue element.
+	 */
 	private int lastElement;
+	/**
+	 * Size of the queue.
+	 */
 	private int size;
 	
+	/**
+	 * Elements of the queue.
+	 */
 	private Object[] elements;
 	
 	
+	/**
+	 * Creates a new QueueImpl.
+	 * @param size
+	 */
 	QueueImpl(int size){
 		listeners = new ArrayList<IQueueListener>();
 		currentElement = -1;
@@ -29,10 +47,7 @@ public class QueueImpl<T> implements IQueue<T>{
 	}
 	
 
-	/* (non-Javadoc)
-	 * @see de.friendscout.vincent.util.IQueue#addListener(de.friendscout.vincent.util.IQueueListener)
-	 */
-	public void addListener(IQueueListener listener) {
+	@Override public void addListener(IQueueListener listener) {
 		listeners.add(listener);
 	}
 
@@ -45,17 +60,11 @@ public class QueueImpl<T> implements IQueue<T>{
 		return elements.length - currentElement + lastElement;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.friendscout.vincent.util.IQueue#hasElements()
-	 */
-	public synchronized boolean hasElements() {
+	@Override public synchronized boolean hasElements() {
 		return currentElement != lastElement;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.friendscout.vincent.util.IQueue#nextElement()
-	 */
-	public synchronized T nextElement() {
+	@Override public synchronized T nextElement() {
 		if (!hasElements())
 			throw new RuntimeException("No elements");
 		currentElement++;
@@ -69,7 +78,7 @@ public class QueueImpl<T> implements IQueue<T>{
 	/**
 	 * Puts a new element in the queue. If the queue is full a runtime exception ("Queue overflow.") is thrown.
 	 */
-	public synchronized void putElement(T o){
+	@Override public synchronized void putElement(T o){
 		lastElement++;
 		if (lastElement==size)
 			lastElement=0;
@@ -87,11 +96,11 @@ public class QueueImpl<T> implements IQueue<T>{
 	/* (non-Javadoc)
 	 * @see de.friendscout.vincent.util.IQueue#removeListener(de.friendscout.vincent.util.IQueueListener)
 	 */
-	public void removeListener(IQueueListener listener) {
+	@Override public void removeListener(IQueueListener listener) {
 		listeners.remove(listener);
 	}
 	
-	public String toString(){
+	@Override public String toString(){
 		return "queue size: "+size+" last: "+lastElement+" curr: "+currentElement + " count: " + getElementCount();
 	}
 	

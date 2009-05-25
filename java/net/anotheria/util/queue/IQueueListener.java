@@ -10,16 +10,16 @@ public interface IQueueListener {
 	 * Called if the queue is emptied.
 	 *
 	 */
-	public void queueEmpty();
+	void queueEmpty();
 	/**
 	 * Called if an element put into the queue.
 	 *
 	 */
-	public void queueElementAdded();
+	void queueElementAdded();
 	/**
 	 * Called if the queue is full.
 	 *
 	 */
-	public void queueFull();
+	void queueFull();
 	 
 }
