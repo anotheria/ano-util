@@ -12,13 +12,13 @@ public class CryptToolTest {
 	
 	@Test public void encryptAndDecrypt(){
 		String message = "I Love You!";
-		String crypted = new String(crypt.encrypt(message));
+		byte[] crypted = crypt.encrypt(message);
 		
 		assertFalse(message.equals(crypted));
 		assertFalse(crypted==null);
-		assertFalse(crypted.length()==0);
+		assertFalse(crypted.length==0);
 		
-		String decrypted = new String(crypt.decrypt(crypted.getBytes())).trim();
+		String decrypted = new String(crypt.decrypt(crypted)).trim();
 		assertEquals(message, decrypted);
 	}
 
@@ -75,13 +75,13 @@ public class CryptToolTest {
 	}
 	
 	private void testCrypt(String message){
-		String crypted = new String(crypt.encrypt(message));
+		byte[] crypted = crypt.encrypt(message);
 		
 		assertFalse(message.equals(crypted));
 		assertFalse(crypted==null);
-		assertFalse(crypted.length()==0);
+		assertFalse(crypted.length==0);
 		
-		String decrypted = new String(crypt.decrypt(crypted.getBytes())).trim();
+		String decrypted = new String(crypt.decrypt(crypted)).trim();
 		System.out.println("Trying to check whether "+message+" is equal to "+decrypted);
 		assertEquals(message, decrypted);
 
