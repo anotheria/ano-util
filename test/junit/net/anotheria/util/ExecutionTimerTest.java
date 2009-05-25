@@ -20,8 +20,8 @@ public class ExecutionTimerTest {
 		t.stopExecution("sleep");
 		t.printExecutionTimesOrderedByCreation();
 		
-		assertTrue(t.getExecutionTime("sleep")>(1500-10));
-		assertTrue(t.getExecutionTime("sleep")<(1500+10));
+		assertTrue(t.getExecutionTime("sleep")>(1500-20));
+		assertTrue(t.getExecutionTime("sleep")<(1500+20));
 	}
 
 	@Test public void testFailover() throws InterruptedException{
@@ -30,8 +30,8 @@ public class ExecutionTimerTest {
 		timer.continueExecution("sleep");
 		Thread.sleep(100);
 		timer.stopExecution("sleep");
-		assertTrue(timer.getExecutionTime("sleep")>(100-15));
-		assertTrue(timer.getExecutionTime("sleep")<(100+15));		
+		assertTrue(timer.getExecutionTime("sleep")>(100-20));
+		assertTrue(timer.getExecutionTime("sleep")<(100+20));		
 	}
 	
 	@Test public void testMultiple() throws InterruptedException{
@@ -47,8 +47,8 @@ public class ExecutionTimerTest {
 		assertEquals(10, timer.getExecutionTimerEntriesOrderedByKeys().size());
 		assertEquals(10, timer.getExecutionTimerEntriesOrderedByTime().size());
 		
-		assertTrue(timer.getTotalExecutionTime()>1000-15);
-		assertTrue(timer.getTotalExecutionTime()<1000+15);
+		assertTrue(timer.getTotalExecutionTime()>1000-20);
+		assertTrue(timer.getTotalExecutionTime()<1000+20);
 
 		timer.printExecutionTimesOrderedByCreation();
 		timer.printExecutionTimesOrderedByTime();
