@@ -36,14 +36,14 @@ public class QueueImpl<T> implements IQueue<T>{
 	
 	/**
 	 * Creates a new QueueImpl.
-	 * @param size
+	 * @param aSize
 	 */
-	QueueImpl(int size){
+	QueueImpl(int aSize){
 		listeners = new ArrayList<IQueueListener>();
 		currentElement = -1;
 		lastElement = -1;
-		this.size = size;
-		elements = new Object[size];
+		this.size = aSize;
+		elements = new Object[aSize];
 	}
 	
 
