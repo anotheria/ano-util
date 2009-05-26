@@ -65,35 +65,35 @@ public class Date implements Serializable{
      * without hour an minutes notification. The minuts and hours have
      * a value of -1 The day name will be
      * calculated automaticly ba the <code>calcDay()</code> function.
-     * @param day the day
-     * @param month the month
-     * @param year the year
+     * @param aDay the day
+     * @param aMonth the month
+     * @param aYear the year
      */
-    public Date(int day, int month, int year) {
-        this(day, month, year, -1,-1);
+    public Date(int aDay, int aMonth, int aYear) {
+        this(aDay, aMonth, aYear, -1,-1);
     }
 
     /** Default constructor. Create a date object. The day name will be
      * calculated automaticly ba the <code>calcDay()</code> function.
-     * @param day the day
-     * @param month the month
-     * @param year the year
+     * @param aDay the day
+     * @param aMonth the month
+     * @param aYear the year
      */
-    public Date(int day, int month, int year, int hour, int min){
-        this.month = month;
-        this.day   = day;
-        this.year  = year;
-        this.hour  = hour;
-        this.min   = min;
-        this.wDay = calcDay(day,month,year);
+    public Date(int aDay, int aMonth, int aYear, int aHour, int aMin){
+        this.month = aMonth;
+        this.day   = aDay;
+        this.year  = aYear;
+        this.hour  = aHour;
+        this.min   = aMin;
+        this.wDay = calcDay(aDay,aMonth,aYear);
     }
 
     /**
      * Creates a new date object which correspongs to the given time in millis since 01.01.1970.
-     * @param millis
+     * @param aMillis
      */
-    public Date(long millis){
-        java.util.Date d = new java.util.Date(millis);
+    public Date(long aMillis){
+        java.util.Date d = new java.util.Date(aMillis);
         GregorianCalendar cal = new GregorianCalendar();
      	cal.setGregorianChange(new java.util.Date(Long.MIN_VALUE));
         cal.setTime(d);
@@ -115,14 +115,14 @@ public class Date implements Serializable{
     }
 
     /** Calculate the day of week.
-     * @param day the day
-     * @param month the month
-     * @param year the year
+     * @param aDay the day
+     * @param aMonth the month
+     * @param aYear the year
      * @return the day of week for given date
      **/
-    private String calcDay(int day, int month, int year){
+    private String calcDay(int aDay, int aMonth, int aYear){
 		 //System.out.println("Month="+month);
-         GregorianCalendar cal = new GregorianCalendar(year/*-1900*/, (month-1), day);
+         GregorianCalendar cal = new GregorianCalendar(aYear/*-1900*/, (aMonth-1), aDay);
          int dow = cal.get(GregorianCalendar.DAY_OF_WEEK);
 	     //dow = (dow+4)%7;
         // if(dow == 0)
@@ -132,27 +132,27 @@ public class Date implements Serializable{
     }
 
     /** Check date
-     * @param d1 the date object to check it
+     * @param aD1 the date object to check it
      * @return true if and only if the given data object is valid
      */
-    public static boolean isValid(Date d1){
-        if(d1.month < 1 || d1.month > 12)
+    public static boolean isValid(Date aD1){
+        if(aD1.month < 1 || aD1.month > 12)
             return false;
-        if(d1.day < 1)
+        if(aD1.day < 1)
             return false;
         GregorianCalendar cal = new GregorianCalendar();
-        if(d1.month == 2 && cal.isLeapYear(d1.year) && d1.day > 29)
+        if(aD1.month == 2 && cal.isLeapYear(aD1.year) && aD1.day > 29)
             return false;
-        if(d1.month == 2 && !cal.isLeapYear(d1.year) && d1.day > 28)
+        if(aD1.month == 2 && !cal.isLeapYear(aD1.year) && aD1.day > 28)
             return false;
-        if(d1.month !=2 && d1.day > DAY_OF_MONTH[d1.month])
+        if(aD1.month !=2 && aD1.day > DAY_OF_MONTH[aD1.month])
             return false;
-        if(d1.hour < -1 || d1.hour > 23)
+        if(aD1.hour < -1 || aD1.hour > 23)
             return false;
-        if(d1.min <-1 || d1.min > 59)
+        if(aD1.min <-1 || aD1.min > 59)
             return false;
-        String pWDay = d1.calcDay(d1.day,d1.month,d1.year);
-        if(!pWDay.equals(d1.wDay))
+        String pWDay = aD1.calcDay(aD1.day,aD1.month,aD1.year);
+        if(!pWDay.equals(aD1.wDay))
             return false;
         return true;
     }
@@ -221,8 +221,8 @@ public class Date implements Serializable{
             case DD__MM__YYYY      : return parseShort(aDateStrg,'-');
             case DD_MM_YYYY_HHMM   : return parseLong(aDateStrg,' ');
             case DD_MM_YYYY        : return parseShort(aDateStrg,' ');
-        }
-        return null;
+            default: return null; 
+        }        
     }
 
     /**
@@ -303,6 +303,11 @@ public class Date implements Serializable{
 	 */
 	public int getDay() {
 		return day;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	/**

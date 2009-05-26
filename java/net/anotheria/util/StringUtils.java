@@ -239,9 +239,9 @@ public final class StringUtils{
 
 	private static class StringPair{
 	    public String first,second;
-		StringPair(String first,String second){
-			this.first = first;
-			this.second = second;
+		StringPair(String aFirst,String aSecond){
+			this.first = aFirst;
+			this.second = aSecond;
 		}
 		StringPair(){
 			this(null,null);

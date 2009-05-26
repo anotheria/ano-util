@@ -40,10 +40,10 @@ public enum TimeUnit {
 	
 	/**
 	 * Creates a new TimeUnit with given factor.
-	 * @param inMills
+	 * @param aInMills
 	 */
-	private TimeUnit(long inMills){
-		this.inMills = inMills;
+	private TimeUnit(long aInMills){
+		this.inMills = aInMills;
 	}
 	/**
 	 * Returns the duration of the period in milliseconds.

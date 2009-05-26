@@ -19,9 +19,9 @@ public class ExecutionTimer {
 	/**
 	 * Creates a new ExecutionTimer.
 	 */
-    public ExecutionTimer(String name) {
+    public ExecutionTimer(String aName) {
 		timers = new Hashtable<String, TimerEntry>();
-		this.name = name;
+		this.name = aName;
     }
 
 	/**
@@ -36,33 +36,33 @@ public class ExecutionTimer {
 	 * The key must be an unique identifier in one ExecutionTimer.
 	 *
 	 */
-	public void startExecution(String key){
-		TimerEntry entry = new TimerEntry(key);
-		timers.put(key, entry);
+	public void startExecution(String aKey){
+		TimerEntry entry = new TimerEntry(aKey);
+		timers.put(aKey, entry);
 	}
 	
-	public void continueExecution(String key){
+	public void continueExecution(String aKey){
 		try{
-			TimerEntry entry = getTimerEntry(key);
+			TimerEntry entry = getTimerEntry(aKey);
 			entry.continueExecution();
 		}catch(Exception e){
-			startExecution(key);
+			startExecution(aKey);
 		}
 	}
 
 	/**
 	 * Notifies the timer, that the execution of the process assigned with the given key stoped.
 	 */
-	public void stopExecution(String key){
-		getTimerEntry(key).stop();
+	public void stopExecution(String aKey){
+		getTimerEntry(aKey).stop();
 	}
 
 	/**
 	 * Returns the execution time for the given process. If the process haven't been started,
 	 * an exception will be thrown. If the process is still running, the start time will be returned.
 	 */
-	public long getExecutionTime(String key){
-		return getTimerEntry(key).getTime();
+	public long getExecutionTime(String aKey){
+		return getTimerEntry(aKey).getTime();
 	}
 
 	/**
@@ -132,35 +132,35 @@ public class ExecutionTimer {
 	}
 
 
-	private Vector<TimerEntry> sortVector(Vector<TimerEntry> src, int method){
+	private Vector<TimerEntry> sortVector(Vector<TimerEntry> aSrc, int aMethod){
 	    boolean changed = true;
 		while(changed){
 		    changed = false;
-			for (int i=0; i<src.size()-1; i++){
-			    TimerEntry first = (TimerEntry)src.elementAt(i);
-				TimerEntry second = (TimerEntry)src.elementAt(i+1);
-				int result = compare(first, second, method);
+			for (int i=0; i<aSrc.size()-1; i++){
+			    TimerEntry first = (TimerEntry)aSrc.elementAt(i);
+				TimerEntry second = (TimerEntry)aSrc.elementAt(i+1);
+				int result = compare(first, second, aMethod);
 				if (result>0){
 				    changed = true;
-					src.setElementAt(second,i);
-					src.setElementAt(first,i+1);
+					aSrc.setElementAt(second,i);
+					aSrc.setElementAt(first,i+1);
 				}
 			}
 		}
-		return src;
+		return aSrc;
 	}
 
-	private int compare(TimerEntry first, TimerEntry second, int method){
-		switch(method){
+	private int compare(TimerEntry aFirst, TimerEntry aSecond, int aMethod){
+		switch(aMethod){
 			case METHOD_CREATION:
-				return first.id < second.id ? -1 : first.id>second.id ? 1 : 0;
+				return aFirst.id < aSecond.id ? -1 : aFirst.id>aSecond.id ? 1 : 0;
 			case METHOD_TIME:
-				long time1 = first.getTime();
-				long time2 = second.getTime();
+				long time1 = aFirst.getTime();
+				long time2 = aSecond.getTime();
 				return time1 < time2 ? -1 : time1 > time2 ? 1 : 0;
 		    case METHOD_KEY:
 			default:
-				return first.key.compareToIgnoreCase(second.key);
+				return aFirst.key.compareToIgnoreCase(aSecond.key);
 		}
 	}
 
@@ -172,10 +172,10 @@ public class ExecutionTimer {
 		return ret;
 	}
 
-	private TimerEntry getTimerEntry(String key){
-	    TimerEntry entry = (TimerEntry) timers.get(key);
+	private TimerEntry getTimerEntry(String aKey){
+	    TimerEntry entry = (TimerEntry) timers.get(aKey);
 		if (entry==null)
-			throw new RuntimeException("No such key:\""+key+"\"");
+			throw new RuntimeException("No such key:\""+aKey+"\"");
 		return entry;
 	}
 
@@ -189,8 +189,8 @@ public class ExecutionTimer {
 		/**
 		 * Creates new timer entry with given key and next creation id and starts it.
 		 */
-		TimerEntry(String key){
-			this.key = key;
+		TimerEntry(String aKey){
+			this.key = aKey;
 			id = nextID.incrementAndGet();
 			start();
 			previousTime = 0L;
@@ -239,8 +239,8 @@ public class ExecutionTimer {
 		/**
 		 * Returns a method dependent string representation of this object.
 		 */
-		public String toString(int method){
-			switch(method){
+		public String toString(int aMethod){
+			switch(aMethod){
 				case METHOD_CREATION:
 					return toStringCreation();
 				case METHOD_TIME:
