@@ -748,7 +748,7 @@ public final class StringUtils{
 		return src.substring(0, end);
 	}
 	
-	public static<T> String concatenateTokens(Collection<T> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
+	public static <T> String concatenateTokens(Collection<T> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
 		StringBuilder ret = new StringBuilder();
 		boolean begin = true;
 		for(T pT:tokens){
@@ -764,7 +764,7 @@ public final class StringUtils{
 		return ret.toString();
 	}
 	
-	public static<T> String concatenateTokens(Collection<T> tokens, String delimiterSequence){
+	public static <T> String concatenateTokens(Collection<T> tokens, String delimiterSequence){
 		StringBuilder ret = new StringBuilder();
 		boolean begin = true;
 		for(T pT:tokens){

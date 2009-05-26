@@ -6,7 +6,7 @@ package net.anotheria.util.queue;
  *
  * @param <T>
  */
-public interface IQueueWorker<T extends Object>{
+public interface IQueueWorker<T extends Object> {
 	/**
 	 * Called to perform some work.
 	 * @param workingElement

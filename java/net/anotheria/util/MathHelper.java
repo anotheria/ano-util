@@ -11,7 +11,7 @@ public class MathHelper {
      * @param precision 1 - Integer.MaxValue
      * @return  rounded Double Vector with precision
      */
-    public static Vector<String> getFormattedStringVector (Vector<Double> values, int precision) {
+    public static Vector<String> getFormattedStringVector(Vector<Double> values, int precision) {
         Vector<String> result = new Vector<String>();
         for (int i = 0; i < values.size(); i++) {
             result.addElement(getFormattedString(values.elementAt(i), precision));
@@ -25,7 +25,7 @@ public class MathHelper {
      * @param precision
      * @return
      */
-    public static String getFormattedString (Double value, int precision) {
+    public static String getFormattedString(Double value, int precision) {
         boolean negativ = false;
         String start = value.toString();
 

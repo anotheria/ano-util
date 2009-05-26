@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * An implementation of a bubble sorter for EQS FI Sorter Pattern.
  */
-public class BubbleSorter<T extends IComparable> extends AbstractSorter<T>{
+public class BubbleSorter<T extends IComparable> extends AbstractSorter<T> {
 
     public List<T> sort(Enumeration<T> source, SortType method){
            ArrayList<T> toSort = new ArrayList<T>();

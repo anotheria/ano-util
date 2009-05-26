@@ -5,7 +5,7 @@ package net.anotheria.util.queue;
  * @author lrosenberg
  * Created on 08.11.2004
  */
-public class TimestampedQueueImpl<T> extends QueueImpl<T> implements ITimestampedQueue<T>{
+public class TimestampedQueueImpl<T> extends QueueImpl<T> implements ITimestampedQueue<T> {
 	
 	private long lastPut;
 	private long lastGet;

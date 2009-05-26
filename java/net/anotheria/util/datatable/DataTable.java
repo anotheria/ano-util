@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class DataTable implements Iterable<DataRow>{
+public class DataTable implements Iterable<DataRow> {
 
 	private DataHeader header;
 	private List<DataRow> rows;

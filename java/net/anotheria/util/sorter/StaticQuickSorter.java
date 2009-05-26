@@ -9,7 +9,7 @@ import java.util.List;
 /**
  *  just an implementation of the well known QuickSort Algorithm
  */
-public final class StaticQuickSorter{
+public final class StaticQuickSorter {
 
 	/**
 	 * Sorts a collection of comparables
@@ -18,7 +18,7 @@ public final class StaticQuickSorter{
 	 * @param sType the sort type (sort method and order).
 	 * @return
 	 */
-	public static<T extends IComparable> List<T> sort(Collection<T> source, SortType sType) {
+	public static <T extends IComparable> List<T> sort(Collection<T> source, SortType sType) {
 		ArrayList<T> tmp = new ArrayList<T>(source.size());
 		tmp.addAll(source);
 		return sort(tmp, sType);
@@ -31,7 +31,7 @@ public final class StaticQuickSorter{
 	 *@param  sType   SortType  ...  how you wanna sort the Vector
 	 *@return         the sorted Vector
 	 */
-	public static<T extends IComparable> List<T> sort(List<T> source, SortType sType) {
+	public static <T extends IComparable> List<T> sort(List<T> source, SortType sType) {
 		boolean sortOrder = sType.getSortOrder();
 		int sortAfter = sType.getSortBy();
         
@@ -48,7 +48,7 @@ public final class StaticQuickSorter{
 		return source;
 	}
 
-	private static<T extends IComparable> void sort(List<T> source, int start, int end, boolean wanted, int sortAfter) {
+	private static <T extends IComparable> void sort(List<T> source, int start, int end, boolean wanted, int sortAfter) {
 		int mid;
 		if (start < end) {
 			mid = partition(source, start, end, wanted, sortAfter);
@@ -57,7 +57,7 @@ public final class StaticQuickSorter{
 		}
 	}
 
-    private static<T extends IComparable> List<T> upsideDown(List<T> src){
+    private static <T extends IComparable> List<T> upsideDown(List<T> src){
         if(src == null)
             return null;
         List<T> ret = new ArrayList<T>(src.size());
@@ -85,7 +85,7 @@ public final class StaticQuickSorter{
         return true;
     }
 
-	private static<T extends IComparable> int partition(List<T> source, int start, int end, boolean wanted, int sortAfter) {
+	private static <T extends IComparable> int partition(List<T> source, int start, int end, boolean wanted, int sortAfter) {
 		int left;
 		int right;
 		T partElement = source.get(end);
@@ -112,7 +112,7 @@ public final class StaticQuickSorter{
 		return left;
 	}
 
-	private static<T extends IComparable> void swap(List<T> source, int i, int j) {
+	private static <T extends IComparable> void swap(List<T> source, int i, int j) {
 		T tmp = source.get(i);
 		source.set(i, source.get(j));
 		source.set(j, tmp);

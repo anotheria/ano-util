@@ -22,7 +22,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 
-public class InsertSorter<T extends IComparable> extends AbstractSorter<T>{
+public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
 
 	public List<T> sort(Enumeration<T> e, SortType how){
       	ListEntry<T> list = null;

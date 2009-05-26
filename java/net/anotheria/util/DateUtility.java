@@ -30,7 +30,7 @@ public abstract class DateUtility {
      * @param d2
      * @return
      */
-    public static boolean isAfter (Date d1, Date d2) {
+    public static boolean isAfter(Date d1, Date d2) {
         if (d1.year < d2.year)
             return  false;
         if (d1.year > d2.year)
@@ -62,7 +62,7 @@ public abstract class DateUtility {
      * @param d2
      * @return
      */
-    public static boolean isBefore (Date d1, Date d2) {
+    public static boolean isBefore(Date d1, Date d2) {
         return  isAfter(d2, d1);
     }
 
@@ -72,7 +72,7 @@ public abstract class DateUtility {
      * @param d2
      * @return
      */
-    public static boolean isSame (Date d1, Date d2) {
+    public static boolean isSame(Date d1, Date d2) {
         return  !isAfter(d2, d1) && !isBefore(d2, d1);
     }
 
@@ -81,7 +81,7 @@ public abstract class DateUtility {
      * @param d
      * @return
      */
-    public static Date nextDate (Date d) {
+    public static Date nextDate(Date d) {
         if (!Date.isValid(d))
             return  null;
         int day = d.day;
@@ -103,7 +103,7 @@ public abstract class DateUtility {
      * @param d
      * @return
      */
-    public static Date previousDate (Date d) {
+    public static Date previousDate(Date d) {
         if (!Date.isValid(d))
             return  null;
         int day = d.day;
@@ -125,7 +125,7 @@ public abstract class DateUtility {
      * @param date
      * @return
      */
-    public static GregorianCalendar toLocalTime (GregorianCalendar date) {
+    public static GregorianCalendar toLocalTime(GregorianCalendar date) {
         GregorianCalendar calLOC = new GregorianCalendar();
         GregorianCalendar calSRC = new GregorianCalendar(date.getTimeZone());
         int offset = -(calLOC.get(Calendar.HOUR_OF_DAY) - calSRC.get(Calendar.HOUR_OF_DAY))*60*60*1000;
@@ -139,7 +139,7 @@ public abstract class DateUtility {
      * put your documentation comment here
      * @param d
      */
-    public static String toDateOnly (Date d) {
+    public static String toDateOnly(Date d) {
         String ret = "";
         ret += (d.day < 10 ? "0" + d.day : "" + d.day) + ".";
         ret += (d.month < 10 ? "0" + d.month : "" + d.month) + ".";
@@ -152,7 +152,7 @@ public abstract class DateUtility {
      * @param d
      * @return
      */
-    public static String toDayAndMonthOnly (Date d) {
+    public static String toDayAndMonthOnly(Date d) {
         String ret = "";
         ret += (d.day < 10 ? "0" + d.day : "" + d.day) + ".";
         ret += (d.month < 10 ? "0" + d.month : "" + d.month) + ".";
@@ -164,7 +164,7 @@ public abstract class DateUtility {
      * @param d
      * @return
      */
-    public static String toTimeOnly (Date d) {
+    public static String toTimeOnly(Date d) {
         return  (d.hour < 10 ? "0" + d.hour : "" + d.hour) + ":" + (d.min < 10 ?
                 "0" + d.min : "" + d.min);
     }
@@ -174,7 +174,7 @@ public abstract class DateUtility {
      * @param date
      * @return
      */
-    public static String dynamicString (Date date) {
+    public static String dynamicString(Date date) {
         int year = date.year;
         int hour = date.hour;
         int min = date.min;
@@ -205,7 +205,7 @@ public abstract class DateUtility {
     /**
      * Returns the date which lies one week after given date.
      */
-    public static Date nextWeek (Date d) {
+    public static Date nextWeek(Date d) {
         Date d2 = new Date(d.toMill() + (7L*24*60*60*1000));
         return  d2;
     }
@@ -215,7 +215,7 @@ public abstract class DateUtility {
      * @added by lro, 28-10-00
      * bug with week calculation for days in november/december
      */
-    public static int getCalendarWeekForDate (Date date) {
+    public static int getCalendarWeekForDate(Date date) {
         //first we need to find where the 4. januar is (this is the first cal week).
         Date startOfFirstWeek = new Date(4, 1, date.year);
         Date startOfThisWeek;
@@ -254,7 +254,7 @@ public abstract class DateUtility {
      * @param year
      * @return
      */
-    public static Date getFirstDayOfWeek (int week, int year) {
+    public static Date getFirstDayOfWeek(int week, int year) {
         Date d = new Date(4, 1, year);
         while (!d.wDay.equals("Mo."))
             d = previousDate(d);

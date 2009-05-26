@@ -8,7 +8,7 @@ import java.util.List;
  * @author lrosenberg
  * @since 22.06.2004
  */
-public class QueueImpl<T> implements IQueue<T>{
+public class QueueImpl<T> implements IQueue<T> {
 	
 	/**
 	 * Listeners of the queue.

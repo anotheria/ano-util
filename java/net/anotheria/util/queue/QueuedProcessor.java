@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 
-public class QueuedProcessor <T extends Object> extends Thread{
+public class QueuedProcessor<T extends Object> extends Thread {
 	private String name;
 	private int counter;
 	private Logger log;

@@ -1,6 +1,6 @@
 package net.anotheria.util.sorter;
 
-class ListEntry<T extends IComparable>{
+class ListEntry<T extends IComparable> {
 	public T value;
 
  	public ListEntry<T> next;
