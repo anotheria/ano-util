@@ -3,7 +3,7 @@ package net.anotheria.util.queue;
 /**
  * An interface for a queue.
  * @author lrosenberg
- * Created on 22.06.2004
+ * @since 22.06.2004
  */
 public interface IQueue<T> {
 	/**

@@ -4,8 +4,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 
-
-
 public class QueuedProcessor <T extends Object> extends Thread{
 	private String name;
 	private int counter;
@@ -106,22 +104,22 @@ public class QueuedProcessor <T extends Object> extends Thread{
 	}
 
 	/**
-	 * @param element
-	 * @throws UnrecoverableQueueOverflowException
+	 * @param aElement
+	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
 	 */
-	public void addToQueue(T element) throws UnrecoverableQueueOverflowException{
-		addToQueueDontWait(element);
+	public void addToQueue(T aElement) throws UnrecoverableQueueOverflowException {
+		addToQueueDontWait(aElement);
 	}
 	
 	/**
 	 * Inserts the specified element at the tail of the processing queue if the queue is not full
      * 
-	 * @param element
-	 * @throws UnrecoverableQueueOverflowException if the processing queue is full
+	 * @param aElement
+	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
 	 */
-	public void addToQueueDontWait(T element) throws UnrecoverableQueueOverflowException{
+	public void addToQueueDontWait(T aElement) throws UnrecoverableQueueOverflowException {
 		try {
-			queue.putElement(element);
+			queue.putElement(aElement);
 		} catch (QueueOverflowException e1) {
 			overflowCount++;
 			// ok, first exception, we try to recover
@@ -132,11 +130,11 @@ public class QueuedProcessor <T extends Object> extends Thread{
 				}
 			}
 			try {
-				queue.putElement(element);
+				queue.putElement(aElement);
 			} catch (QueueOverflowException e2) {
 				throwAwayCount++;
-				log.error("couldn't recover from queue overflow, throwing away " + element);
-				throw new UnrecoverableQueueOverflowException("Element: " + element + ", stats:" + getStatsString());
+				log.error("couldn't recover from queue overflow, throwing away " + aElement);
+				throw new UnrecoverableQueueOverflowException("Element: " + aElement + ", stats:" + getStatsString());
 			}
 		}
 	}

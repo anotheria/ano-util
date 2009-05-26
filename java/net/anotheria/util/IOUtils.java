@@ -12,7 +12,7 @@ import net.anotheria.util.io.UnicodeReader;
 /**
  * TODO Please remain lrosenberg to comment IOUtils.java
  * @author lrosenberg
- * @created on Feb 8, 2005
+ * @since 02.8.2005
  */
 public class IOUtils {
     

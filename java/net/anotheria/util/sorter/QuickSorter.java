@@ -9,12 +9,10 @@ import java.util.List;
 /**
  *  just an implementation of the well known QuickSort Algorithm
  *
- *@author     Chris Hoffmann
- *@created    October 21, 2000
+ *@author Chris Hoffmann
+ *@since 21.10.2000
  */
 public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
-
-
 
 	/**
 	 *  sorts an Enumeration with the QuickSort Algorithm and returns a sorted Vector
