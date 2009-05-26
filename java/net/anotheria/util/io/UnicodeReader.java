@@ -65,9 +65,9 @@ public class UnicodeReader extends Reader {
 		this(in, Charset.forName(charsetName));
 	}
 
-	public UnicodeReader(InputStream in, Charset charset) {
-		internalIn = new PushbackInputStream(in, BOM_SIZE);
-		this.charset = charset;
+	public UnicodeReader(InputStream aIn, Charset aCharset) {
+		internalIn = new PushbackInputStream(aIn, BOM_SIZE);
+		this.charset = aCharset;
 	}
 
 	// public String getDefaultEncoding() {

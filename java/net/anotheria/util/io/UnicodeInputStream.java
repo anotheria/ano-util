@@ -55,9 +55,9 @@ public class UnicodeInputStream extends InputStream {
 
 	private static final int BOM_SIZE = 4;
 
-	UnicodeInputStream(InputStream in, String defaultEnc) {
-		internalIn = new PushbackInputStream(in, BOM_SIZE);
-		this.defaultEnc = defaultEnc;
+	UnicodeInputStream(InputStream aIn, String aDefaultEnc) {
+		internalIn = new PushbackInputStream(aIn, BOM_SIZE);
+		this.defaultEnc = aDefaultEnc;
 	}
 
 	public String getDefaultEncoding() {
