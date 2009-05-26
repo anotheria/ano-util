@@ -8,11 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.anotheria.util.StringUtils;
-
-
-import test.TestObject;
 import test.sizeof.simple1.A;
-import test.sizeof.simple1.B;
 import test.sizeof.simple1.C;
 
 public class SizeofUtility {
