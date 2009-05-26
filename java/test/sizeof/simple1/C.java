@@ -18,15 +18,15 @@ public class C extends B{
 		return s;
 	}
 
-	public void setS(String s) {
-		this.s = s;
+	public void setS(String aS) {
+		this.s = aS;
 	}
 
 	public Integer getBla() {
 		return bla;
 	}
 
-	public void setBla(Integer bla) {
-		this.bla = bla;
+	public void setBla(Integer aBla) {
+		this.bla = aBla;
 	}
 }
