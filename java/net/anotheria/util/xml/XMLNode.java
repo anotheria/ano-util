@@ -42,68 +42,68 @@ public class XMLNode {
 		return nodes;
 	}
 	
-	public void setChildren(List<XMLNode> children){
-		setNodes(children);
+	public void setChildren(List<XMLNode> aChildren){
+		setNodes(aChildren);
 	}
 
-	public void setNodes(List<XMLNode> nodes) {
-		this.nodes = nodes;
+	public void setNodes(List<XMLNode> aNodes) {
+		this.nodes = aNodes;
 	}
 	
-	public void addChildNode(XMLNode child){
-		nodes.add(child);
+	public void addChildNode(XMLNode aChild){
+		nodes.add(aChild);
 	}
 
 	public List<XMLAttribute> getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(List<XMLAttribute> attributes) {
-		this.attributes = attributes;
+	public void setAttributes(List<XMLAttribute> aAttributes) {
+		this.attributes = aAttributes;
 	}
 	
-	public void addAttribute(XMLAttribute attribute){
-		attributes.add(attribute);
+	public void addAttribute(XMLAttribute aAttribute){
+		attributes.add(aAttribute);
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String aName) {
+		this.name = aName;
 	}
 
 	public String getContent() {
 		return content;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setContent(String aContent) {
+		this.content = aContent;
 	}
 	
-	public void setContent(boolean content){
-		setContent(""+content);
+	public void setContent(boolean aContent){
+		setContent(""+aContent);
 	}
 	
-	public void setContent(float content){
-		setContent(""+content);
+	public void setContent(float aContent){
+		setContent(""+aContent);
 	}
 
-	public void setContent(double content){
-		setContent(""+content);
+	public void setContent(double aContent){
+		setContent(""+aContent);
 	}
 
-	public void setContent(long content){
-		setContent(""+content);
+	public void setContent(long aContent){
+		setContent(""+aContent);
 	}
 
-	public void setContent(int content){
-		setContent(""+content);
+	public void setContent(int aContent){
+		setContent(""+aContent);
 	}
 	
-	public void setContent(List l ){
-		setContent(l.toString());
+	public void setContent(List<Object> aL){
+		setContent(aL.toString());
 	}
 
 	@Override public String toString(){
@@ -123,50 +123,50 @@ public class XMLNode {
 		return ret;
 	}
 
-	public void write(PrintStream writer, int tabs) throws IOException{
+	public void write(PrintStream aWriter, int aTabs) throws IOException{
 		String attributeString = createAttributeString();
-		String ident = XMLHelper.makeIdent(tabs);
-		writer.println(ident+XMLHelper.entag(getName()+attributeString));
+		String ident = XMLHelper.makeIdent(aTabs);
+		aWriter.println(ident+XMLHelper.entag(getName()+attributeString));
 		
 		for (XMLNode child : nodes)
-			child.write(writer, tabs+1);
+			child.write(aWriter, aTabs+1);
 		
 		if (content!=null)
-			writer.println(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
+			aWriter.println(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
 		
-		writer.println(ident+XMLHelper.detag(getName()));
+		aWriter.println(ident+XMLHelper.detag(getName()));
 	} 
 
 	
-	public void write(PrintWriter writer, int tabs) throws IOException{
+	public void write(PrintWriter aWriter, int aTabs) throws IOException{
 		String attributeString = createAttributeString();
-		String ident = XMLHelper.makeIdent(tabs);
-		writer.write(ident+XMLHelper.entag(getName()+attributeString));
+		String ident = XMLHelper.makeIdent(aTabs);
+		aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
 		
 		for (XMLNode child : nodes)
-			child.write(writer, tabs+1);
+			child.write(aWriter, aTabs+1);
 		
 		if (content!=null)
-			writer.write(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
+			aWriter.write(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
 		
-		writer.write(ident+XMLHelper.detag(getName()));
+		aWriter.write(ident+XMLHelper.detag(getName()));
 	}
 
 	
-	public void write(OutputStreamWriter writer, int tabs) throws IOException{
+	public void write(OutputStreamWriter aWriter, int aTabs) throws IOException{
 		try{
 			System.out.println("writing "+getName()+" attr: "+attributes);
 			String attributeString = createAttributeString();
-			String ident = XMLHelper.makeIdent(tabs);
-			writer.write(ident+XMLHelper.entag(getName()+attributeString));
+			String ident = XMLHelper.makeIdent(aTabs);
+			aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
 			
 			for (XMLNode child : nodes)
-				child.write(writer, tabs+1);
+				child.write(aWriter, aTabs+1);
 			
 			if (content!=null)
-				writer.write(XMLHelper.makeIdent(tabs+1)+"<![CDATA["+content+"]]>\n");
+				aWriter.write(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
 			
-			writer.write(ident+XMLHelper.detag(getName()));
+			aWriter.write(ident+XMLHelper.detag(getName()));
 		}catch(Throwable t){
 			t.printStackTrace();
 		}

@@ -38,16 +38,16 @@ public class XMLTree {
 		return root;
 	}
 
-	public void setRoot(XMLNode root) {
-		this.root = root;
+	public void setRoot(XMLNode aRoot) {
+		this.root = aRoot;
 	}
 
 	public String getVersion() {
 		return version;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setVersion(String aVersion) {
+		this.version = aVersion;
 	}
 
 	/**
@@ -60,21 +60,21 @@ public class XMLTree {
 
 	/**
 	 * Sets the encoding.
-	 * @param encoding the encoding value.
+	 * @param aEncoding the encoding value.
 	 */
-	public void setEncoding(String encoding) {
-		this.encoding = encoding;
+	public void setEncoding(String aEncoding) {
+		this.encoding = aEncoding;
 	}
 	
 	/**
 	 * Writes the contents of the xml tree as xml to the given output writer.
-	 * @param writer the writer to write the output to.
+	 * @param aWriter the writer to write the output to.
 	 * @throws IOException rethrown if thrown by the writer.
 	 */
-	public void write(OutputStreamWriter writer) throws IOException{
-		writer.write("<?xml version="+XMLHelper.quote(version)+" encoding="+XMLHelper.quote(encoding)+"?>\n");
+	public void write(OutputStreamWriter aWriter) throws IOException{
+		aWriter.write("<?xml version="+XMLHelper.quote(version)+" encoding="+XMLHelper.quote(encoding)+"?>\n");
 		if (root!=null)
-			root.write(writer, 0);
+			root.write(aWriter, 0);
 	}
 
 }

@@ -26,8 +26,8 @@ public class XMLAttribute {
 	 * @param aName
 	 * @param aValue
 	 */
-	public XMLAttribute(String name, int  value){
-		this(name, ""+value);
+	public XMLAttribute(String aName, int  aValue){
+		this(aName, ""+aValue);
 	}
 
 	/**
@@ -52,8 +52,8 @@ public class XMLAttribute {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String aName) {
+		this.name = aName;
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class XMLAttribute {
 		return value;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setValue(String aValue) {
+		this.value = aValue;
 	}
 
 	public String toXMLString(){
