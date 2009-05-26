@@ -13,8 +13,8 @@ public class DataCell {
 		value = aValue;
 	}
 	
-	public void setValue(Object value) {
-		this.value = value;
+	public void setValue(Object aValue) {
+		this.value = aValue;
 	}
 
 	public Object getValue() {

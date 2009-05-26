@@ -13,39 +13,39 @@ public class DataTable implements Iterable<DataRow>{
 		this(10);
 	}
 
-	public DataTable(int initialCapacity){
-		rows = new ArrayList<DataRow>(initialCapacity);
+	public DataTable(int aInitialCapacity){
+		rows = new ArrayList<DataRow>(aInitialCapacity);
 	}
 	
 	public DataHeader getHeader() {
 		return header;
 	}
-	public void setHeader(DataHeader header) {
-		this.header = header;
+	public void setHeader(DataHeader aHeader) {
+		this.header = aHeader;
 	}
 	
-	public DataRow getRow(int index){
-		return rows.get(index);
+	public DataRow getRow(int aIndex){
+		return rows.get(aIndex);
 	}
 	
-	public void setRow(int index, DataRow row){
-		rows.set(index, row);
+	public void setRow(int aIndex, DataRow aRow){
+		rows.set(aIndex, aRow);
 	}
 	
-	public void addRow(DataRow row){
-		rows.add(row);
+	public void addRow(DataRow aRow){
+		rows.add(aRow);
 	}
 	
-	public void removeRow(int index){
-		rows.remove(index);
+	public void removeRow(int aIndex){
+		rows.remove(aIndex);
 	}
 		
-	public void removeRow(DataRow row){
-		rows.remove(row);
+	public void removeRow(DataRow aRow){
+		rows.remove(aRow);
 	}
 		
-	public int getRowIndex(DataRow row){
-		return rows.indexOf(row);
+	public int getRowIndex(DataRow aRow){
+		return rows.indexOf(aRow);
 	}
 	
 	public int getRowsSize(){
