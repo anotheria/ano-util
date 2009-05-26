@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * An implementation of the IQueue interface.
  * @author lrosenberg
- * Created on 22.06.2004
+ * @since 22.06.2004
  */
 public class QueueImpl<T> implements IQueue<T>{
 	
@@ -63,7 +63,7 @@ public class QueueImpl<T> implements IQueue<T>{
 	@Override public synchronized boolean hasElements() {
 		return currentElement != lastElement;
 	}
-
+	
 	@Override public synchronized T nextElement() {
 		if (!hasElements())
 			throw new RuntimeException("No elements");
@@ -76,9 +76,12 @@ public class QueueImpl<T> implements IQueue<T>{
 	}
 	
 	/**
-	 * Puts a new element in the queue. If the queue is full a runtime exception ("Queue overflow.") is thrown.
+	 * Puts a new element in the queue.
+	 * @param o
+	 * @throws QueueOverflowException if the queue is full.
 	 */
-	@Override public synchronized void putElement(T o){
+	@Override
+	public synchronized void putElement(T o) throws QueueOverflowException {
 		lastElement++;
 		if (lastElement==size)
 			lastElement=0;

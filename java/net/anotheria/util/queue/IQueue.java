@@ -23,8 +23,9 @@ public interface IQueue<T> {
 	 */
 	T nextElement();
 	/**
-	 * Puts an element into the queue.
+	 * Puts a new element in the queue.
 	 * @param o
+	 * @throws QueueOverflowException if the queue is full.
 	 */
 	void putElement(T o) throws QueueOverflowException;
 	/**
