@@ -15,7 +15,7 @@ import net.anotheria.util.StringUtils;
  */
 public class CVSRepositoryChanger {
 	
-	private static final Logger staticLogger = Logger.getLogger(CVSRepositoryChanger.class.getName());
+	private static final Logger STATIC_LOGGER = Logger.getLogger(CVSRepositoryChanger.class.getName());
 	
 	//public static final String TO_REPLACE = "213.61.151.32";
 	//public static final String REPLACE_WITH = "cvs.anotheria.net";
@@ -28,7 +28,7 @@ public class CVSRepositoryChanger {
 		try {
 			startpath = a[0];
 		} catch(Exception e) {
-			staticLogger.error(e.getMessage(), e);
+			STATIC_LOGGER.error(e.getMessage(), e);
 		}
 		
 		proceed(new File(startpath));

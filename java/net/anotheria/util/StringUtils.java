@@ -229,10 +229,10 @@ public final class StringUtils{
    	}
 
  	public static StringPair splitString(String source,char delimiter){
-		int del_pos = source.indexOf((int)delimiter);
-		if ( del_pos==-1 )
+		int pDelPos = source.indexOf((int)delimiter);
+		if ( pDelPos==-1 )
 		    return new StringPair();
-		return new StringPair(source.substring(0,del_pos),source.substring(del_pos+1,source.length()));
+		return new StringPair(source.substring(0,pDelPos),source.substring(pDelPos+1,source.length()));
 
 	}
 
@@ -751,8 +751,8 @@ public final class StringUtils{
 	public static<T> String concatenateTokens(Collection<T> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag){
 		StringBuilder ret = new StringBuilder();
 		boolean begin = true;
-		for(T _t:tokens){
-			String t = _t instanceof String ? (String)_t : ""+_t; 
+		for(T pT:tokens){
+			String t = pT instanceof String ? (String)pT : ""+pT; 
 			t = t.trim();
 			if(t.length() == 0)
 				continue;
@@ -767,8 +767,8 @@ public final class StringUtils{
 	public static<T> String concatenateTokens(Collection<T> tokens, String delimiterSequence){
 		StringBuilder ret = new StringBuilder();
 		boolean begin = true;
-		for(T _t:tokens){
-			String t = _t instanceof String ? (String)_t : ""+_t; 
+		for(T pT:tokens){
+			String t = pT instanceof String ? (String)pT : ""+pT; 
 			t = t.trim();
 			if(t.length() == 0)
 				continue;

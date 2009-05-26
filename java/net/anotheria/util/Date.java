@@ -34,7 +34,7 @@ public class Date implements Serializable{
 
 
     /** The day of week. Initial value <code>null</code> */
-    public String w_day = null;
+    public String wDay = null;
     /** The day of month. Initial value is -1.*/
     public int    day   = -1;
     /** The month. Initial value is -1.*/
@@ -85,7 +85,7 @@ public class Date implements Serializable{
         this.year  = year;
         this.hour  = hour;
         this.min   = min;
-        this.w_day = calcDay(day,month,year);
+        this.wDay = calcDay(day,month,year);
     }
 
     /**
@@ -103,7 +103,7 @@ public class Date implements Serializable{
         this.hour  = cal.get(GregorianCalendar.HOUR_OF_DAY);
         this.min   = cal.get(GregorianCalendar.MINUTE);
         this.sec   = cal.get(GregorianCalendar.SECOND);
-        this.w_day = calcDay(day, month, year);
+        this.wDay = calcDay(day, month, year);
     }
     
 
@@ -151,8 +151,8 @@ public class Date implements Serializable{
             return false;
         if(d1.min <-1 || d1.min > 59)
             return false;
-        String w_day = d1.calcDay(d1.day,d1.month,d1.year);
-        if(!w_day.equals(d1.w_day))
+        String pWDay = d1.calcDay(d1.day,d1.month,d1.year);
+        if(!pWDay.equals(d1.wDay))
             return false;
         return true;
     }
@@ -169,7 +169,7 @@ public class Date implements Serializable{
      * Returns the string representation of this date.
      */
     @Override public String toString(){
-		String ret = w_day;
+		String ret = wDay;
  		ret+=" "+NumberUtils.itoa(day, 2) + ".";
 		ret+= NumberUtils.itoa(month,2)+"."+year;
 
@@ -183,25 +183,25 @@ public class Date implements Serializable{
 
     /**
      * Parse date out from string
-     * @param date_strg Source string to parse it
+     * @param aDateStrg Source string to parse it
      */
-    public static Date parse(String date_strg){
-       if(date_strg.indexOf('.')!=-1&& date_strg.indexOf(':')==-1)
-            return parseShort(date_strg,'.');
-       if(date_strg.indexOf('.')!=-1&& date_strg.indexOf(':')!=-1)
-            return parseLong(date_strg,'.');
-       if(date_strg.indexOf('-')!=-1&& date_strg.indexOf(':')==-1)
-            return parseShort(date_strg,'-');
-       if(date_strg.indexOf('-')!=-1&& date_strg.indexOf(':')!=-1)
-            return parseLong(date_strg,'-');
-       if(date_strg.indexOf(' ')!=-1&& date_strg.indexOf(':')==-1)
-            return parseShort(date_strg,' ');
-       if(date_strg.indexOf(' ')!=-1&& date_strg.indexOf(':')!=-1)
-            return parseLong(date_strg,' ');
-       if(date_strg.indexOf('.')!=-1&& date_strg.indexOf(':')==-1)
-            return parseShort(date_strg,'.');
-       if(date_strg.indexOf('.')!=-1&& date_strg.indexOf(':')!=-1)
-            return parseLong(date_strg,'.');
+    public static Date parse(String aDateStrg){
+       if(aDateStrg.indexOf('.')!=-1&& aDateStrg.indexOf(':')==-1)
+            return parseShort(aDateStrg,'.');
+       if(aDateStrg.indexOf('.')!=-1&& aDateStrg.indexOf(':')!=-1)
+            return parseLong(aDateStrg,'.');
+       if(aDateStrg.indexOf('-')!=-1&& aDateStrg.indexOf(':')==-1)
+            return parseShort(aDateStrg,'-');
+       if(aDateStrg.indexOf('-')!=-1&& aDateStrg.indexOf(':')!=-1)
+            return parseLong(aDateStrg,'-');
+       if(aDateStrg.indexOf(' ')!=-1&& aDateStrg.indexOf(':')==-1)
+            return parseShort(aDateStrg,' ');
+       if(aDateStrg.indexOf(' ')!=-1&& aDateStrg.indexOf(':')!=-1)
+            return parseLong(aDateStrg,' ');
+       if(aDateStrg.indexOf('.')!=-1&& aDateStrg.indexOf(':')==-1)
+            return parseShort(aDateStrg,'.');
+       if(aDateStrg.indexOf('.')!=-1&& aDateStrg.indexOf(':')!=-1)
+            return parseLong(aDateStrg,'.');
        return null;
 
 
@@ -211,39 +211,39 @@ public class Date implements Serializable{
 
     /**
      * Parse date out from string with specified format
-     * @param date_strg Source string to parse it
+     * @param aDateStrg Source string to parse it
      */
-    public static Date parse(String date_strg, int format){
-        switch(format){
-            case DD___MM___YYYY_HHMM : return parseLong(date_strg,'.');
-            case DD___MM___YYYY      : return parseShort(date_strg,'.');
-            case DD__MM__YYYY_HHMM : return parseLong(date_strg,'-');
-            case DD__MM__YYYY      : return parseShort(date_strg,'-');
-            case DD_MM_YYYY_HHMM   : return parseLong(date_strg,' ');
-            case DD_MM_YYYY        : return parseShort(date_strg,' ');
+    public static Date parse(String aDateStrg, int aFormat){
+        switch(aFormat){
+            case DD___MM___YYYY_HHMM : return parseLong(aDateStrg,'.');
+            case DD___MM___YYYY      : return parseShort(aDateStrg,'.');
+            case DD__MM__YYYY_HHMM : return parseLong(aDateStrg,'-');
+            case DD__MM__YYYY      : return parseShort(aDateStrg,'-');
+            case DD_MM_YYYY_HHMM   : return parseLong(aDateStrg,' ');
+            case DD_MM_YYYY        : return parseShort(aDateStrg,' ');
         }
         return null;
     }
 
     /**
      * Parse date with hors and minutes out from string
-     * @param date_strg Source string to parse it
+     * @param aDateStrg Source string to parse it
      */
-    public static Date parseLong(String date_strg, char ch){
-        int first_ = date_strg.indexOf(ch,0);
+    public static Date parseLong(String aDateStrg, char aCh){
+        int pFirst = aDateStrg.indexOf(aCh,0);
         //first_--;
-        String dayStrg   = date_strg.substring(0,first_);
-        first_++;
-        int second_ = date_strg.indexOf(ch,first_);
+        String dayStrg   = aDateStrg.substring(0,pFirst);
+        pFirst++;
+        int pSecond = aDateStrg.indexOf(aCh,pFirst);
         //second_--;
-        String monthStrg = date_strg.substring(first_,second_);
-        int yearB = second_+1;
-        int yearE = second_+5;
-        String yearStrg  = date_strg.substring(yearB,yearE);
-        second_=second_+6;
-        int dbp = date_strg.indexOf(':');
-        String hrStrg  = date_strg.substring(second_,dbp);
-        String minStrg = date_strg.substring((dbp+1), date_strg.length());
+        String monthStrg = aDateStrg.substring(pFirst,pSecond);
+        int yearB = pSecond+1;
+        int yearE = pSecond+5;
+        String yearStrg  = aDateStrg.substring(yearB,yearE);
+        pSecond=pSecond+6;
+        int dbp = aDateStrg.indexOf(':');
+        String hrStrg  = aDateStrg.substring(pSecond,dbp);
+        String minStrg = aDateStrg.substring((dbp+1), aDateStrg.length());
         try{
             int day   = Integer.parseInt(dayStrg);
             int month = Integer.parseInt(monthStrg);
@@ -260,18 +260,18 @@ public class Date implements Serializable{
 
     /**
      * Parse date without hors and minutes out from string
-     * @param date_strg source string to parse it
+     * @param aDateStrg source string to parse it
      */
-    public static Date parseShort(String date_strg, char ch){
-        int first_ = date_strg.indexOf(ch,0);
+    public static Date parseShort(String aDateStrg, char aCh){
+        int pFirst = aDateStrg.indexOf(aCh,0);
         //first_--;
-        String dayStrg   = date_strg.substring(0,first_);
-        first_++;
-        int second_ = date_strg.indexOf(ch,first_);
+        String dayStrg   = aDateStrg.substring(0,pFirst);
+        pFirst++;
+        int pSecond = aDateStrg.indexOf(aCh,pFirst);
         //second_--;
-        String monthStrg = date_strg.substring(first_,second_);
-        second_++;
-        String yearStrg  = date_strg.substring(second_,date_strg.length());
+        String monthStrg = aDateStrg.substring(pFirst,pSecond);
+        pSecond++;
+        String yearStrg  = aDateStrg.substring(pSecond,aDateStrg.length());
         try{
             int day   = Integer.parseInt(dayStrg);
             int month = Integer.parseInt(monthStrg);
@@ -337,7 +337,7 @@ public class Date implements Serializable{
 	 * @return
 	 */
 	public String getW_day() {
-		return w_day;
+		return wDay;
 	}
 
 	/**

@@ -222,7 +222,7 @@ public abstract class DateUtility {
         int cal = 1;
         //calculate the day where this week started (for year change for example).
         startOfThisWeek = date;
-        while (!startOfThisWeek.w_day.equals("Mo."))
+        while (!startOfThisWeek.wDay.equals("Mo."))
             startOfThisWeek = DateUtility.previousDate(startOfThisWeek);
         //System.out.println("Start of this week:"+startOfThisWeek);
         if (!startOfThisWeek.equals(date))
@@ -230,11 +230,11 @@ public abstract class DateUtility {
         //System.out.println("Date:"+date);
         //calculate the day where the first week in this year started (the first week is the week in which
         //the 4th january is.
-        while (!startOfFirstWeek.w_day.equals("Mo."))
+        while (!startOfFirstWeek.wDay.equals("Mo."))
             startOfFirstWeek = DateUtility.previousDate(startOfFirstWeek);
         if (date.month == 1 && startOfThisWeek.month == 12) {
-            if (date.day == 1 && (date.w_day.equals("So.") || date.w_day.equals("Sa.")
-                    || date.w_day.equals("Fr.")))
+            if (date.day == 1 && (date.wDay.equals("So.") || date.wDay.equals("Sa.")
+                    || date.wDay.equals("Fr.")))
                 return  getCalendarWeekForDate(startOfThisWeek);
         }
         while (DateUtility.isBefore(startOfFirstWeek, date)) {
@@ -256,7 +256,7 @@ public abstract class DateUtility {
      */
     public static Date getFirstDayOfWeek (int week, int year) {
         Date d = new Date(4, 1, year);
-        while (!d.w_day.equals("Mo."))
+        while (!d.wDay.equals("Mo."))
             d = previousDate(d);
         //der erste tag der ersten woche.
         int kw = 1;

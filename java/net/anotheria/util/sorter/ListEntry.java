@@ -10,8 +10,8 @@ class ListEntry<T extends IComparable>{
      	value = null;
     }
 
-    public ListEntry(T value){
-    	this.value = value;
+    public ListEntry(T aValue){
+    	this.value = aValue;
     }
 
     public int length(){
@@ -20,17 +20,17 @@ class ListEntry<T extends IComparable>{
        	return 1+next.length();
     }
 
-	public void insert(ListEntry<T> new_entry, int method){
+	public void insert(ListEntry<T> aNewEntry, int aMethod){
  		if (next == null){
-   			next = new_entry;
+   			next = aNewEntry;
       		return;
         }
-        if (next.value.compareTo(new_entry.value, method)>=0){
-        	new_entry.next = next;
-         	next = new_entry;
+        if (next.value.compareTo(aNewEntry.value, aMethod)>=0){
+        	aNewEntry.next = next;
+         	next = aNewEntry;
           	return;
         }
-        next.insert(new_entry, method);
+        next.insert(aNewEntry, aMethod);
 
   	}
 }

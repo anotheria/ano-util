@@ -24,7 +24,7 @@ public final class IdCodeGenerator {
 	/**
 	 * The random numbers generator.
 	 */
-	private static final Random random = new Random(System.currentTimeMillis());;
+	private static final Random RANDOM = new Random(System.currentTimeMillis());;
 	
 	/**
 	 * Generates a code of given length from supplied chars.
@@ -35,7 +35,7 @@ public final class IdCodeGenerator {
 	public static String generateCustomCode(char[] chars, int length){
 		String ret = "";
 		for (int i=0; i<length; i++){
-			ret += chars[random.nextInt(chars.length)];
+			ret += chars[RANDOM.nextInt(chars.length)];
 		}
 		return ret;
 	}
@@ -49,7 +49,7 @@ public final class IdCodeGenerator {
 		int interval = CODE_END - CODE_START+1;
 		String ret = "";
 		for (int i=0; i<length; i++)
-			ret += (char)(random.nextInt(interval)+CODE_START);
+			ret += (char)(RANDOM.nextInt(interval)+CODE_START);
 		return ret;
 	}
 	

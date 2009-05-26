@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class WC {
 	
-	private static String EXT = ".java";
+	private static final String EXT = ".java";
 	
 	static int totalLines, totalWords, totalChars;
 	static int totalFiles;
