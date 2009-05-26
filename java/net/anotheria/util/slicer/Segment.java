@@ -18,11 +18,11 @@ public class Segment {
 	/**
 	 * Creates a new Segment with given slice number and elements per page.
 	 * @param aSliceNumber
-	 * @param anElementsPerSlice
+	 * @param aElementsPerSlice
 	 */
-	public Segment(int aSliceNumber, int anElementsPerSlice){
+	public Segment(int aSliceNumber, int aElementsPerSlice){
 		sliceNumber = aSliceNumber;
-		elementsPerSlice = anElementsPerSlice;
+		elementsPerSlice = aElementsPerSlice;
 	}
 	
 	public Segment(){
@@ -34,16 +34,16 @@ public class Segment {
 		return elementsPerSlice;
 	}
 
-	public void setElementsPerSlice(int elementsPerSlice) {
-		this.elementsPerSlice = elementsPerSlice;
+	public void setElementsPerSlice(int aElementsPerSlice) {
+		this.elementsPerSlice = aElementsPerSlice;
 	}
 
 	public int getSliceNumber() {
 		return sliceNumber;
 	}
 
-	public void setSliceNumber(int sliceNumber) {
-		this.sliceNumber = sliceNumber;
+	public void setSliceNumber(int aSliceNumber) {
+		this.sliceNumber = aSliceNumber;
 	}
 	
 	@Override public String toString(){
