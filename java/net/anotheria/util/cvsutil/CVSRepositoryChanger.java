@@ -21,9 +21,10 @@ public class CVSRepositoryChanger {
 	
 	public static void main(String a[]){
 		String startpath = ".";
-		try{
+		try {
 			startpath = a[0];
-		}catch(Exception e){}
+		} catch(Exception e) {			
+		}
 		
 		proceed(new File(startpath));
 		System.out.println("done, changed: "+changedFiles+" files");
