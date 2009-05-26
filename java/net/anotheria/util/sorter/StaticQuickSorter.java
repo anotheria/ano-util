@@ -91,7 +91,7 @@ public final class StaticQuickSorter{
 		T partElement = source.get(end);
 		left = start - 1;
 		right = end;
-		for (; ; ) {
+		while(true) {
 			while (wanted ? partElement.compareTo(source.get(++left), sortAfter) > 0 : partElement.compareTo(source.get(++left), sortAfter) < 0) {
 				if (left == end) {
 					break;

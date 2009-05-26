@@ -95,7 +95,7 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 		T partElement = source.get(end);
 		left = start - 1;
 		right = end;
-		for (; ; ) {
+		while(true) {
 			while (wanted ? compare(partElement, source.get(++left), sortAfter) > 0 : compare(partElement, source.get(++left), sortAfter) < 0) {
 				if (left == end) {
 					break;
