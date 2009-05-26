@@ -38,9 +38,9 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 	 *@return         the sorted Vector
 	 */
 	public List<T> sort(List<T> source, SortType sType) {
-		boolean sortOrder = sType.sortOrder;
+		boolean sortOrder = sType.getSortOrder();
 		int sortAfter = sType.getSortBy();
-        SortType tmp = new SortType(sType.getSortBy(),!sType.sortOrder);
+        SortType tmp = new SortType(sType.getSortBy(),!sType.getSortOrder());
         if(isSorted(source,sType)){
 		    return source;
 		}
@@ -72,7 +72,7 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
     }
 
     private boolean isSorted(List<T> src, SortType type){
-        boolean wanted = (type.sortOrder == SortType.ASC);
+        boolean wanted = (type.getSortOrder() == SortType.ASC);
         int sortAfter = type.getSortBy();
         Iterator<T> elements = src.iterator();
         T comp, comp2;

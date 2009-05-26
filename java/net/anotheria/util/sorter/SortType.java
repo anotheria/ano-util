@@ -12,6 +12,8 @@ import java.io.Serializable;
  */
 public class SortType implements Serializable{
 
+	private static final long serialVersionUID = 2536090774100419017L;
+	
 	/**
   	 *Constant for ascending sort order.
   	 */
@@ -25,26 +27,26 @@ public class SortType implements Serializable{
      * The method which is used by the comparison of single objects.
      * @see com.eqs.fi.shared.common.data.IFICompareable.html#compareTo
      */
-	public int sortBy;
+	private int sortBy;
 
  	/**
      * Order which is used by the sorter, acsending or descending.
      */
-    public boolean sortOrder;
+    private boolean sortOrder;
 
     /**
      * Creates a new SortType with given SortAfter method and order.
      */
-    public SortType(int sortBy, boolean sortOrder){
-    	this.sortBy = sortBy;
-     	this.sortOrder = sortOrder;
+    public SortType(int aSortBy, boolean aSortOrder){
+    	this.sortBy = aSortBy;
+     	this.sortOrder = aSortOrder;
     }
 
     /**
      * Creates a new SortType with given sortAfter method and ascending sort order.
      */
-    public SortType(int sortAfter){
-    	this(sortAfter, ASC);
+    public SortType(int aSortAfter){
+    	this(aSortAfter, ASC);
     }
 
     /**

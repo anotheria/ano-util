@@ -32,7 +32,7 @@ public final class StaticQuickSorter{
 	 *@return         the sorted Vector
 	 */
 	public static<T extends IComparable> List<T> sort(List<T> source, SortType sType) {
-		boolean sortOrder = sType.sortOrder;
+		boolean sortOrder = sType.getSortOrder();
 		int sortAfter = sType.getSortBy();
         
         if(isSorted(source, sType)){
@@ -68,7 +68,7 @@ public final class StaticQuickSorter{
     }
 
     private static <T extends IComparable> boolean isSorted(List<T> src, SortType type){
-        boolean wanted = (type.sortOrder == SortType.ASC);
+        boolean wanted = (type.getSortOrder() == SortType.ASC);
         int sortAfter = type.getSortBy();
         Iterator<T> elements = src.iterator();
         T comp, comp2;
