@@ -69,7 +69,9 @@ public class CopyDirContents {
 		copy(fIn, fOut);
 		try{
 			fIn.close();
-		}catch(IOException ignored){}
+		} catch(IOException ignored) {
+			System.out.println("Ignored exception: " + ignored.getMessage());
+		}
 		try{
 			fOut.close();
 		}catch(IOException e){

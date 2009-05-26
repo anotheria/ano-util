@@ -94,11 +94,13 @@ public class QueuedProcessor <T extends Object> extends Thread{
 				queue.putElement(element);
 				return;
 			}catch(QueueOverflowException e){
-				try{
-					synchronized(queue){
+				try {
+					synchronized(queue) {
 						queue.wait();
 					}
-				}catch(InterruptedException ignored){}
+				} catch(InterruptedException ignored) {
+					log.warn("Ignored exception: " + ignored.getMessage(), ignored);
+				}
 			}
 		}
 	}
