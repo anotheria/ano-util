@@ -53,18 +53,16 @@ public class MathHelper {
                     start =  "0" + start;
                 }
                 start = "$" + start;
-            }
-            else{
-                for(int i=start.length() ; i <= zeros + indexOfPoint; i++){
+            } else {
+                for(int i=start.length() ; i <= zeros + indexOfPoint; i++) {
                     start = start + "0";
                 }
                 start = start + "$";
             }
             start = start.substring(0,start.indexOf('.')) + start.substring(start.indexOf('.')+1);
-            if(start.indexOf('$')==0){
+            if(start.indexOf('$')==0) {
                 start = "0." + start.substring(1);
-            }
-            else{
+            } else {
                 start = start.substring(0,start.length()-1) + ".0";
             }
         }
@@ -87,19 +85,17 @@ public class MathHelper {
             right = right.substring(0,precision-1) + round;
         }
 
-        if(precision > 0){
+        if(precision > 0) {
             resultString = left + resultString +  "," + right;
-        }
-        else{
-            if(Integer.parseInt(String.valueOf(right.charAt(0))) < 5){
+        } else {
+            if(Integer.parseInt(String.valueOf(right.charAt(0))) < 5) {
                 resultString = left + resultString  ;
-            }
-            else{
+            } else {
                 resultString = resultString + (Integer.parseInt(left) + 1);
             }
         }
 
-        if(negativ){
+        if(negativ) {
             return "-" + resultString;
         }
 

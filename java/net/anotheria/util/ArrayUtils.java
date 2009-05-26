@@ -147,16 +147,16 @@ public class ArrayUtils {
 		while(position1 < array1.length && position2 < array2.length){
 			int a1 = array1[position1];
 			int a2 = array2[position2];
-			if(a1 == a2){
+			if(a1 == a2) {
 				buff[positionBuff] = a1;
 				position1++;
 				position2++;
 				positionBuff++;
-			}
-			else if(a1 > a2)
+			} else if(a1 > a2) {
 				position2++;
-			else
+			} else {
 				position1++;
+			}
 		}
 		int[] ret = new int[positionBuff];
 		System.arraycopy(buff, 0, ret, 0, positionBuff);

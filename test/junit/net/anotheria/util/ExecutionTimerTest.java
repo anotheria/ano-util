@@ -20,8 +20,8 @@ public class ExecutionTimerTest {
 		t.stopExecution("sleep");
 		t.printExecutionTimesOrderedByCreation();
 		
-		assertTrue(t.getExecutionTime("sleep")>(1500-20));
-		assertTrue(t.getExecutionTime("sleep")<(1500+20));
+		assertTrue(t.getExecutionTime("sleep")>(1500-30));
+		assertTrue(t.getExecutionTime("sleep")<(1500+30));
 	}
 
 	@Test public void testFailover() throws InterruptedException{
