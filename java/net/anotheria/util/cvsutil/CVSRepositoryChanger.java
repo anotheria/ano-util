@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import net.anotheria.util.StringUtils;
 
 /**
@@ -12,6 +14,8 @@ import net.anotheria.util.StringUtils;
  * @author another
  */
 public class CVSRepositoryChanger {
+	
+	private static final Logger staticLogger = Logger.getLogger(CVSRepositoryChanger.class.getName());
 	
 	//public static final String TO_REPLACE = "213.61.151.32";
 	//public static final String REPLACE_WITH = "cvs.anotheria.net";
@@ -23,7 +27,8 @@ public class CVSRepositoryChanger {
 		String startpath = ".";
 		try {
 			startpath = a[0];
-		} catch(Exception e) {			
+		} catch(Exception e) {
+			staticLogger.error(e.getMessage(), e);
 		}
 		
 		proceed(new File(startpath));
@@ -62,7 +67,7 @@ public class CVSRepositoryChanger {
 				System.out.println("skipped.");
 			}
 			
-		}catch(IOException e){
+		} catch(IOException e) {
 			e.printStackTrace();		
 		}
 	}
