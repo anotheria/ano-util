@@ -17,6 +17,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	private long sleepTime;
 	private int overflowCount;
 	private int throwAwayCount;
+	private long waitingTime;
 	
 	private final IQueueFactory<T> DEF_QUEUE_FACTORY = new StandardQueueFactory<T>();
 	private IQueueFactory<T> queueFactory;
@@ -92,9 +93,12 @@ public class QueuedProcessor<T extends Object> extends Thread {
 				queue.putElement(element);
 				return;
 			}catch(QueueOverflowException e){
+				overflowCount++;
 				try {
 					synchronized(queue) {
+						long waitStart = System.currentTimeMillis();
 						queue.wait();
+						waitingTime += System.currentTimeMillis() - waitStart;
 					}
 				} catch(InterruptedException ignored) {
 					log.warn("Ignored exception: " + ignored.getMessage(), ignored);
@@ -125,7 +129,9 @@ public class QueuedProcessor<T extends Object> extends Thread {
 			// ok, first exception, we try to recover
 			synchronized (this) {
 				try {
+					long waitStart = System.currentTimeMillis();
 					Thread.sleep(100);
+					waitingTime += System.currentTimeMillis() - waitStart;
 				} catch (Exception ignored) {
 				}
 			}
@@ -232,11 +238,11 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 
 	public String getStatsString() {
-		return counter + " elements worked, queue: " + queue.toString() + ", OC:" + overflowCount + ", TAC:" + throwAwayCount;
+		return counter + " elements worked, queue: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
 	}
 
 	public void logOutInfo() {
-		log.info(name + ": " + counter + " elements worked, stat: " + queue.toString() + ", OC:" + overflowCount + ", TAC:" + throwAwayCount);
+		log.info(name + ": " + counter + " elements worked, stat: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount);
 	}
 
 	public IQueueFactory<T> getQueueFactory() {
