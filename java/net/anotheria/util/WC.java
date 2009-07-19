@@ -5,16 +5,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * TODO Please remind lrosenberg to comment this class.
+ * Wordcount utility. Walks recursively through a directory and counts all lines/words/chars in all files which matches the extension (for now .java). 
  * @author lrosenberg
- * Created on 25.06.2004
+ * @created 25.06.2004
  */
 public class WC {
-	
+	/**
+	 * Default extension. Files with another extension will be ignored.
+	 */
 	private static final String EXT = ".java";
 	
-	static int totalLines, totalWords, totalChars;
-	static int totalFiles;
+	private static int totalLines, totalWords, totalChars;
+	private static int totalFiles;
 	
 	public static void main(String a[]){
 		
@@ -30,19 +32,27 @@ public class WC {
 		System.out.println("Total files:"+totalFiles+" C:"+totalChars+", W:"+totalWords+" L:"+totalLines);
 	}
 	
+	/**
+	 * Process a File object. Delegates to proceedFile or proceedDir.
+	 * @param f
+	 */
 	private static void proceed(File f){
 		if (f.isDirectory())
 			proceedDir(f);
 		else
 			proceedFile(f);
 	}
-	
+	/**
+	 * Proceeds a file.
+	 * @param f
+	 */
 	private static void proceedFile(File f){
 		if (!f.getName().endsWith(EXT))
-			return;		
+			return;
+		FileInputStream fIn = null;
 		System.out.print("Checking "+f.getAbsolutePath()+" ");
 		try{	
-			FileInputStream fIn = new FileInputStream(f);
+			fIn = new FileInputStream(f);
 			byte d[] = new byte[fIn.available()];
 			fIn.read(d);
 			String s = new String(d);
@@ -111,9 +121,19 @@ public class WC {
 			
 		}catch(IOException e){
 			e.printStackTrace();		
+		}finally{
+			if (fIn!=null){
+				try{
+					fIn.close();
+				}catch(IOException ignored){}
+			}
 		}
 	}
 	
+	/**
+	 * Proceeds a dir, which means walking over all directory entries and call proceed on them.
+	 * @param f
+	 */
 	private static void proceedDir(File f){
 		File files[] = f.listFiles();
 		for (int i=0; i<files.length; i++){

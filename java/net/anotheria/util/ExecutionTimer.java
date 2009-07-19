@@ -222,10 +222,25 @@ public class ExecutionTimer {
 	}
 
 	private class TimerEntry{
+		/**
+		 * Start time of this entry.
+		 */
 	    private long startTime;
+	    /**
+	     * End time of this entry.
+	     */
 		private long endTime;
+		/**
+		 * Stores previous duration for interrupted (stoped and restarted) tasks.
+		 */
 		private long previousTime;
+		/**
+		 * Id of this entry (order of creation).
+		 */
 		private int id;
+		/**
+		 * Key of this entry (unique id submitted by the user).
+		 */
 		private String key;
 
 		/**
