@@ -199,13 +199,21 @@ public class ExecutionTimer {
 				return aFirst.key.compareToIgnoreCase(aSecond.key);
 		}
 	}
-
+	/**
+	 * Returns all contained timer entries.
+	 * @return
+	 */
 	private List<TimerEntry> getTimerEntries(){
 		List<TimerEntry> ret = new ArrayList<TimerEntry>();
 		ret.addAll(timers.values());
 		return ret;
 	}
-
+	
+	/**
+	 * Returns the timer entry with given key.
+	 * @param aKey the key.
+	 * @return
+	 */
 	private TimerEntry getTimerEntry(String aKey){
 	    TimerEntry entry = (TimerEntry) timers.get(aKey);
 		if (entry==null)
@@ -213,7 +221,7 @@ public class ExecutionTimer {
 		return entry;
 	}
 
-	class TimerEntry{
+	private class TimerEntry{
 	    private long startTime;
 		private long endTime;
 		private long previousTime;
@@ -300,6 +308,4 @@ public class ExecutionTimer {
 		    return toStringKey();
 		}
 	}
-	
-
 }
