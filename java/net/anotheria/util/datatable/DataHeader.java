@@ -5,8 +5,15 @@ import java.util.List;
 
 import net.anotheria.util.StringUtils;
 
+/**
+ * A header of the table.
+ * @author lrosenberg
+ *
+ */
 public class DataHeader {
-	
+	/**
+	 * List of names of headers.
+	 */
 	private List<String> headers;
 	
 	public DataHeader(){

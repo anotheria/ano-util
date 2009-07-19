@@ -1,9 +1,15 @@
 package net.anotheria.util.datatable;
 
 import net.anotheria.util.Date;
-
+/**
+ * A single cell in the table which contains untyped data.
+ * @author lrosenberg
+ */
 public class DataCell {
-	
+
+	/**
+	 * The value of the cell.
+	 */
 	private Object value;
 
 	public DataCell(){

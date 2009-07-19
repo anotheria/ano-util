@@ -3,10 +3,18 @@ package net.anotheria.util.datatable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+/**
+ * This class represents a table with untyped data, similar to a csv file. 
+ * @author lrosenberg
+ */
 public class DataTable implements Iterable<DataRow> {
-
+	/**
+	 * The header of the table.
+	 */
 	private DataHeader header;
+	/**
+	 * A list with rows.
+	 */
 	private List<DataRow> rows;
 	
 	public DataTable(){
