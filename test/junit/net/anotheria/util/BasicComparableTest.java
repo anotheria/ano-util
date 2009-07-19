@@ -1,9 +1,6 @@
 package net.anotheria.util;
 
-import static junit.framework.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
 
