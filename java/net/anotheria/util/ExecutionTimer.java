@@ -1,26 +1,56 @@
 package net.anotheria.util;
 
-import java.util.Hashtable;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * A utility to measure execution of a task which consists of subtasks.  
+ * @author lrosenberg
+ */
 public class ExecutionTimer {
 
-	private static final int METHOD_KEY = 1;
-	private static final int METHOD_TIME = 2;
-	private static final int METHOD_CREATION = 3;
+	/**
+	 * Method for sorting, comparison and toString output.
+	 * @author lrosenberg
+	 *
+	 */
+	private enum Method{
+		/**
+		 * By creation key which is what the user selects as the unique identifier of a subtask.
+		 */
+		KEY,
+		/**
+		 * By execution time.
+		 */
+		TIME,
+		/**
+		 * By creation time.
+		 */
+		CREATION;
+	};
 
-	private Hashtable<String, TimerEntry> timers;
+	/**
+	 * Running timers.
+	 */
+	private Map<String, TimerEntry> timers;
+	/**
+	 * Next unique id in this timer.
+	 */
 	private AtomicInteger nextID = new AtomicInteger(0);
-
+	/**
+	 * Name of the ExecutionTimer (i.e. name of the outer task like "calculateWorksheet"). 
+	 */
 	private String name;
 
 	/**
 	 * Creates a new ExecutionTimer.
 	 */
     public ExecutionTimer(String aName) {
-		timers = new Hashtable<String, TimerEntry>();
+		timers = new ConcurrentHashMap<String, TimerEntry>();
 		this.name = aName;
     }
 
@@ -40,7 +70,10 @@ public class ExecutionTimer {
 		TimerEntry entry = new TimerEntry(aKey);
 		timers.put(aKey, entry);
 	}
-	
+	/**
+	 * Continues previously stoped(paused) execution of the key.
+	 * @param aKey
+	 */
 	public void continueExecution(String aKey){
 		try{
 			TimerEntry entry = getTimerEntry(aKey);
@@ -51,7 +84,7 @@ public class ExecutionTimer {
 	}
 
 	/**
-	 * Notifies the timer, that the execution of the process assigned with the given key stoped.
+	 * Notifies the timer, that the execution of the process assigned with the given key stoped or paused.
 	 */
 	public void stopExecution(String aKey){
 		getTimerEntry(aKey).stop();
@@ -69,10 +102,9 @@ public class ExecutionTimer {
 	 * Returns the sum of the single execution times.
 	 */
 	public long getTotalExecutionTime(){
-		Enumeration<TimerEntry> e = timers.elements();
+		Collection<TimerEntry> entries = timers.values();
 		long sum = 0;
-		while(e.hasMoreElements()){
-		    TimerEntry entry = e.nextElement();
+		for (TimerEntry entry : entries){
 			sum += entry.getTime();
 		}
 		return sum;
@@ -81,49 +113,53 @@ public class ExecutionTimer {
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their keys.
 	 */
-	public Vector<TimerEntry> getExecutionTimerEntriesOrderedByKeys(){
-		return sortVector(getTimerEntriesVector(), METHOD_KEY);
+	public List<TimerEntry> getExecutionTimerEntriesOrderedByKeys(){
+		return sortEntries(getTimerEntries(), Method.KEY);
 	}
 
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their creation order.
 	 */
-	public Vector<TimerEntry> getExecutionTimerEntriesOrderedByCreation(){
-		return sortVector(getTimerEntriesVector(), METHOD_CREATION);
+	public List<TimerEntry> getExecutionTimerEntriesOrderedByCreation(){
+		return sortEntries(getTimerEntries(), Method.CREATION);
 	}
 
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their execution time (fastest first).
 	 */
-	public Vector<TimerEntry> getExecutionTimerEntriesOrderedByTime(){
-		return sortVector(getTimerEntriesVector(), METHOD_TIME);
+	public List<TimerEntry> getExecutionTimerEntriesOrderedByTime(){
+		return sortEntries(getTimerEntries(), Method.TIME);
 	}
 
 	/**
 	 * Prints out all timer entries ordered by execution time (fastest first).
 	 */
 	public void printExecutionTimesOrderedByTime(){
-		printExecutionTimes(METHOD_TIME);
+		printExecutionTimes(Method.TIME);
 	}
 	/**
 	 * Prints out all timer entries ordered by key.
 	 */
 	public void printExecutionTimesOrderedByKeys(){
-		printExecutionTimes(METHOD_KEY);
+		printExecutionTimes(Method.KEY);
 	}
 
 	/**
 	 * Prints out all timer entries ordered by creation order.
 	 */
 	public void printExecutionTimesOrderedByCreation(){
-		printExecutionTimes(METHOD_CREATION);
+		printExecutionTimes(Method.CREATION);
 	}
 
-	private void printExecutionTimes(int method){
-	    Vector<TimerEntry> v = sortVector(getTimerEntriesVector(), method);
+	/**
+	 * Prints execution times in the given sort order.
+	 * @param method
+	 */
+	private void printExecutionTimes(Method method){
+	    List<TimerEntry> v = sortEntries(getTimerEntries(), method);
 		System.out.println("============= "+name+" =============");
 		for (int i=0; i<v.size(); i++){
-		    System.out.println( v.elementAt(i).toString(method) );
+		    System.out.println( v.get(i).toString(method) );
 		}
 		System.out.print("=============");
 		for (int t=0;t<name.length()+2;t++)
@@ -132,43 +168,41 @@ public class ExecutionTimer {
 	}
 
 
-	private Vector<TimerEntry> sortVector(Vector<TimerEntry> aSrc, int aMethod){
+	private List<TimerEntry> sortEntries(List<TimerEntry> aSrc, Method aMethod){
 	    boolean changed = true;
 		while(changed){
 		    changed = false;
 			for (int i=0; i<aSrc.size()-1; i++){
-			    TimerEntry first = (TimerEntry)aSrc.elementAt(i);
-				TimerEntry second = (TimerEntry)aSrc.elementAt(i+1);
+			    TimerEntry first = (TimerEntry)aSrc.get(i);
+				TimerEntry second = (TimerEntry)aSrc.get(i+1);
 				int result = compare(first, second, aMethod);
 				if (result>0){
-				    changed = true;
-					aSrc.setElementAt(second,i);
-					aSrc.setElementAt(first,i+1);
+				    changed = true; 
+					aSrc.set(i, second);
+					aSrc.set(i+1, first);
 				}
 			}
 		}
 		return aSrc;
 	}
 
-	private int compare(TimerEntry aFirst, TimerEntry aSecond, int aMethod){
+	private int compare(TimerEntry aFirst, TimerEntry aSecond, Method aMethod){
 		switch(aMethod){
-			case METHOD_CREATION:
+			case CREATION:
 				return aFirst.id < aSecond.id ? -1 : aFirst.id>aSecond.id ? 1 : 0;
-			case METHOD_TIME:
+			case TIME:
 				long time1 = aFirst.getTime();
 				long time2 = aSecond.getTime();
 				return time1 < time2 ? -1 : time1 > time2 ? 1 : 0;
-		    case METHOD_KEY:
+		    case KEY:
 			default:
 				return aFirst.key.compareToIgnoreCase(aSecond.key);
 		}
 	}
 
-	private Vector<TimerEntry> getTimerEntriesVector(){
-	    Vector<TimerEntry> ret = new Vector<TimerEntry>();
-		Enumeration<TimerEntry> e = timers.elements();
-		while(e.hasMoreElements())
-			ret.addElement(e.nextElement());
+	private List<TimerEntry> getTimerEntries(){
+		List<TimerEntry> ret = new ArrayList<TimerEntry>();
+		ret.addAll(timers.values());
 		return ret;
 	}
 
@@ -239,12 +273,12 @@ public class ExecutionTimer {
 		/**
 		 * Returns a method dependent string representation of this object.
 		 */
-		public String toString(int aMethod){
+		public String toString(Method aMethod){
 			switch(aMethod){
-				case METHOD_CREATION:
+				case CREATION:
 					return toStringCreation();
-				case METHOD_TIME:
-				case METHOD_KEY:
+				case TIME:
+				case KEY:
 				default:
 					return toStringKey();
 			}
