@@ -1,6 +1,8 @@
 package net.anotheria.util.sorter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 
@@ -39,5 +41,14 @@ public abstract class AbstractSorter<T extends IComparable> implements Sorter<T>
     public static <T extends IComparable> List<T> array2list(T src[]){
     	return Arrays.asList(src);
     }
+    
+ 	public List<T> sort(Enumeration<T> source, SortType how){
+ 		ArrayList<T> list = new ArrayList<T>();
+ 		while(source.hasMoreElements()){
+ 			list.add(source.nextElement());
+ 		}
+ 		return sort(list,how);
+ 	}
+
 
 }

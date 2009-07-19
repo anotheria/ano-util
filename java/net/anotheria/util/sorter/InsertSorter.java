@@ -24,11 +24,10 @@ import java.util.List;
 
 public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
 
-	public List<T> sort(Enumeration<T> e, SortType how){
+	public List<T> sort(List<T> toSort, SortType how){
       	ListEntry<T> list = null;
 		int method = how.getSortBy();
-        while(e.hasMoreElements()){
-			T c = e.nextElement();
+		for (T c : toSort){
 			if (list==null){
        			list = new ListEntry<T>(c);
           		continue;
@@ -51,17 +50,45 @@ public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
          	list = list.next;
         }while(list!=null);
 
-
-
       	return v;
 
 
  	}
 
-  	public List<T> sort(List<T> v, SortType method){
-   		//return sort(v.iterator(), method);
-   		throw new RuntimeException("Sorry, yet unsupported method");
-   	}
+  	private static class ListEntry<T extends IComparable> {
+  		public T value;
+
+  	 	public ListEntry<T> next;
+
+  	  	public ListEntry(){
+  	   		next = null;
+  	     	value = null;
+  	    }
+
+  	    public ListEntry(T aValue){
+  	    	this.value = aValue;
+  	    }
+
+  	    public int length(){
+  	    	if (next==null)
+  	     		return 1;
+  	       	return 1+next.length();
+  	    }
+
+  		public void insert(ListEntry<T> aNewEntry, int aMethod){
+  	 		if (next == null){
+  	   			next = aNewEntry;
+  	      		return;
+  	        }
+  	        if (next.value.compareTo(aNewEntry.value, aMethod)>=0){
+  	        	aNewEntry.next = next;
+  	         	next = aNewEntry;
+  	          	return;
+  	        }
+  	        next.insert(aNewEntry, aMethod);
+
+  	  	}
+  	}
 }
 
 

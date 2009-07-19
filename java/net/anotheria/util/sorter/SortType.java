@@ -4,11 +4,9 @@ import java.io.Serializable;
 
 /**
  * SortType is the instruction for the sorter how to handle the incoming data.
- * It consist of a sortAfter parameter, which is passed to the IFIComparable,
+ * It consist of a sortAfter parameter, which is passed to the IComparable,
  * and the sortOrder parameter, which instructs the Sorter if he must sort in ascending or
  * descending order.
- * @see com.eqs.fi.shared.common.data.IFIComparable.html
- * @see com.eqs.fi.shared.common.util.Sorter.html
  */
 public class SortType implements Serializable{
 
@@ -25,7 +23,6 @@ public class SortType implements Serializable{
 
   	/**
      * The method which is used by the comparison of single objects.
-     * @see com.eqs.fi.shared.common.data.IFICompareable.html#compareTo
      */
 	private int sortBy;
 
@@ -35,7 +32,7 @@ public class SortType implements Serializable{
     private boolean sortOrder;
 
     /**
-     * Creates a new SortType with given SortAfter method and order.
+     * Creates a new SortType with given sortby method and order.
      */
     public SortType(int aSortBy, boolean aSortOrder){
     	this.sortBy = aSortBy;
@@ -43,10 +40,10 @@ public class SortType implements Serializable{
     }
 
     /**
-     * Creates a new SortType with given sortAfter method and ascending sort order.
+     * Creates a new SortType with given aSortBy method and ascending sort order.
      */
-    public SortType(int aSortAfter){
-    	this(aSortAfter, ASC);
+    public SortType(int aSortBy){
+    	this(aSortBy, ASC);
     }
 
     /**
@@ -77,6 +74,10 @@ public class SortType implements Serializable{
     	return sortOrder;
     }
     
+    /**
+     * Returns a sorttype which is opposite to this sorttype (switched sort order).
+     * @return
+     */
     public SortType reverse(){
     	return new SortType(getSortBy(), !getSortOrder());
     }
@@ -84,7 +85,7 @@ public class SortType implements Serializable{
     /**
      * Returns the string representation of the object.
      */
-    public String toString(){
+    @Override public String toString(){
 		return "sortBy: "+sortBy+" sortOder: "+(sortOrder==ASC?"ASC":"DESC");
     }
 }

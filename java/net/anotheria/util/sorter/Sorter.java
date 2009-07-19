@@ -5,7 +5,7 @@ import java.util.List;
 
 
 /**
- * A Sorter.
+ * A Sorter interface.
  */
 
 public interface Sorter<T extends IComparable> {
@@ -17,6 +17,6 @@ public interface Sorter<T extends IComparable> {
     /**
      * Sorts the given Enumeration of IFIComparables after given method and order.
      */
- 	public abstract List<T> sort(Enumeration<T> source, SortType how);
+ 	@Deprecated public abstract List<T> sort(Enumeration<T> source, SortType how);
 
 }
