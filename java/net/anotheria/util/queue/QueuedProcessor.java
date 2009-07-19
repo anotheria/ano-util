@@ -5,21 +5,63 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.log4j.Logger;
 
 public class QueuedProcessor<T extends Object> extends Thread {
+	/**
+	 * Name of the processor.
+	 */
 	private String name;
+	/**
+	 * Number of processed elements.
+	 */
 	private int counter;
+	/**
+	 * The log for this processor.
+	 */
 	private Logger log;
+	/**
+	 * The default log to use if no other log is supplied.
+	 */
 	private static Logger defaultLog;
+	/**
+	 * The queue in which items are stored.
+	 */
 	private IQueue<T> queue;
+	/**
+	 * A worker which processes elements in the queue.
+	 */
 	private IQueueWorker<T> worker;
+	/**
+	 * Default time to sleep.
+	 */
 	public static final long DEF_SLEEP_TIME = 50;
+	/**
+	 * Default queue size.
+	 */
 	public static final int DEF_QUEUE_SIZE = 1000;
+	/**
+	 * Size of the queue used by the producer.
+	 */
 	private int queueSize;
+	/**
+	 * Time to sleep after an overflow happened and before retrying.
+	 */
 	private long sleepTime;
+	/**
+	 * Number of overflows encountered by this processor.
+	 */
 	private int overflowCount;
+	/**
+	 * Number of throwed away queue elements.
+	 */
 	private int throwAwayCount;
 	private long waitingTime;
 	
+	/**
+	 * The default queue factory.
+	 */
 	private final IQueueFactory<T> DEF_QUEUE_FACTORY = new StandardQueueFactory<T>();
+	/**
+	 * The factory for creating queues.
+	 */
 	private IQueueFactory<T> queueFactory;
 	private AtomicBoolean stopImmediately;
 	
