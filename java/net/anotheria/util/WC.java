@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author lrosenberg
  * @created 25.06.2004
  */
-public class WC {
+public final class WC {
 	/**
 	 * Default extension. Files with another extension will be ignored.
 	 */
@@ -140,5 +140,9 @@ public class WC {
 			File aFile = files[i];
 			proceed(aFile);
 		}
+	}
+	
+	private WC(){
+		//prevent initialization.
 	}
 }

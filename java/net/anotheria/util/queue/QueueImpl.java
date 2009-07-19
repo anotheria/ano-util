@@ -107,7 +107,10 @@ public class QueueImpl<T> implements IQueue<T> {
 		return "queue size: "+size+" last: "+lastElement+" curr: "+currentElement + " count: " + getElementCount();
 	}
 	
-	public int size(){
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override public int size(){
 		return size;
 	}
 

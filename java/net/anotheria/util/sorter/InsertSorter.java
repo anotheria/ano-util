@@ -18,7 +18,6 @@
 package net.anotheria.util.sorter;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 
@@ -56,7 +55,10 @@ public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
  	}
 
   	private static class ListEntry<T extends IComparable> {
-  		public T value;
+  		/**
+  		 * The value of the entry.
+  		 */
+  		private T value;
 
   	 	public ListEntry<T> next;
 
