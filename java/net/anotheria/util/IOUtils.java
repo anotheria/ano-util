@@ -10,22 +10,39 @@ import java.io.InputStream;
 import net.anotheria.util.io.UnicodeReader;
 
 /**
- * TODO Please remain lrosenberg to comment IOUtils.java
+ * Utils for input output.
  * @author lrosenberg
- * @since 02.8.2005
  */
-public class IOUtils {
-    
+public final class IOUtils {
+
+	/**
+	 * Reads the contents of the file at once and returns the byte array.
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
 	public static final byte[] readFileAtOnce(File file) throws IOException{
         FileInputStream fIn = new FileInputStream(file);
         return readFileAtOnce(fIn);		
 	}
 	
+	/**
+	 * Reads the contents of the file at once and returns the byte array.
+	 * @param filename name of the file.
+	 * @return
+	 * @throws IOException
+	 */
 	public static final byte[] readFileAtOnce(String filename) throws IOException{
         FileInputStream fIn = new FileInputStream(filename);
         return readFileAtOnce(fIn);
     }
 	
+	/**
+	 * Reads the contents of the fileinputstream. (Why not an InputStream btw?).
+	 * @param fIn
+	 * @return
+	 * @throws IOException
+	 */
 	private static final byte[] readFileAtOnce(FileInputStream fIn) throws IOException{
 		byte[] ret = new byte[fIn.available()];
         fIn.read(ret);
@@ -33,10 +50,22 @@ public class IOUtils {
         return ret;
 	}
     
+	/**
+	 * Reads a file and returns the contents as string.
+	 * @param filename
+	 * @return
+	 * @throws IOException
+	 */
     public static final String readFileAtOnceAsString(String filename) throws IOException{
         return new String(readFileAtOnce(filename));
     }
     
+	/**
+	 * Reads a file and returns the contents as string.
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
     public static final String readFileAtOnceAsString(File file) throws IOException{
         return new String(readFileAtOnce(file));
     }
@@ -85,6 +114,11 @@ public class IOUtils {
         
     }
     
+    /**
+     * Reads a line from standard input.
+     * @return
+     * @throws IOException
+     */
     public static String readlineFromStdIn() throws IOException{
     	StringBuilder ret = new StringBuilder();
     	int c;

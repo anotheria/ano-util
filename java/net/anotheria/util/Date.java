@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
- * This class provide a simple date object
+ * This class provide a simple date object.
  **/
 public class Date implements Serializable{
     private static final long serialVersionUID = -8683008562899070994L;

@@ -1,8 +1,14 @@
 package net.anotheria.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import  java.util.Vector;
 
-
+/**
+ * A helper class for double objects formatting.
+ * @author another
+ *
+ */
 public class MathHelper {
 
     /**
@@ -11,10 +17,18 @@ public class MathHelper {
      * @param precision 1 - Integer.MaxValue
      * @return  rounded Double Vector with precision
      */
-    public static Vector<String> getFormattedStringVector(Vector<Double> values, int precision) {
+    @Deprecated public static Vector<String> getFormattedStringVector(Vector<Double> values, int precision) {
         Vector<String> result = new Vector<String>();
         for (int i = 0; i < values.size(); i++) {
             result.addElement(getFormattedString(values.elementAt(i), precision));
+        }
+        return  result;
+    }
+
+    public static List<String> getFormattedStrings(List<Double> values, int precision) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (int i = 0; i < values.size(); i++) {
+            result.add(getFormattedString(values.get(i), precision));
         }
         return  result;
     }

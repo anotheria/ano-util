@@ -5,7 +5,6 @@ import java.util.Random;
 /**
  * This class is an utility for generation of unique identification codes.
  * @author lrosenberg
- * Created on 06.10.2004
  */
 public final class IdCodeGenerator {
 	/**

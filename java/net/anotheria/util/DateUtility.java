@@ -20,16 +20,16 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * put your documentation comment here
+ * A utility for operation with Date objects.
  */
-public abstract class DateUtility {
+public final class DateUtility {
 
-    /**
-     * put your documentation comment here
-     * @param d1
-     * @param d2
-     * @return
-     */
+	/**
+	 * Returns true if the first date is after second date.
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
     public static boolean isAfter(Date d1, Date d2) {
         if (d1.year < d2.year)
             return  false;
@@ -266,5 +266,11 @@ public abstract class DateUtility {
         }
         return  d;
     }
-    
+  
+    /**
+     * Prevent initialization.
+     */
+    private DateUtility(){
+  
+    }
  }
