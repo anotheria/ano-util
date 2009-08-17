@@ -4,13 +4,31 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+/**
+ * This utility class copies recursively everything from source directory to target directory.
+ * @author lrosenberg
+ */
 public class CopyDirContents {
 
+	/**
+	 * Buffer used for copies.
+	 */
 	private static byte[] buffer = new byte[1*1024*1024];
+	/**
+	 * Counter for files and directories.
+	 */
 	private static int files = 0, dirs = 0;
+	/**
+	 * Byte counter.
+	 */
 	private static long bytes = 0;
+	/**
+	 * Start time.
+	 */
 	private static long time = System.currentTimeMillis();
+	/**
+	 * Number of skiped files.
+	 */
 	private static int skipped = 0;
 
 	public static void main(String a[]) throws IOException{
@@ -22,6 +40,9 @@ public class CopyDirContents {
 		printInfo();
 	}
 	
+	/**
+	 * Prints current copy status.
+	 */
 	private static void printInfo(){
 		long now = System.currentTimeMillis();
 		long duration = now - time;
@@ -37,6 +58,12 @@ public class CopyDirContents {
 			copyFile(src, dest);
 	}
 	
+	/**
+	 * Copies two directories.
+	 * @param src
+	 * @param dest
+	 * @throws IOException
+	 */
 	private static void copyDir(File src, File dest) throws IOException{
 		dirs++;
 		//System.out.println("Copying dir: "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
@@ -51,6 +78,12 @@ public class CopyDirContents {
 		}
 	}
 
+	/**
+	 * Copies two files.
+	 * @param src
+	 * @param dest
+	 * @throws IOException
+	 */
 	private static void copyFile(File src, File dest) throws IOException{
 		files++;
 		if (files/1000*1000==files)
@@ -80,6 +113,12 @@ public class CopyDirContents {
 		}
 	}
 	
+	/**
+	 * Copies from stream to stream.
+	 * @param src
+	 * @param dest
+	 * @throws IOException
+	 */
 	private static void copy(FileInputStream src, FileOutputStream dest) throws IOException{
 		while(src.available()>0){
 			int bytesToCopy = src.available()<buffer.length ? src.available() : buffer.length;
