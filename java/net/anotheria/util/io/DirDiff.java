@@ -11,6 +11,12 @@ public class DirDiff {
 		diff(p1,p2);
 	}
 	
+	/**
+	 * Creates a diff between two pathes.
+	 * @param path1
+	 * @param path2
+	 * @throws IOException
+	 */
 	public static void diff(String path1, String path2) throws IOException{
 		File d1 = new File(path1);
 		if (!d1.exists())
@@ -31,6 +37,12 @@ public class DirDiff {
 		
 	}
 	
+	/**
+	 * Creates a new entry. It will be either a FileEntry or a DirectoryEntry.
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
 	private static Entry createEntry(File path) throws IOException{
 		if (path.isDirectory())
 			return createDirectoryEntry(path);
@@ -38,6 +50,12 @@ public class DirDiff {
 			return createFileEntry(path);
 	}
 	
+	/**
+	 * Creates a new FileEntry.
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
 	private static FileEntry createFileEntry(File path) throws IOException{
 		FileInputStream fIn = new FileInputStream(path);
 		long size = fIn.available();
@@ -45,6 +63,12 @@ public class DirDiff {
 		return new FileEntry(path.getAbsolutePath(), size);
 	}
 	
+	/**
+	 * Creates a directory entry.
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
 	private static DirectoryEntry createDirectoryEntry(File path) throws IOException{
 		System.out.println("creating "+path+"...");
 		DirectoryEntry ret = new DirectoryEntry(path.getAbsolutePath());
