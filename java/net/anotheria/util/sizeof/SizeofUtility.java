@@ -11,23 +11,58 @@ import net.anotheria.util.StringUtils;
 import test.sizeof.simple1.A;
 import test.sizeof.simple1.C;
 
+/**
+ * Utility to calculate size of objects in memory.
+ * @author lrosenberg
+ *
+ */
 public class SizeofUtility {
-	
+	/**
+	 * Size of an integer variable.
+	 */
 	public static final int SIZEOF_INT = 4;
+	/**
+	 * Size of a byte variable.
+	 */
 	public static final int SIZEOF_BYTE = 1;
+	/**
+	 * Size of a long variable.
+	 */
 	public static final int SIZEOF_LONG = 8;
+	/**
+	 * Size of a float variable.
+	 */
 	public static final int SIZEOF_FLOAT = 4;
+	/**
+	 * Size of a double variable.
+	 */
 	public static final int SIZEOF_DOUBLE = 8;
+	/**
+	 * Size of a char variable.
+	 */
 	public static final int SIZEOF_CHAR = 2;
+	/**
+	 * Size of a short variable.
+	 */
 	public static final int SIZEOF_SHORT = 2;
+	/**
+	 * Size of a boolean variable.
+	 */
 	public static final int SIZEOF_BOOLEAN = 4;
-	
+	/**
+	 * Size range of the VM.
+	 */
 	public static final int VM = 64/8;
 	//change that to SIZEOF_INT on 32 bit
 	public static final int SIZEOF_REFERENCE = VM;
 	
+	/**
+	 * Overhead of an object.
+	 */
 	public static final int SIZEOF_OBJECT_OVERHEAD = 2*VM;
-	
+	/**
+	 * Map with registered helpers.
+	 */
 	private static Map<Class<?>, SizeofHelper> helpers;
 	
 	static{
@@ -184,6 +219,11 @@ public class SizeofUtility {
 		System.out.println("=======================");
 	}
 	
+	
+	/**
+	 * Test method for modifier debug.
+	 * @param mod
+	 */
 	private static void printMod(int mod){
 		printMod("abstract", Modifier.isAbstract(mod));
 		printMod("final", Modifier.isFinal(mod));
