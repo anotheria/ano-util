@@ -319,7 +319,7 @@ public class ExecutionTimer {
 		/**
 		 * Returns the standart string representation of this object.
 		 */
-		public String toString(){
+		@Override public String toString(){
 		    return toStringKey();
 		}
 	}
