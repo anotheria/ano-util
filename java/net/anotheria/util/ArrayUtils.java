@@ -49,9 +49,36 @@ public class ArrayUtils {
 		return Arrays.copyOfRange(src, from, to);
 	}
 	
-	public static List<Integer> asList(int... array){
+	/**
+	 * Returns the List that contains elements from array.
+	 * NOTE: vararg of parameterized types (here @param array) for primitive arrays doesn't work properly.
+	 * This utility have to be accomplished with asList methods for each primitive arrays!!!
+	 * 
+	 * @param <T>
+	 * @param array
+	 * @return
+	 */
+	public static <T> List<T> asList(T... array){
+		return Arrays.asList(array);
+	}
+	
+	public static List<Integer> asList(int[] array){
 		List<Integer> ret = new ArrayList<Integer>(array.length);
 		for(int a:array)
+			ret.add(a);
+		return ret;
+	}
+	
+	public static List<Long> asList(long[] array){
+		List<Long> ret = new ArrayList<Long>(array.length);
+		for(long a:array)
+			ret.add(a);
+		return ret;
+	}
+	
+	public static List<Float> asList(float[] array){
+		List<Float> ret = new ArrayList<Float>(array.length);
+		for(float a:array)
 			ret.add(a);
 		return ret;
 	}

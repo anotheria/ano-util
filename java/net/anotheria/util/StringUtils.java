@@ -780,8 +780,31 @@ public final class StringUtils{
 		return ret.toString();
 	}	
 	
-	public static String concatenateTokens(String delimiterSequence, Object... tokens){
-		return concatenateTokens(Arrays.asList(tokens), delimiterSequence);
+	/**
+	 * Concatenates tokens to String where tokens are separated from each other by delimiterSequence.
+	 * 
+	 * NOTE: vararg of parameterized types (here @param array) for primitive arrays doesn't work properly.
+	 * This utility have to be accomplished with concatenateTokens methods for each primitive arrays!!!
+	 * 
+	 * @param <T>
+	 * @param delimiterSequence
+	 * @param tokens
+	 * @return
+	 */
+	public static <T> String concatenateTokens(String delimiterSequence, T... tokens){
+		return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
+	}
+	
+	public static <T> String concatenateTokens(String delimiterSequence, int[] tokens){
+		return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
+	}
+	
+	public static <T> String concatenateTokens(String delimiterSequence, long[] tokens){
+		return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
+	}
+	
+	public static <T> String concatenateTokens(String delimiterSequence, float[] tokens){
+		return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
 	}
 	
 	public static String replaceUmlauts(String src){

@@ -106,6 +106,17 @@ public class StringUtilsTest {
 //			System.out.println(s);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Test public void concatenateTokens(){
+		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", "t1","t2","t3"));
+		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", new String[]{"t1","t2","t3"}));
+		
+		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,2,3));
+		assertEquals("1||2||3", StringUtils.concatenateTokens("||", new int[]{1,2,3}));
+		assertEquals("1||2||3", StringUtils.concatenateTokens("||", new Integer[]{1,2,3}));
+		
+		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,"2",3));
+	}
 
 	@Test public void removeImgTag(){
 		assertEquals("blabla", StringUtils.removeImgTag("bla<img src=\"xxx\">bla"));

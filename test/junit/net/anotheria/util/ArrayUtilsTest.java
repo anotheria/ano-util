@@ -1,12 +1,13 @@
 package net.anotheria.util;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static junit.framework.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
@@ -20,6 +21,11 @@ public class ArrayUtilsTest {
 		}
 		public String toString(){
 			return value;
+		}
+		@Override public boolean equals(Object aObj){
+			if(!(aObj instanceof TestObject))
+				return false;
+			return value != null && value.equals(((TestObject)aObj).value);
 		}
 	}
 	
@@ -189,6 +195,46 @@ public class ArrayUtilsTest {
 		assertFalse(ArrayUtils.isSorted(2,3,4,11,5,6,10));
 	}
 	
-	
+	@Test public void asListTest(){
+		
+		List<String> stringList = new ArrayList<String>();
+		stringList.add("s1");
+		stringList.add("s2");
+		stringList.add("s3");
+		assertEquals(stringList, ArrayUtils.asList("s1","s2","s3"));
+		assertEquals(stringList, ArrayUtils.asList(new String[]{"s1","s2","s3"}));
+		
+		List<TestObject> testObjectList = new ArrayList<TestObject>();
+		testObjectList.add(new TestObject("1"));
+		testObjectList.add(new TestObject("2"));
+		testObjectList.add(new TestObject("3"));
+		assertEquals(testObjectList, ArrayUtils.asList(new TestObject("1"),new TestObject("2"),new TestObject("3")));
+		assertEquals(testObjectList, ArrayUtils.asList(new TestObject[]{new TestObject("1"),new TestObject("2"),new TestObject("3")}));		
+		
+		List<Integer> integerList = new ArrayList<Integer>();
+		integerList.add(1);
+		integerList.add(2);
+		integerList.add(3);
+		assertEquals(integerList, ArrayUtils.asList(1,2,3));
+		assertEquals(integerList, ArrayUtils.asList(new int[]{1,2,3}));
+		assertEquals(integerList, ArrayUtils.asList(new Integer[]{1,2,3}));
+		
+		List<Long> longList = new ArrayList<Long>();
+		longList.add(1L);
+		longList.add(2L);
+		longList.add(3L);
+		assertEquals(longList, ArrayUtils.asList(1L,2L,3L));
+		assertEquals(longList, ArrayUtils.asList(new long[]{1L,2L,3L}));
+		assertEquals(longList, ArrayUtils.asList(new Long[]{1L,2L,3L}));
+		
+		List<Float> floatList = new ArrayList<Float>();
+		floatList.add(1F);
+		floatList.add(2F);
+		floatList.add(3F);
+		assertEquals(floatList, ArrayUtils.asList(1F,2F,3F));
+		assertEquals(floatList, ArrayUtils.asList(new float[]{1F,2F,3F}));
+		assertEquals(floatList, ArrayUtils.asList(new Float[]{1F,2F,3F}));
+	}
+
 }
  
