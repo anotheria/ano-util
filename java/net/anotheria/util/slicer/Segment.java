@@ -1,10 +1,18 @@
 package net.anotheria.util.slicer;
 
+import java.io.Serializable;
+
 /**
  * Used as parameter class in a slice request.
  * @author lrosenberg
  */
-public class Segment {
+public class Segment implements Serializable {
+	
+	/**
+	 * Default serialVersion variable.
+	 */
+	private static final long serialVersionUID = -1075806075594192415L;
+
 	/**
 	 * The requested slice number.
 	 */
