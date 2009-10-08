@@ -54,4 +54,28 @@ public class DateUtilityTest {
 		assertTrue(DateUtility.isBefore(same2, next));
 		assertTrue(DateUtility.isBefore(now, next));
 	}
+	
+	@Test public void ageTest(){
+		Date fromDate = new Date(10,5,1984);
+		
+		//full 24 years
+		Date toDate = new Date(9,4,2009);
+		assertEquals(24,DateUtility.getAge(fromDate, toDate));
+		assertEquals(24,DateUtility.getAge(fromDate.toMill(), toDate.toMill()));
+		
+		//exactly 25 years
+		toDate = new Date(10,5,2009);
+		assertEquals(25,DateUtility.getAge(fromDate, toDate));
+		assertEquals(25,DateUtility.getAge(fromDate.toMill(), toDate.toMill()));
+		
+		//full 25 years
+		toDate = new Date(11,5,2009);
+		assertEquals(25,DateUtility.getAge(fromDate, toDate));
+		assertEquals(25,DateUtility.getAge(fromDate.toMill(), toDate.toMill()));
+		
+		//age till now
+		toDate = new Date(System.currentTimeMillis());
+		assertEquals(DateUtility.getAge(fromDate, toDate),DateUtility.getAge(fromDate));
+		assertEquals(DateUtility.getAge(fromDate.toMill(), toDate.toMill()),DateUtility.getAge(fromDate.toMill()));
+	}
 }

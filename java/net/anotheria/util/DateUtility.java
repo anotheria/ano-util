@@ -266,7 +266,62 @@ public final class DateUtility {
         }
         return  d;
     }
-  
+    
+	/**
+	 * Returns age - a period of time, measured by years from fromDate till now
+	 * @param fromDate start date in mills
+	 * @return age
+	 */
+	
+	public static int getAge(long fromDate){
+		return getAge(fromDate, System.currentTimeMillis());
+	}
+	
+	/**
+	 * Returns age - a period of time, measured by years from fromDate till now
+	 * @param fromDate start date
+	 * @return age
+	 */
+	public static int getAge(Date fromDate){
+		return getAge(fromDate, new Date(System.currentTimeMillis()));
+	}
+    
+	/**
+	 * Returns age - a period of time, measured by years from fromDate to toDate
+	 * @param fromDate start date in mills
+	 * @param toDate end date in mills
+	 * @return age
+	 */
+	public static int getAge(long fromDate, long toDate){
+		Date _fromDate = new Date(fromDate);
+		Date _toDate = new Date(toDate);
+		return getAge(_fromDate, _toDate);
+	}
+	
+	/**
+	 * Returns age - a period of time, measured by years from fromDate to toDate
+	 * @param fromDate start date
+	 * @param toDate end date
+	 * @return age
+	 */
+	public static int getAge(Date fromDate, Date toDate){
+		int age = toDate.getYear() - fromDate.getYear();
+		
+		int monthDiff = toDate.getMonth() - fromDate.getMonth();
+		if(monthDiff > 0)
+			return age;
+		if(monthDiff < 0)
+			return --age;
+		
+		int daysDiff = toDate.getDay() - fromDate.getDay();
+		if(daysDiff > 0)
+			return age;
+		if(daysDiff < 0)
+			return --age;	
+		
+		return age > 0? age : 0;
+	}
+	
     /**
      * Prevent initialization.
      */
