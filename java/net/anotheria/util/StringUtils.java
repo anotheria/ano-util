@@ -862,4 +862,16 @@ public final class StringUtils{
 		return src == null || src.length() == 0;
 	}
 	
+	/**
+	 * Converts an Objects list to the list of Strings by calling toString method of each Object from incoming list.
+	 *  
+	 * @param list incoming list of Objects
+	 * @return list where each incoming object converted to string.
+	 */
+	public static List<String> toStringList(List<?> list){
+		List<String> ret = new ArrayList<String>(list.size());
+		for(Object el: list)
+			ret.add(el.toString());
+		return ret;
+	}
 }

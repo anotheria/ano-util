@@ -111,19 +111,33 @@ public class ArrayUtils {
 		return ret;
 	}
 	
-	public static <T> List<String> toStringList(List<T> list){
+	/**
+	 * Converts an Objects list to the list of Strings by calling toString method of each Object from incoming list.
+	 * @Deprecated. Use StringUtils.toStringList() instead.
+	 *  
+	 * @param list incoming list of Objects
+	 * @return list where each incoming object converted to string.
+	 */
+	@Deprecated
+	public static List<String> toStringList(List<?> list){
 		List<String> ret = new ArrayList<String>(list.size());
-		for(T el: list)
+		for(Object el: list)
 			ret.add(el.toString());
 		return ret;
 	}
 	
-	public static <T> List<String> toStringList(int... array){
-		return toStringList(asList(array));
+	public static List<String> toStringList(int... array){
+		List<String> ret = new ArrayList<String>(array.length);
+		for(int el: array)
+			ret.add(String.valueOf(el));
+		return ret;
 	}
 	
 	public static <T> List<String> toStringList(T... array){
-		return toStringList(Arrays.asList(array));
+		List<String> ret = new ArrayList<String>(array.length);
+		for(T el: array)
+			ret.add(String.valueOf(el));
+		return ret;
 	}
 	
 	public static <T> String toString(int... array){
