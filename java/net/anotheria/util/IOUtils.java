@@ -1,6 +1,7 @@
 package net.anotheria.util;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -127,6 +128,19 @@ public final class IOUtils {
     			ret.append((char)c);
     	}
     	return ret.toString();
+    }
+    
+    /**
+     * Closes Closeable instance ignoring IOException. Should be called from a finally block whenever Closeable is used.
+     * @param closeable to close
+     */
+    public static void closeIgnoringException(Closeable closeable){
+    	if(closeable!=null)
+			try {
+				closeable.close();
+			} catch (IOException ignored) {
+				//We can do nothing if on close failure
+			}
     }
 }
 
