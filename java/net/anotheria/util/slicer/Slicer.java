@@ -22,7 +22,7 @@ public class Slicer {
 
 		double pageCount = (double)totalElements / segment.getElementsPerSlice();
 		int showedPageCount = (int)pageCount;
-		if (showedPageCount!=pageCount)
+		if ((double)showedPageCount!=pageCount)
 			showedPageCount++;
 		ret.setTotalNumberOfSlices(showedPageCount);
 		
