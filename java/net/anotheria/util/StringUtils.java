@@ -840,6 +840,29 @@ public final class StringUtils{
 		return ret.toString();
 	}
 	
+	/**
+	 * Escapes all occurrences of escapedChars in a source string with where escaping char is '\'.
+	 * Note: Source string is not checked whether character from escapedChars is already escaped or not.
+	 * @param src source string to escape
+	 * @param escapedChars sequence of characters to escape
+	 * @return escaped string
+	 */
+	public static String escape(String src, char... escapedChars){
+		char escape = '\\';
+		
+		StringBuilder ret = new StringBuilder();
+		for (int i = 0; i < src.length(); i++) {
+			char c = src.charAt(i);
+			for (char eC : escapedChars)
+				if (eC == c) {
+					ret.append(escape);
+					break;
+				}
+			ret.append(c);
+		}
+		return ret.toString();
+	}
+	
 	public static String normalize(String s){
 		if (s==null || s.length()==0)
 			return s;

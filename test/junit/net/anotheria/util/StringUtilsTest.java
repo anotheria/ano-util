@@ -121,5 +121,10 @@ public class StringUtilsTest {
 	@Test public void removeImgTag(){
 		assertEquals("blabla", StringUtils.removeImgTag("bla<img src=\"xxx\">bla"));
 	}
+	
+	@Test public void escape(){
+		String src = "Mumu \"nono\" and 'c' and \\";
+		assertEquals("Mumu \\\"nono\\\" and \\'c\\' and \\\\", StringUtils.escape(src, '\\','\'','"'));
+	}
 }
  
