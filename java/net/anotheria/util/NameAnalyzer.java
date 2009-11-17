@@ -11,15 +11,37 @@ import java.util.Set;
 import net.anotheria.util.sorter.DummySortType;
 import net.anotheria.util.sorter.IComparable;
 import net.anotheria.util.sorter.StaticQuickSorter;
-
+/**
+ * Simple utility to traverse a directory and analyze the file names.
+ * @author lrosenberg
+ *
+ */
 public class NameAnalyzer {
+	/**
+	 * Number of traversed directories.
+	 */
 	private static long dirFound;
+	/**
+	 * Number of touched files.
+	 */
 	private static long filesFound;
+	/**
+	 * Number of touched java files.
+	 */
 	private static long javaFilesFound;
-	
+	/**
+	 * Set with all names.
+	 */
 	private static Set<String> names = new HashSet<String>();
+	/**
+	 * Set with extracted elements and their counts.
+	 */
 	private static HashMap<String,ElementCount> elements = new HashMap<String,ElementCount>();
-	
+	/**
+	 * Main.
+	 * @param a
+	 * @throws IOException
+	 */
 	public static void main(String a[]) throws IOException{
 		//test();
 		///*
