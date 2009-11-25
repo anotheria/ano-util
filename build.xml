@@ -3,6 +3,9 @@
 <project name="ano-util" default="dist" basedir=".">
 	<import file="../build/basic-project.xml"/>	
 
+	<property name="ivy.organisation" value="anotheria.net"/>
+	<property name="ivy.module" value="ano-util"/>
+
 	<!-- 
 		checkout svn://svn.anotheria.net/opensource/build/trunk as ../build 
 		in order for this build script to work.
