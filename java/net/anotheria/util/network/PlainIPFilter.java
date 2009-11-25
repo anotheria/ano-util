@@ -9,13 +9,13 @@ import java.util.List;
  * @author lrosenberg
  *
  */
-public class IPFilter {
+public class PlainIPFilter {
 	private List<IPRange> ranges;
 
 	/**
 	 * Creates a new filter.
 	 */
-	public IPFilter() {
+	public PlainIPFilter() {
 		ranges = new ArrayList<IPRange>();
 	}
 
@@ -42,7 +42,7 @@ public class IPFilter {
 	 * 
 	 * @return
 	 */
-	private boolean mayPass(String ipAddress, List<IPRange> ranges) {
+	public static boolean mayPass(String ipAddress, List<IPRange> ranges) {
 		for (IPRange r : ranges)
 			if (r.mayPass(ipAddress))
 				return true;
@@ -69,12 +69,12 @@ public class IPFilter {
 
 
 
-	private static void check(IPFilter filter, String ip) {
+	private static void check(PlainIPFilter filter, String ip) {
 		System.out.println("for " + ip + " filter replies: " + filter.mayPass(ip));
 	}
 
 	public static void main(String a[]) {
-		IPFilter filter = new IPFilter();
+		PlainIPFilter filter = new PlainIPFilter();
 		filter.addRange("10.0.0.0", 8);
 		filter.addRange("172.16.0.0", 12);
 		filter.addRange("192.168.0.0", 16);
