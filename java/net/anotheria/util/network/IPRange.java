@@ -11,25 +11,48 @@ import net.anotheria.util.StringUtils;
  */
 
 public class IPRange {
+	
+	/**
+	 * Network mask.
+	 */
 	private long networkMask;
-	private long networkIp;
+	
+	/**
+	 * Masked binary IP.
+	 */
+	private long maskedIp;
 
+	/**
+	 * Creates new IPRange with given ipAdress and mask.
+	 * @param ipAdress
+	 * @param mask
+	 */
 	public IPRange(String ipAdress, int mask) {
-		networkIp = convertIp(ipAdress);
+		maskedIp = convertIp(ipAdress);
 		// System.out.println("ipAdress: "+ipAdress+" -> "+networkIp);
 		networkMask = (long) Math.pow(2, mask) - 1;
 		networkMask <<= 32 - mask;
 		// System.out.print(networkIp + " --> ");
-		networkIp &= networkMask;
+		maskedIp &= networkMask;
 		// System.out.println(networkIp);
 
 	}
 
+	/**
+	 * Check whether or not ip param is in the current range.
+	 * @param ip to check
+	 * @return true if ip param in the current range
+	 */
 	public boolean mayPass(String ip) {
 		long myIp = convertIp(ip);
-		return (myIp & networkMask) == networkIp;
+		return (myIp & networkMask) == maskedIp;
 	}
 
+	/**
+	 * Converts ipAddress from dotted-decimal notation to binary.
+	 * @param ipAdress as dotted-decimal
+	 * @return ip address converted to binary form
+	 */
 	private long convertIp(String ipAdress) {
 		long result = 0;
 		String tokens[] = StringUtils.tokenize(ipAdress, '.');
@@ -47,7 +70,8 @@ public class IPRange {
 
 	}
 
+	@Override
 	public String toString() {
-		return "nIP: " + networkIp + ", nM: " + networkMask;
+		return "nIP: " + maskedIp + ", nM: " + networkMask;
 	}
 }
