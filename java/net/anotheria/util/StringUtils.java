@@ -177,6 +177,25 @@ public final class StringUtils{
 		return sum;
 	}
 
+	
+    /**
+     * Inserts the string at the specified position in the source string.
+     *
+     * @param source source string
+     * @param insertion string to be inserted at the specified position
+     * @param position position in the source string to insert
+     * @return the resulting string
+     * @exception  IndexOutOfBoundsException  if the
+     *             <code>position</code> is negative, or
+     *             <code>position</code> is larger than the length of
+     *             source string
+     */
+	public static String insert(String source, String insertion, int position){
+		StringBuilder ret =  new StringBuilder();
+		ret.append(source.substring(0, position)).append(insertion).append(source.substring(position));
+		return ret.toString();
+	}
+	
 	/**
 	 *Returns a new String which equals source String
 	 */
@@ -380,6 +399,26 @@ public final class StringUtils{
 	}
 	
 	
+    /**
+     * Removes from the source string the characters sequence pointed by <code>beginIndex</code> and
+     * length.
+     *
+     * @param      source   source string
+     * @param      beginIndex   the beginning index, inclusive
+     * @param      length     the length of characters sequence to remove
+     * @return     the resulting string
+     * @exception  IndexOutOfBoundsException  if the
+     *             <code>beginIndex</code> or <code>length</code> are negative, or
+     *             <code>beginIndex</code> or <code>beginIndex</code> + <code>length</code>
+     *             are larger than the length of source string
+     */
+	public static String remove(String source, int beginIndex, int length) {
+		if(length == 0)
+			return source;
+		StringBuilder ret = new StringBuilder();
+		ret.append(source.substring(0, beginIndex)).append(source.substring(beginIndex + length));
+		return ret.toString();
+	}
  	
  	public static final String replaceOnce(String src, String toReplace, String with){
  		int index = src.indexOf(toReplace);

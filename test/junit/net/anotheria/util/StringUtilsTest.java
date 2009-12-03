@@ -1,6 +1,8 @@
 package net.anotheria.util;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import org.junit.Test;
 
 public class StringUtilsTest {
 	@Test public void normalize(){
-		String test = "abc123efg mümüßz MA*^&ZM_";
+//		String test = "abc123efg mümüßz MA*^&ZM_";
 //		assertEquals("abc123efg_m_m__z_MA___ZM_", StringUtils.normalize(test));
 //		assertEquals("abc123efg_mümüßz_MA___ZM_", StringUtils.normalize(test));
 	}
@@ -125,6 +127,80 @@ public class StringUtilsTest {
 	@Test public void escape(){
 		String src = "Mumu \"nono\" and 'c' and \\";
 		assertEquals("Mumu \\\"nono\\\" and \\'c\\' and \\\\", StringUtils.escape(src, '\\','\'','"'));
+	}
+	
+	@Test public void insertTest(){
+		String srcBefore = "beforeInsertion";
+		String srcAfter = "AfterInsertion";
+		
+		String src = srcBefore + srcAfter;
+		String insertion = "_INSERTION_";
+		
+		String result = StringUtils.insert(src, insertion, srcBefore.length());
+		assertEquals(srcBefore + insertion + srcAfter, result);
+		
+		result = StringUtils.insert(srcAfter, insertion, 0);
+		assertEquals(insertion + srcAfter, result);
+		
+		result = StringUtils.insert(srcBefore, insertion, srcBefore.length());
+		assertEquals(srcBefore + insertion, result);
+		
+		result = StringUtils.insert(src, "", srcBefore.length());
+		assertEquals(src, result);
+		
+		try{
+			StringUtils.insert(src, insertion, src.length() + 1);
+			fail("Must be throwed Exception exception");
+		}catch(IndexOutOfBoundsException ignored){
+		}
+		
+		try{
+			StringUtils.insert(src, insertion, -1);
+			fail("Must be throwed Exception exception");
+		}catch(IndexOutOfBoundsException ignored){
+		}
+	}
+	
+	@Test public void removeTest(){
+		String src_1 = "beforeInsertion";
+		String src_3 = "AfterInsertion";
+		
+		String src_2 = "_ROMOVING_";
+		String src = src_1 + src_2 + src_3;
+		
+		String result = StringUtils.remove(src, 0, src_1.length());
+		assertEquals(src_2 + src_3, result);
+
+		result = StringUtils.remove(src, src_1.length(), src_2.length());
+		assertEquals(src_1 + src_3, result);
+		
+		
+		result = StringUtils.remove(src, 0, src_1.length());
+		assertEquals(src_2 + src_3, result);
+		
+		result = StringUtils.remove(src, src_1.length() + src_2.length(), src_3.length());
+		assertEquals(src_1 + src_2, result);
+		
+		result = StringUtils.remove(src, 0, 0);
+		assertEquals(src, result);
+		
+		try{
+			StringUtils.remove(src, -1, 1);
+			fail("Must be throwed Exception exception");
+		}catch(IndexOutOfBoundsException ignored){
+		}
+		
+		try{
+			StringUtils.remove(src, 1000, 10001);
+			fail("Must be throwed Exception exception");
+		}catch(IndexOutOfBoundsException ignored){
+		}
+		
+		try{
+			StringUtils.remove(src, 0, -1);
+			fail("Must be throwed Exception exception");
+		}catch(IndexOutOfBoundsException ignored){
+		}
 	}
 }
  
