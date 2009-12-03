@@ -130,11 +130,10 @@ public class StringUtilsTest {
 	}
 	
 	@Test public void insertTest(){
-		String srcBefore = "beforeInsertion";
-		String srcAfter = "AfterInsertion";
-		
-		String src = srcBefore + srcAfter;
-		String insertion = "_INSERTION_";
+		final String srcBefore = "beforeInsertion";
+		final String srcAfter = "AfterInsertion";
+		final String src = srcBefore + srcAfter;
+		final String insertion = "_INSERTION_";
 		
 		String result = StringUtils.insert(src, insertion, srcBefore.length());
 		assertEquals(srcBefore + insertion + srcAfter, result);
@@ -162,11 +161,11 @@ public class StringUtilsTest {
 	}
 	
 	@Test public void removeTest(){
-		String src_1 = "beforeInsertion";
-		String src_3 = "AfterInsertion";
+		final String src_1 = "beforeInsertion";
+		final String src_3 = "AfterInsertion";
 		
-		String src_2 = "_ROMOVING_";
-		String src = src_1 + src_2 + src_3;
+		final String src_2 = "_ROMOVING_";
+		final String src = src_1 + src_2 + src_3;
 		
 		String result = StringUtils.remove(src, 0, src_1.length());
 		assertEquals(src_2 + src_3, result);
@@ -201,6 +200,10 @@ public class StringUtilsTest {
 			fail("Must be throwed Exception exception");
 		}catch(IndexOutOfBoundsException ignored){
 		}
+		
+		result = StringUtils.remove(src, src_1.length(), src_2.length());
+		result = StringUtils.insert(result, src_2, src_1.length());
+		assertEquals(src, result);
 	}
 }
  
