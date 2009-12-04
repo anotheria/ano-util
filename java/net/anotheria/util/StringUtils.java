@@ -191,9 +191,7 @@ public final class StringUtils{
      *             source string
      */
 	public static String insert(String source, String insertion, int position){
-		StringBuilder ret =  new StringBuilder();
-		ret.append(source.substring(0, position)).append(insertion).append(source.substring(position));
-		return ret.toString();
+		return new StringBuilder(source).insert(position, insertion).toString();
 	}
 	
 	/**
@@ -413,11 +411,7 @@ public final class StringUtils{
      *             are larger than the length of source string
      */
 	public static String remove(String source, int beginIndex, int length) {
-		if(length == 0)
-			return source;
-		StringBuilder ret = new StringBuilder();
-		ret.append(source.substring(0, beginIndex)).append(source.substring(beginIndex + length));
-		return ret.toString();
+		return new StringBuilder(source).delete(beginIndex, beginIndex + length).toString();
 	}
  	
  	public static final String replaceOnce(String src, String toReplace, String with){
