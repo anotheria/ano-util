@@ -1,14 +1,13 @@
 package net.anotheria.util.tools;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import net.anotheria.util.IOUtils;
 
 public class FindHeaders {
 	public static void main(String a[]){
 		Walker w = new Walker(new Worker() {
-			int counter = 0;
+			private int counter = 0;
 			
 			@Override
 			public void processFile(File file) {

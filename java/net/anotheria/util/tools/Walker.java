@@ -29,6 +29,7 @@ public class Walker {
 		if (worker==null)
 			throw new IllegalStateException("No worker configured!");
 		process(new File("."));
+		System.out.println("Scanning file "+touched+", directories: "+dirs+", files: "+files);
 	}
 	
 	private void process(File f){

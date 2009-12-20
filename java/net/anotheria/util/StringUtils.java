@@ -255,7 +255,7 @@ public final class StringUtils{
 
 
 	private static class StringPair{
-	    public String first,second;
+	    private String first,second;
 		StringPair(String aFirst,String aSecond){
 			this.first = aFirst;
 			this.second = aSecond;
@@ -263,6 +263,15 @@ public final class StringUtils{
 		StringPair(){
 			this(null,null);
 		}
+
+		public String getFirst(){
+			return first;
+		}
+		
+		public String getSecond(){
+			return second;
+		}
+		
 
 	}
 
