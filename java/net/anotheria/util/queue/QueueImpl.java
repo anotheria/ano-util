@@ -51,9 +51,6 @@ public class QueueImpl<T> implements IQueue<T> {
 		listeners.add(listener);
 	}
 
-	/** Not implemented.
-	 * @see de.friendscout.vincent.util.IQueue#getElementCount()
-	 */
 	public synchronized int getElementCount() {
 		if (lastElement >= currentElement)
 			return lastElement - currentElement;
@@ -96,9 +93,6 @@ public class QueueImpl<T> implements IQueue<T> {
 		elements[lastElement] = o;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.friendscout.vincent.util.IQueue#removeListener(de.friendscout.vincent.util.IQueueListener)
-	 */
 	@Override public void removeListener(IQueueListener listener) {
 		listeners.remove(listener);
 	}
