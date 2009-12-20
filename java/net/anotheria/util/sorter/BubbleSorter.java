@@ -1,20 +1,3 @@
-/* ------------------------------------------------------------------------- *
-  $Source: /work/cvs/ano-util/java/net/anotheria/util/sorter/BubbleSorter.java,v $
-  $Author: lrosenberg $
-  $Date: 2007/08/21 09:31:25 $
-  $Revision: 1.2 $
-
-
-  Copyright 2002 by BeagleSoft GmbH, Berlin, Germany
-  All rights reserved.
-
-  This software is the confidential and proprietary information
-  of BeagleSoft GmbH. ("Confidential Information").  You
-  shall not disclose such Confidential Information and shall use
-  it only in accordance with the terms of the license agreement
-  you entered into with BeagleSoft GmbH.
-  See www.beaglesoft.biz for details.
-** ------------------------------------------------------------------------- */
 package net.anotheria.util.sorter;
 
 import java.util.ArrayList;

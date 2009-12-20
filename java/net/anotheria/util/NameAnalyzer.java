@@ -182,7 +182,7 @@ public class NameAnalyzer {
 			count++;
 		}
 		
-		public String toString(){
+		@Override public String toString(){
 			return name+" = "+count;
 		}
 		
