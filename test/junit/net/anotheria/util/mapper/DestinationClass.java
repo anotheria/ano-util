@@ -17,7 +17,9 @@ import java.util.Map;
 	@PopulateWith(value = "step")
 	private Integer stepAnnotated;
 
+	@PopulateWith(value = "stepToConvert")
 	private Integer stepConfigured;
+
 	private String stepConverted;
 	private Map<String, Integer> intMap;
 	

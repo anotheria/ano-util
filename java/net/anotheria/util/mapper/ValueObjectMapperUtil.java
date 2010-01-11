@@ -1,9 +1,6 @@
 package net.anotheria.util.mapper;
 
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
-import org.dozer.CustomConverter;
-import org.dozer.DozerBeanMapper;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 
@@ -14,11 +11,11 @@ import java.util.Map;
 /**
  * VO mapper maps properties between objects.
  * Mapping can be configured with annotations, xml files, mapping by default.
- *
+ * <p/>
  * <p/>
  * <P>Mapping automatically performed for all fields with the same property
- *  name from the source object into the destination object.
- * 
+ * name from the source object into the destination object.
+ * <p/>
  * <p/>
  *
  * @author vitaliy
@@ -28,7 +25,7 @@ import java.util.Map;
  */
 public final class ValueObjectMapperUtil {
 	/**
-	 *  Singleton mapper instance.
+	 * Singleton mapper instance.
 	 */
 	private static final Mapper mapper
 			= DozerBeanMapperSingletonWrapper.getInstance();
@@ -43,33 +40,44 @@ public final class ValueObjectMapperUtil {
 	/**
 	 * Maps one object to another provided.
 	 *
-	 * @param source given source object
+	 * @param source	  given source object
 	 * @param destination given destination object
 	 */
 	public static void map(final Object source, final Object destination) {
 		final Map<String, Object> annotatedFields = new HashMap<String, Object>();
-		final Class sourceClass = source.getClass();
+		final boolean isMap = source instanceof Map; 
 		final Class destinationClass = destination.getClass();
-		final Field[] fields = sourceClass.getDeclaredFields();
+		final Field[] fields = destinationClass.getDeclaredFields();
 		for (Field field : fields) {
 			final PopulateWith populateWith = field.getAnnotation(PopulateWith.class);
 			if (populateWith != null) {
-				field.setAccessible(true);				
-				try {
-					final Object fieldValue = field.get(source);
-					final Field destinationField = destinationClass.getDeclaredField(populateWith.value());
-					destinationField.setAccessible(true);
-					annotatedFields.put(destinationField.getName(), fieldValue);
-				} catch (IllegalAccessException e) {
-					logger.error(e);
-				} catch (NoSuchFieldException e) {
-					logger.error(e);
+				if(isMap) {
+					final Map<String, Object> sourceMap = (Map<String, Object>) source;
+					annotatedFields.put(field.getName(), sourceMap.get(populateWith.value()));
+				} else {
+					annotatedFields.put(field.getName(), getAnnotatedValue(source, populateWith.value()));
 				}
 			}
 		}
 
-		mapper.map(annotatedFields, destination);
 		mapper.map(source, destination);
+		mapper.map(annotatedFields, destination);
 	}
-	
+
+	private static Object getAnnotatedValue(Object source, String key) {
+		try {
+			final Field sourceField = source.getClass().getDeclaredField(key);
+			if (sourceField == null) {
+				throw new NoSuchFieldException("Source class field not found by " + key );
+			}
+			sourceField.setAccessible(true);
+			return sourceField.get(source);
+		} catch (IllegalAccessException e) {
+			logger.error(e);
+		} catch (NoSuchFieldException e) {
+			logger.error(e);
+		}
+		return null;
+	}
+
 }

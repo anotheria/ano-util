@@ -177,5 +177,21 @@ public class ValueMapperTest {
 		//then
 		Assert.assertEquals(Integer.valueOf(source.getStep()), destination.getStepAnnotated());
 	}
-	
+
+
+	@Test
+	public void shouldMapDictionaryToAnnotatedField() {
+		//given
+		HashMap<String, Integer> sourceMap = new HashMap<String, Integer>(2);
+		sourceMap.put("step", 1);
+		sourceMap.put("stepToConvert", 5);
+		DestinationClass destination = new DestinationClass();
+
+		//when
+		ValueObjectMapperUtil.map(sourceMap, destination);
+
+		//then
+		Assert.assertEquals(sourceMap.get("stepToConvert"), destination.getStepConfigured());
+	}
+
 }
