@@ -1,0 +1,26 @@
+package net.anotheria.util.mapper;
+
+import org.apache.commons.beanutils.Converter;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * Guitar Model Object.
+ * <p/>
+ * <P>Various attributes of guitars, and related behaviour.
+ * <p/>
+ *
+ * @author vitaliy
+ * @version 1.0
+ *          Date: Jan 10, 2010
+ *          Time: 9:50:45 PM
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface PopulateWith {
+	String value();
+	String converterId() default "";
+}

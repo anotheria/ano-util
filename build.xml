@@ -10,4 +10,15 @@
 		checkout svn://svn.anotheria.net/opensource/build/trunk as ../build 
 		in order for this build script to work.
 	-->
+
+   <path id="test.classpath">
+    <pathelement location="${classes.dir}" />
+    <fileset dir="${lib.build}">
+      <include name="**/*.jar"/>
+    </fileset>
+    <pathelement location="${basedir}/etc" />
+    <fileset dir="${lib.project}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
 </project>

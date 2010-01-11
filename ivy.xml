@@ -8,6 +8,12 @@
     </publications>
     <dependencies>
         <dependency org="org.apache" name="log4j" rev="stable" transitive="false"/>
+        <dependency org="org.apache.commons" name="commons-logging" rev="stable" transitive="false"/>
+        <dependency org="org.apache.commons" name="commons-lang" rev="stable" transitive="false"/>
+        <dependency org="org.apache.commons" name="commons-collections" rev="latest" transitive="false"/>
+        <dependency org="org.apache.commons" name="commons-beanutils" rev="stable" transitive="false"/>
+        <dependency org="org" name="dozer" rev="latest" transitive="false"/>
+        <dependency org="net.sf" name="dozer-annotations" rev="latest" transitive="false"/>
         <dependency org="blowfish" name="BlowfishJ" rev="stable" transitive="false"/>
     </dependencies>
 </ivy-module>
