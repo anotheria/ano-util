@@ -8,9 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Guitar Model Object.
- * <p/>
- * <P>Various attributes of guitars, and related behaviour.
+ * Mapper annotation
  * <p/>
  *
  * @author vitaliy
