@@ -17,9 +17,6 @@ import java.util.Map;
 	@PopulateWith(value = "step")
 	private Integer stepAnnotated;
 
-	@PopulateWith(value = "step", converterId = "tempConverter")
-	private String stepAnnotatedAndConverted;
-
 	private Integer stepConfigured;
 	private String stepConverted;
 	private Map<String, Integer> intMap;
@@ -63,12 +60,5 @@ import java.util.Map;
 	public void setStepConverted(String stepConverted) {
 		this.stepConverted = stepConverted;
 	}
-
-	public String getStepAnnotatedAndConverted() {
-		return stepAnnotatedAndConverted;
-	}
-
-	public void setStepAnnotatedAndConverted(String stepAnnotatedAndConverted) {
-		this.stepAnnotatedAndConverted = stepAnnotatedAndConverted;
-	}
+	
 }

@@ -19,6 +19,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface PopulateWith {
-	String value();
-	String converterId() default "";
+	String value();	
 }

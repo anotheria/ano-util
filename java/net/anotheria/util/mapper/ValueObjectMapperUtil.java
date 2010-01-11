@@ -1,5 +1,7 @@
 package net.anotheria.util.mapper;
 
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.dozer.CustomConverter;
 import org.dozer.DozerBeanMapper;
 import org.dozer.DozerBeanMapperSingletonWrapper;
@@ -30,6 +32,7 @@ public final class ValueObjectMapperUtil {
 	 */
 	private static final Mapper mapper
 			= DozerBeanMapperSingletonWrapper.getInstance();
+	private final static Logger logger = Logger.getLogger(ValueObjectMapperUtil.class);
 
 	/**
 	 * Default constructor.
@@ -51,30 +54,16 @@ public final class ValueObjectMapperUtil {
 		for (Field field : fields) {
 			final PopulateWith populateWith = field.getAnnotation(PopulateWith.class);
 			if (populateWith != null) {
-				field.setAccessible(true);
-				System.out.println("hello=" );
+				field.setAccessible(true);				
 				try {
 					final Object fieldValue = field.get(source);
-					System.out.println("fieldValue="  +fieldValue);
 					final Field destinationField = destinationClass.getDeclaredField(populateWith.value());
-					System.out.println("destinationField="  +destinationField);
 					destinationField.setAccessible(true);
-					final String converterId = populateWith.converterId();
-					if (!"".equals(converterId)
-						&& (mapper instanceof DozerBeanMapper
-								&& ((DozerBeanMapper) mapper).getCustomConvertersWithId() != null)) {
-							final CustomConverter converter = ((DozerBeanMapper) mapper).getCustomConvertersWithId().get(converterId);
-						System.out.println("converter="  +converter);
-							converter.convert(fieldValue, destinationField.get(destination), field.getType(), destinationField.getType());
-						annotatedFields.put(destinationField.getName(), destinationField.get(destination));
-					} else {
-						annotatedFields.put(destinationField.getName(), fieldValue);
-					}
-
+					annotatedFields.put(destinationField.getName(), fieldValue);
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					logger.error(e);
 				} catch (NoSuchFieldException e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		}
@@ -82,21 +71,5 @@ public final class ValueObjectMapperUtil {
 		mapper.map(annotatedFields, destination);
 		mapper.map(source, destination);
 	}
-
-	/**
-	 * Used to register custom converter and refer by converter id.
-	 *
-	 * @param converterId reference id
-	 * @param converter dozer custom converter
-	 */
-	public static void registerCustomConverter(final String converterId, final CustomConverter converter) {
-		if (mapper instanceof DozerBeanMapper) {
-			Map<String, CustomConverter> converterMap = ((DozerBeanMapper) mapper).getCustomConvertersWithId();
-			if (converterMap == null) {
-				converterMap = new HashMap<String, CustomConverter>(1);
-			}
-			converterMap.put(converterId, converter);
-			((DozerBeanMapper) mapper).setCustomConvertersWithId(converterMap);
-		}
-	}
+	
 }

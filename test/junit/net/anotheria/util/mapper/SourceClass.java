@@ -17,7 +17,7 @@ public class SourceClass {
 	private final int step;
 
 
-	@PopulateWith(value = "stepAnnotatedAndConverted", converterId = "tempConverter")
+	@PopulateWith(value = "stepAnnotatedAndConverted")
 	private int stepToConvert;
 
 	private Map<String, Integer> intMap;

@@ -177,30 +177,5 @@ public class ValueMapperTest {
 		//then
 		Assert.assertEquals(Integer.valueOf(source.getStep()), destination.getStepAnnotated());
 	}
-
-	@Test
-	public void shouldMapAndConvertAnnotatedField() {
-		//given
-		SourceClass source = new SourceClass(12);
-		source .setStepToConvert(12);
-		DestinationClass destination = new DestinationClass();
-
-		//when
-		ValueObjectMapperUtil.registerCustomConverter("tempConverter", new DozerConverter<Integer, String>(Integer.class, String.class) {
-
-			@Override
-			public String convertTo(Integer integer, String s) {
-				return String.valueOf(integer + 7);
-			}
-
-			@Override
-			public Integer convertFrom(String s, Integer integer) {
-				return Integer.valueOf(s) - 7;
-			}
-		});
-		ValueObjectMapperUtil.map(source, destination);
-
-		//then
-		Assert.assertEquals(String.valueOf(source.getStepToConvert() + 7), destination.getStepAnnotatedAndConverted());
-	}
+	
 }
