@@ -3,7 +3,9 @@ package net.anotheria.util.sorter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * A sorter implementation which works by the insert sort algorithm.
+ */
 public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
 
 	public List<T> sort(List<T> toSort, SortType how){
