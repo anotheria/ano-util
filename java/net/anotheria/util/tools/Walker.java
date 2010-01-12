@@ -1,6 +1,8 @@
 package net.anotheria.util.tools;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Walker {
 	
@@ -23,13 +25,19 @@ public class Walker {
 	public void setWorker(Worker aWorker){
 		worker = aWorker;
 	}
-	
-	
-	public void start(){
+
+	public void start(List<String> directories){
 		if (worker==null)
 			throw new IllegalStateException("No worker configured!");
-		process(new File("."));
-		System.out.println("Scanning file "+touched+", directories: "+dirs+", files: "+files);
+		for (String directory : directories)
+			process(new File(directory));
+		System.out.println("Scanned file "+touched+", directories: "+dirs+", files: "+files);
+	}
+	
+	public void start(){
+		ArrayList<String> toDo = new ArrayList<String>(1);
+		toDo.add(".");
+		start(toDo);
 	}
 	
 	private void process(File f){
