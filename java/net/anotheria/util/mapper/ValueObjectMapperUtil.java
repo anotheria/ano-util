@@ -29,7 +29,11 @@ public final class ValueObjectMapperUtil {
 	 */
 	private static final Mapper mapper
 			= DozerBeanMapperSingletonWrapper.getInstance();
-	private final static Logger logger = Logger.getLogger(ValueObjectMapperUtil.class);
+
+	/**
+	 * mapper logger
+	 */
+	private static final Logger logger = Logger.getLogger(ValueObjectMapperUtil.class);
 
 	/**
 	 * Default constructor.
@@ -64,11 +68,18 @@ public final class ValueObjectMapperUtil {
 		mapper.map(annotatedFields, destination);
 	}
 
-	private static Object getAnnotatedValue(Object source, String key) {
+	/**
+	 * Return field value by field name.
+	 *
+	 * @param source given mapped object
+	 * @param key field name
+	 * @return field value
+	 */
+	private static Object getAnnotatedValue(final Object source, final String key) {
 		try {
 			final Field sourceField = source.getClass().getDeclaredField(key);
 			if (sourceField == null) {
-				throw new NoSuchFieldException("Source class field not found by " + key );
+				throw new NoSuchFieldException("Source class field not found by " + key);
 			}
 			sourceField.setAccessible(true);
 			return sourceField.get(source);
