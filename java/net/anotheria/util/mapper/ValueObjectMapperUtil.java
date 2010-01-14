@@ -1,7 +1,7 @@
 package net.anotheria.util.mapper;
 
 import org.apache.log4j.Logger;
-import org.dozer.DozerBeanMapperSingletonWrapper;
+import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 
 import java.lang.reflect.Field;
@@ -28,7 +28,7 @@ public final class ValueObjectMapperUtil {
 	 * Singleton mapper instance.
 	 */
 	private static final Mapper mapper
-			= DozerBeanMapperSingletonWrapper.getInstance();
+			= new DozerBeanMapper();
 
 	/**
 	 * mapper logger
