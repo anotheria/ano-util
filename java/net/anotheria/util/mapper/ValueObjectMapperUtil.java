@@ -5,7 +5,6 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -48,7 +47,7 @@ public final class ValueObjectMapperUtil {
 	 * @param destination given destination object
 	 */
 	public static void map(final Object source, final Object destination) {
-		final Map<String, Object> annotatedFields = new HashMap<String, Object>();
+
 		final boolean isMap = source instanceof Map; 
 		final Class destinationClass = destination.getClass();
 		final Field[] fields = destinationClass.getDeclaredFields();
@@ -57,15 +56,23 @@ public final class ValueObjectMapperUtil {
 			if (populateWith != null) {
 				if(isMap) {
 					final Map<String, Object> sourceMap = (Map<String, Object>) source;
-					annotatedFields.put(field.getName(), sourceMap.get(populateWith.value()));
+					sourceMap.put(field.getName(), sourceMap.get(populateWith.value()));
 				} else {
-					annotatedFields.put(field.getName(), getAnnotatedValue(source, populateWith.value()));
+					try {
+						final Class sourceClass = source.getClass();
+						final Field sourceField = sourceClass.getDeclaredField(field.getName());
+						sourceField.setAccessible(true);
+						sourceField.set(source, getAnnotatedValue(source, populateWith.value()));
+					} catch (NoSuchFieldException e) {
+						logger.error(e);
+					} catch (IllegalAccessException e) {
+						logger.error(e);
+					}
 				}
 			}
 		}
 
 		mapper.map(source, destination);
-		mapper.map(annotatedFields, destination);
 	}
 
 	/**
