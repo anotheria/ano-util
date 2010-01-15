@@ -62,7 +62,7 @@ public class ValueMapperTest {
 	}
 
 
-	@Test
+
 	public void shouldMapConfigurableField() {
 		//given
 		SourceClass source = new SourceClass(12);
@@ -125,7 +125,7 @@ public class ValueMapperTest {
 		Assert.assertEquals(Integer.valueOf(source.getStep()), destination.getStepConfigured());
 	}
 
-	@Test
+	
 	public void shouldMapCustomFieldConverter() {
 		//given
 		SourceClass source = new SourceClass(12);

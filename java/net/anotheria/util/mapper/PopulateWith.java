@@ -1,7 +1,5 @@
 package net.anotheria.util.mapper;
 
-import org.apache.commons.beanutils.Converter;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
