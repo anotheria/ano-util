@@ -59,12 +59,8 @@ public final class ValueObjectMapperUtil {
 					sourceMap.put(field.getName(), sourceMap.get(populateWith.value()));
 				} else {
 					try {
-						final Class sourceClass = source.getClass();
-						final Field sourceField = sourceClass.getDeclaredField(field.getName());
-						sourceField.setAccessible(true);
-						sourceField.set(source, getAnnotatedValue(source, populateWith.value()));
-					} catch (NoSuchFieldException e) {
-						logger.error(e);
+						field.setAccessible(true);
+						field.set(destination, getAnnotatedValue(source, populateWith.value()));
 					} catch (IllegalAccessException e) {
 						logger.error(e);
 					}
