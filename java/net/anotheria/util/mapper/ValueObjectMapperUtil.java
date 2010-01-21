@@ -3,6 +3,7 @@ package net.anotheria.util.mapper;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.dozer.MappingException;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -67,8 +68,11 @@ public final class ValueObjectMapperUtil {
 				}
 			}
 		}
-
-		mapper.map(source, destination);
+		try {
+			mapper.map(source, destination);
+		} catch (MappingException e) {
+			logger.warn(e);
+		}
 	}
 
 	/**
