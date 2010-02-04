@@ -306,6 +306,37 @@ public final class DateUtility {
 		return age > 0? age : 0;
 	}
 	
+	public static int getDays(Date fromDate){
+		return getDays(fromDate.toMill());
+	}
+	
+	public static int getDays(long fromDate){
+		return getDays(fromDate, System.currentTimeMillis());
+	}
+	
+	public static int getDays(Date fromDate, Date toDate){
+		return getDays(fromDate.toMill(), toDate.toMill());
+	}
+
+	public static int getDays(long fromDate, long toDate){
+		return (int) ((toDate - fromDate)/TimeUnit.DAY.getMillis());
+	}
+	
+	public static long getHourBeginning(long date){
+		Date d = new Date(date);
+		return new Date(d.getDay(),d.getMonth(),d.getYear(),d.getHour(),0).toMill();
+	}
+	
+	public static long getDayBeginning(long date){
+		Date d = new Date(date);
+		return new Date(d.getDay(),d.getMonth(),d.getYear(),0,0).toMill();
+	}
+	
+	public static long getDayEnding(long date){
+		return getDayBeginning(date) + TimeUnit.DAY.getMillis() - 1;
+	}
+	
+	
     /**
      * Prevent initialization.
      */

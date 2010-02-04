@@ -924,7 +924,7 @@ public final class StringUtils{
 	}
 	
 	public static boolean isEmpty(String src){
-		return src == null || src.length() == 0;
+		return src == null || src.trim().length() == 0;
 	}
 	
 	/**
