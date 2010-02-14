@@ -49,13 +49,17 @@ public final class ValueObjectMapperUtil {
 	 */
 	public static void map(final Object source, final Object destination) {
 
-		final boolean isMap = source instanceof Map; 
+		final boolean isMap = source instanceof Map;
 		final Class destinationClass = destination.getClass();
+		final PopulateMe populateMe = (PopulateMe) destinationClass.getAnnotation(PopulateMe.class);
+		if (populateMe != null && !populateMe.all()) {
+			return;
+		}
 		final Field[] fields = destinationClass.getDeclaredFields();
 		for (Field field : fields) {
 			final PopulateWith populateWith = field.getAnnotation(PopulateWith.class);
 			if (populateWith != null) {
-				if(isMap) {
+				if (isMap) {
 					final Map<String, Object> sourceMap = (Map<String, Object>) source;
 					sourceMap.put(field.getName(), sourceMap.get(populateWith.value()));
 				} else {
@@ -79,7 +83,7 @@ public final class ValueObjectMapperUtil {
 	 * Return field value by field name.
 	 *
 	 * @param source given mapped object
-	 * @param key field name
+	 * @param key	field name
 	 * @return field value
 	 */
 	private static Object getAnnotatedValue(final Object source, final String key) {
