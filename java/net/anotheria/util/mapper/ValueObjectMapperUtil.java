@@ -52,6 +52,7 @@ public final class ValueObjectMapperUtil {
 
 		final boolean isMap = source instanceof Map;
 		final Class destinationClass = destination.getClass();
+		@SuppressWarnings({"unchecked"})
 		final PopulateMe populateMe = (PopulateMe) destinationClass.getAnnotation(PopulateMe.class);
 		boolean populateAll = false;
 		if (populateMe != null) {
@@ -64,6 +65,7 @@ public final class ValueObjectMapperUtil {
 			final PopulateWith populateWith = field.getAnnotation(PopulateWith.class);
 			if (populateWith != null) {
 				if (isMap) {
+					@SuppressWarnings({"unchecked"})
 					final Map<String, Object> sourceMap = (Map<String, Object>) source;
 					sourceMap.put(field.getName(), sourceMap.get(populateWith.value()));
 				} else {
