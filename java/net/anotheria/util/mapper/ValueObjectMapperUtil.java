@@ -32,9 +32,9 @@ public final class ValueObjectMapperUtil {
 			= new DozerBeanMapper();
 
 	/**
-	 * mapper logger
+	 * Mapper LOGGER.
 	 */
-	private static final Logger logger = Logger.getLogger(ValueObjectMapperUtil.class);
+	private static final Logger LOGGER = Logger.getLogger(ValueObjectMapperUtil.class);
 
 	/**
 	 * Default constructor.
@@ -57,7 +57,9 @@ public final class ValueObjectMapperUtil {
 		boolean populateAll = false;
 		if (populateMe != null) {
 			populateAll = populateMe.all();
-			if (!populateAll) return;
+			if (!populateAll) {
+				return;
+			}
 		}
 		final Map<String, Object> populateAllFields = new HashMap<String, Object>();
 		final Field[] fields = destinationClass.getDeclaredFields();
@@ -84,11 +86,17 @@ public final class ValueObjectMapperUtil {
 		}
 	}
 
-	private static void mapDozer(Object source, Object destination) {
+	/**
+	 * Internal mapping facility using Dozer.
+	 *
+	 * @param source	  source object
+	 * @param destination destination object
+	 */
+	private static void mapDozer(final Object source, final Object destination) {
 		try {
 			mapper.map(source, destination);
 		} catch (MappingException e) {
-			logger.debug(e);
+			LOGGER.debug(e);
 		}
 	}
 
@@ -108,19 +116,26 @@ public final class ValueObjectMapperUtil {
 			sourceField.setAccessible(true);
 			return sourceField.get(source);
 		} catch (IllegalAccessException e) {
-			logger.error(e);
+			LOGGER.error(e);
 		} catch (NoSuchFieldException e) {
-			logger.error(e);
+			LOGGER.error(e);
 		}
 		return null;
 	}
 
+	/**
+	 * Set filed value for destination object.
+	 *
+	 * @param destination destination object
+	 * @param field	   given field
+	 * @param value	   field value
+	 */
 	private static void setFieldValue(final Object destination, final Field field, final Object value) {
 		try {
 			field.setAccessible(true);
 			field.set(destination, value);
 		} catch (IllegalAccessException e) {
-			logger.debug(e);
+			LOGGER.debug(e);
 		}
 	}
 }
