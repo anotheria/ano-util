@@ -196,6 +196,24 @@ public class ValueMapperTest {
 		Assert.assertFalse(Integer.valueOf(source.getStep()).equals(destination.getStepAnnotated()));
 	}
 
+	@Test
+	public void shouldPopulateAllExceptDontFields() {
+		//given
+		SourceClass source = new SourceClass(12);
+		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		intMap.put("testVal", 1);
+		intMap.put("testVal2", 2);
+		source.setIntMap(intMap);
+		DestinationExcludedClass destination = new DestinationExcludedClass();
+
+		//when
+		ValueObjectMapperUtil.map(source, destination);
+
+		//then
+		Assert.assertFalse(source.getIntMap().equals(destination.getIntMap()));
+		Assert.assertNull(destination.getIntMap());
+	}
+
 
 	@Test
 	public void shouldMapDictionaryToAnnotatedField() {

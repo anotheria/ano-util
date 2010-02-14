@@ -6,6 +6,7 @@ import org.dozer.Mapper;
 import org.dozer.MappingException;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -52,9 +53,12 @@ public final class ValueObjectMapperUtil {
 		final boolean isMap = source instanceof Map;
 		final Class destinationClass = destination.getClass();
 		final PopulateMe populateMe = (PopulateMe) destinationClass.getAnnotation(PopulateMe.class);
-		if (populateMe != null && !populateMe.all()) {
-			return;
+		boolean populateAll = false;
+		if (populateMe != null) {
+			populateAll = populateMe.all();
+			if (!populateAll) return;
 		}
+		final Map<String, Object> populateAllFields = new HashMap<String, Object>();
 		final Field[] fields = destinationClass.getDeclaredFields();
 		for (Field field : fields) {
 			final PopulateWith populateWith = field.getAnnotation(PopulateWith.class);
@@ -63,19 +67,26 @@ public final class ValueObjectMapperUtil {
 					final Map<String, Object> sourceMap = (Map<String, Object>) source;
 					sourceMap.put(field.getName(), sourceMap.get(populateWith.value()));
 				} else {
-					try {
-						field.setAccessible(true);
-						field.set(destination, getAnnotatedValue(source, populateWith.value()));
-					} catch (IllegalAccessException e) {
-						logger.error(e);
-					}
+					setFieldValue(destination, field, getFieldValue(source, populateWith.value()));
 				}
 			}
+			final DontPopulate dontPopulate = field.getAnnotation(DontPopulate.class);
+			if (populateAll && dontPopulate == null) {
+				populateAllFields.put(field.getName(), getFieldValue(source, field.getName()));
+			}
 		}
+		if (populateAll) {
+			mapDozer(populateAllFields, destination);
+		} else {
+			mapDozer(source, destination);
+		}
+	}
+
+	private static void mapDozer(Object source, Object destination) {
 		try {
 			mapper.map(source, destination);
 		} catch (MappingException e) {
-			logger.warn(e);
+			logger.debug(e);
 		}
 	}
 
@@ -86,7 +97,7 @@ public final class ValueObjectMapperUtil {
 	 * @param key	field name
 	 * @return field value
 	 */
-	private static Object getAnnotatedValue(final Object source, final String key) {
+	private static Object getFieldValue(final Object source, final String key) {
 		try {
 			final Field sourceField = source.getClass().getDeclaredField(key);
 			if (sourceField == null) {
@@ -102,4 +113,12 @@ public final class ValueObjectMapperUtil {
 		return null;
 	}
 
+	private static void setFieldValue(final Object destination, final Field field, final Object value) {
+		try {
+			field.setAccessible(true);
+			field.set(destination, value);
+		} catch (IllegalAccessException e) {
+			logger.debug(e);
+		}
+	}
 }
