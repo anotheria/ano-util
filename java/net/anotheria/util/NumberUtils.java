@@ -1,5 +1,7 @@
 package net.anotheria.util;
 
+import java.util.Locale;
+
 /**
  * A collection of useful utility methods for handling numbers, dates and currencies.
  * @author lrosenberg
@@ -128,6 +130,11 @@ public final class NumberUtils {
 			bytes = "Mb";
 		}
 		
+		if (size>1024){
+			size/=1024;
+			bytes = "Gb";
+		}
+
 		return ""+size+" "+bytes;
 			
 	}
@@ -240,14 +247,34 @@ public final class NumberUtils {
 	 * @return transfored (doted) version of the parameter.
 	 */
 	public static String getDotedNumber(long number){
+		return getDotedNumber(number, '.');
+	}
+	
+	public static String getDotedNumber(long number, char separatorChar){
 		String n = StringUtils.reverseString(""+number);
 		StringBuilder ret = new StringBuilder();
 		for (int i=0; i<n.length(); i++){
 			ret.insert(0, n.charAt(i));
 			if (i<n.length()-1 && (i+1)%3==0)
-				ret.insert(0, '.');
+				ret.insert(0, separatorChar);
 		}
 		return ret.toString();
+	}
+	
+	public static String getDotedNumber(long number, Locale locale){
+		if (locale.getLanguage()==null)
+			return getDotedNumber(number);
+		if (locale.getLanguage().equals(Locale.GERMAN))
+			return getDotedNumberDE(number);
+		return getDotedNumberUS(number);
+	}
+	
+	public static String getDotedNumberUS(long number){
+		return getDotedNumber(number, ',');
+	}
+
+	public static String getDotedNumberDE(long number){
+		return getDotedNumber(number, '.');
 	}
 	
 	/**
