@@ -88,7 +88,7 @@ public final class IOUtils {
          if(len > 0)
           result.append(buffer,0, len);
         } while(len > 0);
-        in.close();
+        closeIgnoringException(in);
         return result.toString();
     }
     
@@ -99,7 +99,7 @@ public final class IOUtils {
 		int read;
 		while((read = reader.read(cbuf)) > 0)
 			result.append(cbuf, 0, read);
-		reader.close();
+		closeIgnoringException(reader);
 		return result.toString();
 
     }
