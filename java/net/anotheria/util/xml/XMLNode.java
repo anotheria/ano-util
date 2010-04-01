@@ -1,15 +1,17 @@
 package net.anotheria.util.xml;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * XMLNode. Actually 'Anotheria' custom XML representation.
+ *
+ * @author another
+ */
 public class XMLNode {
 	/**
-	 * Subnodes of this node.
+	 * SubNodes of this node.
 	 */
 	private List<XMLNode> nodes;
 	/**
@@ -27,12 +29,11 @@ public class XMLNode {
 	private String content;
 	
 	/**
-	 * Creates a new XMLNode.
-	 * @param aName
+	 * Constructor. Creates a new XMLNode.
+	 * @param aName node name
 	 */
 	public XMLNode(String aName){
 		name = aName;
-	
 		attributes = new ArrayList<XMLAttribute>();
 		nodes = new ArrayList<XMLNode>();
 	}
@@ -41,7 +42,11 @@ public class XMLNode {
 	public List<XMLNode> getNodes() {
 		return nodes;
 	}
-	
+
+	/**
+	 * Set child nodes  for current.
+	 * @param aChildren xmlNodes list
+	 */
 	public void setChildren(List<XMLNode> aChildren){
 		setNodes(aChildren);
 	}
@@ -49,7 +54,11 @@ public class XMLNode {
 	public void setNodes(List<XMLNode> aNodes) {
 		this.nodes = aNodes;
 	}
-	
+
+	/**
+	 * Allow add child node  for current.
+	 * @param aChild xmlNode
+	 */
 	public void addChildNode(XMLNode aChild){
 		nodes.add(aChild);
 	}
@@ -109,7 +118,11 @@ public class XMLNode {
 	@Override public String toString(){
 		return "name: "+name+", "+" attributes: "+attributes+", nodes: "+nodes;
 	}
-	
+
+	/**
+	 * Areates attribute string.
+	 * @return string
+	 */
 	private String createAttributeString(){
 		String ret = "";
 		if (attributes == null || attributes.size()==0)
@@ -119,10 +132,16 @@ public class XMLNode {
 			ret += " "+a.toXMLString();
 		}
 		
-		
 		return ret;
 	}
 
+	/**
+	 * Recursive - Write method.
+	 *
+	 * @param aWriter PrintStream writer.
+	 * @param aTabs position to start
+	 * @throws IOException on errors
+	 */
 	public void write(PrintStream aWriter, int aTabs) throws IOException{
 		String attributeString = createAttributeString();
 		String ident = XMLHelper.makeIdent(aTabs);
@@ -135,9 +154,16 @@ public class XMLNode {
 			aWriter.println(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
 		
 		aWriter.println(ident+XMLHelper.detag(getName()));
-	} 
+	}
 
-	
+
+	/**
+	 * Recursive - Write method.
+	 *
+	 * @param aWriter PrintWriter
+	 * @param aTabs position to start
+	 * @throws IOException on errors
+	 */
 	public void write(PrintWriter aWriter, int aTabs) throws IOException{
 		String attributeString = createAttributeString();
 		String ident = XMLHelper.makeIdent(aTabs);
@@ -152,7 +178,14 @@ public class XMLNode {
 		aWriter.write(ident+XMLHelper.detag(getName()));
 	}
 
-	
+
+	/**
+	 * Recursive - Write method.
+	 *
+	 * @param aWriter OutputStreamWriter 
+	 * @param aTabs position to start
+	 * @throws IOException on errors
+	 */
 	public void write(OutputStreamWriter aWriter, int aTabs) throws IOException{
 		try{
 			System.out.println("writing "+getName()+" attr: "+attributes);
@@ -166,6 +199,32 @@ public class XMLNode {
 			if (content!=null)
 				aWriter.write(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
 			
+			aWriter.write(ident+XMLHelper.detag(getName()));
+		}catch(Throwable t){
+			t.printStackTrace();
+		}
+	}
+
+	/**
+	 * Recursive - Write method.
+	 * 
+	 * @param aWriter java.io.Writer
+	 * @param aTabs tabs
+	 * @throws IOException on errors
+	 */
+	public void write(Writer aWriter, int aTabs) throws IOException{
+		try{
+			System.out.println("writing "+getName()+" attr: "+attributes);
+			String attributeString = createAttributeString();
+			String ident = XMLHelper.makeIdent(aTabs);
+			aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
+
+			for (XMLNode child : nodes)
+				child.write(aWriter, aTabs+1);
+
+			if (content!=null)
+				aWriter.write(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
+
 			aWriter.write(ident+XMLHelper.detag(getName()));
 		}catch(Throwable t){
 			t.printStackTrace();
