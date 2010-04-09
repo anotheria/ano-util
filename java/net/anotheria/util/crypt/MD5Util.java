@@ -40,5 +40,5 @@ public class MD5Util {
 		}catch(NoSuchAlgorithmException e){
 			throw new AssertionError("NoSuchAlgorithmException: "+e);
 		}
-	}
+	} 
 }

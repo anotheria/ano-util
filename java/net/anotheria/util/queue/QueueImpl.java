@@ -2,6 +2,7 @@ package net.anotheria.util.queue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * An implementation of the IQueue interface.
@@ -15,35 +16,17 @@ public class QueueImpl<T> implements IQueue<T> {
 	 */
 	private List<IQueueListener> listeners;
 	
-	/**
-	 * Current queue element.
-	 */
-	private int currentElement;
-	/**
-	 * Last queue element.
-	 */
-	private int lastElement;
-	/**
-	 * Size of the queue.
-	 */
+	private ArrayBlockingQueue<T> underlyingQueue;
+	
 	private int size;
-	
-	/**
-	 * Elements of the queue.
-	 */
-	private Object[] elements;
-	
-	
 	/**
 	 * Creates a new QueueImpl.
 	 * @param aSize
 	 */
 	QueueImpl(int aSize){
 		listeners = new ArrayList<IQueueListener>();
-		currentElement = -1;
-		lastElement = -1;
-		this.size = aSize;
-		elements = new Object[aSize];
+		underlyingQueue = new ArrayBlockingQueue<T>(aSize);
+		size = aSize;
 	}
 	
 
@@ -52,25 +35,23 @@ public class QueueImpl<T> implements IQueue<T> {
 	}
 
 	public synchronized int getElementCount() {
-		if (lastElement >= currentElement)
-			return lastElement - currentElement;
-		return elements.length - currentElement + lastElement;
+		return underlyingQueue.size();
+	}
+
+	public int size() {
+		return size;
 	}
 
 	@Override public synchronized boolean hasElements() {
-		return currentElement != lastElement;
+		return !underlyingQueue.isEmpty();
 	}
 	
 	@Override public synchronized T nextElement() {
 		if (!hasElements())
 			throw new RuntimeException("No elements");
-		currentElement++;
-		if (currentElement >= size)
-			currentElement = 0;
-		T ret = (T)elements[currentElement];
-		elements[currentElement] = null;
-		return ret; 
+		return underlyingQueue.poll(); 
 	}
+	
 	
 	/**
 	 * Puts a new element in the queue.
@@ -79,34 +60,18 @@ public class QueueImpl<T> implements IQueue<T> {
 	 */
 	@Override
 	public synchronized void putElement(T o) throws QueueOverflowException {
-		lastElement++;
-		if (lastElement==size)
-			lastElement=0;
-		if (lastElement==currentElement){
-			lastElement--;
-			if (lastElement<0)
-				lastElement = size-1;
-			throw new QueueOverflowException(lastElement); 
-			
+		if (!underlyingQueue.offer(o)){
+			throw new QueueOverflowException(""+o); 
 		}
-		
-		elements[lastElement] = o;
-	}
+	} 
 
 	@Override public void removeListener(IQueueListener listener) {
 		listeners.remove(listener);
 	}
 	
 	@Override public String toString(){
-		return "queue size: "+size+" last: "+lastElement+" curr: "+currentElement + " count: " + getElementCount();
+		return "queue count: " + getElementCount();
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override public int size(){
-		return size;
-	}
-
 
 }
