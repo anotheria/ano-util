@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="java"/>
 	<classpathentry kind="src" path="test/junit"/>
+	<classpathentry kind="src" path="etc/appdata"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/BlowfishJ.jar"/>
@@ -9,8 +10,8 @@
 	<classpathentry kind="lib" path="lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="lib/dozer-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/dozer.jar"/>
+	<classpathentry kind="lib" path="lib/dozer-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
