@@ -435,6 +435,13 @@ public final class StringUtils{
  		return src;   
  	}
 
+ 	/**
+ 	 * Replaces all occurences of the toReplace string in the source string with the 'with' string.
+ 	 * @param src source text.
+ 	 * @param toReplace string to replace.
+ 	 * @param with string to replace with.
+ 	 * @return
+ 	 */
  	public static final String replace(String src, String toReplace, String with){
  		int index = 0;
  		while ( (index=src.indexOf(toReplace))>-1){
