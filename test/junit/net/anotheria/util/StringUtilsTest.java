@@ -1,11 +1,14 @@
 package net.anotheria.util;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -129,6 +132,17 @@ public class StringUtilsTest {
 		assertEquals("Mumu \\\"nono\\\" and \\'c\\' and \\\\", StringUtils.escape(src, '\\','\'','"'));
 	}
 	
+	@Test public void replace(){
+		String src = "fuubar";
+		assertEquals("foobar", StringUtils.replace(src, 'u', 'o'));
+		Map<String,String> replacement = new HashMap<String, String>();
+		replacement.put("u", "o");
+		replacement.put("o", "u");
+		replacement.put("b", "B");
+		replacement.put("f", "F");
+		assertEquals("FooBar", StringUtils.replace(src, replacement));
+	}
+	
 	@Test public void insertTest(){
 		final String srcBefore = "beforeInsertion";
 		final String srcAfter = "AfterInsertion";
@@ -204,6 +218,32 @@ public class StringUtilsTest {
 		result = StringUtils.remove(src, src_1.length(), src_2.length());
 		result = StringUtils.insert(result, src_2, src_1.length());
 		assertEquals(src, result);
+	}
+	
+	
+	@Test public void isEmptyTest(){
+		String notEmptySrc = "not empty";
+		assertFalse("Is not empty: " + notEmptySrc, StringUtils.isEmpty(notEmptySrc));
+		notEmptySrc = "n";
+		assertFalse("Is not empty: " + notEmptySrc, StringUtils.isEmpty(notEmptySrc));
+		notEmptySrc = "_";
+		assertFalse("Is not empty: " + notEmptySrc, StringUtils.isEmpty(notEmptySrc));
+		notEmptySrc = " s ";
+		assertFalse("Is not empty: " + notEmptySrc, StringUtils.isEmpty(notEmptySrc));
+		assertTrue("Null string is empty!", StringUtils.isEmpty(null));
+		assertTrue("Zirol string is empty!", StringUtils.isEmpty(""));
+		assertTrue("Whitespace String is empty!", StringUtils.isEmpty(" "));
+		assertTrue("Whitespaces String is empty!", StringUtils.isEmpty("    "));
+		assertTrue("Tabulation is empty!", StringUtils.isEmpty("\t"));
+		assertTrue("Tabulations an whitespaces mix String is empty!", StringUtils.isEmpty("\t    "));
+		assertTrue("New Line symbol String is empty!", StringUtils.isEmpty("\n"));
+		assertTrue("New Line (Windows) symbol String is empty!", StringUtils.isEmpty("\r\n"));
+		assertTrue("Mix from new lines, tabulations and whitespaces is empty!", StringUtils.isEmpty("\t  \n\t  \n"));
+		assertTrue("Mix from new lines, tabulations and whitespaces is empty!", StringUtils.isEmpty("\t  \r\n\t  \n\r\t"));
+		
+//		//Magic sequence that is not cleaned by String.trim function. At least in Java(TM) SE Runtime Environment (build 1.6.0_17-b04-248-10M3025)
+//		if(" \r\n".equals(src))
+//			return true;
 	}
 }
  

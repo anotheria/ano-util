@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.anotheria.util.NumberUtils;
 import net.anotheria.util.StringUtils;
 import BlowfishJ.BlowfishECB;
 
@@ -113,5 +114,58 @@ public class CryptTool {
 		}
 		
 		return map;
+	}
+
+	
+	private static final int NUMERATION_BASE_NUMBER = 13212358;
+	
+	/**
+	 * Converts Numerical ID to Chiffre: string from letters and digits 8 symbols length.
+	 * @param id to convert
+	 * @return
+	 */
+	public static String idToChiffre(String id) {
+		int normalizedId = Integer.parseInt(id) + NUMERATION_BASE_NUMBER;
+		if(normalizedId > 99999999)
+			throw new AssertionError("Id["+id+"] is to big for the current implementation");
+
+		int lastDigit = normalizedId%10; 
+		
+		StringBuilder ret = new StringBuilder();
+		String retIncrement = NumberUtils.itoa(normalizedId%100);
+		
+		while(normalizedId > 0){
+			int n = normalizedId & 31 ^ lastDigit;
+			normalizedId = normalizedId >> 5;
+			n = n <= 25? n + 65: n + 24;
+			ret.append((char)n);
+		}
+		
+		ret.append(retIncrement);
+		return ret.toString();
+	}
+	
+	/**
+	 * Restore Numerical ID from Chiffre.
+	 * @param chiffre
+	 * @return
+	 */
+	public static String chiffreToId(String chiffre) {
+		
+		StringBuilder toDenum = new StringBuilder(chiffre);
+		int lastDigit = Character.getNumericValue(toDenum.charAt(toDenum.length() - 1));
+		
+		toDenum.delete(toDenum.length() - 2, toDenum.length());
+		
+		int ret = 0;
+		int position = 0;
+		
+		for(char c: toDenum.toString().toCharArray()){
+			int n = (c >= 65? c-65: c-24) ^ lastDigit;
+			n = n << 5*(position++);
+			ret += n;
+		}
+		ret -= NUMERATION_BASE_NUMBER;
+		return ret + "";
 	}
 }
