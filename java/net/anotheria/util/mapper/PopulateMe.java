@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  *          Time: 9:50:45 PM
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.FIELD})
 public @interface PopulateMe {
 	public abstract boolean all();
 }
