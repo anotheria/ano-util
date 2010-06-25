@@ -525,7 +525,34 @@ public final class StringUtils{
 		return ret.toString();
  	}
  	
-	public static String reverseString(String src){
+ 	public static final String removeBashComments(String src){
+		StringBuilder ret = new StringBuilder();
+ 		
+		boolean inComments = false;
+		boolean inQuotes = false;
+ 		
+		for (int i=0; i<src.length(); i++){
+			char c = src.charAt(i);
+			if (inComments){
+				if (c=='\n'){
+						inComments = false;
+						inQuotes = false;
+				}
+			}else{
+				if (c=='"')
+					inQuotes=!inQuotes;
+				if (!inQuotes && c=='#'){
+					inComments = true;
+				}else{
+					ret.append(c);
+				}
+			}
+		} 
+ 		
+		return ret.toString();
+ 	}
+
+ 	public static String reverseString(String src){
 		String ret = "";
 		for (int i=src.length()-1; i>=0; i--)
 			ret += src.charAt(i);
