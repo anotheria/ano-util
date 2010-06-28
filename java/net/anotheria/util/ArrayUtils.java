@@ -111,6 +111,13 @@ public class ArrayUtils {
 		return ret;
 	}
 	
+	public static int[] parseStringArray(String[] stringArray){
+		int[] ret = new int[stringArray.length];
+		for(int i = 0; i < stringArray.length; i++)
+			ret[i] = Integer.parseInt(stringArray[i]);
+		return ret;
+	}
+	
 	/**
 	 * Converts an Objects list to the list of Strings by calling toString method of each Object from incoming list.
 	 * @Deprecated. Use StringUtils.toStringList() instead.
