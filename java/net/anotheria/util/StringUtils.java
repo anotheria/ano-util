@@ -100,6 +100,26 @@ public final class StringUtils{
 		return ret;
 	}/*end fun tokenize()*/
 	
+	public static final String[] tokenize(String source, boolean ignoreEmptyTokens, char delimiter){
+		List<String> v = new ArrayList<String>();
+		v = new Vector<String>();
+  		StringBuilder currentS = new StringBuilder();
+		for (char c : source.toCharArray()) {
+			if ( c==delimiter ){
+				if(currentS.length() > 0 || !ignoreEmptyTokens)
+					v.add(currentS.toString());
+				currentS=new StringBuilder();
+				continue;
+			}
+				currentS.append(c);
+		}
+		if(currentS.length() > 0 || !ignoreEmptyTokens)
+			v.add(currentS.toString());
+   		return v.toArray(new String[1]);
+    }
+    
+	
+	
 	public static final String[] tokenize(String source, char delimiter, char escapeChar){
 		return tokenize2list(source, delimiter, escapeChar).toArray(new String[0]);
 	}
@@ -434,7 +454,7 @@ public final class StringUtils{
 		src = s;
  		return src;   
  	}
-
+ 	
  	/**
  	 * Replaces all occurences of the toReplace string in the source string with the 'with' string.
  	 * @param src source text.

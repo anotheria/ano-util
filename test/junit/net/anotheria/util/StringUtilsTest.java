@@ -1,9 +1,10 @@
 package net.anotheria.util;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,15 +27,41 @@ public class StringUtilsTest {
 		hellos.add("Hello, People!");
 		hellos.add("Hello, Aliens!");
 		System.out.println("Concatenate Hellos Tokens with delimiter , and surround with <>:" + StringUtils.concatenateTokens(hellos, ',', '<', '>'));
-	
 		assertEquals("1.2.3", StringUtils.concatenateTokens(".", "1","2","3"));
 	}
 	
 	@Test public void tokenize(){
-		String src = "if:true:mumu|:bubu";
-		String[] ts = StringUtils.tokenize(src, ':', '|');
-		assertEquals("Array length is not 3 (escape doesn't work?)", 3, ts.length);
-		assertEquals("Array length is not 4 (tokenize doesn't work?)", 4, StringUtils.tokenize("if:true:mumu:bubu", ':').length);
+		String[] expectedTokens = new String[]{"if", "true", "mumu:bubu"};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu|:bubu", ':', '|'));
+	
+		expectedTokens = new String[]{"if","true","mumu","bubu"};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu:bubu", ':'));
+		
+		expectedTokens = new String[]{"if","true","mumu", "","bubu"};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu::bubu", ':'));
+		
+		expectedTokens = new String[]{"","if","true","mumu", "bubu"};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize(":if:true:mumu:bubu", ':'));
+		
+//		expectedTokens = new String[]{"if","true","mumu", "bubu", ""};
+//		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu:bubu:", ':'));
+		
+		//tokenize(String source, boolean ignoreEmptyTokens, char delimiter)
+		expectedTokens = new String[]{"if","true","mumu","bubu"};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu:bubu", true, ':'));
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu:bubu", false, ':'));
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu::bubu", true, ':'));
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu:bubu:", true, ':'));
+		assertArrayEquals(expectedTokens, StringUtils.tokenize(":if:true:mumu:bubu", true, ':'));
+		
+		expectedTokens = new String[]{"if","true","mumu", "","bubu"};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu::bubu", false, ':'));
+		
+		expectedTokens = new String[]{"","if","true","mumu", "bubu"};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize(":if:true:mumu:bubu", false, ':'));
+		
+		expectedTokens = new String[]{"if","true","mumu", "bubu", ""};
+		assertArrayEquals(expectedTokens, StringUtils.tokenize("if:true:mumu:bubu:", false, ':'));
 	}
 	
 	@Test public void _tokenize(){
