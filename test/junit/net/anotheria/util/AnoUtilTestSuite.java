@@ -1,6 +1,5 @@
 package net.anotheria.util;
 
-import net.anotheria.util.content.template.processors.ConditionTemplateProcessorTest;
 import net.anotheria.util.crypt.CryptToolTest;
 import net.anotheria.util.crypt.MD5Test;
 import net.anotheria.util.network.IPRangeTest;
@@ -31,8 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		IPRangeTest.class,
 		PlainIPFilterTest.class,
 		ValueMapperTest.class,
-		SimpleQueueTest.class,
-		ConditionTemplateProcessorTest.class
+		SimpleQueueTest.class
 })
 public class AnoUtilTestSuite {
 }
