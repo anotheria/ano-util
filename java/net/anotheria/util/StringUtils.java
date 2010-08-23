@@ -993,4 +993,24 @@ public final class StringUtils{
 			ret.add(el.toString());
 		return ret;
 	}
+
+	/**
+	 * Trims string to last index of delimiter which is situated before max size index and concatenates it with "...".
+	 * If maxSize > value.length than value will be returned.
+	 * @param value string to trim
+	 * @param delimiter delimiter for trimming
+	 * @param maxSize max size of trimmed string
+	 * @return trimmed and concatenated with "..." string
+	 */
+	public static String trimString(String value, String delimiter, int maxSize){
+		String rez = new String(value);
+		if ( rez.length() > maxSize ){
+			int i = rez.lastIndexOf(delimiter, maxSize);
+			if (i != -1  ){
+				rez = rez.substring(0, i).concat("...");
+			}
+		}
+		return rez;
+	}
+
 }
