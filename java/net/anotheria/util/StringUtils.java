@@ -85,6 +85,24 @@ public final class StringUtils{
     	return Arrays.asList(tokenize(source, delimiter));
     }
     
+	/**
+	 *Return a Map with entries from the source string tokenized on entries
+	 * using the entriesDelimiter and on key-value pair with keyValueDelimiter.
+	 */
+    public static final Map<String, String> tokenize2map(String source, char entriesDelimiter, char keyValueDelimiter){
+    	Map<String,String> ret = new HashMap<String, String>();
+    	String[] entryStrArray = tokenize(source, true, entriesDelimiter);
+		for(String entryStr: entryStrArray){
+			entryStr = entryStr.trim();
+			String[] entry = tokenize(entryStr, true, '=');
+			if(entry.length != 2)
+				throw new IllegalArgumentException("Source [" + source + "] is not the valid string map with entries delimiter[" + entriesDelimiter + "] " +
+						"and key->value delimiter [" + keyValueDelimiter + "]!  Wrong entry: " + entryStr);
+			ret.put(entry[0].trim(), entry[1].trim());
+		}
+		return ret;
+    }
+    
     /**
 	  *Returns an array of stringtokens from the source string.
 	  *The String "Leon Power Tools" with delimiter ' ' will return {"Leon","Power","Tools"}

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Test;
 
@@ -272,5 +273,19 @@ public class StringUtilsTest {
 //		if(" \r\n".equals(src))
 //			return true;
 	}
+	
+	@Test public void tokenize2map(){
+		String source = "key1=value 1,key2=value 2, key3 = value 3 ";
+		Map<String,String> result = StringUtils.tokenize2map(source, ',', '=');
+		assertEquals(3, result.size());
+		for(int i = 1; i <= 3; i++){
+			String key = "key" + i;
+			assertTrue("Tokinized Map " + result + " must contains key: " + key, result.containsKey(key));
+			assertEquals("value " + i, result.get(key));
+		}
+	}
+	
+	@Test(expected=IllegalArgumentException.class) public void tokenize2mapFail(){
+		StringUtils.tokenize2map("key1=value 1,key2=value 2, key3 value 3 ", ',', '=');
+	}
 }
- 
