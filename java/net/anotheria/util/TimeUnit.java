@@ -45,12 +45,21 @@ public enum TimeUnit {
 	private TimeUnit(long aInMills){
 		this.inMills = aInMills;
 	}
+	
 	/**
-	 * Returns the duration of the period in milliseconds.
+	 * Returns the duration of the unit in milliseconds.
 	 * @return
 	 */
 	public long getMillis(){
-		return inMills;
+		return getMillis(1);
+	}
+	
+	/**
+	 * Returns the duration of units in milliseconds.
+	 * @return
+	 */
+	public long getMillis(int unitsCount){
+		return inMills * unitsCount;
 	}
 }
  
