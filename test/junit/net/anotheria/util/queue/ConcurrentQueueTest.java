@@ -24,7 +24,7 @@ public class ConcurrentQueueTest {
 	@Test public void test() throws InterruptedException{
 		
 		
-		final long start = System.nanoTime(), end1, end2;
+		long start = System.nanoTime(), end1, end2;
 		IQueue<Integer> queue = new StandardQueueFactory<Integer>().createQueue(QUEUE_SIZE);
 		final Worker worker = new Worker(queue);
 		worker.start();

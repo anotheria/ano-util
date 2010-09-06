@@ -24,7 +24,7 @@ public class QueuedProcessorTest {
 	@Test public void test() throws InterruptedException{
 		
 		
-		final long start = System.nanoTime(), end1, end2;
+		long start = System.nanoTime(), end1, end2;
 		final Worker worker = new Worker();
 		QueuedProcessor<Integer> processor = new QueuedProcessor<Integer>("test", worker, QUEUE_SIZE, Logger.getLogger(QueuedProcessorTest.class));
 		processor.start();
