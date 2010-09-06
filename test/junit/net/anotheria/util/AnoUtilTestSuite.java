@@ -4,9 +4,9 @@ import net.anotheria.util.crypt.CryptToolTest;
 import net.anotheria.util.crypt.MD5Test;
 import net.anotheria.util.network.IPRangeTest;
 import net.anotheria.util.network.PlainIPFilterTest;
-import net.anotheria.util.queue.SimpleQueueTest;
 import net.anotheria.util.slicer.SlicerTest;
 import net.anotheria.util.sorter.SorterTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -30,7 +30,6 @@ import org.junit.runners.Suite.SuiteClasses;
 		IPRangeTest.class,
 		PlainIPFilterTest.class,
 		ValueMapperTest.class,
-		SimpleQueueTest.class
 })
 public class AnoUtilTestSuite {
 }
