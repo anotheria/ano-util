@@ -264,7 +264,7 @@ public final class NumberUtils {
 	public static String getDotedNumber(long number, Locale locale){
 		if (locale.getLanguage()==null)
 			return getDotedNumber(number);
-		if (locale.getLanguage().equals(Locale.GERMAN))
+		if (locale.getLanguage().equals(Locale.GERMAN.getLanguage()))
 			return getDotedNumberDE(number);
 		return getDotedNumberUS(number);
 	}
