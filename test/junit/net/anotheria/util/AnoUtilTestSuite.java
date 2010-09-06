@@ -6,6 +6,7 @@ import net.anotheria.util.network.IPRangeTest;
 import net.anotheria.util.network.PlainIPFilterTest;
 import net.anotheria.util.slicer.SlicerTest;
 import net.anotheria.util.sorter.SorterTest;
+import net.anotheria.util.xml.XMLUtilsTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -29,6 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		ArrayUtilsTest.class,
 		IPRangeTest.class,
 		PlainIPFilterTest.class,
+		XMLUtilsTest.class,
 		ValueMapperTest.class})
 public class AnoUtilTestSuite {
 }
