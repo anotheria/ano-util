@@ -29,7 +29,6 @@ import org.junit.runners.Suite.SuiteClasses;
 		ArrayUtilsTest.class,
 		IPRangeTest.class,
 		PlainIPFilterTest.class,
-		ValueMapperTest.class,
-})
+		ValueMapperTest.class})
 public class AnoUtilTestSuite {
 }
