@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 public class ConcurrentQueueTest {
@@ -20,6 +20,8 @@ public class ConcurrentQueueTest {
 	private static final AtomicLong elementSum = new AtomicLong(0);
 	final CountDownLatch startLatch = new CountDownLatch(1);
 	final CountDownLatch stopLatch = new CountDownLatch(FILLER_COUNT);
+	
+	private static final AtomicBoolean runThreadRun = new AtomicBoolean(true);
 	
 	@Test public void test() throws InterruptedException{
 		
@@ -36,19 +38,20 @@ public class ConcurrentQueueTest {
 		startLatch.countDown();
 		stopLatch.await();
 		end1 = System.nanoTime();
-		System.out.println("Overflow count: "+overflowCount+", elementCount:" +elementCount+", Sum: "+elementSum);
+		runThreadRun.set(false);
+		System.out.println("CQT Overflow count: "+overflowCount+", elementCount:" +elementCount+", Sum: "+elementSum);
 		while(worker.running){
 			try{
 				Thread.sleep(100);
 			}catch(InterruptedException e){}
 		}
 		end2 = System.nanoTime();
-		System.out.println("Worker: count: "+worker.elementCount+", sum: "+worker.elementSum);
+		System.out.println("CQT Worker: count: "+worker.elementCount+", sum: "+worker.elementSum);
 		assertEquals("ElementCount should be similar", elementCount.get(), worker.elementCount);
 		assertEquals("ElementSum should be similar", elementSum.get(), worker.elementSum);
-		System.out.println("Time1 "+(end1-start)/1000/1000+" ms");
-		System.out.println("Time2 "+(end2-start)/1000/1000+" ms");
-		System.out.println("Time2-1 "+(end2-end1)/1000/1000+" ms");
+		System.out.println("CQT Time1 "+(end1-start)/1000/1000+" ms");
+		System.out.println("CQT Time2 "+(end2-start)/1000/1000+" ms");
+		System.out.println("CQT Time2-1 "+(end2-end1)/1000/1000+" ms");
 	}
 	
 	class Filler extends Thread{
@@ -102,11 +105,12 @@ public class ConcurrentQueueTest {
 		public void run() {
 			//wait for first element.
 			while(!queue.hasElements());
-			System.out.println("First element detected ");
-			while(queue.hasElements()){
-				Integer i = queue.nextElement();
-				elementSum += i;
-				elementCount++;
+			while(runThreadRun.get() || queue.hasElements()){
+				if (queue.hasElements()){
+					Integer i = queue.nextElement();
+					elementSum += i;
+					elementCount++;
+				}
 			}
 			running = false;
 		}
