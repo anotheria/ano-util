@@ -28,13 +28,13 @@ public class QueueImpl<T> implements IQueue<T> {
 		underlyingQueue = new ArrayBlockingQueue<T>(aSize);
 		size = aSize;
 	}
-	
+	 
 
 	@Override public void addListener(IQueueListener listener) {
 		listeners.add(listener);
 	}
 
-	public synchronized int getElementCount() {
+	public int getElementCount() {
 		return underlyingQueue.size();
 	}
 
@@ -42,11 +42,11 @@ public class QueueImpl<T> implements IQueue<T> {
 		return size;
 	}
 
-	@Override public synchronized boolean hasElements() {
+	@Override public boolean hasElements() {
 		return !underlyingQueue.isEmpty();
 	}
 	
-	@Override public synchronized T nextElement() {
+	@Override public T nextElement() {
 		if (!hasElements())
 			throw new RuntimeException("No elements");
 		return underlyingQueue.poll(); 
@@ -59,7 +59,7 @@ public class QueueImpl<T> implements IQueue<T> {
 	 * @throws QueueOverflowException if the queue is full.
 	 */
 	@Override
-	public synchronized void putElement(T o) throws QueueOverflowException {
+	public void putElement(T o) throws QueueOverflowException {
 		if (!underlyingQueue.offer(o)){
 			throw new QueueOverflowException(""+o); 
 		}
