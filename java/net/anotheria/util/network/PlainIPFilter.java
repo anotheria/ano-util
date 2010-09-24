@@ -61,15 +61,7 @@ public class PlainIPFilter {
 		return mayPass(ipAddress, ranges);
 	}
 
-
-
-	public String toString() {
+	@Override public String toString() {
 		return "IPFilter with ranges: " + ranges;
-	}
-
-
-
-	private static void check(PlainIPFilter filter, String ip) {
-		System.out.println("for " + ip + " filter replies: " + filter.mayPass(ip));
 	}
 }
