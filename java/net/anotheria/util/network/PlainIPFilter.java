@@ -72,22 +72,4 @@ public class PlainIPFilter {
 	private static void check(PlainIPFilter filter, String ip) {
 		System.out.println("for " + ip + " filter replies: " + filter.mayPass(ip));
 	}
-
-	public static void main(String a[]) {
-		PlainIPFilter filter = new PlainIPFilter();
-		filter.addRange("10.0.0.0", 8);
-		filter.addRange("172.16.0.0", 12);
-		filter.addRange("192.168.0.0", 16);
-		System.out.println(filter);
-
-		check(filter, "10.0.1.1");
-		check(filter, "10.0.0.0");
-		check(filter, "10.0.0.1");
-		check(filter, "10.3.0.1");
-		check(filter, "11.0.0.0");
-		check(filter, "192.168.1.1");
-		check(filter, "192.168.100.100");
-		check(filter, "192.169.100.100");
-
-	}
 }
