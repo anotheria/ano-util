@@ -39,9 +39,9 @@
   
 
 	<scm>
-		<url>svn://svn.anotheria.net/opensource/ano-util/trunk</url>
-		<connection>scm:svn://svn.anotheria.net/opensource/ano-util/trunk</connection>
-		<developerConnection>scm:svn://svn.anotheria.net/opensource/ano-util/trunk</developerConnection>
+		<url>svn:svn://svn.anotheria.net/opensource/ano-util/trunk</url>
+		<connection>scm:svn:svn://svn.anotheria.net/opensource/ano-util/trunk</connection>
+		<developerConnection>scm:svn:svn://svn.anotheria.net/opensource/ano-util/trunk</developerConnection>
 	</scm>
 
 </project>
