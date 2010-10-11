@@ -28,7 +28,7 @@ public class SimpleQueueTest {
 	}
 	
 	@Test public void testEmptyRead(){
-		IQueue<Integer> queue = new StandardQueueFactory().createQueue(100);
+		IQueue<Integer> queue = new StandardQueueFactory<Integer>().createQueue(100);
 		try{
 			queue.nextElement();
 			fail("expected exception");
@@ -39,7 +39,7 @@ public class SimpleQueueTest {
 	 * This test tests whether the read-rotate works (and write rotate for this matter).
 	 */
 	@Test public void testOverread(){
-		IQueue<Integer> queue = new StandardQueueFactory().createQueue(100);
+		IQueue<Integer> queue = new StandardQueueFactory<Integer>().createQueue(100);
 		//read 50 elements away.
 		for (int i=0; i<50; i++){
 			queue.putElement(i);
@@ -59,7 +59,7 @@ public class SimpleQueueTest {
 
 
 	@Test public void testOverflow(){
-		IQueue<Integer> queue = new StandardQueueFactory().createQueue(3);
+		IQueue<Integer> queue = new StandardQueueFactory<Integer>().createQueue(3);
 		queue.putElement(1);
 		queue.putElement(2);
 		queue.putElement(3);
