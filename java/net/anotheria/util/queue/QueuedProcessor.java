@@ -1,6 +1,8 @@
 package net.anotheria.util.queue;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.log4j.Logger;
 
@@ -50,10 +52,14 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	 */
 	private int overflowCount;
 	/**
-	 * Number of throwed away queue elements.
+	 * Number of thrown away queue elements. 'Thrown away' means that a queue overflow happened and the queue was still full after the sleep attempt.
+	 * This will result in an UnrecoverableQueueOverflowException.
 	 */
-	private int throwAwayCount;
-	private long waitingTime;
+	private AtomicInteger throwAwayCount = new AtomicInteger(0);
+	/**
+	 * Time spent by other thread waiting in the queue. If this time is getting too large it indicates that the processing is far too slow. The time is measured in ms.
+	 */
+	private AtomicLong waitingTime = new AtomicLong(0);
 	
 	/**
 	 * The default queue factory.
@@ -69,6 +75,15 @@ public class QueuedProcessor<T extends Object> extends Thread {
 		defaultLog = Logger.getLogger(QueuedProcessor.class);
 	}
 
+	/**
+	 * Creates a new QueuedProcessor. This is the standard constructor used by all other constructors.
+	 * @param aName name of the processor.
+	 * @param aWorker worker for the queued processor.
+	 * @param aQueueFactory factory to create the underlying queue.
+	 * @param aQueueSize size of the queue.
+	 * @param aSleepTime sleep time in case of an overflow.
+	 * @param aLog logger for output. 
+	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory, int aQueueSize, long aSleepTime, Logger aLog) {
 		super(aName);
 		setDaemon(true);
@@ -89,36 +104,82 @@ public class QueuedProcessor<T extends Object> extends Thread {
 		init();
 	}
 
+	/**
+	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_SIZE and DEF_SLEEP_TIME.
+	 * @param aName name of the processor.
+	 * @param aWorker worker for the queued processor.
+	 * @param aQueueFactory factory to create the underlying queue.
+	 * @param aLog logger for output. 
+	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory, Logger aLog) {
 		this(aName, aWorker,  aQueueFactory, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, aLog);
 	}
 	
+	/**
+	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_FACTORY.
+	 * @param aName name of the processor.
+	 * @param aWorker worker for the queued processor.
+	 * @param aQueueSize size of the queue.
+	 * @param aSleepTime sleep time in case of an overflow.
+	 * @param aLog logger for output. 
+	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
 		this(aName, aWorker,  null, aQueueSize, aSleepTime, aLog);
 	}
 
+	/**
+	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_FACTORY and DEF_SLEEP_TIME.
+	 * @param aName name of the processor.
+	 * @param aWorker worker for the queued processor.
+	 * @param aQueueSize size of the queue.
+	 * @param aLog logger for output. 
+	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, Logger aLog) {
 		this(aName, aWorker,  aQueueSize, DEF_SLEEP_TIME, aLog);
 	}
 	
+	/**
+	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_FACTORY, DEF_QUEUE_SIZE and DEF_SLEEP_TIME.
+	 * @param aName name of the processor.
+	 * @param aWorker worker for the queued processor.
+	 * @param aLog logger for output. 
+	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger aLog) {
 		this(aName, aWorker, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, aLog);
 	}
 
+	/**
+	 * Creates a new QueuedProcessor. Uses DEF_SLEEP_TIME, DEF_QUEUE_SIZE and default logger.
+	 * @param aName name of the processor.
+	 * @param aWorker worker for the queued processor.
+	 * @param aQueueSize size of the queue.
+	 * @param aLog logger for output. 
+	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory) {
 		this(aName, aWorker, aQueueFactory, defaultLog);
 	}
 	
 	
+	/**
+	 * Shortest queued processor constructor. Creates a new QueuedProcessor. Uses DEF_SLEEP_TIME, DEF_QUEUE_SIZE, DEF_QUEUE_FACTORY and default logger.
+	 * @param aName name of the processor.
+	 * @param aWorker worker for the queued processor.
+	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker) {
 		this(aName, aWorker, null, defaultLog);
 	}
 
-	public void init(){
+	/**
+	 * Initializes internal processor structurues.
+	 */
+	private void init(){
 		queue = queueFactory.createQueue(queueSize);
 		stopImmediately = new AtomicBoolean(false);
 	}
 
+	/**
+	 * Resets the queue. Useful for inittesting. Doesn't restart the processor but deletes the underlying queue. The elements stuck in queue will NOT be delivered.
+	 */
 	public void reset(){
 		init();
 	}
@@ -140,7 +201,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 					synchronized(queue) {
 						long waitStart = System.currentTimeMillis();
 						queue.wait();
-						waitingTime += System.currentTimeMillis() - waitStart;
+						waitingTime.addAndGet(System.currentTimeMillis() - waitStart);
 					}
 				} catch(InterruptedException ignored) {
 					log.warn("Ignored exception: " + ignored.getMessage(), ignored);
@@ -150,6 +211,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 
 	/**
+	 * Default method to add an element to the queue. Calls addToQueueDontWait internally.
 	 * @param aElement
 	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
 	 */
@@ -173,14 +235,14 @@ public class QueuedProcessor<T extends Object> extends Thread {
 				try {
 					long waitStart = System.currentTimeMillis();
 					Thread.sleep(100);
-					waitingTime += System.currentTimeMillis() - waitStart;
+					waitingTime.addAndGet(System.currentTimeMillis() - waitStart);
 				} catch (Exception ignored) {
 				}
 			}
 			try {
 				queue.putElement(aElement);
 			} catch (QueueOverflowException e2) {
-				throwAwayCount++;
+				throwAwayCount.incrementAndGet();
 				log.error("couldn't recover from queue overflow, throwing away " + aElement);
 				throw new UnrecoverableQueueOverflowException("Element: " + aElement + ", stats:" + getStatsString());
 			}
@@ -216,7 +278,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 					try {
 						T element = null;
 						synchronized (queue) {
-							element = (T) queue.nextElement();
+							element = queue.nextElement();
 							queue.notify();
 						}
 						worker.doWork(element);
@@ -276,7 +338,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	 * @return
 	 */
 	public int getThrowAwayCount() {
-		return throwAwayCount;
+		return throwAwayCount.intValue();
 	}
 
 	public String getStatsString() {

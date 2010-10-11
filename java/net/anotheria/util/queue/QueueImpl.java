@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
- * An implementation of the IQueue interface.
+ * An implementation of the IQueue interface. Note, in the pre-1.5 times we used to have an own implementation here, but now its simply a wrapper to ArrayBlockingQueue.
  * @author lrosenberg
  * @since 22.06.2004
  */
@@ -34,11 +34,11 @@ public class QueueImpl<T> implements IQueue<T> {
 		listeners.add(listener);
 	}
 
-	public int getElementCount() {
+	@Override public int getElementCount() {
 		return underlyingQueue.size();
 	}
 
-	public int size() {
+	@Override public int size() {
 		return size;
 	}
 
