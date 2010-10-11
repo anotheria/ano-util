@@ -59,8 +59,9 @@ public class ObjectConfinementSyncTest {
 		objectConfinementLocks = new ConcurrentHashMap<TestObject, ReentrantLock>();
 	}
 	
-	private void acquireObjectConfinmenetLock(TestObject testObject){
+	private ReentrantLock acquireObjectConfinmenetLock(TestObject testObject){
 		ReentrantLock lock = objectConfinementLocks.get(testObject);
+		
 		if(lock == null){
 			ReentrantLock newLock = new ReentrantLock();
 			lock = objectConfinementLocks.putIfAbsent(testObject, newLock);
@@ -68,25 +69,27 @@ public class ObjectConfinementSyncTest {
 				lock = newLock;
 		}
 		lock.lock();
+		return lock;
 	}
 	
-	private void releaseObjectConfinmenetLock(TestObject testObject){
-		ReentrantLock lock = objectConfinementLocks.get(testObject);
-		if(lock == null)
-			throw new AssertionError("Has lock was acquired?");
+	private void releaseObjectConfinmenetLock(ReentrantLock lock, TestObject testObject){
+//		ReentrantLock lock = objectConfinementLocks.get(testObject);
+//		if(lock == null)
+//			throw new AssertionError("Has lock was acquired?");
 		try{
 		}finally{
+			lock.unlock();
 			//TODO: Time between check and remove is not synchronized!
+//			if(!lock.isLocked()){
 			if(!lock.hasQueuedThreads()){
 				try {
 					//Increase that time!
-					Thread.sleep(300);
-				} catch (InterruptedException e) {
+					Thread.sleep(1);
+				} catch (Exception e) {
 				}
 				objectConfinementLocks.remove(testObject);
 				System.out.println("DELETED LOCK: " + testObject + ", locks: " + objectConfinementLocks.size());
 			}
-			lock.unlock();
 		}
 	}
 	
@@ -102,7 +105,7 @@ public class ObjectConfinementSyncTest {
 		for(int j = 0; j < threadsCount; j++){
 			for(final TestObject obj: testObjects){
 				try {
-					Thread.sleep(rnd.nextInt(300));
+					Thread.sleep(rnd.nextInt(50));
 				} catch (InterruptedException e) {
 					throw new AssertionError("Must never happen!");
 				}
@@ -129,7 +132,7 @@ public class ObjectConfinementSyncTest {
 	private AtomicInteger errorsCounter = new AtomicInteger();
 	private void handleTestObjectSync(TestObject testObject){
 //		System.out.println("Handle " + testObject);
-		acquireObjectConfinmenetLock(testObject);
+		ReentrantLock lock = acquireObjectConfinmenetLock(testObject);
 		int worked = 0;
 		int errors = 0;
 		try{
@@ -139,7 +142,7 @@ public class ObjectConfinementSyncTest {
 		}catch(ConcurrentModificationException e){
 			errors = errorsCounter.incrementAndGet();
 		}finally{
-			releaseObjectConfinmenetLock(testObject);
+			releaseObjectConfinmenetLock(lock, testObject);
 			int errorsRate = (int)((float)errors/worked * 100);
 			System.out.println("FINISH: " + testObject + ", errors: " + errors + ", errorsRate: " + errorsRate + "%, locks: " + objectConfinementLocks.size());
 		}
