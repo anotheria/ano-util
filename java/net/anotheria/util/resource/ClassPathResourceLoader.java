@@ -11,10 +11,6 @@ import net.anotheria.util.NumberUtils;
 
 import org.apache.log4j.Logger;
 
-/**
- * A source loader for files.
- * @author lrosenberg
- */
 public class ClassPathResourceLoader implements ResourceLoader{
 	
 	/**

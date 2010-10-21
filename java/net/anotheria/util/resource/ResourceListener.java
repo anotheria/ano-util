@@ -2,8 +2,7 @@ package net.anotheria.util.resource;
 
 
 /**
- * A configuration source listener will be notified on changes in the configuration. 
- * @author lrosenberg
+ * A Resource listener will be notified on changes in the configuration. 
  */
 public interface ResourceListener {
 	/**

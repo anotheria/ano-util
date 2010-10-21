@@ -2,23 +2,27 @@ package net.anotheria.util.resource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import net.anotheria.util.NumberUtils;
 
 import org.apache.log4j.Logger;
 
 /**
- * Represents a loaded configuration source for example a file. Doesn't contain the content of the file, only metadata is included. The ConfigurationSource object is a surogate which is used to execute functions
- * which are semantically ment to be executed on the configuration source itself, like registering for a change event etc.
- * @author lrosenberg
+ * Representation of physically existing underlying resource with text content. Underlying resource is
+ * identified by name. Depending on ResourceLoader (default is
+ * ClassPathResourceLoader) name can be absolute or relative on File System, URL
+ * etc. Acts as a proxy to hide all routine for a underlying resource loading and updating.
+ * 
  */
 public class Resource {
 	/**
-	 * The key for the underlying source
+	 * The name of the Resource
 	 */
 	private String name;
-	
+
+	/**
+	 * The content for the Resource
+	 */
 	private String content;
 	/**
 	 * A list of listeners
@@ -28,120 +32,153 @@ public class Resource {
 	 * Last detected change timestamp
 	 */
 	private long lastChangeTimestamp;
-	
+
+	/**
+	 * The ResurceLoader that retrieves data from its underlying
+	 */
 	private ResourceLoader resourceLoader;
-	
+
 	/**
 	 * Logger.
 	 */
 	private static Logger log = Logger.getLogger(Resource.class);
-	
+
 	/**
-	 * Creates a new configuration source
-	 * @param aKey
+	 * Creates a new Resource for its underlying in class path
+	 * 
+	 * @param aName
+	 *            name of the Resource
 	 */
-	public Resource(String aName){
+	public Resource(String aName) {
 		this(aName, false);
-	}
-	
-	public Resource(String aName, boolean aWatch){
-		this(aName, aWatch, new ClassPathResourceLoader());
-	}
-	
-	
-	/**
-	 * Creates a new configuration source
-	 * @param aKey
-	 */
-	public Resource(String aName, boolean watch, ResourceLoader aResourceLoader){
-		name = aName;
-		resourceLoader = aResourceLoader;
-		listeners = new ArrayList<ResourceListener>(); 
-		lastChangeTimestamp = System.currentTimeMillis();
-		reloadContent();
-		if(watch)
-			WatchDog.INSTANCE.addResourceToWatch(this);
-	}
-	
-	/**
-	 * Adds a listener to this source. 
-	 * @param listener a listener to add
-	 */
-	public void addListener(ResourceListener listener){
-		synchronized(listeners){
-			listeners.add(listener);
-		}
-	}
-	/**
-	 * Removes the listener from this source
-	 * @param listener
-	 */
-	public void removeListener(ResourceListener listener){
-		synchronized(listeners){
-			listeners.remove(listener);
-		}
-	}
-	
-	@Override public String toString(){
-		return "Resource "+name+", listeners: "+listeners.size()+", "+NumberUtils.makeISO8601TimestampString(getLastChangeTimestamp());
 	}
 
 	/**
-	 * Return the last change timestamp of this source in millis
+	 * Creates a new Resource for its underlying in class path
+	 * 
+	 * @param aName
+	 *            name of the Resource
+	 * @param aWatch
+	 *            must be this Resource up to date with its physical changes
+	 */
+	public Resource(String aName, boolean aWatch) {
+		this(aName, aWatch, new ClassPathResourceLoader());
+	}
+
+	/**
+	 * Creates a new Resource
+	 * 
+	 * @param aName
+	 *            name of the Resource
+	 * @param aWatch
+	 *            must be this Resource up to date with its physical changes
+	 * @param aResourceLoader
+	 *            ResourceLoader that is used to load its underlying
+	 */
+	public Resource(String aName, boolean watch, ResourceLoader aResourceLoader) {
+		name = aName;
+		resourceLoader = aResourceLoader;
+		listeners = new ArrayList<ResourceListener>();
+		lastChangeTimestamp = System.currentTimeMillis();
+		reloadContent();
+		if (watch)
+			WatchDog.INSTANCE.addResourceToWatch(this);
+	}
+
+	/**
+	 * Adds a listener to this Resource.
+	 * 
+	 * @param listener
+	 *            a listener to add
+	 */
+	public void addListener(ResourceListener listener) {
+		synchronized (listeners) {
+			listeners.add(listener);
+		}
+	}
+
+	/**
+	 * Removes the listener from this Resource
+	 * 
+	 * @param listener
+	 */
+	public void removeListener(ResourceListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Resource " + name + ", listeners: " + listeners.size() + ", " + NumberUtils.makeISO8601TimestampString(getLastChangeTimestamp());
+	}
+
+	/**
+	 * Return the last change timestamp of this Resource in millis
+	 * 
 	 * @return
 	 */
 	public long getLastChangeTimestamp() {
 		return lastChangeTimestamp;
-		
+
 	}
 
 	/**
-	 * Returns the config key of this source
+	 * Returns the name of this Resource
+	 * 
 	 * @return
 	 */
-	public String getName(){
+	public String getName() {
 		return name;
 	}
-	
-	public String getContent(){
-		return content;
-	}
-	
+
 	/**
-	 * Returns true if this source's change timestamp is older as the given timestamp
-	 * @param sourceChangeTimestamp
+	 * Returns the content of this Resource
+	 * 
 	 * @return
 	 */
-	protected boolean isOlderAs(long sourceChangeTimestamp){
-		return lastChangeTimestamp < sourceChangeTimestamp;
+	public String getContent() {
+		return content;
 	}
-	
+
 	/**
-	 * Called by the ConfigurationSourceRegistry if a change in the underlying source is detected.
+	 * Returns true if this Resource's change timestamp is older as the given
+	 * timestamp
+	 * 
+	 * @param resourceChangeTimestamp
+	 * @return
+	 */
+	protected boolean isOlderAs(long resourceChangeTimestamp) {
+		return lastChangeTimestamp < resourceChangeTimestamp;
+	}
+
+	/**
+	 * Called by the WatchDog if a change in the underlying
+	 * Resource is detected.
+	 * 
 	 * @param timestamp
 	 */
-	protected void fireUpdateEvent(long timestamp){
+	protected void fireUpdateEvent(long timestamp) {
 		reloadContent();
-		synchronized(listeners){
-			for (ResourceListener listener : listeners){
-				try{
-					log.debug("Calling configurationSourceUpdated on "+listener);
+		synchronized (listeners) {
+			for (ResourceListener listener : listeners) {
+				try {
+					log.debug("Calling configurationSourceUpdated on " + listener);
 					listener.resourceUpdated(this);
-				}catch(Exception e){
-					log.error("Error in notifying configuration source listener:"+listener, e);
+				} catch (Exception e) {
+					log.error("Error in notifying configuration source listener:" + listener, e);
 				}
 			}
 		}
 		lastChangeTimestamp = timestamp;
 	}
-	
-	protected ResourceLoader getResourceLoader(){
+
+	protected ResourceLoader getResourceLoader() {
 		return resourceLoader;
 	}
-	
-	private void reloadContent(){
+
+	private void reloadContent() {
 		content = getResourceLoader().getContent(getName());
 	}
-	
-	
+
 }
