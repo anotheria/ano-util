@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
 
+import net.anotheria.util.IOUtils;
 import net.anotheria.util.NumberUtils;
 
 import org.apache.log4j.Logger;
@@ -70,10 +71,7 @@ public class ClassPathResourceLoader implements ResourceLoader{
 			log.error("getContent("+fileName+")", e);
 			throw new RuntimeException("can't read source: "+fileName, e);
 		}finally{
-			try{
-				if (reader!=null)
-					reader.close();
-			}catch(IOException ignored){}
+			IOUtils.closeIgnoringException(reader);
 		}
 	}
 //*/

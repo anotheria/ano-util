@@ -79,28 +79,36 @@ public final class IOUtils {
      * @throws IOException
      */
     public static final String readFileBufferedAsString(String filename) throws IOException{
-        StringBuffer result = new StringBuffer();
-        char[] buffer = new char[2048];
-        FileReader in = new FileReader(filename);
-        int len = 0;
-        do {
-         len = in.read(buffer);
-         if(len > 0)
-          result.append(buffer,0, len);
-        } while(len > 0);
-        closeIgnoringException(in);
-        return result.toString();
+    	FileReader in = null;
+    	try{
+        	StringBuilder result = new StringBuilder();
+	        char[] buffer = new char[2048];
+	        in = new FileReader(filename);
+	        int len = 0;
+	        do {
+	         len = in.read(buffer);
+	         if(len > 0)
+	          result.append(buffer,0, len);
+	        } while(len > 0);
+	        return result.toString();
+        }finally{
+        	closeIgnoringException(in);
+        }
     }
     
     public static final String readInputStreamBufferedAsString(InputStream in, String charset) throws IOException{
-		BufferedReader reader = new BufferedReader(new UnicodeReader(in, charset));
-		StringBuffer result = new StringBuffer();
-		char[] cbuf = new char[2048];
-		int read;
-		while((read = reader.read(cbuf)) > 0)
-			result.append(cbuf, 0, read);
-		closeIgnoringException(reader);
-		return result.toString();
+		BufferedReader reader = null;
+		try{
+			reader = new BufferedReader(new UnicodeReader(in, charset));
+			StringBuffer result = new StringBuffer();
+			char[] cbuf = new char[2048];
+			int read;
+			while((read = reader.read(cbuf)) > 0)
+				result.append(cbuf, 0, read);
+			return result.toString();
+		} finally {
+			closeIgnoringException(reader);
+		}
 
     }
     

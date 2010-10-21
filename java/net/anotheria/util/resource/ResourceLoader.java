@@ -1,8 +1,8 @@
 package net.anotheria.util.resource;
 
 /**
- * General interface for the loading physically existed resource.
- * Possible implementation can be from class path, from File System, URL
+ * General interface for loading data from physically existed resource.
+ * Possible implementation: from class path, from file system, URL etc.
  * 
  */
 public interface ResourceLoader {

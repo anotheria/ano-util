@@ -1,7 +1,6 @@
 package net.anotheria.util.resource;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
@@ -10,14 +9,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ResourceTest {
-	
-	@BeforeClass public static void init(){
-		WatchDog.INSTANCE.setPause(100);
-	}
 	
 	@Before public void reset(){
 		FixtureLoader.reset();
