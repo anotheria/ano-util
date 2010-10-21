@@ -144,18 +144,4 @@ public class Resource {
 	}
 	
 	
-	public static void main(String[] args) throws Exception{
-		final Resource res1 = new Resource("TestResource.txt", true);
-		System.out.println("Res1 initial content: " + res1.getContent());
-		final CountDownLatch resourceUpdated = new CountDownLatch(1);
-		res1.addListener(new ResourceListener() {
-			@Override
-			public void resourceUpdated(Resource target) {
-				resourceUpdated.countDown();
-				System.out.println("Res1 updated content: " + res1.getContent());
-			}
-		});
-		resourceUpdated.await();
-	}
-	
 }

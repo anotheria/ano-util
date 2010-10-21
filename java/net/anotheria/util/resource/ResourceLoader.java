@@ -1,6 +1,5 @@
 package net.anotheria.util.resource;
 
-
 /**
  * A source loader for files.
  * 
@@ -10,7 +9,19 @@ public interface ResourceLoader {
 
 	boolean isAvailable(String resourceName);
 
-	long getLastChangeTimestamp(String resourceName);
+	/**
+	 * @param resourceName
+	 * @return
+	 * @throws IllegalArgumentException
+	 *             if resource with such name doesn't exist
+	 */
+	long getLastChangeTimestamp(String resourceName) throws IllegalArgumentException;
 
-	String getContent(String resourceName);
+	/**
+	 * @param resourceName
+	 * @return
+	 * @throws IllegalArgumentException
+	 *             if resource with such name doesn't exist
+	 */
+	String getContent(String resourceName) throws IllegalArgumentException;
 }

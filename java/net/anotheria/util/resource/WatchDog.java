@@ -18,17 +18,28 @@ public enum WatchDog {
 	/**
 	 * The one and only instance of the ConfigurationSourceRegistry.
 	 */
-	INSTANCE;
+	INSTANCE(10000);
+	
 	/**
 	 * Logger.
 	 */
 	private static Logger log = Logger.getLogger(WatchDog.class);
 	
-	private Map<String, Resource> watchingRegistry; 
+	private Map<String, Resource> watchingRegistry;
+	private volatile long pause;
 	
-	private WatchDog(){
+	private WatchDog(long aPause){
 		watchingRegistry = new ConcurrentHashMap<String, Resource>();
+		pause = aPause;
 		new WatcherThread().start();
+	}
+	
+	public long getPause() {
+		return pause;
+	}
+
+	public void setPause(long aPause) {
+		pause = aPause;
 	}
 	
 	public void addResourceToWatch(Resource resource){
@@ -54,7 +65,7 @@ public enum WatchDog {
 		@Override public void run(){
 			try{
 				while(!Thread.interrupted()){
-					Thread.sleep(1000L*10);
+					Thread.sleep(getPause());
 					Set<Resource>  watchedResources = new HashSet<Resource>(watchingRegistry.values());
 					for (Resource source : watchedResources){
 						ResourceLoader loader = source.getResourceLoader();
@@ -75,5 +86,6 @@ public enum WatchDog {
 			}catch(InterruptedException e){}
 		}
 	}
- 	
+
+
 }
