@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ObjectConfinementSyncTest {
+public class ObjectConfinementSyncTestik {
 
 	private static final class TestObject{
 		
@@ -146,7 +146,7 @@ public class ObjectConfinementSyncTest {
 	}
 	
 	public static void main(String[] args) {
-		ObjectConfinementSyncTest.init();
-		new ObjectConfinementSyncTest().concurrencyTest();
+		ObjectConfinementSyncTestik.init();
+		new ObjectConfinementSyncTestik().concurrencyTest();
 	}
 }
