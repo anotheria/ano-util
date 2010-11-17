@@ -62,7 +62,7 @@ public class Resource {
 	 *            must be this Resource up to date with its physical changes
 	 */
 	public Resource(String aName, boolean aWatch) {
-		this(aName, aWatch, new ClassPathResourceLoader());
+		this(aName, new ClassPathResourceLoader(), aWatch);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class Resource {
 	 * @param aResourceLoader
 	 *            ResourceLoader that is used to load its underlying
 	 */
-	public Resource(String aName, boolean watch, ResourceLoader aResourceLoader) {
+	public Resource(String aName, ResourceLoader aResourceLoader, boolean watch) {
 		name = aName;
 		resourceLoader = aResourceLoader;
 		listeners = new ArrayList<ResourceListener>();

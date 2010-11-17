@@ -22,20 +22,20 @@ public class ResourceTest {
 	}
 	
 	@Test (expected=IllegalArgumentException.class) public void testContentNonExistance(){
-		Resource res = new Resource("nonExistingResource", false, new FixtureLoader());
+		Resource res = new Resource("nonExistingResource", new FixtureLoader(), false);
 		res.getContent();
 		fail("IllegalArgumentException must be throwed!");
 	}
 	
 	@Test (expected=IllegalArgumentException.class) public void testLastChangeTimestampNonExistance(){
-		Resource res = new Resource("nonExistingResource", false, new FixtureLoader());
+		Resource res = new Resource("nonExistingResource", new FixtureLoader(), false);
 		res.getLastChangeTimestamp();
 		fail("IllegalArgumentException must be throwed!");
 	}
 	
 	@Test public void testContent(){
 		FixtureLoader loader = new FixtureLoader();
-		Resource res = new Resource(FixtureLoader.EXISTING_RESOURCE, false, loader);
+		Resource res = new Resource(FixtureLoader.EXISTING_RESOURCE, loader, false);
 		String content = res.getContent();
 		assertEquals(FixtureLoader.ORIGINAL_CONTENT, content);
 		
@@ -48,7 +48,7 @@ public class ResourceTest {
 	
 	@Test public void testLastChangeTimestamp() throws InterruptedException{
 		FixtureLoader loader = new FixtureLoader();
-		Resource res = new Resource(FixtureLoader.EXISTING_RESOURCE, false, loader);
+		Resource res = new Resource(FixtureLoader.EXISTING_RESOURCE, loader, false);
 		long lastChange = res.getLastChangeTimestamp();
 		assertTrue(lastChange <= System.currentTimeMillis());
 		
@@ -59,7 +59,7 @@ public class ResourceTest {
 	
 	@Test public void testWatchign() throws InterruptedException{
 		FixtureLoader loader = new FixtureLoader();
-		Resource res = new Resource(FixtureLoader.EXISTING_RESOURCE, true, loader);
+		Resource res = new Resource(FixtureLoader.EXISTING_RESOURCE, loader, true);
 		
 		final AtomicBoolean notified = new AtomicBoolean(false);
 		final CountDownLatch resourceUpdated = new CountDownLatch(1);
