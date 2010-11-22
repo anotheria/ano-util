@@ -23,7 +23,6 @@ public class QueuedProcessorTest {
 	
 	@Test public void test() throws InterruptedException{
 		
-		
 		long start = System.nanoTime(), end1, end2;
 		final Worker worker = new Worker();
 		QueuedProcessor<Integer> processor = new QueuedProcessor<Integer>("test", worker, QUEUE_SIZE, Logger.getLogger(QueuedProcessorTest.class));
@@ -49,7 +48,8 @@ public class QueuedProcessorTest {
 		System.out.println("CPT Time1 "+(end1-start)/1000/1000+" ms");
 		System.out.println("CPT Time2 "+(end2-start)/1000/1000+" ms");
 		System.out.println("CPT Time2-1 "+(end2-end1)/1000/1000+" ms");
-	}
+	
+	} 
 	
 	class Filler extends Thread{
 		

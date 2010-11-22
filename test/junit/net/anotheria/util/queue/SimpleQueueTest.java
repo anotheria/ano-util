@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class SimpleQueueTest {
 	@Test public void testReadWrite(){
-		IQueue<Integer> queue = new StandardQueueFactory().createQueue(50);
+		IQueue<Integer> queue = new StandardQueueFactory<Integer>().createQueue(50);
 		for (int i=0; i<50; i++){
 			queue.putElement(i);
 		}
