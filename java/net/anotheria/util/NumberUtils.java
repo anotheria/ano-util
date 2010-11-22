@@ -251,6 +251,8 @@ public final class NumberUtils {
 	}
 	
 	public static String getDotedNumber(long number, char separatorChar){
+		if (number<0)
+			return "-"+getDotedNumber(-1*number, separatorChar);
 		String n = StringUtils.reverseString(""+number);
 		StringBuilder ret = new StringBuilder();
 		for (int i=0; i<n.length(); i++){
