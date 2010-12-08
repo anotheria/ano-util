@@ -1,10 +1,10 @@
 package net.anotheria.util.queue;
 
+import org.apache.log4j.Logger;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.apache.log4j.Logger;
 
 public class QueuedProcessor<T extends Object> extends Thread {
 	/**
@@ -342,11 +342,11 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 
 	public String getStatsString() {
-		return counter + " elements worked, queue: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
+		return "QueuedProcessor "+name+ ": "+counter + " elements worked, queue: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
 	}
 
 	public void logOutInfo() {
-		log.info(name + ": " + counter + " elements worked, stat: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount);
+		log.info("QueuedProcessor "+name + ": " + counter + " elements worked, stat: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount);
 	}
 
 	public IQueueFactory<T> getQueueFactory() {
