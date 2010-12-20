@@ -42,7 +42,7 @@ public class Date implements Serializable{
     /** Maximum nubers of days in month in a not leapyear*/
     public static final int[]  DAY_OF_MONTH= {-1,31,28,31,30,31,30,31,31,30,31,30,31};
     /** The array of day names in a week*/
-    public static final String[] DAY   = {"So.","Mo.","Di.","Mi.","Do.","Fr.","Sa."};
+    public static final String[] DAY   = {"Sun.","Mon.","Tue.","Wed.","Thu.","Fri.","Sat."};
 
     /** Default constructor. Create a date
      * without hour an minutes notification. The minuts and hours have
