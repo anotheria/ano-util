@@ -39,28 +39,46 @@ public class CSVParser {
 		DataTable ret = new DataTable(rows.length);
 
 		if(hasHeader)
-			ret.setHeader(toDataHeader(parseRow(rows[0], valuesSeparator)));
+			ret.setHeader(toDataHeader(parseRow(rows[0], valuesSeparator, true)));
 		
 		for(int i = hasHeader?1:0; i < rows.length; i++)
-			ret.addRow(parseRow(rows[i], valuesSeparator));
+			ret.addRow(parseRow(rows[i], valuesSeparator, true));
 		
 		
 		return ret;
 	}
 	
-	private static DataRow parseRow(String row, char valuesSeparator){
+	private static DataRow parseRow(String row, char valuesSeparator, boolean unescape){
 		try{
 			List<String> tokens = StringUtils._tokenize(row, '"', '"', false,valuesSeparator);
 			DataRow ret = new DataRow();
 			for(String t: tokens){
-				if(StringUtils.isSurroundedWith(t, '"', '"'))
-					t = StringUtils.removeSurround(t);
+				if (unescape && t.indexOf('"') >= 0) {
+					t = unescape(t);
+				}
 				ret.addCell(new DataCell(t));
 			}
 			return ret;
 		}catch(RuntimeException e){
 			throw new RuntimeException("Could not parse CSV Row: " + row, e);
 		}
+	}
+
+	// escape symbol itself has to be escaped too.
+	// I found that org.apache.commons.lang.StringEscapeUtils from commons-lang has useful methods:
+	// escapeCSV and unescapeCSV, but if we used them to escape value, we also have to unescape it properly
+	// for instance, we should either remove both surrounding '"' and double "" inside, either none of them, to unescape later
+	private static String unescape(String t) {
+		// t = t.replaceAll("\"{2}", "\"");// v1, using simple regexp
+		int index = 0;			// v2, using simple string concatenations
+		while ((index = t.indexOf("\"\"", index)) >= 0) {
+			t= t.substring(0, index) + t.substring(index + 1);
+			index++;
+		}
+		if(StringUtils.isSurroundedWith(t, '"', '"') && (t.indexOf(',') >= 0 || t.indexOf('"') >= 0)) {
+			t = StringUtils.removeSurround(t);
+		}
+		return t;
 	}
 	
 	private static DataHeader toDataHeader(DataRow headerRow){
