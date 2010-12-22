@@ -322,9 +322,21 @@ public final class DateUtility {
 		return (int) ((toDate - fromDate)/TimeUnit.DAY.getMillis());
 	}
 	
+	public static long getHourBeginning(){
+		return getHourBeginning(System.currentTimeMillis());
+	}
+	
 	public static long getHourBeginning(long date){
 		Date d = new Date(date);
 		return new Date(d.getDay(),d.getMonth(),d.getYear(),d.getHour(),0).toMill();
+	}
+	
+	public static long getNextHourBeginning(){
+		return getHourBeginning() + TimeUnit.HOUR.getMillis();
+	}
+	
+	public static long getNextHourBeginning(long date){
+		return getHourBeginning(date) + TimeUnit.HOUR.getMillis();
 	}
 	
 	public static long getDayBeginning(long date){
