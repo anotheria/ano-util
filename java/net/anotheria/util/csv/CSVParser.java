@@ -1,6 +1,9 @@
 package net.anotheria.util.csv;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 import net.anotheria.util.StringUtils;
 import net.anotheria.util.datatable.DataCell;
@@ -31,10 +34,10 @@ public class CSVParser {
 	
 	public static DataTable parse(String csvSource, char valuesSeparator, char rowsSeparator, boolean hasHeader){
 		String[] rows = StringUtils.tokenize(csvSource, rowsSeparator);
-//		System.out.println("Found " + rows.length + " row(s)!");
-		
 		if(rows.length == 0)
 			throw new RuntimeException("No rows found!");
+
+		rows = normalizeEscapedNewlines(rows);
 		
 		DataTable ret = new DataTable(rows.length);
 
@@ -48,7 +51,7 @@ public class CSVParser {
 		return ret;
 	}
 	
-	private static DataRow parseRow(String row, char valuesSeparator, boolean unescape){
+	private static DataRow parseRow(String row, char valuesSeparator, boolean unescape) {
 		try{
 			List<String> tokens = StringUtils._tokenize(row, '"', '"', false,valuesSeparator);
 			DataRow ret = new DataRow();
@@ -75,10 +78,42 @@ public class CSVParser {
 			t= t.substring(0, index) + t.substring(index + 1);
 			index++;
 		}
-		if(StringUtils.isSurroundedWith(t, '"', '"') && (t.indexOf(',') >= 0 || t.indexOf('"') >= 0)) {
+		if(StringUtils.isSurroundedWith(t, '"', '"') && (t.indexOf(',') >= 0 || t.indexOf('"') >= 0 || t.indexOf(DEFAULT_ROWS_SEPARATOR) >= 0)) {
 			t = StringUtils.removeSurround(t);
 		}
 		return t;
+	}
+	
+	/** If we have new-line symbol somewhere in the text, it would be escaped, but tokenizer would split it into 2+ separate lines
+	 * This situation can be determined by counting escape symbols in the line - in this and only in this situation, number of double quotes  will be odd*/
+	private static boolean hasOddNumberOfQuotes(String text) {
+		boolean isOddCount = false;
+		for (int i = 0; i >= 0; ){
+			i = text.indexOf('"',i);
+			if (i >= 0) {
+				isOddCount = !isOddCount;
+				i++;
+			}
+		}
+		return isOddCount;
+	}
+	
+	/** We have to handle somehow situation with newlines in the values, 
+	 * for now - algorithm written below looks as simplest and quickest */
+	private static String[] normalizeEscapedNewlines(String[] rows) {
+		List<String> result = new ArrayList<String>(rows.length);
+		for (int i = 0; i < rows.length; i++){
+			String row = rows[i];
+			if (hasOddNumberOfQuotes(row)) {
+				boolean endFound = false;
+				for (int j = i+1; j < rows.length && !endFound; j++, i++){
+					row+= '\n' + rows[j];
+					endFound = hasOddNumberOfQuotes(rows[j]);
+				}
+			}
+			result.add(row);
+		}
+		return result.toArray(new String[result.size()]);
 	}
 	
 	private static DataHeader toDataHeader(DataRow headerRow){
@@ -88,5 +123,4 @@ public class CSVParser {
 		return ret;
 	}
 	
-
 }
