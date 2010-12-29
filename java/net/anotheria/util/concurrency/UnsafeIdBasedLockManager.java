@@ -20,7 +20,7 @@ public class UnsafeIdBasedLockManager extends AbstractIdBasedLockManager impleme
 				//someone else have probably removed the lock in the mean time, re-add
 				IdBasedLock raceCond = locks.put(id, myLock);
 				//if race cond!= null we have a synch problem here, but we are unsafe after all!
-				//future use - merge both locks 
+				//future use - merge both locks
 			}
 		
 		myLock.unlockWithoutRelease();
