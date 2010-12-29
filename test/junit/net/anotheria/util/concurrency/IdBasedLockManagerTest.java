@@ -30,7 +30,7 @@ public class IdBasedLockManagerTest {
 	
 	class Worker {
 		
-		protected int iterations = 10000000;//100000;
+		protected int iterations = 1000000;//100000;
 		protected Random rnd = new Random(System.nanoTime());
 		protected long addedValue = 0;
 		
