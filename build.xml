@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <project name="ano-util" default="dist" basedir=".">
-	<import file="../build/basic-project.xml"/>	
+	<import file="../build_v2/basic-project.xml"/>	
 
 	<property name="ivy.organisation" value="anotheria.net"/>
 	<property name="ivy.module" value="ano-util"/>
