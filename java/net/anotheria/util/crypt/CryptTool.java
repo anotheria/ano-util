@@ -104,15 +104,16 @@ public class CryptTool {
 	public Map<String,String> decryptParameterMap(String str){
 		String decrypted = decryptFromHex(str);
 		decrypted = decrypted.trim();
-		
 		HashMap<String,String> map = new HashMap<String,String>();
-		
 		String tokens[] = StringUtils.tokenize(decrypted, '&');
 		for (int i=0; i<tokens.length; i++){
 			String t[] = StringUtils.tokenize(tokens[i], '=');
-			map.put(t[0], t[1]);
+			if (t.length == 2) {
+				map.put(t[0], t[1]);
+			} else {
+				map.put(t[0], "");
+			}
 		}
-		
 		return map;
 	}
 
