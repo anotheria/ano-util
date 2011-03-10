@@ -1,6 +1,7 @@
 package net.anotheria.util;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -150,5 +151,20 @@ public final class IOUtils {
 				//We can do nothing if on close failure
 			}
     }
+    
+	public static byte[] readBytes(InputStream in) throws IOException {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		int nRead;
+		byte[] data = new byte[16384];
+		try {
+			while ((nRead = in.read(data, 0, data.length)) != -1)
+				buffer.write(data, 0, nRead);
+
+			buffer.flush();
+			return buffer.toByteArray();
+		} finally {
+			closeIgnoringException(buffer);
+		}
+	}
 }
 

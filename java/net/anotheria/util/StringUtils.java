@@ -142,6 +142,10 @@ public final class StringUtils{
 		return tokenize2list(source, delimiter, escapeChar).toArray(new String[0]);
 	}
 	
+	public static final String removeCharAt(String src, int position){
+		return new StringBuilder(src).deleteCharAt(position).toString();		
+	}
+	
 	/**
 	 *Returns a source String with all occurences of 'c' removed.
 	 *removeChar("Leon's Power Tools", ' ') will return "Leon'sPowerTools".
@@ -192,6 +196,10 @@ public final class StringUtils{
 		return Collections.synchronizedMap(buildParameterMap(source, '\n', ':'));
 	}
 
+	public static Map<String,String> buildParameterMap(String source){
+		return buildParameterMap(source, '\n', '=');
+	}
+	
 	public static Map<String,String> buildParameterMap(String source, char lineDelimiter, char parameterDelimiter){
 	    source = removeChar(source,'\r');
 		String[] lines = tokenize(source, lineDelimiter);
@@ -978,8 +986,10 @@ public final class StringUtils{
 	}
 	
 	public static String normalize(String s){
-		if (s==null || s.length()==0)
+		if (s==null || s.trim().length()==0)
 			return s;
+
+		s = s.trim();
 		StringBuilder ret = new StringBuilder(s.length());
 		for (int i=0; i<s.length(); i++){
 			char c = s.charAt(i);
