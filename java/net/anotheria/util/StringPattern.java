@@ -1,0 +1,121 @@
+package net.anotheria.util;
+
+/**
+ * Simple to use pattern matcher.
+ */
+import java.util.ArrayList;
+import java.util.List;
+
+public class StringPattern {
+
+	public static final char DEFAULT_WILDCARD = '*';
+	
+	private char wildCard;
+	
+	private String equals;
+	private String startsWith;
+	private String endsWith;
+	private List<String> indexof;
+	
+	public StringPattern(String pattern) {
+		this(pattern, DEFAULT_WILDCARD);
+	}
+	
+	public StringPattern(String pattern, char wildCard) {
+		this.wildCard = wildCard;
+		List<Integer> wildCards = searchWildcards(pattern);
+		if(wildCards.size() == 0) {
+			equals = pattern;
+			return;
+		}
+		if(wildCards.get(0) > 0) {
+			startsWith = pattern.substring(0, wildCards.get(0));
+		}
+		if(wildCards.get(wildCards.size()-1) < pattern.length() -1) {
+			endsWith = pattern.substring(wildCards.get(wildCards.size()-1)+1);
+		}
+		if(wildCards.size() == 1) {
+			return;
+		}
+		indexof = new ArrayList<String>();
+		for(int i=0; i<wildCards.size()-1; i++) {
+			int start = wildCards.get(i);
+			int end = wildCards.get(i+1);
+			indexof.add(pattern.substring(start+1, end));
+		}
+	}
+	
+	private List<Integer> searchWildcards(String pattern) {
+		List<Integer> result = new ArrayList<Integer>();
+		for(int i=0; i<pattern.length(); i++) {
+			if(pattern.charAt(i) == wildCard) {
+				result.add(i);
+			}
+		}
+		return result;
+	}
+	
+	public boolean match(String aString) {
+		return match(aString, new ArrayList<String>());
+	}
+	
+	public boolean match(String aString, List<String> matches) {
+		
+		if(equals != null) {
+			return aString.equals(equals);
+		}
+
+		int leftMatch = 0;
+		int rightMatch = aString.length();
+		
+		if(startsWith != null) {
+			if(aString.startsWith(startsWith)) {
+				leftMatch = startsWith.length();
+			} else {
+				return false;
+			}
+		}
+		if(endsWith != null) {
+			if(aString.endsWith(endsWith)) {
+				rightMatch = aString.length() - endsWith.length();
+			} else {
+				return false;
+			}
+		}
+		if(indexof != null) {
+			int lastIndex = 0;
+			for(String io: indexof) {
+				int index = aString.indexOf(io, lastIndex);
+				if(index == -1) {
+					return false;
+				}
+				if(matches != null) {
+					matches.add(aString.substring(leftMatch, index));
+					leftMatch = index + io.length();
+				}
+				lastIndex = index;
+			}
+		}
+		matches.add(aString.substring(leftMatch, rightMatch));
+		return true;
+	}
+	
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		if(equals != null) {
+			result.append("equals=" + equals);
+		}
+		if(startsWith != null) {
+			result.append(", startsWith=" + startsWith);
+		}
+		if(indexof != null) {
+			for(String io: indexof) {
+				result.append(", indexof=" + io);
+			}
+		}
+		if(endsWith != null) {
+			result.append(", endsWith=" + endsWith);
+		}
+		return result.toString();
+	}
+}
