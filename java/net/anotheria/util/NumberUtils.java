@@ -279,6 +279,22 @@ public final class NumberUtils {
 		return getDotedNumber(number, '.');
 	}
 	
+	public static String format(double value, int integral, int fraction, String delimiter){
+		//TODO: implementation is dirty but really fast hack :)
+		int integralPart = (int)value;
+		String fractionPart = (int)((value - integralPart) * 1000000) + "00000000";
+		
+		
+		System.out.println("value=" + value + ", integral=" + integral + ", fraction=" + fraction + ", integralPart=" + integralPart + ", fractionPart=" + fractionPart);
+		
+		String formattedValue = integral != -1? NumberUtils.itoa(integralPart, integral): integralPart + "";
+		if(fraction > 0)
+			formattedValue += delimiter + (fractionPart + "").substring(0, fraction);
+		
+		return formattedValue;
+
+	}
+	
 	/**
 	 * Ensure class can't be instantiated.
 	 */
