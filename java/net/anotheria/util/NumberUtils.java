@@ -284,15 +284,13 @@ public final class NumberUtils {
 		int integralPart = (int)value;
 		String fractionPart = (int)((value - integralPart) * 1000000) + "00000000";
 		
-		
-		System.out.println("value=" + value + ", integral=" + integral + ", fraction=" + fraction + ", integralPart=" + integralPart + ", fractionPart=" + fractionPart);
+//		System.out.println("value=" + value + ", integral=" + integral + ", fraction=" + fraction + ", integralPart=" + integralPart + ", fractionPart=" + fractionPart);
 		
 		String formattedValue = integral != -1? NumberUtils.itoa(integralPart, integral): integralPart + "";
 		if(fraction > 0)
 			formattedValue += delimiter + (fractionPart + "").substring(0, fraction);
 		
 		return formattedValue;
-
 	}
 	
 	/**
