@@ -3,8 +3,6 @@ package net.anotheria.util.csv;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import net.anotheria.util.StringUtils;
 import net.anotheria.util.datatable.DataCell;
 import net.anotheria.util.datatable.DataHeader;

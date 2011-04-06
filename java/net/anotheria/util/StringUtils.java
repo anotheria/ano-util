@@ -173,6 +173,11 @@ public final class StringUtils{
 		}
 		return ret.toString();
 	}
+	
+	public static final String removeLines(String src){
+		return replace(removeChar(src, '\r'), '\n', ' ');
+		
+	}
 
 	/**
 	 *Returns first line of multilined String.
