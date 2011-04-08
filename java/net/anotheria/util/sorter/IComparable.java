@@ -5,8 +5,8 @@ package net.anotheria.util.sorter;
  * by the standart sorter.
  * @see com.eqs.fi.shared.common.util.Sorter.html
  */
-public interface IComparable {
-   public int compareTo(IComparable anotherObject, int method);
+public interface IComparable <T>{
+   public int compareTo(IComparable<? extends T> anotherObject, int method);
 }
 
  
