@@ -8,6 +8,10 @@ import java.util.GregorianCalendar;
  */
 public final class DateUtility {
 
+	public static boolean isAfterNow(Date d){
+		return isAfter(d, new Date(System.currentTimeMillis()));
+	}
+	
 	/**
 	 * Returns true if the first date is after second date.
 	 * @param d1
@@ -39,6 +43,10 @@ public final class DateUtility {
         }
         return  false;
     }
+    
+    public static boolean isBeforeNow(Date d){
+		return isBefore(d, new Date(System.currentTimeMillis()));
+	}
 
     /**
      * put your documentation comment here
@@ -49,6 +57,10 @@ public final class DateUtility {
     public static boolean isBefore(Date d1, Date d2) {
         return  isAfter(d2, d1);
     }
+    
+    public static boolean isToday(Date d){
+		return isSame(d, new Date(System.currentTimeMillis()));
+	}
 
     /**
      * put your documentation comment here
