@@ -247,10 +247,14 @@ public class Date implements Serializable{
      */
     public static Date parseShort(String aDateStrg, char aCh){
         int pFirst = aDateStrg.indexOf(aCh,0);
+        if(pFirst < 0)
+        	throw new IllegalArgumentException("Date string wrong format: " + aDateStrg + ". Expected: dd" + aCh + "mm" + aCh + "yyyy");
         //first_--;
         String dayStrg   = aDateStrg.substring(0,pFirst);
         pFirst++;
         int pSecond = aDateStrg.indexOf(aCh,pFirst);
+        if(pSecond < 0)
+        	throw new IllegalArgumentException("Date string wrong format: " + aDateStrg + ". Expected: dd" + aCh + "mm" + aCh + "yyyy");
         //second_--;
         String monthStrg = aDateStrg.substring(pFirst,pSecond);
         pSecond++;
@@ -261,7 +265,9 @@ public class Date implements Serializable{
             int year  = Integer.parseInt(yearStrg);
             Date ret = new Date(day,month,year);
             return ret;
-        } catch(NumberFormatException nfe){return null;}
+        } catch(NumberFormatException nfe){
+        	throw new IllegalArgumentException("Date string wrong format: " + aDateStrg + ". Expected: dd" + aCh + "mm" + aCh + "yyyy");
+        }
     }
 
     public long toMill(){
