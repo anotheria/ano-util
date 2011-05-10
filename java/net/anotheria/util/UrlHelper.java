@@ -113,6 +113,15 @@ public class UrlHelper {
 		}
 	}
 	
+	public String getParameter(String paramName) {
+		for (Parameter param : params) {
+			if(param.getName().equals(paramName)) {
+				return param.getValue();
+			}
+		}
+		return null;
+	}
+	
 	public void removeParameter(String paramName) {
 		addParameter(paramName, null);
 	}
