@@ -44,4 +44,37 @@ public class NumberUtilsTest {
 		assertEquals("12:12 am", NumberUtils.makeTimeString12H(reference));
 		assertEquals("11:12 pm", NumberUtils.makeTimeString12H(reference2));
 	}
+	
+	@Test public void testFractionRound(){
+		double value = 3.1945;
+		assertEquals(3.1945d, NumberUtils.fractionRound(value, 4));
+		assertEquals(3.195d, NumberUtils.fractionRound(value, 3));
+		assertEquals(3.19d, NumberUtils.fractionRound(value, 2));
+		assertEquals(3.2d, NumberUtils.fractionRound(value, 1));
+		assertEquals(3d, NumberUtils.fractionRound(value, 0));
+	}
+	
+	@Test public void testFormat(){
+		assertEquals("2.00", NumberUtils.format(2, -1, 2, '.'));
+		assertEquals("2.10", NumberUtils.format(2.1, -1, 2, '.'));
+		assertEquals("2.13", NumberUtils.format(2.13, -1, 2, '.'));
+		assertEquals("2.14", NumberUtils.format(2.135, -1, 2, '.'));
+		
+		assertEquals("02", NumberUtils.format(2, 2, -1, ','));
+		assertEquals("02,10", NumberUtils.format(2.1, 2, 2, ','));
+		assertEquals("02,2", NumberUtils.format(2.15, 2, 1, ','));
+	}
+	
+	@Test public void testCurrencyFormat(){
+		assertEquals("2,00", NumberUtils.currencyFormat(2, ','));
+		assertEquals("2,10", NumberUtils.currencyFormat(2.1, ','));
+		assertEquals("2,10", NumberUtils.currencyFormat(2.10, ','));
+		assertEquals("2,11", NumberUtils.currencyFormat(2.11, ','));
+		assertEquals("2,11", NumberUtils.currencyFormat(2.111, ','));
+		assertEquals("2,12", NumberUtils.currencyFormat(2.115, ','));
+		assertEquals("0,00", NumberUtils.currencyFormat(0, ','));
+		assertEquals("0,00", NumberUtils.currencyFormat(0.0, ','));
+		assertEquals("0,10", NumberUtils.currencyFormat(0.1, ','));
+		assertEquals("0,01", NumberUtils.currencyFormat(0.01, ','));
+	}
 }

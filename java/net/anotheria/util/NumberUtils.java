@@ -1,5 +1,7 @@
 package net.anotheria.util;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 /**
@@ -279,18 +281,34 @@ public final class NumberUtils {
 		return getDotedNumber(number, '.');
 	}
 	
-	public static String format(double value, int integral, int fraction, String delimiter){
-		//TODO: implementation is dirty but really fast hack :)
-		int integralPart = (int)value;
-		String fractionPart = (int)((value - integralPart) * 1000000) + "00000000";
+	public static double fractionRound(double value, int fraction){
+		int shift = (int)Math.pow(10, fraction);
+		return 1d * Math.round(value * shift)/shift;
+	}
+	
+	public static String format(double value, int integral, int fraction, char delimiter){
+		String integralPattern = "#0";
+		if(integral > 0){
+			integralPattern = "0";
+			for(int i = 1; i < integral; i++)
+				integralPattern += '0';
+		}		
 		
-//		System.out.println("value=" + value + ", integral=" + integral + ", fraction=" + fraction + ", integralPart=" + integralPart + ", fractionPart=" + fractionPart);
+		String fractionPattern = "########################";
+		if(fraction > 0){
+			fractionPattern = "0";
+			for(int i = 1; i < fraction; i++)
+				fractionPattern += '0';
+		}
 		
-		String formattedValue = integral != -1? NumberUtils.itoa(integralPart, integral): integralPart + "";
-		if(fraction > 0)
-			formattedValue += delimiter + (fractionPart + "").substring(0, fraction);
+		DecimalFormatSymbols delimiterFormat = new DecimalFormatSymbols();
+		delimiterFormat.setDecimalSeparator(delimiter);
 		
-		return formattedValue;
+		return new DecimalFormat(integralPattern + "." + fractionPattern, delimiterFormat).format(value);
+	}
+	
+	public static String currencyFormat(double value, char delimiter){
+		return format(value, -1, 2, delimiter);
 	}
 	
 	/**
