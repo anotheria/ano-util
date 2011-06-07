@@ -173,8 +173,8 @@ public class ExecutionTimer {
 		while(changed){
 		    changed = false;
 			for (int i=0; i<aSrc.size()-1; i++){
-			    TimerEntry first = (TimerEntry)aSrc.get(i);
-				TimerEntry second = (TimerEntry)aSrc.get(i+1);
+			    TimerEntry first = aSrc.get(i);
+				TimerEntry second = aSrc.get(i+1);
 				int result = compare(first, second, aMethod);
 				if (result>0){
 				    changed = true; 
@@ -215,7 +215,7 @@ public class ExecutionTimer {
 	 * @return
 	 */
 	private TimerEntry getTimerEntry(String aKey){
-	    TimerEntry entry = (TimerEntry) timers.get(aKey);
+	    TimerEntry entry = timers.get(aKey);
 		if (entry==null)
 			throw new RuntimeException("No such key:\""+aKey+"\"");
 		return entry;
