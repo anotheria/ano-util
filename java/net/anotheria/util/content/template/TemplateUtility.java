@@ -153,9 +153,8 @@ public final class TemplateUtility {
 		if (c == '\t' || c == ' ' || c == LINE_DELIMITER || c == '\r')
 			return new StaticElement(elementText);
 
-		if (varName != null) {
-			if (varName.startsWith(QUOTE) && varName.endsWith(QUOTE))
-				return new StaticElement(StringUtils.strip(varName, 1, 1));
+		if (varName != null && varName.startsWith(QUOTE) && varName.endsWith(QUOTE)){
+			return new StaticElement(StringUtils.strip(varName, 1, 1));
 		}
 
 		List<String> tokens = StringUtils.tokenize(varName, TAG_START, TAG_END, ':');

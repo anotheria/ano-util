@@ -524,11 +524,10 @@ public final class StringUtils{
  		for (int i=0; i<src.length(); i++){
  			char c = src.charAt(i);
  			if (inComments){
- 				if (c=='*')
- 					if (src.charAt(i+1)=='/'){
- 						inComments = false;
- 						i++;
- 					}
+ 				if (c=='*' && src.charAt(i+1)=='/'){
+ 					inComments = false;
+ 					i++;
+ 				}
  			}else{
  				if (c=='/'){
  					if (src.charAt(i+1)=='*'){
