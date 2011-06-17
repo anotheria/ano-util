@@ -331,6 +331,8 @@ public class UrlHelper {
 					name.equals(((Parameter)o).getName());
 		}
 		
-		
+		@Override public int hashCode(){
+			return name.hashCode();
+		}
 	}
 }
