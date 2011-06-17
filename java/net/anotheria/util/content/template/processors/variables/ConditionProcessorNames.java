@@ -152,6 +152,9 @@ public enum ConditionProcessorNames {
 	 * @return boolean value
 	 */
 	private static boolean checkRelations(String var, String var2, Relations option) {
+		if (option==null){
+			throw new IllegalArgumentException("option can't be null");
+		}
 		if ((var == null || var2 == null) && (!var.isEmpty() || !var2.isEmpty()))
 			return false;
 		try {
