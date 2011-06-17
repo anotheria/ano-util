@@ -148,7 +148,7 @@ public class UrlHelper {
 		while(allParameters.hasNext()) {
 			Map.Entry<String, String> param = allParameters.next();
 			Object value = param.getValue();
-			String key = (String) param.getKey();
+			String key = param.getKey();
 			if(value instanceof String[])
 				addParameter(key, ((String[])value)[0]);
 			else
@@ -210,7 +210,7 @@ public class UrlHelper {
 			result.append(param.getName());
 			result.append("=");
 			try {
-				result.append(URLEncoder.encode((String) param.getValue(), "ISO-8859-1"));
+				result.append(URLEncoder.encode(param.getValue(), "ISO-8859-1"));
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException(e);
 			}
@@ -283,7 +283,7 @@ public class UrlHelper {
 	}
 	
 	public String getQuery() {
-		StringBuffer result = new StringBuffer(); 
+		StringBuilder result = new StringBuilder(); 
 		Iterator<Parameter> allParams = params.iterator();
 	
 		while(allParams.hasNext()) {
@@ -291,7 +291,7 @@ public class UrlHelper {
 			result.append(param.getName());
 			result.append("=");
 			try {
-				result.append(URLEncoder.encode((String) param.getValue(), "ISO-8859-1"));
+				result.append(URLEncoder.encode( param.getValue(), "ISO-8859-1"));
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException(e);
 			}
@@ -304,7 +304,13 @@ public class UrlHelper {
 	}
 	
 	public class Parameter {
+		/**
+		 * Parameter name.
+		 */
 		private String name;
+		/**
+		 * Parameter value.
+		 */
 		private String value;
 		
 		public String getName() {
@@ -320,9 +326,9 @@ public class UrlHelper {
 			this.value = value;
 		}
 		
-		public boolean equals(Object o) {
-			Parameter anotherParameter = (Parameter) o;
-			return name.equals(anotherParameter.getName());
+		@Override public boolean equals(Object o) {
+			return o instanceof Parameter && 
+					name.equals(((Parameter)o).getName());
 		}
 		
 		
