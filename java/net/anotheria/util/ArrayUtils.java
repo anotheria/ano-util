@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * An utility for handling of arrays.
+ * An util for handling of arrays.
+ * 
  * @author denis
  *
  */
