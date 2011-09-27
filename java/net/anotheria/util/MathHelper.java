@@ -2,7 +2,7 @@ package net.anotheria.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import  java.util.Vector;
+import java.util.Vector;
 
 /**
  * A helper class for double objects formatting.
