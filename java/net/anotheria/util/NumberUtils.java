@@ -161,6 +161,22 @@ public final class NumberUtils {
 		Date d = new Date(millis);
 		return itoa(d.year,4)+"-"+itoa(d.month)+"-"+itoa(d.day);
 	}
+
+	/**
+	 * Returns the ISO8601 date of now.
+	 * @return
+	 */
+	public static String makeISO8601DateString(){
+		return makeISO8601DateString(System.currentTimeMillis());
+	}
+	
+	/**
+	 * Returns the ISO8601 timestamp of now.
+	 * @return
+	 */
+	public static String makeISO8601TimestampString(){
+		return makeISO8601TimestampString(System.currentTimeMillis());
+	}
 	
 	/**
 	 * Creates an ISO8601 confirm timestamp string in form of YYYY-MM-DDTHH:MM:SS,zzz.
