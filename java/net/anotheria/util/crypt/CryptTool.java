@@ -1,5 +1,6 @@
 package net.anotheria.util.crypt;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,8 +35,13 @@ public class CryptTool {
 	 * @return
 	 */
 	public byte[] encrypt(String toEncrypt) {
-		toEncrypt = padMod(toEncrypt, 8);		
-		byte[] toEncryptB = toEncrypt.getBytes();	
+		toEncrypt = padMod(toEncrypt, 8);	
+		byte[] toEncryptB;
+		try{
+			toEncryptB = toEncrypt.getBytes("UTF-8");
+		}catch(UnsupportedEncodingException e){
+			toEncryptB = toEncrypt.getBytes();
+		}
 		cipher.encrypt(toEncryptB);
 		return toEncryptB;
 	}
@@ -70,10 +76,12 @@ public class CryptTool {
 		if (adder == length)
 			return source;
 
+		StringBuilder ret = new StringBuilder(source);
+		
 		for (int i = 0; i < adder; i++) {
-			source += " ";
+			ret.append(' ');
 		}
-		return source;
+		return ret.toString();
 	}
 	
 	/**
@@ -83,17 +91,15 @@ public class CryptTool {
 	 */
 	public String encryptParameterMap(Map<String,String> parameters){
 		Iterator<String> keys = parameters.keySet().iterator();
-		String toEncode = ""; 
+		StringBuilder toEncode = new StringBuilder(); 
 		while (keys.hasNext()){
 			if (toEncode.length()>0)
-				toEncode += "&";
+				toEncode.append('&');
 			String key = keys.next();
 			String value = parameters.get(key);
-			toEncode += key+"="+value;
+			toEncode.append(key).append('=').append(value);
 		}
-		toEncode = toEncode.trim();
-		
-		return encryptToHex(toEncode);
+		return encryptToHex(toEncode.toString().trim());
 	}
 	
 	/**
