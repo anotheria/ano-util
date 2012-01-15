@@ -8,12 +8,6 @@ import java.util.GregorianCalendar;
  **/
 public class Date implements Serializable{
     private static final long serialVersionUID = -8683008562899070994L;
-    public static final int DD___MM___YYYY_HHMM = 1;
-    public static final int DD___MM___YYYY      = 2;
-    public static final int DD__MM__YYYY_HHMM   = 3;
-    public static final int DD__MM__YYYY        = 4;
-    public static final int DD_MM_YYYY_HHMM     = 5;
-    public static final int DD_MM_YYYY          = 6;
 
 
     /** The day of week. Initial value <code>null</code> */
@@ -192,21 +186,6 @@ public class Date implements Serializable{
 
     }
 
-    /**
-     * Parse date out from string with specified format
-     * @param aDateStrg Source string to parse it
-     */
-    public static Date parse(String aDateStrg, int aFormat){
-        switch(aFormat){
-            case DD___MM___YYYY_HHMM : return parseLong(aDateStrg,'.');
-            case DD___MM___YYYY      : return parseShort(aDateStrg,'.');
-            case DD__MM__YYYY_HHMM : return parseLong(aDateStrg,'-');
-            case DD__MM__YYYY      : return parseShort(aDateStrg,'-');
-            case DD_MM_YYYY_HHMM   : return parseLong(aDateStrg,' ');
-            case DD_MM_YYYY        : return parseShort(aDateStrg,' ');
-            default: return null; 
-        }        
-    }
 
     /**
      * Parse date with hors and minutes out from string
