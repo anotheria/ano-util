@@ -3,6 +3,7 @@ package net.anotheria.util;
 /**
  * This class helps to handle URLs and its parameters.
  * Easily parse an existing URL and remove/add parameters.
+ * @author otoense
  */
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -13,11 +14,25 @@ import java.util.List;
 import java.util.Map;
 
 public class UrlHelper {
-
+	/**
+	 * Url protocol.
+	 */
 	private String protocol;
+	/**
+	 * Target host.
+	 */
 	private String host;
+	/**
+	 * Target port.
+	 */
 	private int port = -1;
+	/**
+	 * Context path.
+	 */
 	private String path;
+	/**
+	 * Url parameters.
+	 */
 	private List<Parameter> params;
 	private String reference;
 	
