@@ -54,7 +54,7 @@ public final class LogMessageUtil {
 	/**
 	 * Maximum length of argument object string representation.
 	 */
-	public static final int MAX_ARGUMENT_LENGTH = 100;
+	public static final int MAX_ARGUMENT_LENGTH = 255;
 
 	/**
 	 * Default constructor for preventing illegal instantiations of this class.
