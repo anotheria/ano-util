@@ -195,7 +195,7 @@ public final class LogMessageUtil {
 				continue;
 			}
 
-			result.append(key + DELIMITER_MAP_ELEMENT + result.append(objToString(item, false)));
+			result.append(key + DELIMITER_MAP_ELEMENT + objToString(item, false));
 		}
 
 		if (!isTop)
