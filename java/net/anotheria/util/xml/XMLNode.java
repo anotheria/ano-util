@@ -192,7 +192,6 @@ public class XMLNode {
 	 */
 	public void write(OutputStreamWriter aWriter, int aTabs) throws IOException{
 		try{
-			System.out.println("writing "+getName()+" attr: "+attributes);
 			String attributeString = createAttributeString();
 			String ident = XMLHelper.makeIdent(aTabs);
 			aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
@@ -218,7 +217,6 @@ public class XMLNode {
 	 */
 	public void write(Writer aWriter, int aTabs) throws IOException{
 		try{
-			System.out.println("writing "+getName()+" attr: "+attributes);
 			String attributeString = createAttributeString();
 			String ident = XMLHelper.makeIdent(aTabs);
 			aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
