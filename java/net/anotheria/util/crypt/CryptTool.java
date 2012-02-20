@@ -35,7 +35,7 @@ public class CryptTool {
 	 * @return
 	 */
 	public byte[] encrypt(String toEncrypt) {
-		toEncrypt = padMod(toEncrypt, 8);	
+		toEncrypt = padMod(toEncrypt, 8);
 		byte[] toEncryptB;
 		try{
 			toEncryptB = toEncrypt.getBytes("UTF-8");
@@ -77,13 +77,13 @@ public class CryptTool {
 			return source;
 
 		StringBuilder ret = new StringBuilder(source);
-		
+
 		for (int i = 0; i < adder; i++) {
 			ret.append(' ');
 		}
 		return ret.toString();
 	}
-	
+
 	/**
 	 * Encrypts a map of key value pairs to a single string to use as html parameter or similar.
 	 * @param parameters a map with parameters.
@@ -91,7 +91,7 @@ public class CryptTool {
 	 */
 	public String encryptParameterMap(Map<String,String> parameters){
 		Iterator<String> keys = parameters.keySet().iterator();
-		StringBuilder toEncode = new StringBuilder(); 
+		StringBuilder toEncode = new StringBuilder();
 		while (keys.hasNext()){
 			if (toEncode.length()>0)
 				toEncode.append('&');
@@ -101,7 +101,7 @@ public class CryptTool {
 		}
 		return encryptToHex(toEncode.toString().trim());
 	}
-	
+
 	/**
 	 * Decrypts a previously encoded parameter map and returns it as map of key-value pairs.
 	 * @param str the string to decode.
@@ -123,9 +123,9 @@ public class CryptTool {
 		return map;
 	}
 
-	
+
 	private static final int NUMERATION_BASE_NUMBER = 13212358;
-	
+
 	/**
 	 * Converts Numerical ID to Chiffre: string from letters and digits 8 symbols length.
 	 * @param id to convert
@@ -136,37 +136,37 @@ public class CryptTool {
 		if(normalizedId > 99999999)
 			throw new AssertionError("Id["+id+"] is to big for the current implementation");
 
-		int lastDigit = normalizedId%10; 
-		
+		int lastDigit = normalizedId%10;
+
 		StringBuilder ret = new StringBuilder();
 		String retIncrement = NumberUtils.itoa(normalizedId%100);
-		
+
 		while(normalizedId > 0){
 			int n = normalizedId & 31 ^ lastDigit;
 			normalizedId = normalizedId >> 5;
 			n = n <= 25? n + 65: n + 24;
 			ret.append((char)n);
 		}
-		
+
 		ret.append(retIncrement);
 		return ret.toString();
 	}
-	
+
 	/**
 	 * Restore Numerical ID from Chiffre.
 	 * @param chiffre
 	 * @return
 	 */
 	public static String chiffreToId(String chiffre) {
-		
+
 		StringBuilder toDenum = new StringBuilder(chiffre);
 		int lastDigit = Character.getNumericValue(toDenum.charAt(toDenum.length() - 1));
-		
+
 		toDenum.delete(toDenum.length() - 2, toDenum.length());
-		
+
 		int ret = 0;
 		int position = 0;
-		
+
 		for(char c: toDenum.toString().toCharArray()){
 			int n = (c >= 65? c-65: c-24) ^ lastDigit;
 			n = n << 5*(position++);
@@ -174,5 +174,62 @@ public class CryptTool {
 		}
 		ret -= NUMERATION_BASE_NUMBER;
 		return ret + "";
+	}
+
+	/**
+	 * Encrypts long integer number.
+	 *
+	 * @param n long integer number to encrypt.
+	 * @return encrypted long integer number.
+	 */
+	public long encryptLong(long n) {
+		final byte[] buffer = toBytes(n);
+		cipher.encrypt(buffer);
+		return toLong(buffer);
+	}
+
+	/**
+	 * Decrypts long integer number.
+	 *
+	 * @param n long integer number to decrypt.
+	 * @return decrypted long integer number.
+	 */
+	public long decryptLong(long n) {
+		final byte[] buffer = toBytes(n);
+		cipher.decrypt(buffer);
+		return toLong(buffer);
+	}
+
+	/**
+	 * Converts long integer number to array of eight bytes.
+	 *
+	 * @param n long integer number.
+	 * @return array of bytes.
+	 */
+	private static byte[] toBytes(long n) {
+		long value = n;
+		final byte[] bytes = new byte[Long.SIZE / Byte.SIZE];
+		for (int i = bytes.length - 1; i >= 0; --i) {
+			bytes[i] = (byte) (value & 0xffl);
+			value >>>= Byte.SIZE;
+		}
+		return bytes;
+	}
+
+	/**
+	 * Converts array of eight bytes to long integer number.
+	 *
+	 * @param bytes array of bytes.
+	 * @return long integer number.
+	 */
+	private static final long toLong(byte[] bytes) {
+		assert bytes.length == Long.SIZE / Byte.SIZE;
+
+		long value = bytes[0];
+		for (int i = 1; i < bytes.length; ++i) {
+			value <<= Byte.SIZE;
+			value += (bytes[i] & 0xffl);
+		}
+		return value;
 	}
 }
