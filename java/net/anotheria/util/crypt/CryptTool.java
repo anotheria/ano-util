@@ -177,59 +177,24 @@ public class CryptTool {
 	}
 
 	/**
-	 * Encrypts long integer number.
-	 *
-	 * @param n long integer number to encrypt.
-	 * @return encrypted long integer number.
+	 * Encrypts specified byte array. Size must be aligned to 8-bytes boundary.
+	 * @param buffer byte array to encrypt.
 	 */
-	public long encryptLong(long n) {
-		final byte[] buffer = toBytes(n);
+	public void encryptBuffer(byte[] buffer) {
+		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
+			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
+		}
 		cipher.encrypt(buffer);
-		return toLong(buffer);
 	}
 
 	/**
-	 * Decrypts long integer number.
-	 *
-	 * @param n long integer number to decrypt.
-	 * @return decrypted long integer number.
+	 * Decrypts specified byte array. Size must be aligned to 8-bytes boundary.
+	 * @param buffer byte array to decrypt.
 	 */
-	public long decryptLong(long n) {
-		final byte[] buffer = toBytes(n);
+	public void decryptBuffer(byte[] buffer) {
+		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
+			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
+		}
 		cipher.decrypt(buffer);
-		return toLong(buffer);
-	}
-
-	/**
-	 * Converts long integer number to array of eight bytes.
-	 *
-	 * @param n long integer number.
-	 * @return array of bytes.
-	 */
-	private static byte[] toBytes(long n) {
-		long value = n;
-		final byte[] bytes = new byte[Long.SIZE / Byte.SIZE];
-		for (int i = bytes.length - 1; i >= 0; --i) {
-			bytes[i] = (byte) (value & 0xffl);
-			value >>>= Byte.SIZE;
-		}
-		return bytes;
-	}
-
-	/**
-	 * Converts array of eight bytes to long integer number.
-	 *
-	 * @param bytes array of bytes.
-	 * @return long integer number.
-	 */
-	private static final long toLong(byte[] bytes) {
-		assert bytes.length == Long.SIZE / Byte.SIZE;
-
-		long value = bytes[0];
-		for (int i = 1; i < bytes.length; ++i) {
-			value <<= Byte.SIZE;
-			value += (bytes[i] & 0xffl);
-		}
-		return value;
 	}
 }

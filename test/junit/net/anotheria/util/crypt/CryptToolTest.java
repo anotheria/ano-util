@@ -102,9 +102,4 @@ public class CryptToolTest {
 			fail("Illegal chars are not tested");
 		}catch(IllegalArgumentException e){}
 	}
-
-	@Test
-	public void testLongEncryption() {
-		assertEquals(42L, crypt.decryptLong(crypt.encryptLong(42)));
-	}
 }
