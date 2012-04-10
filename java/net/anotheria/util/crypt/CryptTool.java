@@ -25,8 +25,15 @@ public class CryptTool {
 	 * @param key the key to use for en- and decode.
 	 */
 	public CryptTool(String key) {
-		byte[] raw = key.getBytes();
-		cipher = new BlowfishECB(raw);
+		this(key.getBytes());
+	}
+
+	/**
+	 * Create a new crypttool with the binary given key.
+	 * @param key the key to use for en- and decode.
+	 */
+	public CryptTool(byte[] key) {
+		cipher = new BlowfishECB(key);
 	}
 
 	/**
