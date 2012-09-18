@@ -37,12 +37,12 @@ public class IdBasedLockManagerTest {
 		protected CountDownLatch ready;
 		protected CountDownLatch start;
 		protected CountDownLatch finish;
-		protected IdBasedLockManager lockManager;
+		protected IdBasedLockManager<String> lockManager;
 
 		public Worker(CountDownLatch ready, CountDownLatch start, CountDownLatch finish){
-			this(new SafeIdBasedLockManager(), ready, start, finish);
+			this(new SafeIdBasedLockManager<String>(), ready, start, finish);
 		}
-		public Worker(IdBasedLockManager aLockManager, CountDownLatch ready, CountDownLatch start, CountDownLatch finish){
+		public Worker(IdBasedLockManager <String>aLockManager, CountDownLatch ready, CountDownLatch start, CountDownLatch finish){
 			this.ready = ready;
 			this.start = start;
 			this.finish = finish;
@@ -93,7 +93,7 @@ public class IdBasedLockManagerTest {
 				int counterId = rnd.nextInt(COUNTERS);
 				int valueToAdd = 1;//rnd.nextInt(100);
 				IdBasedLock lock = lockManager.obtainLock(""+counterId);
-				SafeIdBasedLockManager.out("worker id "+counterId+" lockcount: "+lock.getReferenceCount());
+				//SafeIdBasedLockManager.out("worker id "+counterId+" lockcount: "+lock.getReferenceCount());
 				lock.lock();
 				counters.get(""+counterId).increaseBy(valueToAdd);
 				lock.unlock();

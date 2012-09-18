@@ -2,7 +2,7 @@ package net.anotheria.util.concurrency;
 
 import java.util.Map;
 
-abstract class AbstractIdBasedLockManager {
+abstract class AbstractIdBasedLockManager<T> {
 	int getLockSize(){
 		return getLockMap().size();
 	}
@@ -15,6 +15,6 @@ abstract class AbstractIdBasedLockManager {
 		//System.out.println(Thread.currentThread().getName()+" "+message);
 	}
 	
-	protected abstract Map<String, IdBasedLock> getLockMap();
+	protected abstract Map<T, IdBasedLock<T>> getLockMap();
 
 }
