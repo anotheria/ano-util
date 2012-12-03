@@ -71,7 +71,7 @@ public final class DateUtility {
 		if (date == null)
 			throw new IllegalArgumentException("Invalid incoming parameter date");
 		final Date currentDate = new Date(System.currentTimeMillis());
-		return !DateUtility.isAfter(date, currentDate) && !DateUtility.isBefore(currentDate, date);
+		return date.getYear() == currentDate.getYear() && date.getMonth() == currentDate.getMonth() && date.getDay() == currentDate.getDay();
 	}
 
 	/**
