@@ -56,4 +56,8 @@ public class PasswordGenerator {
 		return ret;
 		
 	}
+
+	public static void main(String[] a){
+		System.out.println(generate(10));
+	}
 }
