@@ -1,5 +1,9 @@
 package net.anotheria.util.maven;
 
+import net.anotheria.util.IOUtils;
+import net.anotheria.util.NumberUtils;
+import net.anotheria.util.StringUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,10 +12,6 @@ import java.util.HashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
-
-import net.anotheria.util.IOUtils;
-import net.anotheria.util.NumberUtils;
-import net.anotheria.util.StringUtils;
 
 public class MavenVersionReader {
 	
@@ -30,10 +30,13 @@ public class MavenVersionReader {
 					while(fromStream==null || (!fromStream.getName().equals(myName))){
 						fromStream = input.getNextJarEntry();
 					}
-					byte b[]  = new byte[(int)fromStream.getSize()];
-					input.read(b);
-					String content = new String(b);
-					return readVersionFromString(content, f.lastModified());
+					int size = (int)fromStream.getSize();
+					if (size>0) {
+					    byte b[]  = new byte[size];
+					    input.read(b);
+					    String content = new String(b);
+					    return readVersionFromString(content, f.lastModified());
+				    }
 				}
 				
 			}
