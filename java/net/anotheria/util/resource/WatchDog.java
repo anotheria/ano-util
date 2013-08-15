@@ -1,13 +1,13 @@
 package net.anotheria.util.resource;
 
+import net.anotheria.util.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import net.anotheria.util.NumberUtils;
-
-import org.apache.log4j.Logger;
 
 /**
  * WatchDog is the singleton object that register Resources and updates it on
@@ -24,7 +24,7 @@ public enum WatchDog {
 	/**
 	 * Logger.
 	 */
-	private static Logger log = Logger.getLogger(WatchDog.class);
+	private static Logger log = LoggerFactory.getLogger(WatchDog.class);
 
 	private Map<String, Resource> watchingRegistry;
 	private volatile long pause;

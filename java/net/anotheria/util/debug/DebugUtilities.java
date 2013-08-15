@@ -1,5 +1,7 @@
 package net.anotheria.util.debug;
 
+import net.anotheria.util.NumberUtils;
+
 import java.util.List;
 
 /**
@@ -52,6 +54,10 @@ public class DebugUtilities {
 		for (int i=0; i<l.size(); i++){
 			System.out.println(""+(i+1)+"\t"+Long.toBinaryString(Long.parseLong(l.get(i).toString())));
 		}
+	}
+
+	public static void main(String a[]){
+		System.out.println("1372299300 "+ NumberUtils.makeISO8601TimestampString(1372299300));
 	}
 }
   

@@ -3,7 +3,7 @@
   <parent>
 	<groupId>net.anotheria</groupId>
 	<artifactId>parent</artifactId>
-	<version>2.0</version>
+	<version>2.2</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -13,6 +13,10 @@
   <name>ano-utils</name>
 
   <dependencies>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+    </dependency>
 	<dependency>
 		<groupId>blowfish</groupId>
 		<artifactId>blowfish</artifactId>
@@ -28,7 +32,6 @@
   			</exclusion>
   		</exclusions>
 	</dependency>
-	
 	<dependency>
 		<groupId>commons-lang</groupId>
 		<artifactId>commons-lang</artifactId>

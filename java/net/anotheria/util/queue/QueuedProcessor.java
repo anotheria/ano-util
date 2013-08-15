@@ -1,6 +1,7 @@
 package net.anotheria.util.queue;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -72,7 +73,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	private AtomicBoolean stopImmediately;
 	
 	static {
-		defaultLog = Logger.getLogger(QueuedProcessor.class);
+		defaultLog = LoggerFactory.getLogger(QueuedProcessor.class);
 	}
 
 	/**
@@ -152,8 +153,6 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	 * Creates a new QueuedProcessor. Uses DEF_SLEEP_TIME, DEF_QUEUE_SIZE and default logger.
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
-	 * @param aQueueSize size of the queue.
-	 * @param aLog logger for output. 
 	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory) {
 		this(aName, aWorker, aQueueFactory, defaultLog);

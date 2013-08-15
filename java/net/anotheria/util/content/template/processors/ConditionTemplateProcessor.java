@@ -3,7 +3,8 @@ package net.anotheria.util.content.template.processors;
 import net.anotheria.util.content.template.TemplateProcessor;
 import net.anotheria.util.content.template.TemplateReplacementContext;
 import net.anotheria.util.content.template.processors.variables.ConditionProcessorNames;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ConditionTemplateProcessor as  TemplateProcessor.
@@ -14,7 +15,7 @@ public class ConditionTemplateProcessor implements TemplateProcessor {
 	/**
 	 * Logger.
 	 */
-	private final Logger log = Logger.getLogger(ConditionTemplateProcessor.class);
+	private final Logger log = LoggerFactory.getLogger(ConditionTemplateProcessor.class);
 
 	@Override
 	public String replace(String aPrefix, String aVariable, String aDefValue, TemplateReplacementContext aContext) {

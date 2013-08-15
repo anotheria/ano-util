@@ -1,13 +1,13 @@
 package net.anotheria.util.queue;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.log4j.Logger;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class QueuedProcessorTest {
 	
@@ -25,7 +25,7 @@ public class QueuedProcessorTest {
 		
 		long start = System.nanoTime(), end1, end2;
 		final Worker worker = new Worker();
-		QueuedProcessor<Integer> processor = new QueuedProcessor<Integer>("test", worker, QUEUE_SIZE, Logger.getLogger(QueuedProcessorTest.class));
+		QueuedProcessor<Integer> processor = new QueuedProcessor<Integer>("test", worker, QUEUE_SIZE, LoggerFactory.getLogger(QueuedProcessorTest.class));
 		processor.start();
 		
 		for (int i=0; i<FILLER_COUNT; i++){

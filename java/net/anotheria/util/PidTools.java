@@ -1,11 +1,12 @@
 package net.anotheria.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-
-import org.apache.log4j.Logger;
 
 /**
  * Tools for obtaining and manipulation with Process Id (PID) of current JVM on
@@ -16,7 +17,7 @@ public final class PidTools {
 	/**
 	 * Logger
 	 */
-	static final Logger log = Logger.getLogger(PidTools.class);
+	static final Logger log = LoggerFactory.getLogger(PidTools.class);
 
 	/**
 	 * Private constructor to prevent instantiation

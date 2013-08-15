@@ -1,11 +1,11 @@
 package net.anotheria.util.resource;
 
+import net.anotheria.util.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.anotheria.util.NumberUtils;
-
-import org.apache.log4j.Logger;
 
 /**
  * Representation of physically existing underlying resource with text content. Underlying resource is
@@ -41,7 +41,7 @@ public class Resource {
 	/**
 	 * Logger.
 	 */
-	private static Logger log = Logger.getLogger(Resource.class);
+	private static Logger log = LoggerFactory.getLogger(Resource.class);
 
 	/**
 	 * Creates a new Resource for its underlying in class path

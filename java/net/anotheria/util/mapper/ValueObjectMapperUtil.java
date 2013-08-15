@@ -1,9 +1,10 @@
 package net.anotheria.util.mapper;
 
-import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.MappingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public final class ValueObjectMapperUtil {
 	/**
 	 * Mapper LOGGER.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(ValueObjectMapperUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ValueObjectMapperUtil.class);
 
 	/**
 	 * Default constructor.
@@ -96,7 +97,7 @@ public final class ValueObjectMapperUtil {
 		try {
 			mapper.map(source, destination);
 		} catch (MappingException e) {
-			LOGGER.debug(e);
+			LOGGER.debug("mapDozer", e);
 		}
 	}
 
@@ -116,9 +117,9 @@ public final class ValueObjectMapperUtil {
 			sourceField.setAccessible(true);
 			return sourceField.get(source);
 		} catch (IllegalAccessException e) {
-			LOGGER.error(e);
+			LOGGER.error("getFieldField", e);
 		} catch (NoSuchFieldException e) {
-			LOGGER.error(e);
+			LOGGER.error("getFieldField", e);
 		}
 		return null;
 	}
@@ -135,7 +136,7 @@ public final class ValueObjectMapperUtil {
 			field.setAccessible(true);
 			field.set(destination, value);
 		} catch (IllegalAccessException e) {
-			LOGGER.debug(e);
+			LOGGER.debug("setFieldValue", e);
 		}
 	}
 }

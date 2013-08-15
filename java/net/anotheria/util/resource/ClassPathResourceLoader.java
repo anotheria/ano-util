@@ -1,5 +1,10 @@
 package net.anotheria.util.resource;
 
+import net.anotheria.util.IOUtils;
+import net.anotheria.util.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,17 +12,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
 
-import net.anotheria.util.IOUtils;
-import net.anotheria.util.NumberUtils;
-
-import org.apache.log4j.Logger;
-
 public class ClassPathResourceLoader implements ResourceLoader{
 	
 	/**
 	 * Logger.
 	 */
-	private static Logger log = Logger.getLogger(ClassPathResourceLoader.class);
+	private static Logger log = LoggerFactory.getLogger(ClassPathResourceLoader.class);
 	
 	private ClassLoader getClassPathLoader(){
 		return getClass().getClassLoader();

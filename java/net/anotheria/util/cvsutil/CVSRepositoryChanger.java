@@ -1,21 +1,22 @@
 package net.anotheria.util.cvsutil;
 
+import net.anotheria.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
-
-import net.anotheria.util.StringUtils;
-
 /**
  * TODO please remined another to comment this class
  * @author another
  */
+@Deprecated
 public class CVSRepositoryChanger {
 	
-	private static final Logger STATIC_LOGGER = Logger.getLogger(CVSRepositoryChanger.class.getName());
+	private static final Logger STATIC_LOGGER = LoggerFactory.getLogger(CVSRepositoryChanger.class.getName());
 	
 	//public static final String TO_REPLACE = "213.61.151.32";
 	//public static final String REPLACE_WITH = "cvs.anotheria.net";
