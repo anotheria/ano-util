@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.anotheria</groupId>
   <artifactId>ano-util</artifactId>
-  <version>2.0.2-SNAPSHOT</version>
+  <version>2.1.0</version>
   <name>ano-utils</name>
 
   <dependencies>
@@ -44,9 +44,9 @@
   
 
 	<scm>
-		<url>svn:svn://svn.anotheria.net/opensource/ano-util/trunk</url>
-		<connection>scm:svn:svn://svn.anotheria.net/opensource/ano-util/trunk</connection>
-		<developerConnection>scm:svn:svn://svn.anotheria.net/opensource/ano-util/trunk</developerConnection>
+		<url>svn:svn://svn.anotheria.net/opensource/ano-util/tags/ano-util-2.1.0</url>
+		<connection>scm:svn:svn://svn.anotheria.net/opensource/ano-util/tags/ano-util-2.1.0</connection>
+		<developerConnection>scm:svn:svn://svn.anotheria.net/opensource/ano-util/tags/ano-util-2.1.0</developerConnection>
 	</scm>
 
 </project>
