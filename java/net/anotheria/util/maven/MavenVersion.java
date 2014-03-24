@@ -1,6 +1,8 @@
 package net.anotheria.util.maven;
 
-public class MavenVersion {
+import java.io.Serializable;
+
+public class MavenVersion implements Serializable{
 	private String fileTimestamp;
 	private String version;
 	private String group;
