@@ -1,18 +1,17 @@
 package net.anotheria.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class StringUtilsTest {
 	@Test public void normalize(){
@@ -287,5 +286,19 @@ public class StringUtilsTest {
 	
 	@Test(expected=IllegalArgumentException.class) public void tokenize2mapFail(){
 		StringUtils.tokenize2map("key1=value 1,key2=value 2, key3 value 3 ", ',', '=');
+	}
+
+	//this is array from moskito with error in https://jira.opensource.anotheria.net/browse/MSK-220
+	private static final char[] CHARS_TO_REMOVE_FROM_NAME = {
+			' ','\t','\r','\n'
+	};
+	@Test public void removeCharTest(){
+		String source = "";
+		String target = StringUtils.removeChars(source, CHARS_TO_REMOVE_FROM_NAME);
+		assertEquals(source, target);
+
+		source = "I Love \t My App \r\n Very Much";
+		target = StringUtils.removeChars(source, CHARS_TO_REMOVE_FROM_NAME);
+		assertEquals("ILoveMyAppVeryMuch", target);
 	}
 }
