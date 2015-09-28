@@ -1,0 +1,14 @@
+{
+    "@customConstantVariables": [
+        // registered trade mark sign
+        {
+            "key": "regSign",
+            "value": "&reg;"
+        },
+        // sharp S
+        {
+            "key": "sharpS",
+            "value": "&szlig;"
+        }
+    ]
+}

@@ -1,5 +1,7 @@
 package net.anotheria.util.content.template.processors.variables;
 
+import net.anotheria.util.content.template.configs.TemplateProcessorConfig;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,10 @@ public final class ConstantVariables {
 	 * Map with constants.
 	 */
 	private static Map<String, String> constants = new HashMap<String, String>();
+	/**
+	 * {@link TemplateProcessorConfig} instance.
+	 */
+	private static final TemplateProcessorConfig templateProcessorConfig = TemplateProcessorConfig.getInstance();
 
 	static {
 		constants.put("spacer", "&nbsp;");
@@ -36,6 +42,7 @@ public final class ConstantVariables {
 		constants.put("raquo", "&raquo;");
 		constants.put("laquo", "&laquo;");
 		constants.put("lang", "lang");
+		constants.putAll(templateProcessorConfig.getCustomConstantVariablesMap());
 	}
 
 	/**
