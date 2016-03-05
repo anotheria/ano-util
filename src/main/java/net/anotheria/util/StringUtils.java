@@ -23,7 +23,7 @@ public final class StringUtils{
 	/**
   	 *Return a Vector with tokens from the source string tokenized using the delimiter char.
      */
-    public static final Vector<String> tokenize2vector(String source, char delimiter){
+    public static Vector<String> tokenize2vector(String source, char delimiter){
 		Vector<String> v;
 		v = new Vector<String>();
   		StringBuilder currentS = new StringBuilder();
@@ -46,7 +46,7 @@ public final class StringUtils{
    		return v;
     }
     
-	public static final List<String> tokenize2list(String source, char delimiter, char escapeChar){
+	public static List<String> tokenize2list(String source, char delimiter, char escapeChar){
 		List<String> ret = new ArrayList<String>();
   		StringBuilder currentS = new StringBuilder();
 		char c;
@@ -70,18 +70,18 @@ public final class StringUtils{
 				}else{
 				    ret.add(new String(""));
 				}
-				currentS=new StringBuilder();
+				currentS = new StringBuilder();
 			}else{
 				currentS.append(c);
 			}
 			skipNext = false;
 		}
-		if ( currentS!=null && currentS.length()>0 )
+		if ( currentS.length()>0 )
 			ret.add(currentS.toString());
    		return ret;
     }
     
-    public static final List<String> tokenize2list(String source, char delimiter){
+    public static List<String> tokenize2list(String source, char delimiter){
     	return Arrays.asList(tokenize(source, delimiter));
     }
     
@@ -138,11 +138,11 @@ public final class StringUtils{
     
 	
 	
-	public static final String[] tokenize(String source, char delimiter, char escapeChar){
+	public static String[] tokenize(String source, char delimiter, char escapeChar){
 		return tokenize2list(source, delimiter, escapeChar).toArray(new String[0]);
 	}
 	
-	public static final String removeCharAt(String src, int position){
+	public static String removeCharAt(String src, int position){
 		return new StringBuilder(src).deleteCharAt(position).toString();		
 	}
 	
@@ -150,7 +150,7 @@ public final class StringUtils{
 	 *Returns a source String with all occurences of 'c' removed.
 	 *removeChar("Leon's Power Tools", ' ') will return "Leon'sPowerTools".
 	 */
-	public static final String removeChar(String src, char c){
+	public static String removeChar(String src, char c){
 		StringBuffer ret=new StringBuffer();
 		for ( int i=0;i<src.length() ;i++ )
 			if (src.charAt(i)!=c)
@@ -158,7 +158,7 @@ public final class StringUtils{
 		return ret.toString();
 	}/*end of fun removeChar()*/
 
-	public static final String removeChars(String src, char c[]){
+	public static String removeChars(String src, char c[]){
 		StringBuilder ret=new StringBuilder();
 		for ( int i=0;i<src.length() ;i++ ){
 			char aC = src.charAt(i);
@@ -174,23 +174,23 @@ public final class StringUtils{
 		return ret.toString();
 	}
 	
-	public static final String removeLines(String src){
+	public static String removeLines(String src){
 		return replace(removeChar(src, '\r'), '\n', ' ');
 		
 	}
 
 	/**
-	 *Returns first line of multilined String.
+	 *Returns first line of multi-lined String.
 	 */
 	public static String getFirstLine(String source){
-		String line = new String("");
+		StringBuilder line = new StringBuilder();
 		int i=0;
 		while( i<source.length() ){
-			line += source.charAt(i);
+			line.append(source.charAt(i));
 		    if ( source.charAt(i++)=='\n' )
 			    break;
 		}
-		return line;
+		return line.toString();
 	}
 
 	/**
@@ -336,11 +336,11 @@ public final class StringUtils{
        	return ret;
    	}
 
- 	public static final String concat(String a, String b){
+ 	public static String concat(String a, String b){
  		return concat(a, b, " ");
  	}
 
- 	public static final String concat(String a, String b, String delimiter){
+ 	public static String concat(String a, String b, String delimiter){
  		return (a==null || a.length()==0) ? b : (b == null || b.length() == 0 )? a : a+delimiter+b;
  	}
  	
@@ -355,7 +355,7 @@ public final class StringUtils{
 	}
 
  	
- 	public static final String capitalize(String s){
+ 	public static String capitalize(String s){
  		char c = s.charAt(0);
  		return Character.toUpperCase(c)+s.substring(1);
  	}
@@ -474,7 +474,7 @@ public final class StringUtils{
 		return new StringBuilder(source).delete(beginIndex, beginIndex + length).toString();
 	}
  	
- 	public static final String replaceOnce(String src, String toReplace, String with){
+ 	public static String replaceOnce(String src, String toReplace, String with){
  		int index = src.indexOf(toReplace);
  		if (index==-1)
  		    return src;
@@ -493,7 +493,7 @@ public final class StringUtils{
  	 * @param with string to replace with.
  	 * @return
  	 */
- 	public static final String replace(String src, String toReplace, String with){
+ 	public static String replace(String src, String toReplace, String with){
  		int index = 0;
  		while ( (index=src.indexOf(toReplace))>-1){
  			String s = src.substring(0, index);
@@ -504,7 +504,7 @@ public final class StringUtils{
  		return src;   
  	}
  	
-	public static final String replace(String src, String toReplace, char with){
+	public static String replace(String src, String toReplace, char with){
 		int index = 0;
 		while ( (index=src.indexOf(toReplace))>-1){
 			StringBuffer s = new StringBuffer(src.substring(0, index));
@@ -516,7 +516,7 @@ public final class StringUtils{
 	}
 
  	
- 	public static final String removeCComments(String src){
+ 	public static String removeCComments(String src){
  		StringBuilder ret = new StringBuilder();
  		
  		boolean inComments = false;
@@ -544,7 +544,7 @@ public final class StringUtils{
  		return ret.toString();
  	}
  	
- 	public static final String removeCPPComments(String src){
+ 	public static String removeCPPComments(String src){
 		StringBuilder ret = new StringBuilder();
  		
 		boolean inComments = false;
@@ -575,7 +575,7 @@ public final class StringUtils{
 		return ret.toString();
  	}
  	
- 	public static final String removeBashComments(String src){
+ 	public static String removeBashComments(String src){
 		StringBuilder ret = new StringBuilder();
  		
 		boolean inComments = false;
@@ -822,11 +822,11 @@ public final class StringUtils{
 	  Original tokenize method is used in VariableProcessor so any changes in it must be well tested before go to life. That's why this duplication method was created.
 	 */
 	
-	  public static final List<String> _tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
+	  public static List<String> _tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
 		  return _tokenize(source, escapeStart, escapeEnd, true, delimiters);
 	  }
 	  
-	  public static final List<String> _tokenize(String source, char escapeStart, char escapeEnd, boolean skipEmptyTokens, char... delimiters) {
+	  public static List<String> _tokenize(String source, char escapeStart, char escapeEnd, boolean skipEmptyTokens, char... delimiters) {
 		boolean quotingMode = escapeStart == escapeEnd;  
 		Set<Character> delimitersHash = new HashSet<Character>(delimiters.length);
 		
@@ -921,11 +921,11 @@ public final class StringUtils{
 		return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
 	}
 	
-	public static <T> String concatenateTokens(String delimiterSequence, int[] tokens){
+	public static String concatenateTokens(String delimiterSequence, int[] tokens){
 		return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
 	}
 	
-	public static <T> String concatenateTokens(String delimiterSequence, long[] tokens){
+	public static String concatenateTokens(String delimiterSequence, long[] tokens){
 		return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
 	}
 	
