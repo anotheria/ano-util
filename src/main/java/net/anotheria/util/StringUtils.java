@@ -158,6 +158,12 @@ public final class StringUtils{
 		return ret.toString();
 	}/*end of fun removeChar()*/
 
+	/**
+	 * Removes all chars from the char array from the string.
+	 * @param src
+	 * @param c
+	 * @return
+	 */
 	public static String removeChars(String src, char c[]){
 		StringBuilder ret=new StringBuilder();
 		for ( int i=0;i<src.length() ;i++ ){
@@ -173,14 +179,19 @@ public final class StringUtils{
 		}
 		return ret.toString();
 	}
-	
+
+	/**
+	 * Removes line feeds (\r, \n) from string.
+	 * @param src string to remove lines from.
+	 * @return
+	 */
 	public static String removeLines(String src){
 		return replace(removeChar(src, '\r'), '\n', ' ');
 		
 	}
 
 	/**
-	 *Returns first line of multi-lined String.
+	 * Returns first line of multi-lined String.
 	 */
 	public static String getFirstLine(String source){
 		StringBuilder line = new StringBuilder();
