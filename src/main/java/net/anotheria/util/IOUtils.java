@@ -1,5 +1,7 @@
 package net.anotheria.util;
 
+import net.anotheria.util.io.UnicodeReader;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -8,8 +10,6 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-
-import net.anotheria.util.io.UnicodeReader;
 
 /**
  * Utils for input output.
@@ -23,7 +23,7 @@ public final class IOUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static final byte[] readFileAtOnce(File file) throws IOException{
+	public static byte[] readFileAtOnce(File file) throws IOException{
         FileInputStream fIn = new FileInputStream(file);
         return readFileAtOnce(fIn);		
 	}
@@ -34,7 +34,7 @@ public final class IOUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static final byte[] readFileAtOnce(String filename) throws IOException{
+	public static byte[] readFileAtOnce(String filename) throws IOException{
         FileInputStream fIn = new FileInputStream(filename);
         return readFileAtOnce(fIn);
     }
@@ -45,7 +45,7 @@ public final class IOUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	private static final byte[] readFileAtOnce(FileInputStream fIn) throws IOException{
+	private static byte[] readFileAtOnce(FileInputStream fIn) throws IOException{
 		byte[] ret = new byte[fIn.available()];
         fIn.read(ret);
         fIn.close();
@@ -58,7 +58,7 @@ public final class IOUtils {
 	 * @return
 	 * @throws IOException
 	 */
-    public static final String readFileAtOnceAsString(String filename) throws IOException{
+    public static String readFileAtOnceAsString(String filename) throws IOException{
         return new String(readFileAtOnce(filename));
     }
     
@@ -68,7 +68,7 @@ public final class IOUtils {
 	 * @return
 	 * @throws IOException
 	 */
-    public static final String readFileAtOnceAsString(File file) throws IOException{
+    public static String readFileAtOnceAsString(File file) throws IOException{
         return new String(readFileAtOnce(file));
     }
     
@@ -79,7 +79,7 @@ public final class IOUtils {
      * @return
      * @throws IOException
      */
-    public static final String readFileBufferedAsString(String filename) throws IOException{
+    public static String readFileBufferedAsString(String filename) throws IOException{
     	FileReader in = null;
     	try{
         	StringBuilder result = new StringBuilder();
@@ -97,7 +97,7 @@ public final class IOUtils {
         }
     }
     
-    public static final String readInputStreamBufferedAsString(InputStream in, String charset) throws IOException{
+    public static String readInputStreamBufferedAsString(InputStream in, String charset) throws IOException{
 		BufferedReader reader = null;
 		try{
 			reader = new BufferedReader(new UnicodeReader(in, charset));
@@ -113,15 +113,8 @@ public final class IOUtils {
 
     }
     
-    public static final String readFileBufferedAsString(File file, String charset) throws IOException{
+    public static String readFileBufferedAsString(File file, String charset) throws IOException{
 		return readInputStreamBufferedAsString(new FileInputStream(file), charset);
-    }
-    
-    public static void main(String a[]) throws Exception{
-        String s = readFileAtOnceAsString("/opt/projects/datingr4p1/build/local.properties");
-        System.out.println(s.length()+" bytes read");
-        System.out.println(s);
-        
     }
     
     /**
