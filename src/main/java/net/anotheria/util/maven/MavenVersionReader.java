@@ -31,12 +31,21 @@ public class MavenVersionReader {
 						fromStream = input.getNextJarEntry();
 					}
 					int size = (int)fromStream.getSize();
-					if (size>0) {
+					if (size>0 ) {
 					    byte b[]  = new byte[size];
 					    input.read(b);
 					    String content = new String(b);
 					    return readVersionFromString(content, f.lastModified());
 				    }
+					if (size == -1){
+						StringBuilder b = new StringBuilder();
+						int c;
+						while( (c = input.read())!=-1){
+							b.append((char)c);
+						}
+						return readVersionFromString(b.toString(), f.lastModified());
+
+					}
 				}
 				
 			}
@@ -123,10 +132,14 @@ public class MavenVersionReader {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(readVersionFromFile(new File("/opt/small-tomcat/webapps/moskitodemo/META-INF/maven/net.anotheria/moskitodemo/pom.properties")));
+
+		//System.out.println(readVersionFromJar(new File("/Users/another/.m2/repository/net/anotheria/moskito-webui/2.6.3/moskito-webui-2.6.3.jar")));
+		System.out.println(readVersionFromJar(new File("/Users/another/.m2/repository/net/anotheria/moskito-webui/2.7.0/moskito-webui-2.7.0.jar")));
+		System.out.println(readVersionFromJar(new File("/opt/small_tomcat/webapps/moskito/WEB-INF/lib/moskito-webui-2.7.1-SNAPSHOT.jar")));
+/*		System.out.println(readVersionFromFile(new File("/opt/small-tomcat/webapps/moskitodemo/META-INF/maven/net.anotheria/moskitodemo/pom.properties")));
 		System.out.println(readVersionFromJar(new File("/opt/small-tomcat/webapps/moskitodemo/WEB-INF/lib/ano-prise-1.0.0.jar")));
 		System.out.println(findVersionInDirectory(new File("/opt/small-tomcat/webapps/moskitodemo/META-INF")));
-		System.out.println(findJarInDirectory(new File("/opt/small-tomcat/webapps/moskitodemo/WEB-INF/lib"), "moskito-webui"));
+		System.out.println(findJarInDirectory(new File("/opt/small-tomcat/webapps/moskitodemo/WEB-INF/lib"), "moskito-webui"));*/
 			
 	}
 }
