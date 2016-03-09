@@ -1,6 +1,7 @@
 package net.anotheria.util.concurrency;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -49,6 +50,10 @@ public class IdBasedLock<K> implements Serializable {
 
     AtomicInteger getRefCount() {
         return refCount;
+    }
+
+    public boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException {
+      return lock.tryLock(timeout, unit);
     }
 
     public void lock() {
