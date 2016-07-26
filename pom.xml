@@ -19,9 +19,9 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>blowfish</groupId>
-            <artifactId>blowfish</artifactId>
-            <version>1.0</version>
+            <groupId>io.github.dheid</groupId>
+            <artifactId>blowfishj</artifactId>
+            <version>2.16</version>
         </dependency>
         <dependency>
             <groupId>net.sf.dozer</groupId>

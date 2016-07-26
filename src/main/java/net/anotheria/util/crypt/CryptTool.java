@@ -1,13 +1,13 @@
 package net.anotheria.util.crypt;
 
+import net.anotheria.util.NumberUtils;
+import net.anotheria.util.StringUtils;
+import net.sourceforge.blowfishj.crypt.BlowfishECB;
+
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import net.anotheria.util.NumberUtils;
-import net.anotheria.util.StringUtils;
-import BlowfishJ.BlowfishECB;
 
 /***
  * A tool to encrypt and decrypt strings using Blowfish algorithm.
@@ -33,7 +33,7 @@ public class CryptTool {
 	 * @param key the key to use for en- and decode.
 	 */
 	public CryptTool(byte[] key) {
-		cipher = new BlowfishECB(key);
+		cipher = new BlowfishECB(key, 0, key.length);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class CryptTool {
 		}catch(UnsupportedEncodingException e){
 			toEncryptB = toEncrypt.getBytes();
 		}
-		cipher.encrypt(toEncryptB);
+		cipher.encrypt(toEncryptB, 0, toEncryptB, 0, toEncryptB.length);
 		return toEncryptB;
 	}
 
@@ -64,7 +64,7 @@ public class CryptTool {
 	}
 
 	public byte[] decrypt(byte[] toDecrypt) {
-		cipher.decrypt(toDecrypt);
+		cipher.decrypt(toDecrypt, 0, toDecrypt, 0, toDecrypt.length);
 		return toDecrypt;
 	}
 
@@ -191,7 +191,7 @@ public class CryptTool {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		cipher.encrypt(buffer);
+		cipher.encrypt(buffer, 0, buffer, 0, buffer.length);
 	}
 
 	/**
@@ -202,6 +202,6 @@ public class CryptTool {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		cipher.decrypt(buffer);
+		cipher.decrypt(buffer, 0, buffer, 0, buffer.length);
 	}
 }
