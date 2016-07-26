@@ -44,8 +44,8 @@ public class XMLNode {
 	 */
 	public XMLNode(String aName){
 		name = aName;
-		attributes = new ArrayList<XMLAttribute>();
-		nodes = new ArrayList<XMLNode>();
+		attributes = new ArrayList<>();
+		nodes = new ArrayList<>();
 	}
 
 	
@@ -58,8 +58,8 @@ public class XMLNode {
 	 * @param aChildren xmlNodes list
 	 */
 	public void setChildren(List<XMLNode> aChildren){
-		setNodes(aChildren);
-	}
+        this.nodes = aChildren;
+    }
 
 	public void setNodes(List<XMLNode> aNodes) {
 		this.nodes = aNodes;
@@ -102,28 +102,28 @@ public class XMLNode {
 	}
 	
 	public void setContent(boolean aContent){
-		setContent(""+aContent);
-	}
+        this.content = ""+aContent;
+    }
 	
 	public void setContent(float aContent){
-		setContent(""+aContent);
-	}
+        this.content = ""+aContent;
+    }
 
 	public void setContent(double aContent){
-		setContent(""+aContent);
-	}
+        this.content = ""+aContent;
+    }
 
 	public void setContent(long aContent){
-		setContent(""+aContent);
-	}
+        this.content = ""+aContent;
+    }
 
 	public void setContent(int aContent){
-		setContent(""+aContent);
-	}
+        this.content = ""+aContent;
+    }
 	
 	public void setContent(List<Object> aL){
-		setContent(aL.toString());
-	}
+        this.content = aL.toString();
+    }
 
 	@Override public String toString(){
 		return "name: "+name+", "+" attributes: "+attributes+", nodes: "+nodes;
@@ -139,7 +139,7 @@ public class XMLNode {
 			return ret;
 		
 		for (XMLAttribute a : attributes){
-			ret += " "+a.toXMLString();
+			ret += ' ' +a.toXMLString();
 		}
 		
 		return ret;
@@ -152,18 +152,18 @@ public class XMLNode {
 	 * @param aTabs position to start
 	 * @throws IOException on errors
 	 */
-	public void write(PrintStream aWriter, int aTabs) throws IOException{
+	public void write(PrintStream aWriter, int aTabs) {
 		String attributeString = createAttributeString();
 		String ident = XMLHelper.makeIdent(aTabs);
-		aWriter.println(ident+XMLHelper.entag(getName()+attributeString));
+        aWriter.println(ident+XMLHelper.entag(name +attributeString));
 		
 		for (XMLNode child : nodes)
 			child.write(aWriter, aTabs+1);
 		
 		if (content!=null)
 			aWriter.println(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
-		
-		aWriter.println(ident+XMLHelper.detag(getName()));
+
+        aWriter.println(ident+XMLHelper.detag(name));
 	}
 
 
@@ -174,18 +174,18 @@ public class XMLNode {
 	 * @param aTabs position to start
 	 * @throws IOException on errors
 	 */
-	public void write(PrintWriter aWriter, int aTabs) throws IOException{
+	public void write(PrintWriter aWriter, int aTabs) {
 		String attributeString = createAttributeString();
 		String ident = XMLHelper.makeIdent(aTabs);
-		aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
+        aWriter.write(ident+XMLHelper.entag(name +attributeString));
 		
 		for (XMLNode child : nodes)
 			child.write(aWriter, aTabs+1);
 		
 		if (content!=null)
 			aWriter.write(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
-		
-		aWriter.write(ident+XMLHelper.detag(getName()));
+
+        aWriter.write(ident+XMLHelper.detag(name));
 	}
 
 
@@ -196,19 +196,19 @@ public class XMLNode {
 	 * @param aTabs position to start
 	 * @throws IOException on errors
 	 */
-	public void write(OutputStreamWriter aWriter, int aTabs) throws IOException{
+	public void write(OutputStreamWriter aWriter, int aTabs) {
 		try{
 			String attributeString = createAttributeString();
 			String ident = XMLHelper.makeIdent(aTabs);
-			aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
+            aWriter.write(ident+XMLHelper.entag(name +attributeString));
 			
 			for (XMLNode child : nodes)
 				child.write(aWriter, aTabs+1);
 			
 			if (content!=null)
 				aWriter.write(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
-			
-			aWriter.write(ident+XMLHelper.detag(getName()));
+
+            aWriter.write(ident+XMLHelper.detag(name));
 		}catch(Throwable t){
 			log.error(t.getMessage(), t);
 		}
@@ -221,11 +221,11 @@ public class XMLNode {
 	 * @param aTabs tabs
 	 * @throws IOException on errors
 	 */
-	public void write(Writer aWriter, int aTabs) throws IOException{
+	public void write(Writer aWriter, int aTabs) {
 		try{
 			String attributeString = createAttributeString();
 			String ident = XMLHelper.makeIdent(aTabs);
-			aWriter.write(ident+XMLHelper.entag(getName()+attributeString));
+            aWriter.write(ident+XMLHelper.entag(name +attributeString));
 
 			for (XMLNode child : nodes)
 				child.write(aWriter, aTabs+1);
@@ -233,7 +233,7 @@ public class XMLNode {
 			if (content!=null)
 				aWriter.write(XMLHelper.makeIdent(aTabs+1)+"<![CDATA["+content+"]]>\n");
 
-			aWriter.write(ident+XMLHelper.detag(getName()));
+            aWriter.write(ident+XMLHelper.detag(name));
 		}catch(Throwable t){
 			log.error(t.getMessage(), t);
 		}

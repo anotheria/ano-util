@@ -55,7 +55,7 @@ public final class TemplateProcessorConfig implements Serializable {
 	/**
 	 * Returns configuration instance.
 	 *
-	 * @return {@link TemplateProcessorConfig}
+	 * @return
 	 */
 	public static TemplateProcessorConfig getInstance() {
 		if (instance != null)
@@ -82,7 +82,7 @@ public final class TemplateProcessorConfig implements Serializable {
 		return customConstantVariables;
 	}
 
-	public void setCustomConstantVariables(CustomConstantVariableConfig[] customConstantVariables) {
+	public void setCustomConstantVariables(CustomConstantVariableConfig... customConstantVariables) {
 		this.customConstantVariables = customConstantVariables;
 	}
 
@@ -92,7 +92,7 @@ public final class TemplateProcessorConfig implements Serializable {
 	 * @return {@link Map} with custom variable key/value pairs
 	 */
 	public Map<String, String> getCustomConstantVariablesMap() {
-		final Map<String, String> result = new HashMap<String, String>();
+		final Map<String, String> result = new HashMap<>();
 
 		if (this.customConstantVariables == null || this.customConstantVariables.length == 0)
 			return result;

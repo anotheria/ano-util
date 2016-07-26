@@ -2,7 +2,6 @@ package net.anotheria.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * A helper class for double objects formatting.
@@ -17,18 +16,18 @@ public class MathHelper {
      * @param precision 1 - Integer.MaxValue
      * @return  rounded Double Vector with precision
      */
-    @Deprecated public static Vector<String> getFormattedStringVector(Vector<Double> values, int precision) {
-        Vector<String> result = new Vector<String>();
+    @Deprecated public static List<String> getFormattedStringVector(List<Double> values, int precision) {
+        List<String> result = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
-            result.addElement(getFormattedString(values.elementAt(i), precision));
+            result.add(getFormattedString(values.get(i), precision));
         }
         return  result;
     }
 
-    public static List<String> getFormattedStrings(List<Double> values, int precision) {
-        ArrayList<String> result = new ArrayList<String>();
-        for (int i = 0; i < values.size(); i++) {
-            result.add(getFormattedString(values.get(i), precision));
+    public static List<String> getFormattedStrings(Iterable<Double> values, int precision) {
+        List<String> result = new ArrayList<>();
+        for (Double value : values) {
+            result.add(getFormattedString(value, precision));
         }
         return  result;
     }
@@ -43,19 +42,15 @@ public class MathHelper {
         boolean negativ = false;
         String start = value.toString();
 
-        if(value.doubleValue() < 0){
-            start = (-1 * value.doubleValue()) + "";
+        if(value < 0){
+            start = String.valueOf(-1 * value);
             negativ = true;
         }
 
-        String resultString = "";
-        String right;
-        String left;
-        int zeros;
         int indexE = start.indexOf('E');
 
         if(indexE!=-1){
-            zeros = new Integer(start.substring(indexE+1)).intValue();
+            int zeros = new Integer(start.substring(indexE + 1));
             if(start.charAt(indexE - 1)=='-'){
                 zeros *= -1;
             }
@@ -64,14 +59,14 @@ public class MathHelper {
             if(zeros < 0){
                 zeros = -zeros;
                 for(int i= 0; i < zeros - indexOfPoint;i++){
-                    start =  "0" + start;
+                    start = '0' + start;
                 }
-                start = "$" + start;
+                start = '$' + start;
             } else {
                 for(int i=start.length() ; i <= zeros + indexOfPoint; i++) {
-                    start = start + "0";
+                    start = start + '0';
                 }
-                start = start + "$";
+                start = start + '$';
             }
             start = start.substring(0,start.indexOf('.')) + start.substring(start.indexOf('.')+1);
             if(start.indexOf('$')==0) {
@@ -82,16 +77,17 @@ public class MathHelper {
         }
 
 
-        left = start.substring(0,start.indexOf('.'));
-        right = start.substring(start.indexOf('.')+1);
+        String left = start.substring(0, start.indexOf('.'));
+        String right = start.substring(start.indexOf('.') + 1);
 
+        String resultString = "";
         while (left.length() > 3) {
 
-            resultString = "." + left.substring(left.length()-3) + resultString;
+            resultString = '.' + left.substring(left.length()-3) + resultString;
             left = left.substring(0,left.length()-3);
         }
         while (right.length() < precision) {
-            right = right + "0";
+            right = right + '0';
         }
 
         if (right.length() > precision && precision > 0){
@@ -100,7 +96,7 @@ public class MathHelper {
         }
 
         if(precision > 0) {
-            resultString = left + resultString +  "," + right;
+            resultString = left + resultString + ',' + right;
         } else {
             if(Integer.parseInt(String.valueOf(right.charAt(0))) < 5) {
                 resultString = left + resultString  ;
@@ -110,7 +106,7 @@ public class MathHelper {
         }
 
         if(negativ) {
-            return "-" + resultString;
+            return '-' + resultString;
         }
 
         return resultString;

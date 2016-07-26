@@ -5,16 +5,16 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class SlicerTest {
 	@Test
 	public void test(){
-		List<Integer> data = new ArrayList<Integer>(20);
+		List<Integer> data = new ArrayList<>(20);
 		for (int i=0; i<22; i++)
 			data.add(i+1);
 		
@@ -60,7 +60,7 @@ public class SlicerTest {
 	}
 	
 	@Test public void testOverflow(){
-		List<Integer> data = new ArrayList<Integer>(5);
+		List<Integer> data = new ArrayList<>(5);
 		for (int i=0; i<5; i++)
 			data.add(i+1);
 		Slice<Integer> second = Slicer.slice(new Segment(2, 5), data);

@@ -43,12 +43,12 @@ public class FileResourceLoader implements ResourceLoader{
 				ret.append((char) c);
 			return ret.toString();
 		} catch (IOException e) {
-			log.error("getContent(" + fileName + ")", e);
+			log.error("getContent(" + fileName + ')', e);
 			throw new RuntimeException("can't read source: " + fileName, e);
 		}
 	}
 	
-	public static void main(String[] args) throws Exception{
+	public static void main(String... args) throws Exception{
 		ResourceLoader loader = new FileResourceLoader();
 		System.out.println("Current base dir: " + new File("").getAbsolutePath());
 		String testFile = "test.txt";

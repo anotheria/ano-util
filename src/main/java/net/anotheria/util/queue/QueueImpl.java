@@ -24,8 +24,8 @@ public class QueueImpl<T> implements IQueue<T> {
 	 * @param aSize
 	 */
 	QueueImpl(int aSize){
-		listeners = new ArrayList<IQueueListener>();
-		underlyingQueue = new ArrayBlockingQueue<T>(aSize);
+		listeners = new ArrayList<>();
+		underlyingQueue = new ArrayBlockingQueue<>(aSize);
 		size = aSize;
 	}
 	 
@@ -61,7 +61,7 @@ public class QueueImpl<T> implements IQueue<T> {
 	@Override
 	public void putElement(T o) {
 		if (!underlyingQueue.offer(o)){
-			throw new QueueOverflowException(""+o); 
+			throw new QueueOverflowException(String.valueOf(o));
 		}
 	} 
 

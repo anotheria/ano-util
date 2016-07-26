@@ -26,8 +26,8 @@ public class ConcurrentQueueTest {
 	@Test public void test() throws InterruptedException{
 		
 		
-		long start = System.nanoTime(), end1, end2;
-		IQueue<Integer> queue = new StandardQueueFactory<Integer>().createQueue(QUEUE_SIZE);
+		long start = System.nanoTime();
+        IQueue<Integer> queue = new StandardQueueFactory<Integer>().createQueue(QUEUE_SIZE);
 		final Worker worker = new Worker(queue);
 		worker.start();
 		
@@ -37,16 +37,16 @@ public class ConcurrentQueueTest {
 		
 		startLatch.countDown();
 		stopLatch.await();
-		end1 = System.nanoTime();
-		runThreadRun.set(false);
+        long end1 = System.nanoTime();
+        runThreadRun.set(false);
 		System.out.println("CQT Overflow count: "+overflowCount+", elementCount:" +elementCount+", Sum: "+elementSum);
 		while(worker.running){
 			try{
 				Thread.sleep(100);
 			}catch(InterruptedException e){}
 		}
-		end2 = System.nanoTime();
-		System.out.println("CQT Worker: count: "+worker.elementCount+", sum: "+worker.elementSum);
+        long end2 = System.nanoTime();
+        System.out.println("CQT Worker: count: "+worker.elementCount+", sum: "+worker.elementSum);
 		assertEquals("ElementCount should be similar", elementCount.get(), worker.elementCount);
 		assertEquals("ElementSum should be similar", elementSum.get(), worker.elementSum);
 		System.out.println("CQT Time1 "+(end1-start)/1000/1000+" ms");
@@ -88,7 +88,7 @@ public class ConcurrentQueueTest {
 		}
 	}
 	
-	class Worker extends Thread{
+	static class Worker extends Thread{
 
 		private long elementCount = 0;
 		private long elementSum = 0;

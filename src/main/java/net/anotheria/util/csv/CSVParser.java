@@ -98,8 +98,8 @@ public class CSVParser {
 	
 	/** We have to handle somehow situation with newlines in the values, 
 	 * for now - algorithm written below looks as simplest and quickest */
-	private static String[] normalizeEscapedNewlines(String[] rows) {
-		List<String> result = new ArrayList<String>(rows.length);
+	private static String[] normalizeEscapedNewlines(String... rows) {
+		List<String> result = new ArrayList<>(rows.length);
 		for (int i = 0; i < rows.length; i++){
 			String row = rows[i];
 			if (hasOddNumberOfQuotes(row)) {
@@ -114,7 +114,7 @@ public class CSVParser {
 		return result.toArray(new String[result.size()]);
 	}
 	
-	private static DataHeader toDataHeader(DataRow headerRow){
+	private static DataHeader toDataHeader(Iterable<DataCell> headerRow){
 		DataHeader ret = new DataHeader();
 		for(DataCell cell: headerRow)
 			ret.addHeader(cell.getValueAsString());

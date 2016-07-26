@@ -66,7 +66,7 @@ public class ClassPathResourceLoader implements ResourceLoader{
 				ret.append((char) c);
 			return ret.toString();
 		} catch (IOException e) {
-			log.error("getContent("+fileName+")", e);
+			log.error("getContent("+fileName+ ')', e);
 			throw new RuntimeException("can't read source: " + fileName, e);
 		}
 	}

@@ -22,14 +22,13 @@ public class ConditionTemplateProcessor implements TemplateProcessor {
 		//sorry!  next If block -- is just the stupid hack!  due  to 'if' prefix name (
 		if (ConditionProcessorNames.iF.getPrefixName().equals(aPrefix)) {
 			return ConditionProcessorNames.iF.executeReplacement(aVariable, aDefValue);
-		} else {
-			try {
-				return ConditionProcessorNames.valueOf(ConditionProcessorNames.class, aPrefix).executeReplacement(aVariable, aDefValue);
-			} catch (RuntimeException exception) {
-				log.error("An exceptions has been occurred while trying to replace variable. where prefix="+aPrefix+" variable="+aVariable+" defaultValue="+aDefValue, exception);
-			}
 		}
-		return "";
+        try {
+            return ConditionProcessorNames.valueOf(ConditionProcessorNames.class, aPrefix).executeReplacement(aVariable, aDefValue);
+        } catch (RuntimeException exception) {
+            log.error("An exceptions has been occurred while trying to replace variable. where prefix="+aPrefix+" variable="+aVariable+" defaultValue="+aDefValue, exception);
+        }
+        return "";
 	}
 }
 

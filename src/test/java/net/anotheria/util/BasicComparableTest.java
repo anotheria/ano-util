@@ -2,7 +2,7 @@ package net.anotheria.util;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 
 public class BasicComparableTest {

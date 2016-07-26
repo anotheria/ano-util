@@ -65,7 +65,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	/**
 	 * The default queue factory.
 	 */
-	private final IQueueFactory<T> DEF_QUEUE_FACTORY = new StandardQueueFactory<T>();
+	private final IQueueFactory<T> DEF_QUEUE_FACTORY = new StandardQueueFactory<>();
 	/**
 	 * The factory for creating queues.
 	 */
@@ -278,7 +278,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 						T element = null;
 						synchronized (queue) {
 							element = queue.nextElement();
-							queue.notify();
+                            queue.notifyAll();
 						}
 						worker.doWork(element);
 					} catch (Exception e) {
@@ -288,7 +288,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 					if(shutdown.get()){
 						log.info("Queue is empty. Processing completed!");
 						synchronized (shutdown) {
-							shutdown.notify();						
+                            shutdown.notifyAll();
 						}
 						break;
 					}

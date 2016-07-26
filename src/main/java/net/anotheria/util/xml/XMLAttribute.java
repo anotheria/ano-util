@@ -27,7 +27,7 @@ public class XMLAttribute {
 	 * @param aValue
 	 */
 	public XMLAttribute(String aName, int  aValue){
-		this(aName, ""+aValue);
+		this(aName, String.valueOf(aValue));
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class XMLAttribute {
 	}
 	
 	@Override public String toString(){
-		return name+"="+value;
+		return name+ '=' +value;
 	}
 
 	/**
@@ -69,6 +69,6 @@ public class XMLAttribute {
 	}
 
 	public String toXMLString(){
-		return getName()+"="+XMLHelper.quote(getValue());
+        return name + '=' +XMLHelper.quote(value);
 	}
 }

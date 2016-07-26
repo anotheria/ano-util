@@ -1,20 +1,22 @@
 package net.anotheria.util;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Performs html and xml encoding.
  */
 public class CharacterEntityCoder {
-	private static final Hashtable<Character, String> ENTITIES;
-	private static final Vector<String[]> HTML_ENTITIES;
-	private static final Hashtable<String,String> HTML_2_XML_ENTITIES;
+	private static final Map<Character, String> ENTITIES;
+	private static final List<String[]> HTML_ENTITIES;
+	private static final Map<String,String> HTML_2_XML_ENTITIES;
 	
 	
 	static {
-		ENTITIES = new Hashtable<Character, String>();
+		ENTITIES = new HashMap<>();
 		ENTITIES.put('\n', "&#010;");
 		ENTITIES.put('\r', "&#013;");
 		ENTITIES.put('\t', "&#009;");
@@ -81,104 +83,73 @@ public class CharacterEntityCoder {
 		ENTITIES.put('˝', "&#253;");
 		ENTITIES.put('ˇ', "&#255;");
 		ENTITIES.put('-', "&#8212;");
-/*		entities.put(char) 0x00, "&#000");
-		entities.put(char) 0x01, "&#001");
-		entities.put(char) 0x02, "&#002");
-		entities.put(char) 0x03, "&#003");
-		entities.put(char) 0x04, "&#004");
-		entities.put(char) 0x05, "&#005");
-		entities.put(char) 0x06, "&#006");
-		entities.put(char) 0x07, "&#007");
-		entities.put(char) 0x08, "&#008");
-		entities.put(char) 0x0b, "&#011");
-		entities.put(char) 0x0c, "&#012");
-		entities.put(char) 0x0e, "&#014");
-		entities.put(char) 0x0f, "&#015");
-		entities.put(char) 0x10, "&#016");
-		entities.put(char) 0x11, "&#017");
-		entities.put(char) 0x12, "&#018");
-		entities.put(char) 0x13, "&#019");
-		entities.put(char) 0x14, "&#020");
-		entities.put(char) 0x15, "&#021");
-		entities.put(char) 0x16, "&#022");
-		entities.put(char) 0x17, "&#023");
-		entities.put(char) 0x18, "&#024");
-		entities.put(char) 0x19, "&#025");
-		entities.put(char) 0x1a, "&#026");
-		entities.put(char) 0x1b, "&#027");
-		entities.put(char) 0x1c, "&#028");
-		entities.put(char) 0x1d, "&#029");
-		entities.put(char) 0x1e, "&#030");
-		entities.put(char) 0x1f, "&#031");
-*/				
 		
-		HTML_ENTITIES = new Vector<String[]>();
-		HTML_ENTITIES.addElement(new String[] {"&", "&amp;"});
-		HTML_ENTITIES.addElement(new String[] {"\"", "&quot;"});
-		HTML_ENTITIES.addElement(new String[] {"ß", "&sect;"});
-		HTML_ENTITIES.addElement(new String[] {"ﬂ", "&szlig;"});
-		HTML_ENTITIES.addElement(new String[] {"<", "&lt;"});
-		HTML_ENTITIES.addElement(new String[] {">", "&gt;"});
-		HTML_ENTITIES.addElement(new String[] {"Ä", "&euro;"});
-//		htmlEntities.addElement(new String[] {"\n", "<br>"});
-		HTML_ENTITIES.addElement(new String[] {"¿", "&Agrave;"});
-		HTML_ENTITIES.addElement(new String[] {"¡", "&Aacute;"});
-		HTML_ENTITIES.addElement(new String[] {"¬", "&Acirc;"});
-		HTML_ENTITIES.addElement(new String[] {"√", "&Atilde;"});
-		HTML_ENTITIES.addElement(new String[] {"ƒ", "&Auml;"});
-		HTML_ENTITIES.addElement(new String[] {"≈", "&Aring;"});
-		HTML_ENTITIES.addElement(new String[] {"∆", "&AElig;"});
-		HTML_ENTITIES.addElement(new String[] {"«", "&Ccedil;"});
-		HTML_ENTITIES.addElement(new String[] {"»", "&Egrave;"});
-		HTML_ENTITIES.addElement(new String[] {"…", "&Eacute;"});
-		HTML_ENTITIES.addElement(new String[] {" ", "&Ecirc;"});
-		HTML_ENTITIES.addElement(new String[] {"À", "&Euml;"});
-		HTML_ENTITIES.addElement(new String[] {"Ã", "&Igrave;"});
-		HTML_ENTITIES.addElement(new String[] {"Õ", "&Iacute;"});
-		HTML_ENTITIES.addElement(new String[] {"Œ", "&Icirc;"});
-		HTML_ENTITIES.addElement(new String[] {"œ", "&Iuml;"});
-		HTML_ENTITIES.addElement(new String[] {"—", "&Ntilde;"});
-		HTML_ENTITIES.addElement(new String[] {"“", "&Ograve;"});
-		HTML_ENTITIES.addElement(new String[] {"”", "&Oacute;"});
-		HTML_ENTITIES.addElement(new String[] {"‘", "&Ocirc;"});
-		HTML_ENTITIES.addElement(new String[] {"’", "&Otilde;"});
-		HTML_ENTITIES.addElement(new String[] {"÷", "&Ouml;"});
-		HTML_ENTITIES.addElement(new String[] {"Ÿ", "&Ugrave;"});
-		HTML_ENTITIES.addElement(new String[] {"⁄", "&Uacute;"});
-		HTML_ENTITIES.addElement(new String[] {"€", "&Ucirc;"});
-		HTML_ENTITIES.addElement(new String[] {"‹", "&Uuml;"});
-		HTML_ENTITIES.addElement(new String[] {"›", "&Yacute;"});
-		HTML_ENTITIES.addElement(new String[] {"‡", "&agrave;"});
-		HTML_ENTITIES.addElement(new String[] {"·", "&aacute;"});
-		HTML_ENTITIES.addElement(new String[] {"‚", "&acirc;"});
-		HTML_ENTITIES.addElement(new String[] {"„", "&atilde;"});
-		HTML_ENTITIES.addElement(new String[] {"‰", "&auml;"});
-		HTML_ENTITIES.addElement(new String[] {"Ê", "&aelig;"});
-		HTML_ENTITIES.addElement(new String[] {"Á", "&ccedil;"});
-		HTML_ENTITIES.addElement(new String[] {"Ë", "&egrave;"});
-		HTML_ENTITIES.addElement(new String[] {"È", "&eacute;"});
-		HTML_ENTITIES.addElement(new String[] {"Í", "&ecirc;"});
-		HTML_ENTITIES.addElement(new String[] {"Î", "&euml;"});
-		HTML_ENTITIES.addElement(new String[] {"Ï", "&igrave;"});
-		HTML_ENTITIES.addElement(new String[] {"Ì", "&iacute;"});
-		HTML_ENTITIES.addElement(new String[] {"Ó", "&icirc;"});
-		HTML_ENTITIES.addElement(new String[] {"Ô", "&iuml;"});
-		HTML_ENTITIES.addElement(new String[] {"", "&eth;"});
-		HTML_ENTITIES.addElement(new String[] {"Ò", "&ntilde;"});
-		HTML_ENTITIES.addElement(new String[] {"Ú", "&ograve;"});
-		HTML_ENTITIES.addElement(new String[] {"Û", "&oacute;"});
-		HTML_ENTITIES.addElement(new String[] {"Ù", "&ocirc;"});
-		HTML_ENTITIES.addElement(new String[] {"ı", "&otilde;"});
-		HTML_ENTITIES.addElement(new String[] {"ˆ", "&ouml;"});
-		HTML_ENTITIES.addElement(new String[] {"˘", "&ugrave;"});
-		HTML_ENTITIES.addElement(new String[] {"˙", "&uacute;"});
-		HTML_ENTITIES.addElement(new String[] {"˚", "&ucirc;"});
-		HTML_ENTITIES.addElement(new String[] {"¸", "&uuml;"});
-		HTML_ENTITIES.addElement(new String[] {"˝", "&yacute;"});
-		HTML_ENTITIES.addElement(new String[] {"ˇ", "&yuml;"});
-		HTML_ENTITIES.addElement(new String[] {"-", "&mdash;"});
+		HTML_ENTITIES = new ArrayList<>();
+		HTML_ENTITIES.add(new String[] {"&", "&amp;"});
+		HTML_ENTITIES.add(new String[] {"\"", "&quot;"});
+		HTML_ENTITIES.add(new String[] {"ß", "&sect;"});
+		HTML_ENTITIES.add(new String[] {"ﬂ", "&szlig;"});
+		HTML_ENTITIES.add(new String[] {"<", "&lt;"});
+		HTML_ENTITIES.add(new String[] {">", "&gt;"});
+		HTML_ENTITIES.add(new String[] {"Ä", "&euro;"});
+		HTML_ENTITIES.add(new String[] {"¿", "&Agrave;"});
+		HTML_ENTITIES.add(new String[] {"¡", "&Aacute;"});
+		HTML_ENTITIES.add(new String[] {"¬", "&Acirc;"});
+		HTML_ENTITIES.add(new String[] {"√", "&Atilde;"});
+		HTML_ENTITIES.add(new String[] {"ƒ", "&Auml;"});
+		HTML_ENTITIES.add(new String[] {"≈", "&Aring;"});
+		HTML_ENTITIES.add(new String[] {"∆", "&AElig;"});
+		HTML_ENTITIES.add(new String[] {"«", "&Ccedil;"});
+		HTML_ENTITIES.add(new String[] {"»", "&Egrave;"});
+		HTML_ENTITIES.add(new String[] {"…", "&Eacute;"});
+		HTML_ENTITIES.add(new String[] {" ", "&Ecirc;"});
+		HTML_ENTITIES.add(new String[] {"À", "&Euml;"});
+		HTML_ENTITIES.add(new String[] {"Ã", "&Igrave;"});
+		HTML_ENTITIES.add(new String[] {"Õ", "&Iacute;"});
+		HTML_ENTITIES.add(new String[] {"Œ", "&Icirc;"});
+		HTML_ENTITIES.add(new String[] {"œ", "&Iuml;"});
+		HTML_ENTITIES.add(new String[] {"—", "&Ntilde;"});
+		HTML_ENTITIES.add(new String[] {"“", "&Ograve;"});
+		HTML_ENTITIES.add(new String[] {"”", "&Oacute;"});
+		HTML_ENTITIES.add(new String[] {"‘", "&Ocirc;"});
+		HTML_ENTITIES.add(new String[] {"’", "&Otilde;"});
+		HTML_ENTITIES.add(new String[] {"÷", "&Ouml;"});
+		HTML_ENTITIES.add(new String[] {"Ÿ", "&Ugrave;"});
+		HTML_ENTITIES.add(new String[] {"⁄", "&Uacute;"});
+		HTML_ENTITIES.add(new String[] {"€", "&Ucirc;"});
+		HTML_ENTITIES.add(new String[] {"‹", "&Uuml;"});
+		HTML_ENTITIES.add(new String[] {"›", "&Yacute;"});
+		HTML_ENTITIES.add(new String[] {"‡", "&agrave;"});
+		HTML_ENTITIES.add(new String[] {"·", "&aacute;"});
+		HTML_ENTITIES.add(new String[] {"‚", "&acirc;"});
+		HTML_ENTITIES.add(new String[] {"„", "&atilde;"});
+		HTML_ENTITIES.add(new String[] {"‰", "&auml;"});
+		HTML_ENTITIES.add(new String[] {"Ê", "&aelig;"});
+		HTML_ENTITIES.add(new String[] {"Á", "&ccedil;"});
+		HTML_ENTITIES.add(new String[] {"Ë", "&egrave;"});
+		HTML_ENTITIES.add(new String[] {"È", "&eacute;"});
+		HTML_ENTITIES.add(new String[] {"Í", "&ecirc;"});
+		HTML_ENTITIES.add(new String[] {"Î", "&euml;"});
+		HTML_ENTITIES.add(new String[] {"Ï", "&igrave;"});
+		HTML_ENTITIES.add(new String[] {"Ì", "&iacute;"});
+		HTML_ENTITIES.add(new String[] {"Ó", "&icirc;"});
+		HTML_ENTITIES.add(new String[] {"Ô", "&iuml;"});
+		HTML_ENTITIES.add(new String[] {"", "&eth;"});
+		HTML_ENTITIES.add(new String[] {"Ò", "&ntilde;"});
+		HTML_ENTITIES.add(new String[] {"Ú", "&ograve;"});
+		HTML_ENTITIES.add(new String[] {"Û", "&oacute;"});
+		HTML_ENTITIES.add(new String[] {"Ù", "&ocirc;"});
+		HTML_ENTITIES.add(new String[] {"ı", "&otilde;"});
+		HTML_ENTITIES.add(new String[] {"ˆ", "&ouml;"});
+		HTML_ENTITIES.add(new String[] {"˘", "&ugrave;"});
+		HTML_ENTITIES.add(new String[] {"˙", "&uacute;"});
+		HTML_ENTITIES.add(new String[] {"˚", "&ucirc;"});
+		HTML_ENTITIES.add(new String[] {"¸", "&uuml;"});
+		HTML_ENTITIES.add(new String[] {"˝", "&yacute;"});
+		HTML_ENTITIES.add(new String[] {"ˇ", "&yuml;"});
+		HTML_ENTITIES.add(new String[] {"-", "&mdash;"});
 
-		HTML_2_XML_ENTITIES = new Hashtable<String,String>();
+		HTML_2_XML_ENTITIES = new HashMap<>();
 		HTML_2_XML_ENTITIES.put("&amp;",   "&#038;");
 		HTML_2_XML_ENTITIES.put("&ouml;",  "&#246;");
 		HTML_2_XML_ENTITIES.put("&auml;",  "&#228;");
@@ -260,7 +231,7 @@ public class CharacterEntityCoder {
 		for (int i=0; i<s.length(); i++){
 			Character c = s.charAt(i);
    			String temp = ENTITIES.get(c);
-      		result.append(temp == null ? ""+s.charAt(i) : temp);
+      		result.append(temp == null ? String.valueOf(s.charAt(i)) : temp);
        	}
 		return result.toString();
 	}
@@ -269,7 +240,7 @@ public class CharacterEntityCoder {
 	**/
 	public static String htmlEncodeString(String s) {
 		for (int i=0; i<HTML_ENTITIES.size(); i++) {
-			String[] sa = (String[]) HTML_ENTITIES.elementAt(i);
+			String[] sa = HTML_ENTITIES.get(i);
 			char o = sa[0].charAt(0);
 			String n = sa[1];
 			s = StringUtils.replace(s, o, n);
@@ -281,22 +252,20 @@ public class CharacterEntityCoder {
 	* returns dencoded String from XML
 	**/
 	public static String decodeString(String s) {
-		Enumeration<Character> e = ENTITIES.keys();
-		while (e.hasMoreElements()) {
-			Character o = e.nextElement();
-			String n = ENTITIES.get(o);
+		for (Entry<Character, String> characterStringEntry : ENTITIES.entrySet()) {
+			String n = characterStringEntry.getValue();
 			int j = n.length();
-			String s1 ="";
-			int lastI=0;
-			for (int i=0; i<s.length()-j; i++) {
-				if (s.substring(i,i+j).equals(n)) {
-					s1=s1+s.substring(lastI, i)+o;
-					lastI = i+j;
-					i=lastI;
+			String s1 = "";
+			int lastI = 0;
+			for (int i = 0; i < s.length() - j; i++) {
+				if (s.substring(i, i + j).equals(n)) {
+					s1 = s1 + s.substring(lastI, i) + characterStringEntry.getKey();
+					lastI = i + j;
+					i = lastI;
 				}
 			}
-			if(!s1.equals(""))
-				s=s1;
+			if (!s1.isEmpty())
+				s = s1;
 		}
 
 		return s;
@@ -307,7 +276,7 @@ public class CharacterEntityCoder {
 	**/
 	public static String decodeHtmlString(String s) {
 		for (int k=0; k<HTML_ENTITIES.size(); k++) {
-			String[] sa = (String[]) HTML_ENTITIES.elementAt(k);
+			String[] sa = HTML_ENTITIES.get(k);
 			char o = sa[0].charAt(0);
 			String n = sa[1];
 			int j = n.length();
@@ -322,32 +291,30 @@ public class CharacterEntityCoder {
 					i=lastI;
 				}
 			}
-			if(!s1.equals(""))
+			if(!s1.isEmpty())
 				s=s1;
 		}
 		return s;
 	}
 
 	public static String htm2xml(String s){
-		Enumeration<String> e = HTML_2_XML_ENTITIES.keys();
-		while(e.hasMoreElements()){
-			String htmString = e.nextElement();
-			String xmlString = HTML_2_XML_ENTITIES.get(htmString);
-			int j = htmString.length();
-			int lastI=0;
-			String replaced="";
-			for(int i=0; i<s.length()-j; i++){
-				if(s.substring(i,i+j).equals(htmString)){
+		for (Map.Entry<String, String> stringStringEntry : HTML_2_XML_ENTITIES.entrySet()) {
+			String xmlString = stringStringEntry.getValue();
+			int j = stringStringEntry.getKey().length();
+			int lastI = 0;
+			String replaced = "";
+			for (int i = 0; i < s.length() - j; i++) {
+				if (s.substring(i, i + j).equals(stringStringEntry.getKey())) {
 					//System.out.println("ON Replace "+s.substring(i,i+j)+" -> "+s.substring(lastI, i)+xmlString);
-					replaced = replaced +s.substring(lastI, i)+xmlString;
+					replaced = replaced + s.substring(lastI, i) + xmlString;
 					//System.out.println("###:"+replaced);
-					lastI = i+j;
-					i=lastI-1;
+					lastI = i + j;
+					i = lastI - 1;
 				}
 			}
 			replaced = replaced + s.substring(lastI, s.length());
-			if(!replaced.equals(""))
-				s=replaced;
+			if (!replaced.isEmpty())
+				s = replaced;
 		}
 		return s;
 	}

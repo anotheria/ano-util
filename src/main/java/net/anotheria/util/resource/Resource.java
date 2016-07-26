@@ -78,7 +78,7 @@ public class Resource {
 	public Resource(String aName, ResourceLoader aResourceLoader, boolean watch) {
 		name = aName;
 		resourceLoader = aResourceLoader;
-		listeners = new ArrayList<ResourceListener>();
+		listeners = new ArrayList<>();
 		lastChangeTimestamp = System.currentTimeMillis();
 		reloadContent();
 		if (watch)
@@ -110,7 +110,8 @@ public class Resource {
 
 	@Override
 	public String toString() {
-		return "Resource " + name + ", listeners: " + listeners.size() + ", " + NumberUtils.makeISO8601TimestampString(getLastChangeTimestamp());
+
+        return "Resource " + name + ", listeners: " + listeners.size() + ", " + NumberUtils.makeISO8601TimestampString(lastChangeTimestamp);
 	}
 
 	/**
@@ -178,7 +179,7 @@ public class Resource {
 	}
 
 	private void reloadContent() {
-		content = getResourceLoader().getContent(getName());
+        content = resourceLoader.getContent(name);
 	}
 
 }

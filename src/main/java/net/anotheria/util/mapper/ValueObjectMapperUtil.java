@@ -62,7 +62,7 @@ public final class ValueObjectMapperUtil {
 				return;
 			}
 		}
-		final Map<String, Object> populateAllFields = new HashMap<String, Object>();
+		final Map<String, Object> populateAllFields = new HashMap<>();
 		final Field[] fields = destinationClass.getDeclaredFields();
 		for (Field field : fields) {
 			final PopulateWith populateWith = field.getAnnotation(PopulateWith.class);

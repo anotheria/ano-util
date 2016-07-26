@@ -79,7 +79,7 @@ public class SortType implements Serializable{
      * @return
      */
     public SortType reverse(){
-    	return new SortType(getSortBy(), !getSortOrder());
+        return new SortType(sortBy, !sortOrder);
     }
 
     /**

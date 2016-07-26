@@ -17,7 +17,7 @@ public class Slicer {
 	public static <T> Slice<T> slice(Segment segment, List<T> data){
 		int totalElements = data.size();
 		
-		Slice<T> ret = new Slice<T>(segment);
+		Slice<T> ret = new Slice<>(segment);
 		ret.setTotalNumberOfItems(totalElements);
 
 		double pageCount = (double)totalElements / segment.getElementsPerSlice();

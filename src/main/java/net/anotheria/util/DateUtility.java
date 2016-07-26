@@ -168,8 +168,8 @@ public final class DateUtility {
 	 */
 	public static String toDayAndMonthOnly(Date d) {
 		String ret = "";
-		ret += (d.day < 10 ? "0" + d.day : "" + d.day) + ".";
-		ret += (d.month < 10 ? "0" + d.month : "" + d.month) + ".";
+		ret += (d.day < 10 ? "0" + d.day : String.valueOf(d.day)) + '.';
+		ret += (d.month < 10 ? "0" + d.month : String.valueOf(d.month)) + '.';
 		return ret;
 	}
 
@@ -180,8 +180,8 @@ public final class DateUtility {
 	 * @return
 	 */
 	public static String toTimeOnly(Date d) {
-		return (d.hour < 10 ? "0" + d.hour : "" + d.hour) + ":" + (d.min < 10 ?
-				"0" + d.min : "" + d.min);
+		return (d.hour < 10 ? "0" + d.hour : String.valueOf(d.hour)) + ':' + (d.min < 10 ?
+				"0" + d.min : String.valueOf(d.min));
 	}
 
 	/**
@@ -200,9 +200,7 @@ public final class DateUtility {
 			if (year == 0) {
 				if (month == 0 || day == 0)
 					return null;
-				return "" + (date.day < 10 ? "0" + date.day : "" + date.day)
-						+ "." + (date.month < 10 ? "0" + date.month : "" +
-						date.month);
+				return (date.day < 10 ? "0" + date.day : String.valueOf(date.day)) + '.' + (date.month < 10 ? "0" + date.month : String.valueOf(date.month));
 			}
 			return toDateOnly(date);
 		}
@@ -210,9 +208,7 @@ public final class DateUtility {
 			if (month == 0 || day == 0)
 				return toTimeOnly(date);
 			else {
-				return "" + (date.day < 10 ? "0" + date.day : "" + date.day)
-						+ "." + (date.month < 10 ? "0" + date.month : "" +
-						date.month) + ", " + toTimeOnly(date);
+				return (date.day < 10 ? "0" + date.day : String.valueOf(date.day)) + '.' + (date.month < 10 ? "0" + date.month : String.valueOf(date.month)) + ", " + toTimeOnly(date);
 			}
 		}
 		return toDateOnly(date) + ", " + toTimeOnly(date);
@@ -222,8 +218,7 @@ public final class DateUtility {
 	 * Returns the date which lies one week after given date.
 	 */
 	public static Date nextWeek(Date d) {
-		Date d2 = new Date(d.toMill() + (7L * 24 * 60 * 60 * 1000));
-		return d2;
+		return new Date(d.toMill() + (7L * 24 * 60 * 60 * 1000));
 	}
 
 	/**
@@ -233,36 +228,42 @@ public final class DateUtility {
 	 * bug with week calculation for days in november/december
 	 */
 	public static int getCalendarWeekForDate(Date date) {
-		//first we need to find where the 4. januar is (this is the first cal week).
-		Date startOfFirstWeek = new Date(4, 1, date.year);
-		Date startOfThisWeek;
-		int cal = 1;
-		//calculate the day where this week started (for year change for example).
-		startOfThisWeek = date;
-		while (!startOfThisWeek.wDay.equals("Mo."))
-			startOfThisWeek = DateUtility.previousDate(startOfThisWeek);
-		//System.out.println("Start of this week:"+startOfThisWeek);
-		if (!startOfThisWeek.equals(date))
-			return getCalendarWeekForDate(startOfThisWeek);
-		//System.out.println("Date:"+date);
-		//calculate the day where the first week in this year started (the first week is the week in which
-		//the 4th january is.
-		while (!startOfFirstWeek.wDay.equals("Mo."))
-			startOfFirstWeek = DateUtility.previousDate(startOfFirstWeek);
-		if (date.month == 1 && startOfThisWeek.month == 12) {
-			if (date.day == 1 && (date.wDay.equals("So.") || date.wDay.equals("Sa.")
-					|| date.wDay.equals("Fr.")))
-				return getCalendarWeekForDate(startOfThisWeek);
-		}
-		while (DateUtility.isBefore(startOfFirstWeek, date)) {
-			startOfFirstWeek = DateUtility.nextWeek(startOfFirstWeek);
-			startOfFirstWeek.hour = 0;
-			cal++;
-			if (DateUtility.isBefore(date, startOfFirstWeek)) {
-				cal--;
+		while (true) {
+			//first we need to find where the 4. januar is (this is the first cal week).
+			Date startOfFirstWeek = new Date(4, 1, date.year);
+			Date startOfThisWeek;
+			int cal = 1;
+			//calculate the day where this week started (for year change for example).
+			startOfThisWeek = date;
+			while (!startOfThisWeek.wDay.equals("Mo."))
+				startOfThisWeek = DateUtility.previousDate(startOfThisWeek);
+			//System.out.println("Start of this week:"+startOfThisWeek);
+			if (!startOfThisWeek.equals(date)) {
+				date = startOfThisWeek;
+				continue;
 			}
+			//System.out.println("Date:"+date);
+			//calculate the day where the first week in this year started (the first week is the week in which
+			//the 4th january is.
+			while (!startOfFirstWeek.wDay.equals("Mo."))
+				startOfFirstWeek = DateUtility.previousDate(startOfFirstWeek);
+			if (date.month == 1 && startOfThisWeek.month == 12) {
+				if (date.day == 1 && (date.wDay.equals("So.") || date.wDay.equals("Sa.")
+						|| date.wDay.equals("Fr."))) {
+					date = startOfThisWeek;
+					continue;
+				}
+			}
+			while (DateUtility.isBefore(startOfFirstWeek, date)) {
+				startOfFirstWeek = DateUtility.nextWeek(startOfFirstWeek);
+				startOfFirstWeek.hour = 0;
+				cal++;
+				if (DateUtility.isBefore(date, startOfFirstWeek)) {
+					cal--;
+				}
+			}
+			return cal;
 		}
-		return cal;
 	}
 
 	/**

@@ -1,32 +1,3 @@
-/**
-This code was pasted to ano-web project as workaround for java bug:
-http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4508058
-
-The original source is:
-http://koti.mbnet.fi/akini/java/unicodereader/UnicodeReader.java.txt
-
-Any license or restriction of using weren't found either as way to contact with authors.
-So we assume that do not restrict any legal aspects of the copy rights by using, modifying and, possibly, selling
-this code.
- 
-
- version: 1.1 / 2007-01-25
- - changed BOM recognition ordering (longer boms first)
-
- Original pseudocode   : Thomas Weidenfeller
- Implementation tweaked: Aki Nieminen
-
- http://www.unicode.org/unicode/faq/utf_bom.html
- BOMs:
-   00 00 FE FF    = UTF-32, big-endian
-   FF FE 00 00    = UTF-32, little-endian
-   EF BB BF       = UTF-8,
-   FE FF          = UTF-16, big-endian
-   FF FE          = UTF-16, little-endian
-
- Win2k Notepad:
-   Unicode format = UTF-16LE
- ***/
 package net.anotheria.util.io;
 
 import java.io.IOException;
@@ -52,11 +23,7 @@ public class UnicodeReader extends Reader {
 	 * 
 	 * @param in
 	 *            inputstream to be read
-	 * @param defaultEnc
-	 *            default encoding if stream does not have BOM marker. Give NULL
-	 *            to use system-level default.
 	 */
-	
 	public UnicodeReader(InputStream in) {
 		this(in, Charset.defaultCharset());
 	}
@@ -92,12 +59,12 @@ public class UnicodeReader extends Reader {
 		if (internalIn2 != null)
 			return;
 
-		Charset preciseCharset;
-		byte bom[] = new byte[BOM_SIZE];
-		int n, unread;
-		n = internalIn.read(bom, 0, bom.length);
+        byte[] bom = new byte[BOM_SIZE];
+        int n = internalIn.read(bom, 0, bom.length);
 
-		if ((bom[0] == (byte) 0x00) && (bom[1] == (byte) 0x00) && (bom[2] == (byte) 0xFE) && (bom[3] == (byte) 0xFF)) {
+        int unread;
+        Charset preciseCharset;
+        if ((bom[0] == (byte) 0x00) && (bom[1] == (byte) 0x00) && (bom[2] == (byte) 0xFE) && (bom[3] == (byte) 0xFF)) {
 			preciseCharset = Charset.forName("UTF-32BE");
 			unread = n - 4;
 		} else if ((bom[0] == (byte) 0xFF) && (bom[1] == (byte) 0xFE) && (bom[2] == (byte) 0x00) && (bom[3] == (byte) 0x00)) {
@@ -130,11 +97,13 @@ public class UnicodeReader extends Reader {
 		}
 	}
 
+	@Override
 	public void close() throws IOException {
 		init();
 		internalIn2.close();
 	}
 
+	@Override
 	public int read(char[] cbuf, int off, int len) throws IOException {
 		init();
 		return internalIn2.read(cbuf, off, len);

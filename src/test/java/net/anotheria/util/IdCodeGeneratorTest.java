@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class IdCodeGeneratorTest {
 	
@@ -44,7 +44,7 @@ public class IdCodeGeneratorTest {
 	@Test public void abc(){
 		String code = IdCodeGenerator.generateCustomCode(new char[]{'a','b','c'}, 10);
 		assertEquals(10, code.length());
-		List<Character> pattern = new ArrayList<Character>(); 
+		List<Character> pattern = new ArrayList<>();
 		for (char c : new char[]{'a','b','c'})
 			pattern.add(c);
 		for (int i = 0; i<code.length(); i++){

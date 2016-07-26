@@ -11,11 +11,11 @@ public class UnsafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
      * Serialization version unique identifier.
      */
     private static final long serialVersionUID = -4257919838109398407L;
-    private ConcurrentMap<K, IdBasedLock<K>> locks = new ConcurrentHashMap<K, IdBasedLock<K>>();
+    private ConcurrentMap<K, IdBasedLock<K>> locks = new ConcurrentHashMap<>();
 
     @Override
     public IdBasedLock<K> obtainLock(K id) {
-        IdBasedLock<K> lock = new IdBasedLock<K>(id, this);
+        IdBasedLock<K> lock = new IdBasedLock<>(id, this);
         IdBasedLock<K> myLock = locks.putIfAbsent(id, lock);
         if (myLock == null)
             return lock;

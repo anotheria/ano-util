@@ -13,7 +13,7 @@ public class URLUtils {
 	public static final Map<String,String> ENCODING;
 	
 	static {
-		ENCODING = new HashMap<String, String>();
+		ENCODING = new HashMap<>();
 		ENCODING.put(" ", "%20");
 		ENCODING.put("<", "%3C");
 		ENCODING.put(">", "%3E");

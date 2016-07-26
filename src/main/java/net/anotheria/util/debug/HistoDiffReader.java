@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HistoDiffReader {
 
 	private static final Logger log = LoggerFactory.getLogger(HistoDiffReader.class);
 
-	public static void main(String a[]) throws Exception{
+	public static void main(String... a) throws Exception{
 
 		String newP = "/Users/another/Documents/Projects/AYN/CRASH/2013-02-05/histo3.txt";
 		String oldP = "/Users/another/Documents/Projects/AYN/CRASH/2013-02-05/histo2.txt";
@@ -45,13 +46,10 @@ public class HistoDiffReader {
 		List<HistogramEntry> newEntries = newH.getEntries();
 		List<HistogramEntry> oldEntries = oldH.getEntries();
 
-		List<String> classNames = new ArrayList<String>();
-
-		HashMap<String,HistogramEntry> map = new HashMap<String,HistogramEntry>(newEntries.size());
+		Map<String,HistogramEntry> map = new HashMap<>(newEntries.size());
 		//first put all new entries
 		for (HistogramEntry entry : newEntries){
 			map.put(entry.getClassName(), entry);
-			classNames.add(entry.getClassName());
 		}
 
 		for (HistogramEntry entry : oldEntries){
@@ -60,7 +58,6 @@ public class HistoDiffReader {
 				//this is an object that vanished from heap
 				entry.negate();
 				map.put(entry.getClassName(), entry);
-				classNames.add(entry.getClassName());
 			}else{
 				ne.reduceBy(entry);
 			}
@@ -68,13 +65,11 @@ public class HistoDiffReader {
 
 		int unchangedClassCount = 0;
 		//sanity check
-		ArrayList<String> keys = new ArrayList<String>();
-		keys.addAll(map.keySet());
-		for (String key : keys){
-			HistogramEntry entry = map.get(key);
+		for (Map.Entry<String, HistogramEntry> stringHistogramEntryEntry : map.entrySet()){
+			HistogramEntry entry = stringHistogramEntryEntry.getValue();
 			if (entry.getInstanceCount()==0 && entry.getBytes()==0){
 				unchangedClassCount++;
-				map.remove(key);
+				map.remove(stringHistogramEntryEntry.getKey());
 			}
 			if (entry.getInstanceCount()!=0 && entry.getBytes()==0){
 				System.out.println("SANITY CHECK FAILED ON "+entry);
@@ -84,13 +79,11 @@ public class HistoDiffReader {
 		System.out.println("Unchanged classes: "+unchangedClassCount);
 		System.out.println("Changed classes: "+map.size());
 
-		long sumPosMem = 0;
-		int sumPosInstance = 0;
-
 		//--
-		List<HistogramEntry> result = new ArrayList<HistoDiffReader.HistogramEntry>();
-		result.addAll(map.values());
+		List<HistogramEntry> result = new ArrayList<>(map.values());
 		result = StaticQuickSorter.sort(result, new HistogrammEntrySortType());
+		int sumPosInstance = 0;
+		long sumPosMem = 0;
 		for (HistogramEntry e : result){
 			System.out.println(e.toDetails());
 			if (e.bytes>0)
@@ -107,12 +100,12 @@ public class HistoDiffReader {
 	public static final Histogramm readHistogram(String path) throws Exception{
 		Histogramm h = new Histogramm(path);
 		String content = IOUtils.readFileAtOnceAsString(path);
-		String tt[] = StringUtils.tokenize(content, '\n');
+		String[] tt = StringUtils.tokenize(content, '\n');
 		for (String line : tt){
 			if (line == null)
 				continue;
 			line = line.trim();
-			if (line.equals(""))
+			if (line.isEmpty())
 				continue;
 
 			if (line.startsWith("num"))
@@ -142,7 +135,7 @@ public class HistoDiffReader {
 
 		public Histogramm(String aName) {
 			name = aName;
-			entries = new ArrayList<HistoDiffReader.HistogramEntry>();
+			entries = new ArrayList<>();
 		}
 
 		public void addEntry(HistogramEntry toAdd){
@@ -203,9 +196,8 @@ public class HistoDiffReader {
 		}
 
 		public HistogramEntry(String line){
-			String t[] = StringUtils.tokenize(line, ' ');
-			List<String> tt = new ArrayList<String>();
-			tt.addAll(Arrays.asList(t));
+			String[] t = StringUtils.tokenize(line, ' ');
+			List<String> tt = new ArrayList<>(Arrays.asList(t));
 			int index = -1;
 			while( (index=tt.indexOf(""))!=-1)
 				tt.remove(index);
@@ -263,9 +255,9 @@ public class HistoDiffReader {
 			HistogramEntry anotherEntry = (HistogramEntry)o;
 			switch(method){
 				case HistogrammEntrySortType.SORT_BY_COUNT:
-					return BasicComparable.compareInt(getInstanceCount(), anotherEntry.getInstanceCount());
+					return BasicComparable.compareInt(instanceCount, anotherEntry.instanceCount);
 				case HistogrammEntrySortType.SORT_BY_MEMORY:
-					return BasicComparable.compareLong(getBytes(), anotherEntry.getBytes());
+					return BasicComparable.compareLong(bytes, anotherEntry.bytes);
 				default:
 					throw new AssertionError("Unknown method "+method);
 			}

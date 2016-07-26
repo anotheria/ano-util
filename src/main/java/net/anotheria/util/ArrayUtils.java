@@ -19,14 +19,13 @@ public class ArrayUtils {
 	 * @param secondArray
 	 * @return
 	 */
-	public static <T> T[] mergeArrays(T[] firstArray, T[] secondArray) {
+	public static <T> T[] mergeArrays(T[] firstArray, T... secondArray) {
 		T[] ret = Arrays.copyOf(firstArray, firstArray.length + secondArray.length);
-		for(int i = firstArray.length; i < ret.length; i++)
-			ret[i] = secondArray[i - firstArray.length];
+		System.arraycopy(secondArray, firstArray.length - firstArray.length, ret, firstArray.length, ret.length - firstArray.length);
 		return ret;
 	}
 	
-	public static int[] mergeArrays(int[] firstArray, int[] secondArray) {
+	public static int[] mergeArrays(int[] firstArray, int... secondArray) {
 		return toIntArray(mergeArrays(toIntegerArray(firstArray), toIntegerArray(secondArray)));
 	}
 	
@@ -64,21 +63,21 @@ public class ArrayUtils {
 	}
 	
 	public static List<Integer> asList(int[] array){
-		List<Integer> ret = new ArrayList<Integer>(array.length);
+		List<Integer> ret = new ArrayList<>(array.length);
 		for(int a:array)
 			ret.add(a);
 		return ret;
 	}
 	
 	public static List<Long> asList(long[] array){
-		List<Long> ret = new ArrayList<Long>(array.length);
+		List<Long> ret = new ArrayList<>(array.length);
 		for(long a:array)
 			ret.add(a);
 		return ret;
 	}
 	
 	public static List<Float> asList(float[] array){
-		List<Float> ret = new ArrayList<Float>(array.length);
+		List<Float> ret = new ArrayList<>(array.length);
 		for(float a:array)
 			ret.add(a);
 		return ret;
@@ -112,7 +111,7 @@ public class ArrayUtils {
 		return ret;
 	}
 	
-	public static int[] parseStringArray(String[] stringArray){
+	public static int[] parseStringArray(String... stringArray){
 		int[] ret = new int[stringArray.length];
 		for(int i = 0; i < stringArray.length; i++)
 			ret[i] = Integer.parseInt(stringArray[i]);
@@ -128,21 +127,21 @@ public class ArrayUtils {
 	 */
 	@Deprecated
 	public static List<String> toStringList(List<?> list){
-		List<String> ret = new ArrayList<String>(list.size());
+		List<String> ret = new ArrayList<>(list.size());
 		for(Object el: list)
 			ret.add(el.toString());
 		return ret;
 	}
 	
 	public static List<String> toStringList(int... array){
-		List<String> ret = new ArrayList<String>(array.length);
+		List<String> ret = new ArrayList<>(array.length);
 		for(int el: array)
 			ret.add(String.valueOf(el));
 		return ret;
 	}
 	
 	public static <T> List<String> toStringList(T... array){
-		List<String> ret = new ArrayList<String>(array.length);
+		List<String> ret = new ArrayList<>(array.length);
 		for(T el: array)
 			ret.add(String.valueOf(el));
 		return ret;
@@ -182,7 +181,7 @@ public class ArrayUtils {
 	 * @param array2
 	 * @return the array of elements that the array1 and the array2 have in common
 	 */
-	public static int[] intersection(int[] array1, int[] array2){
+	public static int[] intersection(int[] array1, int... array2){
 		if(array1.length == 0 || array2.length == 0)
 			return new int[0];
 		if(!isSorted(array1) || !isSorted(array2))
@@ -226,23 +225,6 @@ public class ArrayUtils {
 
 	public static <T> T[] createInstance(T[] a, int size){
 		 return (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
-	}
-	
-	public static final void main(String args[]){
-		int[] a1 = {0,2,3,6,8,10,11,12,13,14,34};
-		int[] a2 = {1,2,3,5,6,9,10,13,53};
-		System.out.println("Array1: " + Arrays.toString(a1));
-		System.out.println("Array2: " + Arrays.toString(a2));
-		System.out.println("Intersection Array1 and Array1: " + Arrays.toString(intersection(a1, a1)));
-		System.out.println("Intersection Array1 and Array2: " + Arrays.toString(intersection(a1, a2)));
-		System.out.println("Intersection Array2 and Array1: " + Arrays.toString(intersection(a2, a1)));
-		
-		int[] b1 = {};
-		int[] b2 = {1,2,3,5,6,9,10,13,53};
-		System.out.println("Array b1: " + Arrays.toString(b1));
-		System.out.println("Array b2: " + Arrays.toString(b2));
-		System.out.println("Intersection Array b1 and Array b1: " + Arrays.toString(intersection(b1, b1)));
-		System.out.println("Intersection Array b1 and Array b2: " + Arrays.toString(intersection(b1, b2)));
 	}
 	
 }

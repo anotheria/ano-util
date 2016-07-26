@@ -30,7 +30,7 @@ public class IPRange {
 	public IPRange(String ipAdress, int mask) {
 		maskedIp = convertIp(ipAdress);
 		// System.out.println("ipAdress: "+ipAdress+" -> "+networkIp);
-		networkMask = (long) Math.pow(2, mask) - 1;
+		networkMask = (long) StrictMath.pow(2, mask) - 1;
 		networkMask <<= 32 - mask;
 		// System.out.print(networkIp + " --> ");
 		maskedIp &= networkMask;
@@ -53,15 +53,15 @@ public class IPRange {
 	 * @param ipAdress as dotted-decimal
 	 * @return ip address converted to binary form
 	 */
-	private long convertIp(String ipAdress) {
-		long result = 0;
-		String tokens[] = StringUtils.tokenize(ipAdress, '.');
+	private static long convertIp(String ipAdress) {
+        String[] tokens = StringUtils.tokenize(ipAdress, '.');
 		if (tokens == null || tokens.length != 4)
 			throw new RuntimeException("Illegal ip format: " + ipAdress);
 		int[] ipAsByte = new int[4]; // int because byte is signed
 		for (int i = 0; i < tokens.length; i++)
 			ipAsByte[i] = Integer.parseInt(tokens[i]);
-		for (int i = 0; i < ipAsByte.length; i++) {
+        long result = 0;
+        for (int i = 0; i < ipAsByte.length; i++) {
 			if (i > 0)
 				result <<= 8;
 			result |= ipAsByte[i];

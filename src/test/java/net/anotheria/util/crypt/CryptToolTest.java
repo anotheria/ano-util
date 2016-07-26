@@ -45,12 +45,12 @@ public class CryptToolTest {
 
     @Test
     public void testMap() {
-        Map<String, String> parameters = new HashMap<String, String>();
+        Map<String, String> parameters = new HashMap<>();
 
         String k1 = "a", v1 = "1";
-        String k2 = "b", v2 = "3";
-        String k3 = "c";
         parameters.put(k1, v1);
+        String v2 = "3";
+        String k2 = "b";
         parameters.put(k2, v2);
         int size = parameters.size();
 
@@ -65,6 +65,7 @@ public class CryptToolTest {
         assertEquals(size, decrypted.size());
         assertEquals(v1, decrypted.get(k1));
         assertEquals(v2, decrypted.get(k2));
+        String k3 = "c";
         assertEquals(null, decrypted.get(k3));
 
     }

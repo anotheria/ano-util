@@ -81,7 +81,7 @@ public final class LogMessageUtil {
 		if (objects == null || objects.length == 0)
 			return methodName + "()" + STR_FAIL;
 
-		StringBuffer arguments = new StringBuffer("(");
+		StringBuilder arguments = new StringBuilder("(");
 		int processed = 0;
 		for (Object obj : objects) {
 			if (processed > 0)
@@ -101,36 +101,36 @@ public final class LogMessageUtil {
 			// collection's support
 			if (obj instanceof Collection<?>) {
 				Collection<?> collection = (Collection<?>) obj;
-				arguments.append(collection.size() + DELIMITER_LENGTH + "[");
+				arguments.append(collection.size()).append(DELIMITER_LENGTH).append('[');
 				arguments.append(crop(collectionToString(collection, true), MAX_ARGUMENT_LENGTH));
-				arguments.append("]");
+				arguments.append(']');
 				continue;
 			}
 
 			// map's support
 			if (obj instanceof Map<?, ?>) {
 				Map<?, ?> map = (Map<?, ?>) obj;
-				arguments.append(map.size() + DELIMITER_LENGTH + "{");
+				arguments.append(map.size()).append(DELIMITER_LENGTH).append('{');
 				arguments.append(crop(mapToString(map, true), MAX_ARGUMENT_LENGTH));
-				arguments.append("}");
+				arguments.append('}');
 				continue;
 			}
 
 			// arrays support
 			if (obj.getClass() != null && obj.getClass().isArray()) {
 				int length = Array.getLength(obj);
-				arguments.append(length + DELIMITER_LENGTH + "[");
+				arguments.append(length).append(DELIMITER_LENGTH).append('[');
 				arguments.append(crop(arrayToString(obj, true), MAX_ARGUMENT_LENGTH));
-				arguments.append("]");
+				arguments.append(']');
 				continue;
 			}
 
 			arguments.append(crop(obj, MAX_ARGUMENT_LENGTH));
 
 		}
-		arguments.append(")");
+		arguments.append(')');
 
-		return methodName + arguments.toString() + STR_FAIL;
+		return methodName + arguments + STR_FAIL;
 	}
 
 	/**
@@ -158,7 +158,7 @@ public final class LogMessageUtil {
 		}
 
 		if (!isTop)
-			result.append("]");
+			result.append(']');
 
 		return result.toString();
 	}
@@ -186,20 +186,20 @@ public final class LogMessageUtil {
 			final Object key = keyset[idx];
 			final Object item = map.get(key);
 			if (item == null) {
-				result.append(key + DELIMITER_MAP_ELEMENT + STR_NULL);
+				result.append(key).append(DELIMITER_MAP_ELEMENT).append(STR_NULL);
 				continue;
 			}
 
 			if (item.toString().isEmpty()) {
-				result.append(key + DELIMITER_MAP_ELEMENT + STR_EMPTY);
+				result.append(key).append(DELIMITER_MAP_ELEMENT).append(STR_EMPTY);
 				continue;
 			}
 
-			result.append(key + DELIMITER_MAP_ELEMENT + objToString(item, false));
+			result.append(key).append(DELIMITER_MAP_ELEMENT).append(objToString(item, false));
 		}
 
 		if (!isTop)
-			result.append("}");
+			result.append('}');
 
 		return result.toString();
 	}
@@ -228,7 +228,7 @@ public final class LogMessageUtil {
 		}
 
 		if (!isTop)
-			result.append("]");
+			result.append(']');
 
 		return result.toString();
 	}

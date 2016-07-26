@@ -31,12 +31,9 @@ public final class TemplateUtility {
 	/**
 	 * Map with pre-configured  template processors.
 	 */
-	private static final Map<String, TemplateProcessor> defaultProcessors = new HashMap<String, TemplateProcessor>();
+	private static final Map<String, TemplateProcessor> defaultProcessors = new HashMap<>();
 
 
-	/**
-	 * Default Processors init.
-	 */
 	static {
 		defaultProcessors.put(ConstantsTemplateProcessor.PREFIX, new ConstantsTemplateProcessor());
 
@@ -77,8 +74,7 @@ public final class TemplateUtility {
 	 * @return collection
 	 */
 	public static Map<String, TemplateProcessor> getDefaultProcessors() {
-		HashMap<String, TemplateProcessor> ret = new HashMap<String, TemplateProcessor>();
-		ret.putAll(defaultProcessors);
+		Map<String, TemplateProcessor> ret = new HashMap<>(defaultProcessors);
 		return ret;
 	}
 
@@ -118,7 +114,7 @@ public final class TemplateUtility {
 	 * @param processors TemplateProcessor collection
 	 * @return replaced text
 	 */
-	private static String replaceVariables(TemplateReplacementContext context, List<ContentElement> index, Map<String, TemplateProcessor> processors) {
+	private static String replaceVariables(TemplateReplacementContext context, Iterable<ContentElement> index, Map<String, TemplateProcessor> processors) {
 		StringBuilder ret = new StringBuilder();
 		for (ContentElement el : index)
 			ret.append(replaceContentElement(context, el, processors));
@@ -134,7 +130,7 @@ public final class TemplateUtility {
 	private static List<ContentElement> indexSource(String src) {
 		String myS = StringUtils.removeChar(src, '\r');
 		List<String> stringIndex = StringUtils.indexSuperTags(myS, TAG_START, TAG_END);
-		List<ContentElement> ret = new ArrayList<ContentElement>(stringIndex.size());
+		List<ContentElement> ret = new ArrayList<>(stringIndex.size());
 		for (String s : stringIndex)
 			ret.add(createContentElementInDynamic(s, TAG_START, TAG_END));
 		return ret;

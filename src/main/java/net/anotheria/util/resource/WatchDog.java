@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -30,7 +29,7 @@ public enum WatchDog {
 	private volatile long pause;
 
 	private WatchDog(long aPause) {
-		watchingRegistry = new ConcurrentHashMap<String, Resource>();
+		watchingRegistry = new ConcurrentHashMap<>();
 		pause = aPause;
 		new WatcherThread().start();
 	}
@@ -67,7 +66,7 @@ public enum WatchDog {
 			try {
 				while (!Thread.interrupted()) {
 					Thread.sleep(getPause());
-					Set<Resource> watchedResources = new HashSet<Resource>(watchingRegistry.values());
+					Iterable<Resource> watchedResources = new HashSet<>(watchingRegistry.values());
 					for (Resource source : watchedResources) {
 						ResourceLoader loader = source.getResourceLoader();
 						try {

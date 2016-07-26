@@ -2,8 +2,8 @@ package net.anotheria.util;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ExecutionTimerTest {
 	@Test
@@ -39,7 +39,7 @@ public class ExecutionTimerTest {
 	@Test public void testMultiple() throws InterruptedException{
 		ExecutionTimer timer = new ExecutionTimer();
 		for (int i=1; i<=10; i++){
-			String key = ""+(11-i);
+			String key = String.valueOf(11 - i);
 			timer.startExecution(key);
 			Thread.sleep(100);
 			timer.stopExecution(key);

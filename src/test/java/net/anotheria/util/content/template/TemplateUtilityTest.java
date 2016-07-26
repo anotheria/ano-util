@@ -1,6 +1,6 @@
 package net.anotheria.util.content.template;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static net.anotheria.util.content.template.TemplateUtility.replaceVariables;
@@ -15,24 +15,24 @@ public class TemplateUtilityTest {
 	@Test
 	public void testReplaceTest() {
 		TemplateUtility.addProcessor(SimpleTestProcessor.PREFIX, new SimpleTestProcessor());
-		String replacePart1 = '{' + SimpleTestProcessor.PREFIX + ":" + SimpleTestProcessor.var1 + "}";
+		String replacePart1 = '{' + SimpleTestProcessor.PREFIX + ':' + SimpleTestProcessor.var1 + '}';
 		String replacePart2 = '{' + SimpleTestProcessor.PREFIX + ":not_exist:default___}";
 		String text = "I'm text for replace! " + replacePart1;
-		String text2 = "TEST 2 " + replacePart2;
-		String staticText = "I'm static {::::>>>>>}}}}}";
 
-		String userID = "1";
+        String userID = "1";
 		String language = "ua";
 
 		String testReplaceVAR1 = replaceVariables(new TemplateReplacementContext(userID, language), text);
 		Assert.assertNotNull("Should not be null", testReplaceVAR1);
 		Assert.assertEquals("Should not be null",  "I'm text for replace! "  + SimpleTestProcessor.var1Value + language, testReplaceVAR1);
 
-		String testReplaceToDefault = replaceVariables(new TemplateReplacementContext(userID, language), text2);
+        String text2 = "TEST 2 " + replacePart2;
+        String testReplaceToDefault = replaceVariables(new TemplateReplacementContext(userID, language), text2);
 		Assert.assertNotNull("Should not be null", testReplaceToDefault);
 		Assert.assertEquals("Should not be null", "TEST 2 " + "default___" + userID, testReplaceToDefault);
 
-		String testReplaceStaticContent = replaceVariables(new TemplateReplacementContext(userID, language), staticText);
+        String staticText = "I'm static {::::>>>>>}}}}}";
+        String testReplaceStaticContent = replaceVariables(new TemplateReplacementContext(userID, language), staticText);
 		Assert.assertNotNull("Should not be null", testReplaceStaticContent);
 		Assert.assertEquals("Should not be null", staticText, testReplaceStaticContent);
 

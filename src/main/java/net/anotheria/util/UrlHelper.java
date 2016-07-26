@@ -1,10 +1,5 @@
 package net.anotheria.util;
 
-/**
- * This class helps to handle URLs and its parameters.
- * Easily parse an existing URL and remove/add parameters.
- * @author otoense
- */
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -51,24 +46,24 @@ public class UrlHelper {
 		this.port = port;
 		this.path = path;
 		this.reference = reference; 
-		params = new ArrayList<Parameter>();
+		params = new ArrayList<>();
 	}
 	
 	public UrlHelper(String url) {
-		params = new ArrayList<Parameter>();
+		params = new ArrayList<>();
 		
 		int protocolPos = url.indexOf("://");
 		
 		if(protocolPos > -1) {
-			setProtocol(url.substring(0, protocolPos));
-			url = url.substring(protocolPos+3);
+            this.protocol = url.substring(0, protocolPos);
+            url = url.substring(protocolPos+3);
 		}
 		
 		int referencePos = url.lastIndexOf('#');
 		
 		if(referencePos > -1) {
-			setReference(url.substring(referencePos+1));
-			url = url.substring(0, referencePos);
+            this.reference = url.substring(referencePos+1);
+            url = url.substring(0, referencePos);
 		}
 		
 		int queryPos = url.indexOf('?');
@@ -81,20 +76,20 @@ public class UrlHelper {
 		int pathPos = url.indexOf('/', portPos);
 		
 		if(portPos > -1) {
-			setHost(url.substring(0, portPos));
-			if(pathPos > -1) {
-				setPort(Integer.parseInt(url.substring(portPos+1, pathPos)));
-				setPath(url.substring(pathPos));
-			} else {
-				setPort(Integer.parseInt(url.substring(portPos+1, url.length())));
-			}
+            this.host = url.substring(0, portPos);
+            if(pathPos > -1) {
+                this.port = Integer.parseInt(url.substring(portPos+1, pathPos));
+                this.path = url.substring(pathPos);
+            } else {
+                this.port = Integer.parseInt(url.substring(portPos+1, url.length()));
+            }
 		} else {
 			if(pathPos > -1) {
-				setHost(url.substring(0, pathPos));
-				setPath(url.substring(pathPos));	
-			} else {
-				setHost(url);
-			}
+                this.host = url.substring(0, pathPos);
+                this.path = url.substring(pathPos);
+            } else {
+                this.host = url;
+            }
 		}
 		
 	
@@ -106,8 +101,8 @@ public class UrlHelper {
 					query = query.substring(1);
 			
 			String[] params = StringUtils.tokenize(query, '&');
-			for(int i=0; i<params.length; i++) {
-				addParameter(params[i]);
+			for (String param : params) {
+				addParameter(param);
 			}
 		}
 	}
@@ -142,7 +137,7 @@ public class UrlHelper {
 	}
 	
 	public void removeParameters() {
-		params = new ArrayList<Parameter>();
+		params = new ArrayList<>();
 	}
 	
 	public void addParameter(String paramString) {
@@ -159,28 +154,15 @@ public class UrlHelper {
 	}
 	
 	public void addParameters(Map<String, String> parameters) {
-		Iterator<Map.Entry<String, String>> allParameters = parameters.entrySet().iterator();
-		while(allParameters.hasNext()) {
-			Map.Entry<String, String> param = allParameters.next();
+		for (Map.Entry<String, String> param : parameters.entrySet()) {
 			Object value = param.getValue();
 			String key = param.getKey();
-			if(value instanceof String[])
-				addParameter(key, ((String[])value)[0]);
+			if (value instanceof String[])
+				addParameter(key, ((String[]) value)[0]);
 			else
 				addParameter(key, value.toString());
 		}
 	}
-	
-	/*
-	public void addParameters(HttpServletRequest req) {
-		Enumeration allParams = req.getParameterNames();
-		while(allParams.hasMoreElements()) {
-			String paramName = (String) allParams.nextElement();
-			String paramValue = req.getParameter(paramName);
-			addParameter(paramName, paramValue);
-		}
-	}
-	*/
 	
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -194,7 +176,7 @@ public class UrlHelper {
 			result.append(host);
 		
 		if(port != -1 && port != 80) {
-			result.append(":");
+			result.append(':');
 			result.append(port);
 		}
 		
@@ -203,13 +185,13 @@ public class UrlHelper {
 		}
 
 		if(params.size()>0) {
-			result.append("?");
+			result.append('?');
 		}
 		
 		result.append(parametersToString());
 		
 		if(reference != null && reference.length()>0) {
-			result.append("#");
+			result.append('#');
 			result.append(reference);
 		}
 		
@@ -223,14 +205,14 @@ public class UrlHelper {
 		while(allParams.hasNext()) {
 			Parameter param = allParams.next();
 			result.append(param.getName());
-			result.append("=");
+			result.append('=');
 			try {
 				result.append(URLEncoder.encode(param.getValue(), "ISO-8859-1"));
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException(e);
 			}
 			if(allParams.hasNext()) {
-				result.append("&");
+				result.append('&');
 			}
 		}
 		return result.toString();
@@ -304,21 +286,21 @@ public class UrlHelper {
 		while(allParams.hasNext()) {
 			Parameter param = allParams.next();
 			result.append(param.getName());
-			result.append("=");
+			result.append('=');
 			try {
 				result.append(URLEncoder.encode( param.getValue(), "ISO-8859-1"));
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException(e);
 			}
 			if(allParams.hasNext()) {
-				result.append("&");
+				result.append('&');
 			}
 		}
 		
 		return result.toString();
 	}
 	
-	public class Parameter {
+	public static class Parameter {
 		/**
 		 * Parameter name.
 		 */
@@ -342,8 +324,8 @@ public class UrlHelper {
 		}
 		
 		@Override public boolean equals(Object o) {
-			return o instanceof Parameter && 
-					name.equals(((Parameter)o).getName());
+            return o instanceof Parameter &&
+					name.equals(((Parameter) o).name);
 		}
 		
 		@Override public int hashCode(){

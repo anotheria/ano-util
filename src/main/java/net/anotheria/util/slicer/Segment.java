@@ -55,7 +55,7 @@ public class Segment implements Serializable {
 	}
 	
 	@Override public String toString(){
-		return "SliceNumber: "+getSliceNumber()+", ElementsPerSlice: "+getElementsPerSlice();
+        return "SliceNumber: "+ sliceNumber +", ElementsPerSlice: "+ elementsPerSlice;
 	}
 
 }

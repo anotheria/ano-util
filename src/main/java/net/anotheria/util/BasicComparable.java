@@ -2,7 +2,7 @@ package net.anotheria.util;
 
 import net.anotheria.util.sorter.IComparable;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * An abstract class which implements useful methods to compare basic types.
@@ -36,7 +36,8 @@ public abstract class BasicComparable implements IComparable{
 	/**
 	 * @deprecated use compareBoolean instead.
 	 */
-	public static final int compareBool(boolean a, boolean b){
+	@Deprecated
+    public static final int compareBool(boolean a, boolean b){
 		return compareBoolean(a,b);
 	}
 
@@ -47,8 +48,8 @@ public abstract class BasicComparable implements IComparable{
 	 * @return 0 if a==b, -1 if a & !b or +1 if !a & b.
 	 */
 	public static final int compareBoolean(boolean a, boolean b){
-		return a==b ? 0 : 
-			a & !b ? -1 : 1;
+		return a==b ? 0 :
+				a && !b ? -1 : 1;
 	}
 	
 	/**
@@ -91,7 +92,7 @@ public abstract class BasicComparable implements IComparable{
 	 * @param b second List to compare.
 	 * @return 0 if a.size==b.size, -1 if a.size&lt;b.size or +1 if a.size&gt;b.size.
 	 */
-	public static final <T> int compareList(List<T> a, List<T> b){
+	public static final <T> int compareList(Collection<T> a, Collection<T> b){
 		return a == null ? 
 				(b == null ? 0 : -1 ) : 
 				(b == null ? 1 : compareInt(a.size(), b.size()));

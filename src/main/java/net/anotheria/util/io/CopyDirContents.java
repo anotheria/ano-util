@@ -18,7 +18,7 @@ public class CopyDirContents {
 	/**
 	 * Buffer used for copies.
 	 */
-	private static byte[] buffer = new byte[1*1024*1024];
+	private static byte[] buffer = new byte[1024 * 1024];
 	/**
 	 * Counter for files and directories.
 	 */
@@ -36,7 +36,7 @@ public class CopyDirContents {
 	 */
 	private static int skipped = 0;
 
-	public static void main(String a[]) throws IOException{
+	public static void main(String... a) throws IOException{
 		File src = new File("/storage/BAK_EXT_DISK");
 		File dest = new File("/media/WD Passport");
 		
@@ -89,7 +89,7 @@ public class CopyDirContents {
 	 * @param dest
 	 * @throws IOException
 	 */
-	private static void copyFile(File src, File dest) throws IOException{
+	private static void copyFile(File src, File dest) {
 		files++;
 		if (files/1000*1000==files)
 			printInfo();

@@ -41,7 +41,7 @@ public class FixtureLoader implements ResourceLoader{
 		lastUpdateTimestamp = ORIGINAL_LAST_UPDATE;
 	}
 	
-	private void chechExistance(String resourceName){
+	private static void chechExistance(String resourceName){
 		if(!EXISTING_RESOURCE.equals(resourceName))
 			throw new IllegalArgumentException("Resource with name " + resourceName + " doesn't exist!");
 	}

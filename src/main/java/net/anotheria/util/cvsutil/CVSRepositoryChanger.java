@@ -17,7 +17,7 @@ public class CVSRepositoryChanger {
 	public static final String TO_REPLACE = "lro@";
 	public static final String REPLACE_WITH = "lrosenberg@";
 	
-	public static void main(String a[]){
+	public static void main(String... a){
 		String startpath = ".";
 		try {
 			startpath = a[0];
@@ -40,14 +40,14 @@ public class CVSRepositoryChanger {
 	private static void proceedFile(File f){
 		if (!f.getName().equals("Root"))
 			return;
-		STATIC_LOGGER.info("Checking "+f.getAbsolutePath()+" ");
+		STATIC_LOGGER.info("Checking "+f.getAbsolutePath()+ ' ');
 		try{	
 			FileInputStream fIn = new FileInputStream(f);
-			byte d[] = new byte[fIn.available()];
+			byte[] d = new byte[fIn.available()];
 			fIn.read(d);
 			String source = new String(d);
 			String dest = source;
-			while(dest.indexOf(TO_REPLACE)!=-1)
+			while(dest.contains(TO_REPLACE))
 				dest = StringUtils.replace(dest, TO_REPLACE, REPLACE_WITH);
 			
 			if (!dest.equals(source)){
@@ -67,9 +67,8 @@ public class CVSRepositoryChanger {
 	}
 	
 	private static void proceedDir(File f){
-		File files[] = f.listFiles();
-		for (int i=0; i<files.length; i++){
-			File aFile = files[i];
+		File[] files = f.listFiles();
+		for (File aFile : files) {
 			proceed(aFile);
 		}
 	}

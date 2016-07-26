@@ -10,7 +10,7 @@ public class Date implements Serializable{
     private static final long serialVersionUID = -8683008562899070994L;
 
 
-    /** The day of week. Initial value <code>null</code> */
+    /** The day of week. Initial value {@code null} */
     public String wDay = null;
     /** The day of month. Initial value is -1.*/
     public int    day   = -1;
@@ -29,7 +29,7 @@ public class Date implements Serializable{
     
     private int dayOfWeek;
     
-    /** String array of month used for printing via <code>toString()</code> method*/
+    /** String array of month used for printing via {@code toString()} method*/
     public static final String[] MONTH     = {null,"Jan","Feb","Mar","Apr","Mai","Jun",
                                                "Jul","Aug","Sep","Oct","Nov","Dec"};
 
@@ -41,7 +41,7 @@ public class Date implements Serializable{
     /** Default constructor. Create a date
      * without hour an minutes notification. The minuts and hours have
      * a value of -1 The day name will be
-     * calculated automaticly ba the <code>calcDay()</code> function.
+     * calculated automaticly ba the {@code calcDay()} function.
      * @param aDay the day
      * @param aMonth the month
      * @param aYear the year
@@ -51,7 +51,7 @@ public class Date implements Serializable{
     }
 
     /** Default constructor. Create a date object. The day name will be
-     * calculated automaticly ba the <code>calcDay()</code> function.
+     * calculated automaticly ba the {@code calcDay()} function.
      * @param aDay the day
      * @param aMonth the month
      * @param aYear the year
@@ -70,9 +70,9 @@ public class Date implements Serializable{
      * @param aMillis
      */
     public Date(long aMillis){
-        java.util.Date d = new java.util.Date(aMillis);
         GregorianCalendar cal = new GregorianCalendar();
      	cal.setGregorianChange(new java.util.Date(Long.MIN_VALUE));
+        java.util.Date d = new java.util.Date(aMillis);
         cal.setTime(d);
         this.month = cal.get(GregorianCalendar.MONTH)+1;
         this.day   = cal.get(GregorianCalendar.DATE);
@@ -129,9 +129,7 @@ public class Date implements Serializable{
         if(aD1.min <-1 || aD1.min > 59)
             return false;
         String pWDay = aD1.calcDay(aD1.day,aD1.month,aD1.year);
-        if(!pWDay.equals(aD1.wDay))
-            return false;
-        return true;
+        return pWDay.equals(aD1.wDay);
     }
     
     /**
@@ -147,12 +145,12 @@ public class Date implements Serializable{
      */
     @Override public String toString(){
 		String ret = wDay;
- 		ret+=" "+NumberUtils.itoa(day, 2) + ".";
-		ret+= NumberUtils.itoa(month,2)+"."+year;
+ 		ret+= ' ' +NumberUtils.itoa(day, 2) + '.';
+		ret+= NumberUtils.itoa(month,2)+ '.' +year;
 
 	    if(min != -1){
 		    ret = ret + ", ";
-		    ret += NumberUtils.itoa(hour, 2)+":";
+		    ret += NumberUtils.itoa(hour, 2)+ ':';
 			ret += NumberUtils.itoa(min, 2);
         }
 		return ret;
@@ -212,8 +210,7 @@ public class Date implements Serializable{
             int year  = Integer.parseInt(yearStrg);
             int hour  = Integer.parseInt(hrStrg);
             int min   = Integer.parseInt(minStrg);
-            Date ret  = new Date(day,month,year,hour,min);
-            return ret;
+            return new Date(day,month,year,hour,min);
         } catch(NumberFormatException nfe){return null;}
 
 
@@ -242,8 +239,7 @@ public class Date implements Serializable{
             int day   = Integer.parseInt(dayStrg);
             int month = Integer.parseInt(monthStrg);
             int year  = Integer.parseInt(yearStrg);
-            Date ret = new Date(day,month,year);
-            return ret;
+            return new Date(day,month,year);
         } catch(NumberFormatException nfe){
         	throw new IllegalArgumentException("Date string wrong format: " + aDateStrg + ". Expected: dd" + aCh + "mm" + aCh + "yyyy", nfe);
         }
@@ -261,9 +257,7 @@ public class Date implements Serializable{
     }
 
 	@Override public boolean equals(Object o){
- 		return ( o instanceof Date ) ? 
- 			((Date)o).toMill()==toMill() : 
- 			false;
+ 		return (o instanceof Date) && ((Date) o).toMill() == toMill();
   	}
 
 	/**
@@ -273,12 +267,7 @@ public class Date implements Serializable{
 		return day;
 	}
 
-	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	/**
+    /**
 	 * @return
 	 */
 	public int getDayOfWeek() {

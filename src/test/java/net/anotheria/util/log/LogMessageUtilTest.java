@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -52,7 +53,7 @@ public class LogMessageUtilTest {
 		System.out.println("Primitive type multiple array(" + (System.currentTimeMillis() - startTime) + "ms): " + msg);
 
 		// complex objects
-		Object dates = (Object) new Date[] { new Date(), new Date() };
+		Object dates = new Date[] { new Date(), new Date() };
 		startTime = System.currentTimeMillis();
 		msg = failMsg(t, dates);
 		System.out.println("Complex type array(" + (System.currentTimeMillis() - startTime) + "ms): " + msg);
@@ -65,21 +66,21 @@ public class LogMessageUtilTest {
 
 		// set
 		startTime = System.currentTimeMillis();
-		msg = failMsg(t, new HashSet<String>(arrayList));
+		msg = failMsg(t, new HashSet<>(arrayList));
 		System.out.println("Set(" + (System.currentTimeMillis() - startTime) + "ms): " + msg);
 
 		// list of lists
-		List<List<String>> arrayListOfLists = new ArrayList<List<String>>();
+		List<List<String>> arrayListOfLists = new ArrayList<>();
 		arrayListOfLists.add(Arrays.asList("1", "2", "3", "4"));
 		arrayListOfLists.add(Arrays.asList("5", "6", "7", "8", "9", "10", "11", "12"));
 		arrayListOfLists.add(Arrays.asList("x", "y"));
-		arrayListOfLists.add(Arrays.asList("z"));
+		arrayListOfLists.add(Collections.singletonList("z"));
 		startTime = System.currentTimeMillis();
 		msg = failMsg(t, arrayListOfLists);
 		System.out.println("List of lists(" + (System.currentTimeMillis() - startTime) + "ms): " + msg);
 
 		// map
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 		for (int i = 0; i < 10; i++)
 			map.put("key" + i, "value" + i);
 
@@ -88,7 +89,7 @@ public class LogMessageUtilTest {
 		System.out.println("Map(" + (System.currentTimeMillis() - startTime) + "ms): " + msg);
 
 		// all in one
-		Map<String, Object> hugeArgument = new HashMap<String, Object>();
+		Map<String, Object> hugeArgument = new HashMap<>();
 		hugeArgument.put("array", array);
 		hugeArgument.put("mArray", mArray);
 		hugeArgument.put("datesArray", dates);

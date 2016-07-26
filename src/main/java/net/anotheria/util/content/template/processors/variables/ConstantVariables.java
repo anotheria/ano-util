@@ -15,7 +15,7 @@ public final class ConstantVariables {
 	/**
 	 * Map with constants.
 	 */
-	private static Map<String, String> constants = new HashMap<String, String>();
+	private static Map<String, String> constants = new HashMap<>();
 	/**
 	 * {@link TemplateProcessorConfig} instance.
 	 */

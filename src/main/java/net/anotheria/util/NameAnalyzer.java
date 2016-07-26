@@ -3,6 +3,8 @@ package net.anotheria.util;
 import net.anotheria.util.sorter.DummySortType;
 import net.anotheria.util.sorter.IComparable;
 import net.anotheria.util.sorter.StaticQuickSorter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,9 @@ import java.util.Set;
  *
  */
 public class NameAnalyzer {
+
+	private static final Logger log = LoggerFactory.getLogger(NameAnalyzer.class);
+	
 	/**
 	 * Number of traversed directories.
 	 */
@@ -32,32 +37,28 @@ public class NameAnalyzer {
 	/**
 	 * Set with all names.
 	 */
-	private static Set<String> names = new HashSet<String>();
+	private static Set<String> names = new HashSet<>();
 	/**
 	 * Set with extracted elements and their counts.
 	 */
-	private static HashMap<String,ElementCount> elements = new HashMap<String,ElementCount>();
+	private static HashMap<String,ElementCount> elements = new HashMap<>();
 	/**
 	 * Main.
 	 * @param a
 	 * @throws IOException
 	 */
-	public static void main(String a[]) throws IOException{
-		//test();
-		///*
+	public static void main(String... a) {
 		proceed(new File("."));
 		
-		System.out.println("Finished found files: "+filesFound+", dirs: "+dirFound+", java files: "+javaFilesFound);
-		System.out.println("Found "+names.size()+" names, "+elements.size()+" elements.");
+		log.info("Finished found files: "+filesFound+", dirs: "+dirFound+", java files: "+javaFilesFound);
+		log.info("Found "+names.size()+" names, "+elements.size()+" elements.");
 		
-		List<ElementCount> list = new ArrayList<ElementCount>();
-		list.addAll(elements.values());
+		List<ElementCount> list = new ArrayList<>(elements.values());
 		list = StaticQuickSorter.sort(list, new DummySortType());
 		for (ElementCount ec : list){
-			System.out.println(ec);
+			log.info(ec.toString());
 		}
-		
-		//*/
+
 	}
 	
 	private static void proceed(File f){
@@ -75,7 +76,7 @@ public class NameAnalyzer {
 		javaFilesFound++;
 		name = name.substring(0, name.length()-".java".length());
 		if (!names.add(name))
-			System.out.println("Double name: "+name);
+			log.info("Double name: "+name);
 		
 		List<String> listOfElements = uncamelCase(name);
 		for (String s : listOfElements){
@@ -90,21 +91,21 @@ public class NameAnalyzer {
 	
 	private static void proceedDirectory(File f){
 		dirFound++;
-		File files[] = f.listFiles();
+		File[] files = f.listFiles();
 		for (File afile : files)
 			proceed(afile);
 	}
 	
 	private static void test(){
-		System.out.println("FactoryUtil -> "+uncamelCase("FactoryUtil"));
-		System.out.println("PersonalDataController -> "+uncamelCase("PersonalDataController"));
-		System.out.println("MatchingDAOFactory -> "+uncamelCase("MatchingDAOFactory"));
+		log.info("FactoryUtil -> "+uncamelCase("FactoryUtil"));
+		log.info("PersonalDataController -> "+uncamelCase("PersonalDataController"));
+		log.info("MatchingDAOFactory -> "+uncamelCase("MatchingDAOFactory"));
 		
 		
 	}
 	
-	private static List<String> uncamelCase1(String s){
-		List<String> list = new ArrayList<String>();
+	private static List<String> uncamelCase1(CharSequence s){
+		List<String> list = new ArrayList<>();
 		
 		boolean inCamelCase = false;
 		boolean previousCamelCase = false;
@@ -115,7 +116,7 @@ public class NameAnalyzer {
 			if (!inCamelCase && Character.isUpperCase(c)){
 				if (current.length()>0 &&(!previousCamelCase))
 					list.add(current);
-				current = "" + c;
+				current = String.valueOf(c);
 				previousCamelCase = true;
 			}else{
 				current += c;
@@ -130,8 +131,8 @@ public class NameAnalyzer {
 		return list;
 	}
 	
-	private static List<String> uncamelCase2(String s){
-		List<String> list = new ArrayList<String>();
+	private static List<String> uncamelCase2(CharSequence s){
+		List<String> list = new ArrayList<>();
 		
 		boolean inCamelCase = false;
 		boolean previousCamelCase = false;
@@ -158,7 +159,7 @@ public class NameAnalyzer {
 	}
 
 	private static List<String> uncamelCase(String s){
-		List<String> ret = new ArrayList<String>();
+		List<String> ret = new ArrayList<>();
 		ret.addAll(uncamelCase1(s));
 		ret.addAll(uncamelCase2(s));
 		return ret;

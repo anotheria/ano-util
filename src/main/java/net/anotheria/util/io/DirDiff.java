@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class DirDiff {
-	public static void main(String a[]) throws IOException{
+	public static void main(String... a) throws IOException{
 		String p2 = "/media/WD Passport";
 		String p1 = "/storage/BAK_EXT_DISK";
 		diff(p1,p2);

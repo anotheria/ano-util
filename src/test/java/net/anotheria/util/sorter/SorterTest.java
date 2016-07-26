@@ -6,33 +6,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class SorterTest {
 	@Test public void quickSort(){
 		testSorter(new QuickSorter<TestComparable>());
 	}
 	
-	@Test public void bubbleSort(){
-		System.out.println("BubbleSorter not tested");
-		//testSorter(new BubbleSorter<TestComparable>());
-	}
-
-	@Test public void insertSort(){
-		System.out.println("InsertSorter not tested");
-		//testSorter(new InsertSorter<TestComparable>());
-	}
-
-	private void testSorter(Sorter<TestComparable> sorter){
+	private static void testSorter(Sorter<TestComparable> sorter){
 		List<TestComparable> presorted = createList();
-		List<TestComparable> sortResult, sortResult2;
-		
-		List<TestComparable> reversed = new ArrayList<TestComparable>();
-		reversed.addAll(presorted);
-		Collections.reverse(reversed);
-		
-		sortResult = sorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
+
+		List<TestComparable> reversed = new ArrayList<>(presorted);
+        Collections.reverse(reversed);
+
+		List<TestComparable> sortResult = sorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
 		assertEquals(presorted, sortResult);
 		assertEquals(presorted.size(), sortResult.size());
 		
@@ -51,7 +39,7 @@ public class SorterTest {
 		
 		//SORTING
 		Collections.shuffle(presorted);
-		sortResult2 = sorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
+		List<TestComparable> sortResult2 = sorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
 		compareLists(sortResult, sortResult2);
 
 		Collections.shuffle(presorted);
@@ -96,14 +84,14 @@ public class SorterTest {
 		
 	}
 	
-	private void compareLists(List<?> list1, List<?> list2){
+	private static void compareLists(List<?> list1, List<?> list2){
 		assertEquals(list1.size(), list2.size());
 		for (int i=0; i<list1.size(); i++)
 			assertEquals(list1.get(i), list2.get(i));
 	}
 	
-	private List<TestComparable> createList(){
-		List<TestComparable> ret = new ArrayList<TestComparable>();
+	private static List<TestComparable> createList(){
+		List<TestComparable> ret = new ArrayList<>();
 		
 		for (int i=0; i<100; i++)
 			ret.add(new TestComparable("name-"+i, i, 500.0 - i));
@@ -113,13 +101,11 @@ public class SorterTest {
 	
 	@Test public void testStaticQuickSorter(){
 		List<TestComparable> presorted = createList();
-		List<TestComparable> sortResult, sortResult2;
-		
-		List<TestComparable> reversed = new ArrayList<TestComparable>();
-		reversed.addAll(presorted);
-		Collections.reverse(reversed);
-		
-		sortResult = StaticQuickSorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
+
+		List<TestComparable> reversed = new ArrayList<>(presorted);
+        Collections.reverse(reversed);
+
+		List<TestComparable> sortResult = StaticQuickSorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
 		assertEquals(presorted, sortResult);
 		assertEquals(presorted.size(), sortResult.size());
 		
@@ -138,7 +124,7 @@ public class SorterTest {
 		
 		//SORTING
 		Collections.shuffle(presorted);
-		sortResult2 = StaticQuickSorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
+		List<TestComparable> sortResult2 = StaticQuickSorter.sort(presorted, new TestSortType(TestSortType.SORT_BY_INTEGER));
 		compareLists(sortResult, sortResult2);
 
 		Collections.shuffle(presorted);

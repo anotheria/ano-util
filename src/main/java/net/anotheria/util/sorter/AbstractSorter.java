@@ -2,18 +2,19 @@ package net.anotheria.util.sorter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Vector;
 
 public abstract class AbstractSorter<T extends IComparable> implements Sorter<T> {
   	/**
      * Transfers a vector into array.
      * Vector should include only objects of type IComparable.
      */
- 	public static IComparable[] vector2array(Vector<IComparable> src){
+ 	public static IComparable[] vector2array(Collection<IComparable> src){
   		IComparable[] ret = new IComparable[src.size()];
-    	src.copyInto(ret);
+		src.toArray(ret);
      	return ret;
    	}
    	
@@ -23,27 +24,26 @@ public abstract class AbstractSorter<T extends IComparable> implements Sorter<T>
  	 */
 
  	public static <T extends IComparable> T[] list2array(List<T> src){
- 		T[] tmp = (T[])new IComparable[0];
+ 		T[] tmp = (T[]) new IComparable[0];
    		return src.toArray(tmp);
    	}
 
     /**
      * Transfers an array into Vector.
      */
-    public static <T extends IComparable> Vector<T> array2vector(T[] src){
+    public static <T extends IComparable> List<T> array2vector(T... src){
         int l = src.length;
- 		Vector<T> ret = new Vector<T>(l);
-   		for (int i=0; i<l; i++)
-     		ret.addElement(src[i]);
+		List<T> ret = new ArrayList<>(l);
+        Collections.addAll(ret, src);
        	return ret;
     }
     
-    public static <T extends IComparable> List<T> array2list(T src[]){
+    public static <T extends IComparable> List<T> array2list(T... src){
     	return Arrays.asList(src);
     }
     
  	public List<T> sort(Enumeration<T> source, SortType how){
- 		ArrayList<T> list = new ArrayList<T>();
+ 		List<T> list = new ArrayList<>();
  		while(source.hasMoreElements()){
  			list.add(source.nextElement());
  		}

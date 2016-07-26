@@ -18,7 +18,7 @@ public class DirectoryEntry extends Entry{
 	 */
 	public DirectoryEntry(String name){
 		super(name);
-		entries = new ArrayList<Entry>();
+		entries = new ArrayList<>();
 	}
 	/**
 	 * Adds a sub entry.
@@ -30,14 +30,12 @@ public class DirectoryEntry extends Entry{
 	/**
 	 * Returns the size of the entry.
 	 */
+	@Override
 	public long getSize(){
 		long ret = 0;
 		for (Entry e : entries)
 			ret += e.getSize();
 		return ret;
 	}
-	
-	public String toOut(int tab){
-		return super.toOut(tab);
-	}
+
 }

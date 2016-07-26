@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class FindHeaders {
-    public static void main(String a[]) {
+    public static void main(String... a) {
         Walker w = new Walker(new Worker() {
             private int counter = 0;
 
@@ -21,7 +21,7 @@ public class FindHeaders {
                     content = content.trim();
                     if (content.indexOf("package") > 0) {
                         counter++;
-                        System.out.println("Found header in " + file.getAbsoluteFile() + " (" + counter + ")");
+                        System.out.println("Found header in " + file.getAbsoluteFile() + " (" + counter + ')');
                     }
                 } catch (IOException e) {
                    // ignore this exception

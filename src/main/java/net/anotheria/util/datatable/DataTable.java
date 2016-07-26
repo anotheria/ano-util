@@ -22,7 +22,7 @@ public class DataTable implements Iterable<DataRow> {
 	}
 
 	public DataTable(int aInitialCapacity){
-		rows = new ArrayList<DataRow>(aInitialCapacity);
+		rows = new ArrayList<>(aInitialCapacity);
 	}
 	
 	public DataHeader getHeader() {

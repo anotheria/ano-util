@@ -101,7 +101,7 @@ public class Slice<T> {
 	 * @return true if this slice is not the last one
 	 */
 	public boolean hasNextSlice(){
-		return getCurrentSlice() < getTotalNumberOfSlices();
+        return getCurrentSlice() < totalNumberOfSlices;
 	}
 	
 	/**

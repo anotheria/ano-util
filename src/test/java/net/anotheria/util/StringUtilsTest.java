@@ -22,7 +22,7 @@ public class StringUtilsTest {
 
 	@Test public void concatenate(){
 		System.out.println("TESTING concatenateTokens():");
-		List<String> hellos = new ArrayList<String>(4);
+		List<String> hellos = new ArrayList<>(4);
 		hellos.add("Hello, World!");
 		hellos.add("Hello, People!");
 		hellos.add("Hello, Aliens!");
@@ -141,11 +141,11 @@ public class StringUtilsTest {
 
 	@Test public void concatenateTokens(){
 		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", "t1","t2","t3"));
-		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", new String[]{"t1","t2","t3"}));
+		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", "t1","t2","t3"));
 		
 		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,2,3));
 		assertEquals("1||2||3", StringUtils.concatenateTokens("||", new int[]{1,2,3}));
-		assertEquals("1||2||3", StringUtils.concatenateTokens("||", new Integer[]{1,2,3}));
+		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,2,3));
 		
 		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,"2",3));
 	}
@@ -162,7 +162,7 @@ public class StringUtilsTest {
 	@Test public void replace(){
 		String src = "fuubar";
 		assertEquals("foobar", StringUtils.replace(src, 'u', 'o'));
-		Map<String,String> replacement = new HashMap<String, String>();
+		Map<String,String> replacement = new HashMap<>();
 		replacement.put("u", "o");
 		replacement.put("o", "u");
 		replacement.put("b", "B");

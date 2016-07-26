@@ -8,15 +8,16 @@ import java.util.List;
  */
 public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
 
+	@Override
 	public List<T> sort(List<T> toSort, SortType how){
       	ListEntry<T> list = null;
 		int method = how.getSortBy();
 		for (T c : toSort){
 			if (list==null){
-       			list = new ListEntry<T>(c);
+       			list = new ListEntry<>(c);
           		continue;
          	}
-          	ListEntry<T> le = new ListEntry<T>(c);
+          	ListEntry<T> le = new ListEntry<>(c);
           	if (list.value.compareTo(le.value,method)>=0){
            		le.next = list;
              	list = le;
@@ -28,7 +29,7 @@ public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
 
         }/*...while*/
 
-        ArrayList<T> v = new ArrayList<T>(list.length());
+        List<T> v = new ArrayList<>(list.length());
         do{
         	v.add(list.value);
          	list = list.next;

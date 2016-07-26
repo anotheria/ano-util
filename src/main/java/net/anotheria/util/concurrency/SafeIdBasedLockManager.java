@@ -10,26 +10,32 @@ public class SafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
      * Serialization version unique identifier.
      */
     private static final long serialVersionUID = -7086955847344168761L;
-    private Map<K, IdBasedLock<K>> locks = new HashMap<K, IdBasedLock<K>>();
+    private Map<K, IdBasedLock<K>> locks = new HashMap<>();
 
-    public synchronized IdBasedLock<K> obtainLock(K id) {
-        IdBasedLock<K> lock = locks.get(id);
-        if (lock != null) {
-            lock.increaseRefCount();
+    @Override
+    public IdBasedLock<K> obtainLock(K id) {
+        synchronized (this) {
+            IdBasedLock<K> lock = locks.get(id);
+            if (lock != null) {
+                lock.increaseRefCount();
+                return lock;
+            }
+
+            lock = new IdBasedLock<>(id, this);
+            locks.put(id, lock);
             return lock;
         }
-
-        lock = new IdBasedLock<K>(id, this);
-        locks.put(id, lock);
-        return lock;
     }
 
-    public synchronized void releaseLock(IdBasedLock<K> lock) {
-        K id = lock.getId();
-        if (lock.getRefCount().get() == 1) {
-            locks.remove(id);
+    @Override
+    public void releaseLock(IdBasedLock<K> lock) {
+        synchronized (this) {
+            K id = lock.getId();
+            if (lock.getRefCount().get() == 1) {
+                locks.remove(id);
+            }
+            lock.decreaseRefCount();
         }
-        lock.decreaseRefCount();
     }
 
     @Override

@@ -32,7 +32,7 @@ public class CryptTool {
 	 * Create a new crypttool with the binary given key.
 	 * @param key the key to use for en- and decode.
 	 */
-	public CryptTool(byte[] key) {
+	public CryptTool(byte... key) {
 		cipher = new BlowfishECB(key, 0, key.length);
 	}
 
@@ -63,7 +63,7 @@ public class CryptTool {
 		return HexDecoder.toHexString(encrypted);
 	}
 
-	public byte[] decrypt(byte[] toDecrypt) {
+	public byte[] decrypt(byte... toDecrypt) {
 		cipher.decrypt(toDecrypt, 0, toDecrypt, 0, toDecrypt.length);
 		return toDecrypt;
 	}
@@ -117,10 +117,10 @@ public class CryptTool {
 	public Map<String,String> decryptParameterMap(String str){
 		String decrypted = decryptFromHex(str);
 		decrypted = decrypted.trim();
-		HashMap<String,String> map = new HashMap<String,String>();
-		String tokens[] = StringUtils.tokenize(decrypted, '&');
-		for (int i=0; i<tokens.length; i++){
-			String t[] = StringUtils.tokenize(tokens[i], '=');
+		Map<String, String> map = new HashMap<>();
+		String[] tokens = StringUtils.tokenize(decrypted, '&');
+		for (String token : tokens) {
+			String[] t = StringUtils.tokenize(token, '=');
 			if (t.length == 2) {
 				map.put(t[0], t[1]);
 			} else {
@@ -180,14 +180,14 @@ public class CryptTool {
 			ret += n;
 		}
 		ret -= NUMERATION_BASE_NUMBER;
-		return ret + "";
+		return String.valueOf(ret);
 	}
 
 	/**
 	 * Encrypts specified byte array. Size must be aligned to 8-bytes boundary.
 	 * @param buffer byte array to encrypt.
 	 */
-	public void encryptBuffer(byte[] buffer) {
+	public void encryptBuffer(byte... buffer) {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
@@ -198,7 +198,7 @@ public class CryptTool {
 	 * Decrypts specified byte array. Size must be aligned to 8-bytes boundary.
 	 * @param buffer byte array to decrypt.
 	 */
-	public void decryptBuffer(byte[] buffer) {
+	public void decryptBuffer(byte... buffer) {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}

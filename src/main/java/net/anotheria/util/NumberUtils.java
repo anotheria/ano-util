@@ -13,21 +13,21 @@ public final class NumberUtils {
 
 	/**
 	 * Constants for month names.
-	 */	
-	public static final String MONTH[] = {
-		"",
-		"JAN",
-		"FEB",
-		"MAR",
-		"APR",
-		"MAI",
-		"JUN",
-		"JUL",
-		"AUG",
-		"SEP",
-		"OCT",
-		"NOV",
-		"DEC"
+	 */
+	public static final String[] MONTH = {
+			"",
+			"JAN",
+			"FEB",
+			"MAR",
+			"APR",
+			"MAI",
+			"JUN",
+			"JUL",
+			"AUG",
+			"SEP",
+			"OCT",
+			"NOV",
+			"DEC"
 	};
 
 	/**
@@ -36,9 +36,9 @@ public final class NumberUtils {
 	 * Example: itoa(23, 4) -> 0023.
 	 */
 	public static String itoa(int i, int limit){
-		String a = ""+i;
+		String a = String.valueOf(i);
 		while (a.length()<limit)
-			a = "0"+a;
+			a = '0' +a;
 		return a;			
 	}
 	
@@ -56,8 +56,8 @@ public final class NumberUtils {
 	 */
 	public static String makeDateStringLong(long time){
 		Date date = new Date(time);
-		return itoa(date.day)+" "+
-				MONTH[date.month]+" "+
+		return itoa(date.day)+ ' ' +
+				MONTH[date.month]+ ' ' +
 				date.year;
 	}
 
@@ -68,8 +68,8 @@ public final class NumberUtils {
 	public static String makeDateString(long time){
 		Date date = new Date(time);
 		int minus = date.year >2000 ? 2000 : 1900;
-		return itoa(date.day)+" "+
-				MONTH[date.month]+" "+
+		return itoa(date.day)+ ' ' +
+				MONTH[date.month]+ ' ' +
 				itoa(date.year - minus);
 	}
 	
@@ -80,15 +80,15 @@ public final class NumberUtils {
 	 */
 	public static String makeDigitalDateString(long time){
 		Date date = new Date(time);
-		return itoa(date.day)+"."+
-				itoa(date.month)+"."+
+		return itoa(date.day)+ '.' +
+				itoa(date.month)+ '.' +
 				itoa(date.year);
 	}
 
 	public static String makeDigitalDateStringLong(long time){
 		Date date = new Date(time);
-		return itoa(date.day)+"."+
-				itoa(date.month)+"."+
+		return itoa(date.day)+ '.' +
+				itoa(date.month)+ '.' +
 				itoa(date.year,4);
 	}
 
@@ -98,7 +98,7 @@ public final class NumberUtils {
 	 */
 	public static String makeTimeString(long time){
 		Date date = new Date(time);
-		return itoa(date.hour)+":"+ itoa(date.min);
+		return itoa(date.hour)+ ':' + itoa(date.min);
 	}
 
 	/**
@@ -113,7 +113,7 @@ public final class NumberUtils {
 			hour-=12;
 			t = "pm";
 		}
-		return itoa(hour)+":"+ itoa(date.min)+" "+t;
+		return itoa(hour)+ ':' + itoa(date.min)+ ' ' +t;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public final class NumberUtils {
 			bytes = "Gb";
 		}
 
-		return ""+size+" "+bytes;
+		return size + " " + bytes;
 			
 	}
 
@@ -150,7 +150,7 @@ public final class NumberUtils {
 	 * @return a string of form: "year.month.day", at least digits for each value.
 	 */
 	public static String getDateString(int day, int month, int year){
-		return itoa(day,2)+"."+itoa(month,2)+"."+itoa(year,2);
+		return itoa(day,2)+ '.' +itoa(month,2)+ '.' +itoa(year,2);
 	}
 
 	/**
@@ -160,7 +160,7 @@ public final class NumberUtils {
 	 */
 	public static String makeISO8601DateString(long millis){
 		Date d = new Date(millis);
-		return itoa(d.year,4)+"-"+itoa(d.month)+"-"+itoa(d.day);
+		return itoa(d.year,4)+ '-' +itoa(d.month)+ '-' +itoa(d.day);
 	}
 
 	/**
@@ -187,8 +187,8 @@ public final class NumberUtils {
 	public static String makeISO8601TimestampString(long millis){
 		String ret = makeISO8601DateString(millis);
 		Date d = new Date(millis);
-		ret += "T"+itoa(d.hour)+":"+itoa(d.min)+":"+itoa(d.sec);
-		ret += ","+itoa((int)(millis-millis/1000*1000),3);
+		ret += 'T' +itoa(d.hour)+ ':' +itoa(d.min)+ ':' +itoa(d.sec);
+		ret += ',' +itoa((int)(millis-millis/1000*1000),3);
 		return ret; 
 	}
 
@@ -196,10 +196,9 @@ public final class NumberUtils {
 		if (str.length()==0)
 			return 0;
 		String[] t = StringUtils.tokenize(str, '.');
-		int d,m,y;
-		d = Integer.parseInt(t[0]);
-		m = Integer.parseInt(t[1]);
-		y = Integer.parseInt(t[2]);
+		int d = Integer.parseInt(t[0]);
+		int m = Integer.parseInt(t[1]);
+		int y = Integer.parseInt(t[2]);
 		if (y<100){
 			if (y<20)
 				y+=2000;
@@ -222,8 +221,8 @@ public final class NumberUtils {
 	public static String getCurrencyValue(double aValue){
 		aValue += 0.005;
 		int tmp = (int)(aValue*100);
-		aValue = (double)((double)tmp/100);
-		String ret = ""+aValue;
+		aValue = (double)tmp/100;
+		String ret = String.valueOf(aValue);
 		int ind = ret.indexOf('.');
 		if (ind==-1)
 			return ret + ".00";
@@ -234,7 +233,7 @@ public final class NumberUtils {
 	
 	/**
 	 * Returns true if the number parameter can pass a luhn check. 
-	 * @see http://en.wikipedia.org/wiki/Luhn_check for details on luhn algorithm.
+	 * see http://en.wikipedia.org/wiki/Luhn_check for details on luhn algorithm.
 	 * @param aNumber the number to check.
 	 * @return true if the number passes the check or false otherwise.
 	 */
@@ -271,8 +270,8 @@ public final class NumberUtils {
 	
 	public static String getDotedNumber(long number, char separatorChar){
 		if (number<0)
-			return "-"+getDotedNumber(-1*number, separatorChar);
-		String n = StringUtils.reverseString(""+number);
+			return '-' +getDotedNumber(-1*number, separatorChar);
+		String n = StringUtils.reverseString(String.valueOf(number));
 		StringBuilder ret = new StringBuilder();
 		for (int i=0; i<n.length(); i++){
 			ret.insert(0, n.charAt(i));
@@ -299,7 +298,7 @@ public final class NumberUtils {
 	}
 	
 	public static double fractionRound(double value, int fraction){
-		int shift = (int)Math.pow(10, fraction);
+		int shift = (int) StrictMath.pow(10, fraction);
 		return 1d * Math.round(value * shift)/shift;
 	}
 	
@@ -321,7 +320,7 @@ public final class NumberUtils {
 		DecimalFormatSymbols delimiterFormat = new DecimalFormatSymbols();
 		delimiterFormat.setDecimalSeparator(delimiter);
 		
-		return new DecimalFormat(integralPattern + "." + fractionPattern, delimiterFormat).format(BigDecimal.valueOf(value));
+		return new DecimalFormat(integralPattern + '.' + fractionPattern, delimiterFormat).format(BigDecimal.valueOf(value));
 	}
 	
 	public static String currencyFormat(double value, char delimiter){
@@ -333,7 +332,4 @@ public final class NumberUtils {
 	 */
 	private NumberUtils(){}
 
-	public static void main(String a[]){
-		System.out.println(makeISO8601TimestampString());
-	}
 }

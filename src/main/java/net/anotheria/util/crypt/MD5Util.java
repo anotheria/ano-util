@@ -23,22 +23,25 @@ public class MD5Util {
 	 * @param toHash the stringbuilder to enhash.
 	 * @return the hash of the string in the stringbuilder.
 	 */
-	public static final String getMD5Hash(StringBuilder toHash){
+	public static final String getMD5Hash(CharSequence toHash){
 		return getMD5Hash(toHash.toString().getBytes());
 	}
-	
+
 	/**
 	 * Returns the MD5 hash of the given byte array. This method is synchronized.
+	 *
 	 * @param bytes the byte array containing the string to enhash.
 	 * @return
 	 */
-	public static synchronized final String getMD5Hash(byte[] bytes){
-		try{
-			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			md5.reset();
-			return HexDecoder.toHexString(md5.digest(bytes));
-		}catch(NoSuchAlgorithmException e){
-			throw new AssertionError("NoSuchAlgorithmException: "+e, e);
+	public static final String getMD5Hash(byte... bytes) {
+		synchronized (MD5Util.class) {
+			try {
+				MessageDigest md5 = MessageDigest.getInstance("MD5");
+				md5.reset();
+				return HexDecoder.toHexString(md5.digest(bytes));
+			} catch (NoSuchAlgorithmException e) {
+				throw new AssertionError("NoSuchAlgorithmException: " + e, e);
+			}
 		}
-	} 
+	}
 }

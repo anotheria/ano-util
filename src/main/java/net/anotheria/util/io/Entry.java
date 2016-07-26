@@ -30,10 +30,10 @@ public abstract class Entry {
 	public abstract long getSize();
 
 	public String toOut(int tab){
-		return getTab(tab).append(getName()).toString();
+        return getTab(tab).append(name).toString();
 	}
 	
-	protected StringBuilder getTab(int number){
+	protected static StringBuilder getTab(int number){
 		StringBuilder ret = new StringBuilder();
 		for (int i=0; i<number; i++)
 			ret.append('\t');

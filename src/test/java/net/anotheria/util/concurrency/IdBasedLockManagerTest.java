@@ -30,7 +30,7 @@ public class IdBasedLockManagerTest {
 		}
 	}
 	
-	class Worker {
+	static class Worker {
 		
 		protected int iterations = 1000000;//100000;
 		protected Random rnd = new Random(System.nanoTime());
@@ -71,7 +71,7 @@ public class IdBasedLockManagerTest {
 			for (int i=0; i<iterations; i++){
 				int counterId = rnd.nextInt(COUNTERS);
 				int valueToAdd = 1;//rnd.nextInt(100);
-				counters.get(""+counterId).increaseBy(valueToAdd);
+				counters.get(String.valueOf(counterId)).increaseBy(valueToAdd);
 				addedValue += valueToAdd;
 			}
 			finish.countDown();
@@ -93,11 +93,11 @@ public class IdBasedLockManagerTest {
 			}
 			for (int i=0; i<iterations; i++){
 				int counterId = rnd.nextInt(COUNTERS);
-				int valueToAdd = 1;//rnd.nextInt(100);
-				IdBasedLock lock = lockManager.obtainLock(""+counterId);
+				IdBasedLock lock = lockManager.obtainLock(String.valueOf(counterId));
 				//SafeIdBasedLockManager.out("worker id "+counterId+" lockcount: "+lock.getReferenceCount());
 				lock.lock();
-				counters.get(""+counterId).increaseBy(valueToAdd);
+				int valueToAdd = 1;//rnd.nextInt(100);
+				counters.get(String.valueOf(counterId)).increaseBy(valueToAdd);
 				lock.unlock();
 				addedValue += valueToAdd;
 			}
@@ -108,9 +108,9 @@ public class IdBasedLockManagerTest {
 	private HashMap<String, Counter> counters = null;
 	
 	@Before public void init(){
-		counters = new HashMap<String, IdBasedLockManagerTest.Counter>();
+		counters = new HashMap<>();
 		for (int i=0; i<COUNTERS; i++)
-			counters.put(""+i, new Counter());
+			counters.put(String.valueOf(i), new Counter());
 	}
 	private static long unsynchedErrors;
 	@Test public void testUnsynched(){
@@ -135,11 +135,12 @@ public class IdBasedLockManagerTest {
 		}catch(InterruptedException e){}
 		long duration = System.currentTimeMillis() - startTime; 
 
-		long workersAdded = 0, countersCounted = 0;
+		long workersAdded = 0;
 		for (UnsynchedWorker worker : workers){
 			workersAdded+=worker.getAddedValue();
 		}
-		
+
+		long countersCounted = 0;
 		for (Counter c : counters.values()){
 			countersCounted += c.getValue();
 		}
@@ -172,11 +173,12 @@ public class IdBasedLockManagerTest {
 		}catch(InterruptedException e){}
 		long duration = System.currentTimeMillis() - startTime; 
 			
-		long workersAdded = 0, countersCounted = 0;
+		long workersAdded = 0;
 		for (SynchedWorker worker : workers){
 			workersAdded+=worker.getAddedValue();
 		}
-		
+
+		long countersCounted = 0;
 		for (Counter c : counters.values()){
 			countersCounted += c.getValue();
 		}
@@ -211,11 +213,12 @@ public class IdBasedLockManagerTest {
 		}catch(InterruptedException e){}
 		long duration = System.currentTimeMillis() - startTime; 
 			
-		long workersAdded = 0, countersCounted = 0;
+		long workersAdded = 0;
 		for (SynchedWorker worker : workers){
 			workersAdded+=worker.getAddedValue();
 		}
-		
+
+		long countersCounted = 0;
 		for (Counter c : counters.values()){
 			countersCounted += c.getValue();
 		}

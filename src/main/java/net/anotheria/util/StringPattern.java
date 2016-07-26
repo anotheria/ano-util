@@ -1,9 +1,7 @@
 package net.anotheria.util;
 
-/**
- * Simple to use pattern matcher.
- */
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class StringPattern {
@@ -37,7 +35,7 @@ public class StringPattern {
 		if(wildCards.size() == 1) {
 			return;
 		}
-		indexof = new ArrayList<String>();
+		indexof = new ArrayList<>();
 		for(int i=0; i<wildCards.size()-1; i++) {
 			int start = wildCards.get(i);
 			int end = wildCards.get(i+1);
@@ -45,8 +43,8 @@ public class StringPattern {
 		}
 	}
 	
-	private List<Integer> searchWildcards(String pattern) {
-		List<Integer> result = new ArrayList<Integer>();
+	private List<Integer> searchWildcards(CharSequence pattern) {
+		List<Integer> result = new ArrayList<>();
 		for(int i=0; i<pattern.length(); i++) {
 			if(pattern.charAt(i) == wildCard) {
 				result.add(i);
@@ -59,7 +57,7 @@ public class StringPattern {
 		return match(aString, new ArrayList<String>());
 	}
 	
-	public boolean match(String aString, List<String> matches) {
+	public boolean match(String aString, Collection<String> matches) {
 		
 		if(equals != null) {
 			return aString.equals(equals);
@@ -103,18 +101,18 @@ public class StringPattern {
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		if(equals != null) {
-			result.append("equals=" + equals);
+			result.append("equals=").append(equals);
 		}
 		if(startsWith != null) {
-			result.append(", startsWith=" + startsWith);
+			result.append(", startsWith=").append(startsWith);
 		}
 		if(indexof != null) {
 			for(String io: indexof) {
-				result.append(", indexof=" + io);
+				result.append(", indexof=").append(io);
 			}
 		}
 		if(endsWith != null) {
-			result.append(", endsWith=" + endsWith);
+			result.append(", endsWith=").append(endsWith);
 		}
 		return result.toString();
 	}

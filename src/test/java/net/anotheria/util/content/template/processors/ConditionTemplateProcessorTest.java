@@ -70,7 +70,7 @@ public class ConditionTemplateProcessorTest {
 	/**
 	 * Trying to post bad data.
 	 */
-	public void testWrongUse() {
+	public static void testWrongUse() {
 		String reS = processor.replace("", ",", "", null);
 		Assert.assertTrue(reS.isEmpty());
 		processor.replace(null, ",", "", null);

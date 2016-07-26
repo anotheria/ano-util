@@ -60,15 +60,11 @@ public final class PidTools {
 			pidFile = "logs/pid";
 
 		try (BufferedWriter out = new BufferedWriter(new FileWriter(pidFile))) {
-			out.write(pid + "");
+			out.write(String.valueOf(pid));
 			out.flush();
 		} catch (IOException e) {
-            log.error("Could not write PID '"+pid+"' into file '"+pidFile+"'", e);
+            log.error("Could not write PID '"+pid+"' into file '"+pidFile+ '\'', e);
 		}
-	}
-
-	public static void main(String[] args) {
-		System.out.println("My PID: " + getPid());
 	}
 
 }

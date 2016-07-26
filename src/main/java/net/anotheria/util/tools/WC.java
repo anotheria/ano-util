@@ -26,7 +26,7 @@ public final class WC {
 	private static int totalLines, totalWords, totalChars;
 	private static int totalFiles;
 	
-	public static void main(String a[]){
+	public static void main(String... a){
 		
 		totalLines = totalWords = totalChars = 0;
 		totalFiles = 0;
@@ -49,27 +49,25 @@ public final class WC {
 			if (!file.getName().endsWith(EXT))
 				return;
 			try (FileInputStream fIn = new FileInputStream(file)) {
-				byte d[] = new byte[fIn.available()];
+				byte[] d = new byte[fIn.available()];
 				fIn.read(d);
 				String s = new String(d);
 
 				s = StringUtils.removeChar(s, '\r');
 				s = StringUtils.removeCComments(s);
 				s = StringUtils.removeCPPComments(s);
-				
-				char c;
-				int i =0 ;
-				
-				int words, lines, chars;
-				boolean inWord = false;
-				
-				words = lines = chars = 0;
-				
+
+				int lines, chars;
+
+				int words = lines = chars = 0;
+
 				String currentLine = "";
-				
+
+				boolean inWord = false;
+				int i = 0;
 				while( i<s.length()){
-					c = s.charAt(i);
-					
+					char c = s.charAt(i);
+
 					if (c==' ' || c=='\t' || c=='\n'){
 						if (inWord)
 							inWord = false;
@@ -87,7 +85,7 @@ public final class WC {
 								(!currentLine.startsWith("import")) && 
 								(!currentLine.startsWith("package")))
 							lines++;
-						currentLine = new String("");
+						currentLine = "";
 					}
 					
 					i++;

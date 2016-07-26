@@ -9,7 +9,7 @@ public class MavenVersion implements Serializable{
 	private String artifact;
 	
 	@Override public String toString(){
-		return getGroup()+"/"+getArtifact()+" "+getVersion()+" file: "+getFileTimestamp();
+        return group + '/' + artifact + ' ' + version +" file: "+ fileTimestamp;
 	}
 
 	public String getFileTimestamp() {
