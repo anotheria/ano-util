@@ -1,15 +1,15 @@
 package net.anotheria.util.resource;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 public class ResourceTest {
 	
@@ -57,7 +57,7 @@ public class ResourceTest {
 		assertEquals(lastChange, res.getLastChangeTimestamp());
 	}
 	
-	@Test public void testWatchign() throws InterruptedException{
+	@Test public void testWatching() throws InterruptedException{
 		FixtureLoader loader = new FixtureLoader();
 		Resource res = new Resource(FixtureLoader.EXISTING_RESOURCE, loader, true);
 		

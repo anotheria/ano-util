@@ -69,9 +69,9 @@ public final class TemplateProcessorConfig implements Serializable {
 
 			try {
 				ConfigurationManager.INSTANCE.configure(instance);
-				LOGGER.info("getInstance() configured with[" + instance.toString() + "].");
+				LOGGER.info("getInstance() configured using instance '{}'", instance);
 			} catch (IllegalArgumentException e) {
-				LOGGER.warn("getInstance() configuration fail. Relaying on defaults[" + instance.toString() + "].");
+				LOGGER.warn("getInstance() configuration fail. Relaying on defaults: " + instance, e);
 			}
 
 			return instance;

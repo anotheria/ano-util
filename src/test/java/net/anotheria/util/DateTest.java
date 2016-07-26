@@ -1,7 +1,9 @@
 package net.anotheria.util;
 
 import org.junit.Test;
-import static junit.framework.Assert.*;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class DateTest {
 	@Test public void remapping(){

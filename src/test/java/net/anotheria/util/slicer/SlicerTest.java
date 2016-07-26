@@ -1,10 +1,15 @@
 package net.anotheria.util.slicer;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 public class SlicerTest {
 	@Test

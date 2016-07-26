@@ -3,7 +3,8 @@ package net.anotheria.util.resource;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.fail;
 
 public class ClassPathResourceLoaderTest {
 

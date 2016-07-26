@@ -13,7 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.anotheria.util.content.TextReplaceConstants.*;
+import static net.anotheria.util.content.TextReplaceConstants.LINE_DELIMITER;
+import static net.anotheria.util.content.TextReplaceConstants.QUOTE;
+import static net.anotheria.util.content.TextReplaceConstants.TAG_END;
+import static net.anotheria.util.content.TextReplaceConstants.TAG_START;
 
 
 /**

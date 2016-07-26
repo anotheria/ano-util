@@ -1,7 +1,8 @@
 package net.anotheria.util.crypt;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class MD5Test {
 	@Test public void testMd5(){

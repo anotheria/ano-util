@@ -137,8 +137,8 @@ public class StringUtilsTest {
 //		for(String s:t)
 //			System.out.println(s);
 	}
-	
-	@SuppressWarnings("unchecked")
+
+
 	@Test public void concatenateTokens(){
 		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", "t1","t2","t3"));
 		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", new String[]{"t1","t2","t3"}));

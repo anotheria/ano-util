@@ -163,10 +163,10 @@ public class Resource {
 		synchronized (listeners) {
 			for (ResourceListener listener : listeners) {
 				try {
-					log.debug("Calling configurationSourceUpdated on " + listener);
+					log.debug("Calling configurationSourceUpdated on {}", listener);
 					listener.resourceUpdated(this);
 				} catch (Exception e) {
-					log.error("Error in notifying configuration source listener:" + listener, e);
+					log.error("Error in notifying configuration source listener: " + listener, e);
 				}
 			}
 		}

@@ -2,10 +2,10 @@ package net.anotheria.util.csv;
 
 import net.anotheria.util.datatable.DataRow;
 import net.anotheria.util.datatable.DataTable;
-
 import org.apache.commons.lang.StringEscapeUtils;
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class CSVParserTest {
 

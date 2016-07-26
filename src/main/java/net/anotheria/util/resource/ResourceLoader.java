@@ -21,7 +21,7 @@ public interface ResourceLoader {
 	 * @throws IllegalArgumentException
 	 *             if resource with such name is not available
 	 */
-	long getLastChangeTimestamp(String resourceName) throws IllegalArgumentException;
+	long getLastChangeTimestamp(String resourceName);
 
 	/**
 	 * Returns text content of a resource 
@@ -30,5 +30,5 @@ public interface ResourceLoader {
 	 * @throws IllegalArgumentException
 	 *             if resource with such name is not available
 	 */
-	String getContent(String resourceName) throws IllegalArgumentException;
+	String getContent(String resourceName);
 }

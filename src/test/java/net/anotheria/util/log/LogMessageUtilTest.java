@@ -1,6 +1,6 @@
 package net.anotheria.util.log;
 
-import static net.anotheria.util.log.LogMessageUtil.failMsg;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static net.anotheria.util.log.LogMessageUtil.failMsg;
 
 /**
  * Test for {@link LogMessageUtil} (examples).

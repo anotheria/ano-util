@@ -1,9 +1,10 @@
 package net.anotheria.util.network;
 
-import static junit.framework.Assert.fail;
-import static junit.framework.Assert.*;
-
 import org.junit.Test;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 public class IPRangeTest {
 

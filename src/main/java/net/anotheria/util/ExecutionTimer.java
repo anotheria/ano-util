@@ -78,7 +78,7 @@ public class ExecutionTimer {
 		try{
 			TimerEntry entry = getTimerEntry(aKey);
 			entry.continueExecution();
-		}catch(Exception e){
+		}catch(RuntimeException e){
 			startExecution(aKey);
 		}
 	}

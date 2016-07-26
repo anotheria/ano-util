@@ -1,12 +1,5 @@
 package net.anotheria.util.debug;
 
-/**
- * TODO comment this class
- *
- * @author lrosenberg
- * @since 05.02.13 19:15
- */
-
 import net.anotheria.util.BasicComparable;
 import net.anotheria.util.IOUtils;
 import net.anotheria.util.NumberUtils;
@@ -14,6 +7,8 @@ import net.anotheria.util.StringUtils;
 import net.anotheria.util.sorter.IComparable;
 import net.anotheria.util.sorter.SortType;
 import net.anotheria.util.sorter.StaticQuickSorter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +17,7 @@ import java.util.List;
 
 public class HistoDiffReader {
 
+	private static final Logger log = LoggerFactory.getLogger(HistoDiffReader.class);
 
 	public static void main(String a[]) throws Exception{
 
@@ -133,8 +129,7 @@ public class HistoDiffReader {
 //				}
 				h.addEntry(entry);
 			}catch(NumberFormatException e){
-				e.printStackTrace();
-				System.out.println("FAILED "+line);
+				log.error("FAILED "+line, e);
 			}
 
 		}

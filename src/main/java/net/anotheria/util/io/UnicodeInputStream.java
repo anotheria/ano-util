@@ -69,9 +69,7 @@ public class UnicodeInputStream extends InputStream {
          try {
             init();
          } catch (IOException ex) {
-            IllegalStateException ise = new IllegalStateException("Init method failed.");
-            ise.initCause(ise);
-            throw ise;
+            throw new IllegalStateException("Init method failed.", ex);
          }
       }
       return encoding;

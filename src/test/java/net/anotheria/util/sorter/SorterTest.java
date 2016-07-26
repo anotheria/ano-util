@@ -1,12 +1,13 @@
 package net.anotheria.util.sorter;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class SorterTest {
 	@Test public void quickSort(){

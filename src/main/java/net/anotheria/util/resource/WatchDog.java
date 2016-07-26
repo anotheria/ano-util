@@ -72,10 +72,9 @@ public enum WatchDog {
 						ResourceLoader loader = source.getResourceLoader();
 						try {
 							long lastUpdate = loader.getLastChangeTimestamp(source.getName());
-							log.debug("Checking source: " + source + ", lastUpdateFromLoader= " + NumberUtils.makeISO8601TimestampString(lastUpdate) + ", storedLastUpdate=" + NumberUtils.makeISO8601TimestampString(source.getLastChangeTimestamp()));
+							log.debug("Checking source: {}, lastUpdateFromLoader: {}, storedLastUpdate: {}", source, NumberUtils.makeISO8601TimestampString(lastUpdate), NumberUtils.makeISO8601TimestampString(source.getLastChangeTimestamp()));
 							if (source.isOlderAs(lastUpdate)) {
-								log.debug("firing update event: " + source);
-								// System.out.println("firing update on source: "+source);
+								log.debug("Firing update event: {}", source);
 								source.fireUpdateEvent(lastUpdate);
 							}
 						} catch (IllegalArgumentException e) {
@@ -85,6 +84,7 @@ public enum WatchDog {
 					}
 				}
 			} catch (InterruptedException e) {
+				// ignored
 			}
 		}
 	}

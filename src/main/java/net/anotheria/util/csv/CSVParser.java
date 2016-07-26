@@ -1,13 +1,13 @@
 package net.anotheria.util.csv;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.anotheria.util.StringUtils;
 import net.anotheria.util.datatable.DataCell;
 import net.anotheria.util.datatable.DataHeader;
 import net.anotheria.util.datatable.DataRow;
 import net.anotheria.util.datatable.DataTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CSVParser {
 	

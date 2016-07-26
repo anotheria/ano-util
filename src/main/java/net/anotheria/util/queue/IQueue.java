@@ -27,7 +27,7 @@ public interface IQueue<T> {
 	 * @param o
 	 * @throws QueueOverflowException if the queue is full.
 	 */
-	void putElement(T o) throws QueueOverflowException;
+	void putElement(T o);
 	/**
 	 * Adds a queue listener to the queue.
 	 * @param listener

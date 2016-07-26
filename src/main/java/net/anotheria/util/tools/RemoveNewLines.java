@@ -1,9 +1,9 @@
 package net.anotheria.util.tools;
 
-import java.io.FileOutputStream;
-
 import net.anotheria.util.IOUtils;
 import net.anotheria.util.StringUtils;
+
+import java.io.FileOutputStream;
 
 /**
  * A simple command line programm that removes all \r from the file submitted as argument.

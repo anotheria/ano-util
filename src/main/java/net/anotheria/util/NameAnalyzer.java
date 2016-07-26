@@ -1,5 +1,9 @@
 package net.anotheria.util;
 
+import net.anotheria.util.sorter.DummySortType;
+import net.anotheria.util.sorter.IComparable;
+import net.anotheria.util.sorter.StaticQuickSorter;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,10 +11,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import net.anotheria.util.sorter.DummySortType;
-import net.anotheria.util.sorter.IComparable;
-import net.anotheria.util.sorter.StaticQuickSorter;
 /**
  * Simple utility to traverse a directory and analyze the file names.
  * @author lrosenberg

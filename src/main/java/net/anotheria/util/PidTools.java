@@ -59,20 +59,11 @@ public final class PidTools {
 		if (pidFile == null)
 			pidFile = "logs/pid";
 
-		BufferedWriter out = null;
-		try {
-			out = new BufferedWriter(new FileWriter(pidFile));
+		try (BufferedWriter out = new BufferedWriter(new FileWriter(pidFile))) {
 			out.write(pid + "");
 			out.flush();
 		} catch (IOException e) {
-			log.error("Could not write PID " + pid + " into file " + pidFile + ": " + e, e);
-		} finally {
-			if (out != null)
-				try {
-					out.close();
-				} catch (IOException e) {
-				}
-
+            log.error("Could not write PID '"+pid+"' into file '"+pidFile+"'", e);
 		}
 	}
 

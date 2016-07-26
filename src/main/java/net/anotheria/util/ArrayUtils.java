@@ -222,8 +222,8 @@ public class ArrayUtils {
 	public static boolean isSorted(int... array){
 		return isSorted(false, array);
 	}
-	
-	@SuppressWarnings("unchecked")
+
+
 	public static <T> T[] createInstance(T[] a, int size){
 		 return (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
 	}

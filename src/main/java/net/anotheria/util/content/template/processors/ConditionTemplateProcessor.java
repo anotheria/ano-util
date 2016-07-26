@@ -25,8 +25,8 @@ public class ConditionTemplateProcessor implements TemplateProcessor {
 		} else {
 			try {
 				return ConditionProcessorNames.valueOf(ConditionProcessorNames.class, aPrefix).executeReplacement(aVariable, aDefValue);
-			} catch (Exception ignored) {
-				log.error("An exceptions has been occurred while trying to replace variable. where prefix=" + aPrefix + " variable=" + aVariable + " defaultValue=" + aDefValue, ignored);
+			} catch (RuntimeException exception) {
+				log.error("An exceptions has been occurred while trying to replace variable. where prefix="+aPrefix+" variable="+aVariable+" defaultValue="+aDefValue, exception);
 			}
 		}
 		return "";

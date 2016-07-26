@@ -1,5 +1,6 @@
 package net.anotheria.util;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -320,7 +321,7 @@ public final class NumberUtils {
 		DecimalFormatSymbols delimiterFormat = new DecimalFormatSymbols();
 		delimiterFormat.setDecimalSeparator(delimiter);
 		
-		return new DecimalFormat(integralPattern + "." + fractionPattern, delimiterFormat).format(value);
+		return new DecimalFormat(integralPattern + "." + fractionPattern, delimiterFormat).format(BigDecimal.valueOf(value));
 	}
 	
 	public static String currencyFormat(double value, char delimiter){

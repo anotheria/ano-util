@@ -2,9 +2,13 @@ package net.anotheria.util;
 
 import net.anotheria.util.mapper.DestinationClass;
 import net.anotheria.util.mapper.DestinationExcludedClass;
-import net.anotheria.util.mapper.ValueObjectMapperUtil;
 import net.anotheria.util.mapper.SourceClass;
-import org.dozer.*;
+import net.anotheria.util.mapper.ValueObjectMapperUtil;
+import org.dozer.CustomConverter;
+import org.dozer.CustomFieldMapper;
+import org.dozer.DozerBeanMapper;
+import org.dozer.DozerConverter;
+import org.dozer.Mapper;
 import org.dozer.classmap.ClassMap;
 import org.dozer.fieldmap.FieldMap;
 import org.junit.Assert;

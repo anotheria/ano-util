@@ -1,8 +1,8 @@
 package net.anotheria.util;
 
-import java.util.List;
-
 import net.anotheria.util.sorter.IComparable;
+
+import java.util.List;
 
 /**
  * An abstract class which implements useful methods to compare basic types.

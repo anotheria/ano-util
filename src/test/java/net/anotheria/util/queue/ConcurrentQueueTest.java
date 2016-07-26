@@ -1,14 +1,13 @@
 package net.anotheria.util.queue;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class ConcurrentQueueTest {
 	

@@ -38,7 +38,7 @@ public class MD5Util {
 			md5.reset();
 			return HexDecoder.toHexString(md5.digest(bytes));
 		}catch(NoSuchAlgorithmException e){
-			throw new AssertionError("NoSuchAlgorithmException: "+e);
+			throw new AssertionError("NoSuchAlgorithmException: "+e, e);
 		}
 	} 
 }

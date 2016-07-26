@@ -1,9 +1,9 @@
 package net.anotheria.util.datatable;
 
+import net.anotheria.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.anotheria.util.StringUtils;
 
 /**
  * A header of the table.

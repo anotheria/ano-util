@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static java.lang.System.in;
+
 /**
  * Utils for input output.
  * @author lrosenberg
@@ -80,11 +82,10 @@ public final class IOUtils {
      * @throws IOException
      */
     public static String readFileBufferedAsString(String filename) throws IOException{
-    	FileReader in = null;
-    	try{
+    	try (FileReader in = new FileReader(filename)){
         	StringBuilder result = new StringBuilder();
 	        char[] buffer = new char[2048];
-	        in = new FileReader(filename);
+
 	        int len = 0;
 	        do {
 	         len = in.read(buffer);
@@ -92,25 +93,18 @@ public final class IOUtils {
 	          result.append(buffer,0, len);
 	        } while(len > 0);
 	        return result.toString();
-        }finally{
-        	closeIgnoringException(in);
         }
     }
     
     public static String readInputStreamBufferedAsString(InputStream in, String charset) throws IOException{
-		BufferedReader reader = null;
-		try{
-			reader = new BufferedReader(new UnicodeReader(in, charset));
+		try (BufferedReader reader = new BufferedReader(new UnicodeReader(in, charset))) {
 			StringBuffer result = new StringBuffer();
 			char[] cbuf = new char[2048];
 			int read;
 			while((read = reader.read(cbuf)) > 0)
 				result.append(cbuf, 0, read);
 			return result.toString();
-		} finally {
-			closeIgnoringException(reader);
 		}
-
     }
     
     public static String readFileBufferedAsString(File file, String charset) throws IOException{
@@ -125,7 +119,7 @@ public final class IOUtils {
     public static String readlineFromStdIn() throws IOException{
     	StringBuilder ret = new StringBuilder();
     	int c;
-    	while( (c=System.in.read())!='\n' && c!=-1){
+    	while( (c= in.read())!='\n' && c!=-1){
     		if (c!='\r')
     			ret.append((char)c);
     	}
@@ -144,19 +138,15 @@ public final class IOUtils {
 				//We can do nothing if on close failure
 			}
     }
-    
 	public static byte[] readBytes(InputStream in) throws IOException {
-		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-		int nRead;
-		byte[] data = new byte[16384];
-		try {
-			while ((nRead = in.read(data, 0, data.length)) != -1)
-				buffer.write(data, 0, nRead);
 
-			buffer.flush();
+		try (final ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+			int nRead;
+			byte[] data = new byte[16384];
+			while ((nRead = in.read(data, 0, data.length)) != -1) {
+				buffer.write(data, 0, nRead);
+			}
 			return buffer.toByteArray();
-		} finally {
-			closeIgnoringException(buffer);
 		}
 	}
 }

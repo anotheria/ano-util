@@ -245,7 +245,7 @@ public class Date implements Serializable{
             Date ret = new Date(day,month,year);
             return ret;
         } catch(NumberFormatException nfe){
-        	throw new IllegalArgumentException("Date string wrong format: " + aDateStrg + ". Expected: dd" + aCh + "mm" + aCh + "yyyy");
+        	throw new IllegalArgumentException("Date string wrong format: " + aDateStrg + ". Expected: dd" + aCh + "mm" + aCh + "yyyy", nfe);
         }
     }
 

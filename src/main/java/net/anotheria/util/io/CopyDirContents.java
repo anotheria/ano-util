@@ -1,5 +1,8 @@
 package net.anotheria.util.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,6 +12,8 @@ import java.io.IOException;
  * @author lrosenberg
  */
 public class CopyDirContents {
+
+	private static final Logger log = LoggerFactory.getLogger(CopyDirContents.class);
 
 	/**
 	 * Buffer used for copies.
@@ -36,7 +41,7 @@ public class CopyDirContents {
 		File dest = new File("/media/WD Passport");
 		
 		copy(src, dest);
-		System.out.println("Finished: ");
+		log.debug("Finished: ");
 		printInfo();
 	}
 	
@@ -48,7 +53,7 @@ public class CopyDirContents {
 		long duration = now - time;
 		double throughtput = (double)bytes/duration*1000;
 		double mbs = throughtput/1024/1024;
-		System.out.println("Copied dirs: "+dirs+", files: "+files+", bytes: "+bytes+" in "+duration+", throughtput: "+throughtput+" bytes/second, "+mbs+" MB/s, skiped: "+skipped);
+		log.info("Copied dirs: "+dirs+", files: "+files+", bytes: "+bytes+" in "+duration+", throughtput: "+throughtput+" bytes/second, "+mbs+" MB/s, skiped: "+skipped);
 	}
 	
 	public static void copy(File src, File dest) throws IOException{
@@ -96,20 +101,12 @@ public class CopyDirContents {
 				printInfo();
 			return;
 		}
-		System.out.println("Copying file: "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
-		FileInputStream fIn = new FileInputStream(src);
-		FileOutputStream fOut = new FileOutputStream(dest);
-		copy(fIn, fOut);
-		try{
-			fIn.close();
-		} catch(IOException ignored) {
-			System.out.println("Ignored exception: " + ignored.getMessage());
-		}
-		try{
-			fOut.close();
-		}catch(IOException e){
-			e.printStackTrace();
-			System.out.println("Couldn't copy "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
+		log.info("Copying file: "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
+		try(FileInputStream fIn = new FileInputStream(src);
+		FileOutputStream fOut = new FileOutputStream(dest)) {
+			copy(fIn, fOut);
+		} catch(IOException e){
+			log.error("Couldn't copy "+src.getAbsolutePath()+" to "+dest.getAbsolutePath(), e);
 		}
 	}
 	

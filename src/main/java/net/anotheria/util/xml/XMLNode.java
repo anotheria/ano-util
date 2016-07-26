@@ -1,5 +1,8 @@
 package net.anotheria.util.xml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
@@ -14,6 +17,9 @@ import java.util.List;
  * @author another
  */
 public class XMLNode {
+
+	private static final Logger log = LoggerFactory.getLogger(XMLNode.class);
+
 	/**
 	 * SubNodes of this node.
 	 */
@@ -204,7 +210,7 @@ public class XMLNode {
 			
 			aWriter.write(ident+XMLHelper.detag(getName()));
 		}catch(Throwable t){
-			t.printStackTrace();
+			log.error(t.getMessage(), t);
 		}
 	}
 
@@ -229,7 +235,7 @@ public class XMLNode {
 
 			aWriter.write(ident+XMLHelper.detag(getName()));
 		}catch(Throwable t){
-			t.printStackTrace();
+			log.error(t.getMessage(), t);
 		}
 	}
 }

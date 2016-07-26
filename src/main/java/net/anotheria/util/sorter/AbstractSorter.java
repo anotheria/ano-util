@@ -21,7 +21,7 @@ public abstract class AbstractSorter<T extends IComparable> implements Sorter<T>
  	 * Transfers a list into array.
  	 * The list should include only objects of type IComparable.
  	 */
- 	@SuppressWarnings("unchecked")
+
  	public static <T extends IComparable> T[] list2array(List<T> src){
  		T[] tmp = (T[])new IComparable[0];
    		return src.toArray(tmp);

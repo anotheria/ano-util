@@ -59,7 +59,7 @@ public class QueueImpl<T> implements IQueue<T> {
 	 * @throws QueueOverflowException if the queue is full.
 	 */
 	@Override
-	public void putElement(T o) throws QueueOverflowException {
+	public void putElement(T o) {
 		if (!underlyingQueue.offer(o)){
 			throw new QueueOverflowException(""+o); 
 		}
