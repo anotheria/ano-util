@@ -123,19 +123,9 @@ public class StringUtilsTest {
 		String source = "{if:{equals:{mp:persons_size}:2}:Gender{mp:gender2}Age{mp:age2}}";
 		char tagStart = '{';
 		char tagEnd = '}';
-		char escapeChar = '\\';
-		List<String> tags = StringUtils.extractSuperTags(source, tagStart, tagEnd, escapeChar);
+		List<String> tags = StringUtils.extractSuperTags(source, tagStart, tagEnd);
 		for(String t: tags)
 			System.out.println(t);
-		
-//		String src = "{if:true:mumu|:bubu}";
-//		MatchedProfilesProcessor p = new MatchedProfilesProcessor();
-//		p.setAccountId("267");
-//		VariablesUtility.addProcessor(MatchedProfilesProcessor.PREFIX, p);
-//		System.out.println(VariablesUtility.replaceVariables(null, src));
-//		List<String> t = StringUtils.extractSuperTags(src,'{','}','|');
-//		for(String s:t)
-//			System.out.println(s);
 	}
 
 
