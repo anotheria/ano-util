@@ -11,17 +11,14 @@ import java.util.List;
 public class MathHelper {
 
     /**
-     * put your documentation comment here
      * @param values Double Vector
      * @param precision 1 - Integer.MaxValue
      * @return  rounded Double Vector with precision
+     * @deprecated use {@link #getFormattedStrings(Iterable, int)} instead
      */
-    @Deprecated public static List<String> getFormattedStringVector(List<Double> values, int precision) {
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < values.size(); i++) {
-            result.add(getFormattedString(values.get(i), precision));
-        }
-        return  result;
+    @Deprecated
+    public static List<String> getFormattedStringVector(List<Double> values, int precision) {
+        return  getFormattedStrings(values, precision);
     }
 
     public static List<String> getFormattedStrings(Iterable<Double> values, int precision) {

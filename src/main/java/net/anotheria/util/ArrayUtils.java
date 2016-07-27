@@ -120,7 +120,7 @@ public class ArrayUtils {
 	
 	/**
 	 * Converts an Objects list to the list of Strings by calling toString method of each Object from incoming list.
-	 * @Deprecated. Use StringUtils.toStringList() instead.
+	 * @deprecated Use StringUtils.toStringList() instead.
 	 *  
 	 * @param list incoming list of Objects
 	 * @return list where each incoming object converted to string.
