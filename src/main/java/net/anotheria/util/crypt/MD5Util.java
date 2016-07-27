@@ -31,7 +31,6 @@ public class MD5Util {
 	 * Returns the MD5 hash of the given byte array. This method is synchronized.
 	 *
 	 * @param bytes the byte array containing the string to enhash.
-	 * @return
 	 */
 	public static final String getMD5Hash(byte... bytes) {
 		synchronized (MD5Util.class) {

@@ -21,7 +21,6 @@ public class QueueImpl<T> implements IQueue<T> {
 	private int size;
 	/**
 	 * Creates a new QueueImpl.
-	 * @param aSize
 	 */
 	QueueImpl(int aSize){
 		listeners = new ArrayList<>();
@@ -55,7 +54,6 @@ public class QueueImpl<T> implements IQueue<T> {
 	
 	/**
 	 * Puts a new element in the queue.
-	 * @param o
 	 * @throws QueueOverflowException if the queue is full.
 	 */
 	@Override

@@ -14,7 +14,6 @@ public interface TemplateProcessor {
 	 * @param aVariable processor variable name
 	 * @param aDefValue default value
 	 * @param aContext  additional replacement parameters
-	 * @return string
 	 */
 	String replace(String aPrefix, String aVariable, String aDefValue, TemplateReplacementContext aContext);
 

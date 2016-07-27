@@ -15,9 +15,6 @@ public final class DateUtility {
 	/**
 	 * Returns true if the first date is after second date.
 	 *
-	 * @param d1
-	 * @param d2
-	 * @return
 	 */
 	public static boolean isAfter(Date d1, Date d2) {
 		if (d1.year < d2.year)
@@ -52,9 +49,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param d1
-	 * @param d2
-	 * @return
 	 */
 	public static boolean isBefore(Date d1, Date d2) {
 		return isAfter(d2, d1);
@@ -77,9 +71,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param d1
-	 * @param d2
-	 * @return
 	 */
 	public static boolean isSame(Date d1, Date d2) {
 		return !isAfter(d2, d1) && !isBefore(d2, d1);
@@ -88,8 +79,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param d
-	 * @return
 	 */
 	public static Date nextDate(Date d) {
 		if (!Date.isValid(d))
@@ -111,8 +100,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param d
-	 * @return
 	 */
 	public static Date previousDate(Date d) {
 		if (!Date.isValid(d))
@@ -134,8 +121,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param date
-	 * @return
 	 */
 	public static GregorianCalendar toLocalTime(GregorianCalendar date) {
 		GregorianCalendar calLOC = new GregorianCalendar();
@@ -150,7 +135,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param d
 	 */
 	public static String toDateOnly(Date d) {
 		String ret = "";
@@ -163,8 +147,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param d
-	 * @return
 	 */
 	public static String toDayAndMonthOnly(Date d) {
 		String ret = "";
@@ -176,8 +158,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param d
-	 * @return
 	 */
 	public static String toTimeOnly(Date d) {
 		return (d.hour < 10 ? "0" + d.hour : String.valueOf(d.hour)) + ':' + (d.min < 10 ?
@@ -187,8 +167,6 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
-	 * @param date
-	 * @return
 	 */
 	public static String dynamicString(Date date) {
 		int year = date.year;
@@ -224,7 +202,7 @@ public final class DateUtility {
 	/**
 	 * Returns the calendar week for this date.
 	 *
-	 * @added by lro, 28-10-00
+	 * @since 28-10-00
 	 * bug with week calculation for days in november/december
 	 */
 	public static int getCalendarWeekForDate(Date date) {
@@ -269,9 +247,6 @@ public final class DateUtility {
 	/**
 	 * Returns the date for the first day of a "calendar week" for a given year.
 	 *
-	 * @param week
-	 * @param year
-	 * @return
 	 */
 	public static Date getFirstDayOfWeek(int week, int year) {
 		Date d = new Date(4, 1, year);
@@ -290,7 +265,6 @@ public final class DateUtility {
 	 * Returns age - a period of time, measured by years from fromDate till now
 	 *
 	 * @param fromDate start date in mills
-	 * @return age
 	 */
 
 	public static int getAge(long fromDate) {
@@ -301,7 +275,6 @@ public final class DateUtility {
 	 * Returns age - a period of time, measured by years from fromDate till now
 	 *
 	 * @param fromDate start date
-	 * @return age
 	 */
 	public static int getAge(Date fromDate) {
 		return getAge(fromDate, new Date(System.currentTimeMillis()));
@@ -312,7 +285,6 @@ public final class DateUtility {
 	 *
 	 * @param fromDate start date in mills
 	 * @param toDate   end date in mills
-	 * @return age
 	 */
 	public static int getAge(long fromDate, long toDate) {
 		Date _fromDate = new Date(fromDate);
@@ -325,7 +297,6 @@ public final class DateUtility {
 	 *
 	 * @param fromDate start date
 	 * @param toDate   end date
-	 * @return age
 	 */
 	public static int getAge(Date fromDate, Date toDate) {
 		int age = toDate.getYear() - fromDate.getYear();

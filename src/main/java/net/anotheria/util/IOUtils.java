@@ -21,9 +21,6 @@ public final class IOUtils {
 
 	/**
 	 * Reads the contents of the file at once and returns the byte array.
-	 * @param file
-	 * @return
-	 * @throws IOException
 	 */
 	public static byte[] readFileAtOnce(File file) throws IOException{
         FileInputStream fIn = new FileInputStream(file);
@@ -33,8 +30,6 @@ public final class IOUtils {
 	/**
 	 * Reads the contents of the file at once and returns the byte array.
 	 * @param filename name of the file.
-	 * @return
-	 * @throws IOException
 	 */
 	public static byte[] readFileAtOnce(String filename) throws IOException{
         FileInputStream fIn = new FileInputStream(filename);
@@ -43,9 +38,6 @@ public final class IOUtils {
 	
 	/**
 	 * Reads the contents of the fileinputstream. (Why not an InputStream btw?).
-	 * @param fIn
-	 * @return
-	 * @throws IOException
 	 */
 	private static byte[] readFileAtOnce(FileInputStream fIn) throws IOException{
 		byte[] ret = new byte[fIn.available()];
@@ -56,9 +48,6 @@ public final class IOUtils {
     
 	/**
 	 * Reads a file and returns the contents as string.
-	 * @param filename
-	 * @return
-	 * @throws IOException
 	 */
     public static String readFileAtOnceAsString(String filename) throws IOException{
         return new String(readFileAtOnce(filename));
@@ -66,9 +55,6 @@ public final class IOUtils {
     
 	/**
 	 * Reads a file and returns the contents as string.
-	 * @param file
-	 * @return
-	 * @throws IOException
 	 */
     public static String readFileAtOnceAsString(File file) throws IOException{
         return new String(readFileAtOnce(file));
@@ -77,9 +63,6 @@ public final class IOUtils {
     /**
      * Instead of reading the file at once, reads the file by reading 2K blocks. Useful for reading
      * special files, where the size of the file isn't determinable, for example /proc/xxx files on linux.
-     * @param filename
-     * @return
-     * @throws IOException
      */
     public static String readFileBufferedAsString(String filename) throws IOException{
     	try (FileReader in = new FileReader(filename)){
@@ -113,8 +96,6 @@ public final class IOUtils {
     
     /**
      * Reads a line from standard input.
-     * @return
-     * @throws IOException
      */
     public static String readlineFromStdIn() throws IOException{
     	StringBuilder ret = new StringBuilder();

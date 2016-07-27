@@ -35,7 +35,6 @@ public class Slice<T> {
 	
 	/**
 	 * Returns the segment this slice has been initialized with.
-	 * @return
 	 */
 	public Segment getSegment() {
 		return segment;
@@ -48,7 +47,6 @@ public class Slice<T> {
 	
 	/**
 	 * Returns the total number of items.
-	 * @return 
 	 */
 	public int getTotalNumberOfItems() {
 		return totalNumberOfItems;
@@ -59,7 +57,6 @@ public class Slice<T> {
 	
 	/**
 	 * Returns the total number of slices.
-	 * @return
 	 */
 	public int getTotalNumberOfSlices() {
 		return totalNumberOfSlices;
@@ -70,7 +67,6 @@ public class Slice<T> {
 	
 	/**
 	 * Returns the number of the current slice.
-	 * @return
 	 */
 	public int getCurrentSlice(){
 		return segment.getSliceNumber();

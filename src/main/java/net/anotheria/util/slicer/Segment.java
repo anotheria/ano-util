@@ -25,8 +25,6 @@ public class Segment implements Serializable {
 	
 	/**
 	 * Creates a new Segment with given slice number and elements per page.
-	 * @param aSliceNumber
-	 * @param aElementsPerSlice
 	 */
 	public Segment(int aSliceNumber, int aElementsPerSlice){
 		sliceNumber = aSliceNumber;

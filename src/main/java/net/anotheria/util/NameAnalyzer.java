@@ -44,8 +44,6 @@ public class NameAnalyzer {
 	private static HashMap<String,ElementCount> elements = new HashMap<>();
 	/**
 	 * Main.
-	 * @param a
-	 * @throws IOException
 	 */
 	public static void main(String... a) {
 		proceed(new File("."));

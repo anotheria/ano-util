@@ -11,21 +11,18 @@ public abstract class Entry {
 	private String name;
 	/**
 	 * Constructor for the entry.
-	 * @param aName
 	 */
 	protected Entry(String aName){
 		name = aName;
 	}
 	/**
 	 * Returns the name.
-	 * @return
 	 */
 	public String getName(){ return name; }
 	
 	public void setName(String aName){ name = aName; }
 	/**
 	 * Returns the size of the entry.
-	 * @return
 	 */
 	public abstract long getSize();
 

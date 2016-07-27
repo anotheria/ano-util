@@ -16,7 +16,6 @@ public final class StaticQuickSorter {
 	 * @param <T> extends IComparable
 	 * @param source collection to sort
 	 * @param sType the sort type (sort method and order).
-	 * @return
 	 */
 	public static <T extends IComparable> List<T> sort(Collection<T> source, SortType sType) {
 		List<T> tmp = new ArrayList<>(source.size());

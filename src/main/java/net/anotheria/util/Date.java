@@ -67,7 +67,6 @@ public class Date implements Serializable{
 
     /**
      * Creates a new date object which correspongs to the given time in millis since 01.01.1970.
-     * @param aMillis
      */
     public Date(long aMillis){
         GregorianCalendar cal = new GregorianCalendar();
@@ -134,7 +133,6 @@ public class Date implements Serializable{
     
     /**
      * Returns true if this date is a valid date. For example 30 Februar is not a valid date.
-     * @return
      */
     public boolean isValid(){
     	return isValid(this);
@@ -261,49 +259,42 @@ public class Date implements Serializable{
   	}
 
 	/**
-	 * @return
 	 */
 	public int getDay() {
 		return day;
 	}
 
     /**
-	 * @return
 	 */
 	public int getDayOfWeek() {
 		return dayOfWeek;
 	}
 
 	/**
-	 * @return
 	 */
 	public int getHour() {
 		return hour;
 	}
 
 	/**
-	 * @return
 	 */
 	public int getMin() {
 		return min;
 	}
 
 	/**
-	 * @return
 	 */
 	public int getMonth() {
 		return month;
 	}
 
 	/**
-	 * @return
 	 */
 	public String getW_day() {
 		return wDay;
 	}
 
 	/**
-	 * @return
 	 */
 	public int getYear() {
 		return year;
@@ -311,7 +302,6 @@ public class Date implements Serializable{
 	
 	/**
 	 * Returns the ISO8601 timestamp of this date.
-	 * @return
 	 */
 	public String toISO8601Timestamp(){
 		return NumberUtils.makeISO8601TimestampString(toMill());

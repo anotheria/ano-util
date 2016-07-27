@@ -491,7 +491,6 @@ public final class StringUtils {
      * @param src       source text.
      * @param toReplace string to replace.
      * @param with      string to replace with.
-     * @return
      */
     public static String replace(String src, String toReplace, String with) {
         int index = 0;
@@ -908,10 +907,6 @@ public final class StringUtils {
      * NOTE: vararg of parameterized types (here @param array) for primitive arrays doesn't work properly.
      * This utility have to be accomplished with concatenateTokens methods for each primitive arrays!!!
      *
-     * @param <T>
-     * @param delimiterSequence
-     * @param tokens
-     * @return
      */
     public static <T> String concatenateTokens(String delimiterSequence, T... tokens) {
         return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);

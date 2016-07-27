@@ -6,7 +6,6 @@ package net.anotheria.util;
 public interface IObserver {
 	/**
 	 * Called by the subject if its updated.
-	 * @param subject
 	 */
 	void update(ISubject subject);
 }

@@ -12,7 +12,6 @@ import java.util.List;
 public class DebugUtilities {
 	/**
 	 * Prints out an array to the stdout.
-	 * @param arr
 	 */
 	public static final void printArray(Object... arr){
 		for (int i=0; i<arr.length; i++){
@@ -21,7 +20,6 @@ public class DebugUtilities {
 	}
 	/**
 	 * Prints out a list to the stdout.
-	 * @param l
 	 */
 	public static final void printList(List<?>  l){
 		System.out.println(listToString(l));
@@ -48,7 +46,6 @@ public class DebugUtilities {
 	
 	/**
 	 * Prints out a list to the stdout.
-	 * @param l
 	 */
 	public static final void printBinaryList(List<?>  l){
 		for (int i=0; i<l.size(); i++){

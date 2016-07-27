@@ -55,7 +55,6 @@ public final class TemplateProcessorConfig implements Serializable {
 	/**
 	 * Returns configuration instance.
 	 *
-	 * @return
 	 */
 	public static TemplateProcessorConfig getInstance() {
 		if (instance != null)

@@ -14,7 +14,6 @@ public class DirectoryEntry extends Entry{
 	private List<Entry> entries;
 	/**
 	 * Creates a new directory entry.
-	 * @param name
 	 */
 	public DirectoryEntry(String name){
 		super(name);
@@ -22,7 +21,6 @@ public class DirectoryEntry extends Entry{
 	}
 	/**
 	 * Adds a sub entry.
-	 * @param anEntry
 	 */
 	public void addEntry(Entry anEntry){
 		entries.add(anEntry);

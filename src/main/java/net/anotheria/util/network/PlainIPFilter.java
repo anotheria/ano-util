@@ -40,7 +40,6 @@ public class PlainIPFilter {
 	 * @param ranges 
 	 * 			to pass through
 	 * 
-	 * @return
 	 */
 	public static boolean mayPass(String ipAddress, Iterable<IPRange> ranges) {
 		for (IPRange r : ranges)
@@ -55,7 +54,6 @@ public class PlainIPFilter {
 	 * 
 	 * @param ipAdress
 	 *            the adress to check.
-	 * @return
 	 */
 	public boolean mayPass(String ipAddress) {
 		return mayPass(ipAddress, ranges);

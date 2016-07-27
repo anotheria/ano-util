@@ -75,8 +75,6 @@ public final class NumberUtils {
 	
 	/**
 	 * Returns a digital time string (23.02.2002).
-	 * @param time
-	 * @return
 	 */
 	public static String makeDigitalDateString(long time){
 		Date date = new Date(time);
@@ -165,7 +163,6 @@ public final class NumberUtils {
 
 	/**
 	 * Returns the ISO8601 date of now.
-	 * @return
 	 */
 	public static String makeISO8601DateString(){
 		return makeISO8601DateString(System.currentTimeMillis());
@@ -173,7 +170,6 @@ public final class NumberUtils {
 	
 	/**
 	 * Returns the ISO8601 timestamp of now.
-	 * @return
 	 */
 	public static String makeISO8601TimestampString(){
 		return makeISO8601TimestampString(System.currentTimeMillis());

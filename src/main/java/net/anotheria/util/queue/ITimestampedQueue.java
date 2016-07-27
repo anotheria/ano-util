@@ -8,13 +8,11 @@ package net.anotheria.util.queue;
 public interface ITimestampedQueue<T> extends IQueue<T> {
 	/**
 	 * Returns the time of the last put.
-	 * @return
 	 */
 	long getLastPutTimestamp();
 	
 	/**
 	 * Returns the time of the last get.
-	 * @return
 	 */
 	long getLastGetTimestamp();
 

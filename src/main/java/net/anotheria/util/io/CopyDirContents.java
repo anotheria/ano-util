@@ -65,9 +65,6 @@ public class CopyDirContents {
 	
 	/**
 	 * Copies two directories.
-	 * @param src
-	 * @param dest
-	 * @throws IOException
 	 */
 	private static void copyDir(File src, File dest) throws IOException{
 		dirs++;
@@ -85,9 +82,6 @@ public class CopyDirContents {
 
 	/**
 	 * Copies two files.
-	 * @param src
-	 * @param dest
-	 * @throws IOException
 	 */
 	private static void copyFile(File src, File dest) {
 		files++;
@@ -112,9 +106,6 @@ public class CopyDirContents {
 	
 	/**
 	 * Copies from stream to stream.
-	 * @param src
-	 * @param dest
-	 * @throws IOException
 	 */
 	private static void copy(FileInputStream src, FileOutputStream dest) throws IOException{
 		while(src.available()>0){

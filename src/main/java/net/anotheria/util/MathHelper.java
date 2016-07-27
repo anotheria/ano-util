@@ -31,9 +31,6 @@ public class MathHelper {
 
     /**
      * put your documentation comment here
-     * @param value
-     * @param precision
-     * @return
      */
     public static String getFormattedString(Double value, int precision) {
         boolean negativ = false;

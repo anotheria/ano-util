@@ -100,7 +100,6 @@ public class Resource {
 	/**
 	 * Removes the listener from this Resource
 	 * 
-	 * @param listener
 	 */
 	public void removeListener(ResourceListener listener) {
 		synchronized (listeners) {
@@ -117,7 +116,6 @@ public class Resource {
 	/**
 	 * Return the last change timestamp of this Resource in millis
 	 * 
-	 * @return
 	 */
 	public long getLastChangeTimestamp() {
 		return lastChangeTimestamp;
@@ -127,7 +125,6 @@ public class Resource {
 	/**
 	 * Returns the name of this Resource
 	 * 
-	 * @return
 	 */
 	public String getName() {
 		return name;
@@ -136,7 +133,6 @@ public class Resource {
 	/**
 	 * Returns the content of this Resource
 	 * 
-	 * @return
 	 */
 	public String getContent() {
 		return content;
@@ -146,8 +142,6 @@ public class Resource {
 	 * Returns true if this Resource's change timestamp is older as the given
 	 * timestamp
 	 * 
-	 * @param resourceChangeTimestamp
-	 * @return
 	 */
 	protected boolean isOlderAs(long resourceChangeTimestamp) {
 		return lastChangeTimestamp < resourceChangeTimestamp;
@@ -157,7 +151,6 @@ public class Resource {
 	 * Called by the WatchDog if a change in the underlying
 	 * Resource is detected.
 	 * 
-	 * @param timestamp
 	 */
 	protected void fireUpdateEvent(long timestamp) {
 		reloadContent();

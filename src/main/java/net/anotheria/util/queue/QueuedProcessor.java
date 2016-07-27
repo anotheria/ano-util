@@ -212,7 +212,6 @@ public class QueuedProcessor<T extends Object> extends Thread {
 
 	/**
 	 * Default method to add an element to the queue. Calls addToQueueDontWait internally.
-	 * @param aElement
 	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
 	 */
 	public void addToQueue(T aElement) throws UnrecoverableQueueOverflowException {
@@ -222,7 +221,6 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	/**
 	 * Inserts the specified element at the tail of the processing queue if the queue is not full
      * 
-	 * @param element
 	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
 	 */
 	public void addToQueueDontWait(T element) throws UnrecoverableQueueOverflowException {
@@ -323,7 +321,6 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 	
 	/**
-	 * @return
 	 */
 	public int getQueueOverflowCount() {
 		return overflowCount;
@@ -334,7 +331,6 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 
 	/**
-	 * @return
 	 */
 	public int getThrowAwayCount() {
 		return throwAwayCount.intValue();

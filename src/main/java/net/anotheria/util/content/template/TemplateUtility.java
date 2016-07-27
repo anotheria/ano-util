@@ -71,7 +71,6 @@ public final class TemplateUtility {
 	/**
 	 * Return pre configured processors.
 	 *
-	 * @return collection
 	 */
 	public static Map<String, TemplateProcessor> getDefaultProcessors() {
 		Map<String, TemplateProcessor> ret = new HashMap<>(defaultProcessors);
@@ -125,7 +124,6 @@ public final class TemplateUtility {
 	 * Creates List of <a>ContentElement</a> from incoming string.
 	 *
 	 * @param src text
-	 * @return collection
 	 */
 	private static List<ContentElement> indexSource(String src) {
 		String myS = StringUtils.removeChar(src, '\r');

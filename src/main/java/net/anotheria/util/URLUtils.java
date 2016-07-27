@@ -41,7 +41,6 @@ public class URLUtils {
 	
 	/**
 	 * Encodes unsafe characters in a URL
-	 * @param url
 	 * @return mostly (in current implementation) safe URL
 	 */
 	public static String encode(String url){

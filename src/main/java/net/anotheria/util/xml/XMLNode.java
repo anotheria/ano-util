@@ -3,7 +3,6 @@ package net.anotheria.util.xml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -131,7 +130,6 @@ public class XMLNode {
 
 	/**
 	 * Areates attribute string.
-	 * @return string
 	 */
 	private String createAttributeString(){
 		String ret = "";
@@ -150,7 +148,6 @@ public class XMLNode {
 	 *
 	 * @param aWriter PrintStream writer.
 	 * @param aTabs position to start
-	 * @throws IOException on errors
 	 */
 	public void write(PrintStream aWriter, int aTabs) {
 		String attributeString = createAttributeString();
@@ -172,7 +169,6 @@ public class XMLNode {
 	 *
 	 * @param aWriter PrintWriter
 	 * @param aTabs position to start
-	 * @throws IOException on errors
 	 */
 	public void write(PrintWriter aWriter, int aTabs) {
 		String attributeString = createAttributeString();
@@ -194,7 +190,6 @@ public class XMLNode {
 	 *
 	 * @param aWriter OutputStreamWriter 
 	 * @param aTabs position to start
-	 * @throws IOException on errors
 	 */
 	public void write(OutputStreamWriter aWriter, int aTabs) {
 		try{
@@ -219,7 +214,6 @@ public class XMLNode {
 	 * 
 	 * @param aWriter java.io.Writer
 	 * @param aTabs tabs
-	 * @throws IOException on errors
 	 */
 	public void write(Writer aWriter, int aTabs) {
 		try{

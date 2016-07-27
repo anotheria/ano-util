@@ -27,9 +27,6 @@ public final class IdCodeGenerator {
 	
 	/**
 	 * Generates a code of given length from supplied chars.
-	 * @param chars
-	 * @param length
-	 * @return
 	 */
 	public static String generateCustomCode(char[] chars, int length){
 		String ret = "";
@@ -41,8 +38,6 @@ public final class IdCodeGenerator {
 	
 	/**
 	 * Generates a code of given length.
-	 * @param length
-	 * @return
 	 */
 	public static String generateCode(int length){
 		int interval = CODE_END - CODE_START+1;
@@ -54,7 +49,6 @@ public final class IdCodeGenerator {
 	
 	/**
 	 * Generates a code with default length (CODE_LENGTH).
-	 * @return
 	 */
 	public static String generateCode(){
 		return generateCode(CODE_LENGTH);

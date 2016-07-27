@@ -24,8 +24,6 @@ public class IPRange {
 
 	/**
 	 * Creates new IPRange with given ipAdress and mask.
-	 * @param ipAdress
-	 * @param mask
 	 */
 	public IPRange(String ipAdress, int mask) {
 		maskedIp = convertIp(ipAdress);

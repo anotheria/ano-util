@@ -16,7 +16,6 @@ public interface ResourceLoader {
 
 	/**
 	 * Returns timestamp of last resource modification
-	 * @param resourceName
 	 * @return timestamp of last resource modification
 	 * @throws IllegalArgumentException
 	 *             if resource with such name is not available
@@ -25,7 +24,6 @@ public interface ResourceLoader {
 
 	/**
 	 * Returns text content of a resource 
-	 * @param resourceName
 	 * @return text content
 	 * @throws IllegalArgumentException
 	 *             if resource with such name is not available

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Wordcount utility. Walks recursively through a directory and counts all lines/words/chars in all files which matches the extension (for now .java). 
  * @author lrosenberg
- * @created 25.06.2004
+ * @since 25.06.2004
  */
 public final class WC {
 	/**

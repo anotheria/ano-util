@@ -76,7 +76,6 @@ public class SortType implements Serializable{
     
     /**
      * Returns a sorttype which is opposite to this sorttype (switched sort order).
-     * @return
      */
     public SortType reverse(){
         return new SortType(sortBy, !sortOrder);

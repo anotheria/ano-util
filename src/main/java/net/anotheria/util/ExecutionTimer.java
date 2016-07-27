@@ -72,7 +72,6 @@ public class ExecutionTimer {
 	}
 	/**
 	 * Continues previously stoped(paused) execution of the key.
-	 * @param aKey
 	 */
 	public void continueExecution(String aKey){
 		try{
@@ -153,7 +152,6 @@ public class ExecutionTimer {
 
 	/**
 	 * Prints execution times in the given sort order.
-	 * @param method
 	 */
 	private void printExecutionTimes(Method method){
 	    List<TimerEntry> v = sortEntries(getTimerEntries(), method);
@@ -201,7 +199,6 @@ public class ExecutionTimer {
 	}
 	/**
 	 * Returns all contained timer entries.
-	 * @return
 	 */
 	private List<TimerEntry> getTimerEntries(){
 		List<TimerEntry> ret = new ArrayList<>(timers.values());
@@ -211,7 +208,6 @@ public class ExecutionTimer {
 	/**
 	 * Returns the timer entry with given key.
 	 * @param aKey the key.
-	 * @return
 	 */
 	private TimerEntry getTimerEntry(String aKey){
 	    TimerEntry entry = timers.get(aKey);

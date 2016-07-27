@@ -38,8 +38,6 @@ public class CryptTool {
 
 	/**
 	 * Returns a byte array containing the encrypted version of the string.
-	 * @param toEncrypt
-	 * @return
 	 */
 	public byte[] encrypt(String toEncrypt) {
 		toEncrypt = padMod(toEncrypt, 8);
@@ -56,7 +54,6 @@ public class CryptTool {
 	/**
 	 * Returns a HEX version of the encrypted string.
 	 * @param toEncrypt the string to encrypt.
-	 * @return
 	 */
 	public String encryptToHex(String toEncrypt) {
 		byte[] encrypted = encrypt(toEncrypt);
@@ -136,7 +133,6 @@ public class CryptTool {
 	/**
 	 * Converts Numerical ID to Chiffre: string from letters and digits 8 symbols length.
 	 * @param id to convert
-	 * @return
 	 */
 	public static String idToChiffre(String id) {
 		int normalizedId = Integer.parseInt(id) + NUMERATION_BASE_NUMBER;
@@ -161,8 +157,6 @@ public class CryptTool {
 
 	/**
 	 * Restore Numerical ID from Chiffre.
-	 * @param chiffre
-	 * @return
 	 */
 	public static String chiffreToId(String chiffre) {
 

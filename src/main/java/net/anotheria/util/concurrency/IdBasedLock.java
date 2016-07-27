@@ -8,7 +8,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The lock class.
- * @param <K>
  */
 public class IdBasedLock<K> implements Serializable {
     /**

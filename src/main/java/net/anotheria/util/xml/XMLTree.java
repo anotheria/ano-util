@@ -32,7 +32,6 @@ public class XMLTree {
 
 	/**
 	 * Returns the root node.
-	 * @return 
 	 */
 	public XMLNode getRoot() {
 		return root;
@@ -52,7 +51,6 @@ public class XMLTree {
 
 	/**
 	 * Returns the encoding.
-	 * @return
 	 */
 	public String getEncoding() {
 		return encoding;

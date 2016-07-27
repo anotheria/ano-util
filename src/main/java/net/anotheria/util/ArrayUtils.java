@@ -14,10 +14,6 @@ public class ArrayUtils {
 
 	/**
 	 * Merges two arrays in a third array.
-	 * @param <T>
-	 * @param firstArray
-	 * @param secondArray
-	 * @return
 	 */
 	public static <T> T[] mergeArrays(T[] firstArray, T... secondArray) {
 		T[] ret = Arrays.copyOf(firstArray, firstArray.length + secondArray.length);
@@ -54,9 +50,6 @@ public class ArrayUtils {
 	 * NOTE: vararg of parameterized types (here @param array) for primitive arrays doesn't work properly.
 	 * This utility have to be accomplished with asList methods for each primitive arrays!!!
 	 * 
-	 * @param <T>
-	 * @param array
-	 * @return
 	 */
 	public static <T> List<T> asList(T... array){
 		return Arrays.asList(array);
@@ -177,8 +170,6 @@ public class ArrayUtils {
 	/**
 	 * Finds all elements that the array1 and the array2 have in common. 
 	 * The array1 and the array2 must be sorted ascent. 
-	 * @param array1
-	 * @param array2
 	 * @return the array of elements that the array1 and the array2 have in common
 	 */
 	public static int[] intersection(int[] array1, int... array2){
