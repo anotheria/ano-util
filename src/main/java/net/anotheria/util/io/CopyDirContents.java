@@ -109,7 +109,6 @@ public class CopyDirContents {
 	 */
 	private static void copy(FileInputStream src, FileOutputStream dest) throws IOException{
 		while(src.available()>0){
-			int bytesToCopy = src.available()<buffer.length ? src.available() : buffer.length;
 			int copied = src.read(buffer);
 			dest.write(buffer, 0, copied);
 			bytes+= copied;

@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -131,18 +130,14 @@ public class NameAnalyzer {
 	
 	private static List<String> uncamelCase2(CharSequence s){
 		List<String> list = new ArrayList<>();
-		
-		boolean inCamelCase = false;
-		boolean previousCamelCase = false;
+
 		String current = "";
 		
 		for (int i=0; i<s.length(); i++){
 			char c = s.charAt(i);
 			if (Character.isUpperCase(c)){
 				current += c;
-				inCamelCase = true;
 			}else{
-				inCamelCase = false;
 				if (current.length()>1){
 					list.add(current);
 				}

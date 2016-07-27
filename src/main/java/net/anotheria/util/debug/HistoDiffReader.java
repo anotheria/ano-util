@@ -198,7 +198,7 @@ public class HistoDiffReader {
 		public HistogramEntry(String line){
 			String[] t = StringUtils.tokenize(line, ' ');
 			List<String> tt = new ArrayList<>(Arrays.asList(t));
-			int index = -1;
+			int index;
 			while( (index=tt.indexOf(""))!=-1)
 				tt.remove(index);
 			position = Integer.parseInt(StringUtils.removeChar(tt.get(0), ':').trim());

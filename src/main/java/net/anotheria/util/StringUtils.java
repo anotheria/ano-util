@@ -493,7 +493,7 @@ public final class StringUtils {
      * @param with      string to replace with.
      */
     public static String replace(String src, String toReplace, String with) {
-        int index = 0;
+        int index;
         while ((index = src.indexOf(toReplace)) > -1) {
             String s = src.substring(0, index);
             s += with;
@@ -504,7 +504,7 @@ public final class StringUtils {
     }
 
     public static String replace(String src, String toReplace, char with) {
-        int index = 0;
+        int index;
         while ((index = src.indexOf(toReplace)) > -1) {
             String s = src.substring(0, index) + with +
                     src.substring(index + toReplace.length(), src.length());
@@ -672,7 +672,7 @@ public final class StringUtils {
         String currentTag = null;
         boolean inTag = false;
         boolean skipNext = false;
-        boolean skipNow = false;
+        boolean skipNow;
         for (int i = 0, l = source.length(); i < l; i++) {
             char c = source.charAt(i);
 

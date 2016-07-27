@@ -21,8 +21,6 @@ public final class HexDecoder {
 	public static String toHexString(byte... block) {
 		StringBuilder buf = new StringBuilder();
 
-		int len = block.length;
-
         for (byte aBlock : block) {
             byte2hex(aBlock, buf);
         }

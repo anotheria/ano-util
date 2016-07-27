@@ -273,7 +273,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 				if (queue.hasElements()) {
 					counter++;
 					try {
-						T element = null;
+						T element;
 						synchronized (queue) {
 							element = queue.nextElement();
                             queue.notifyAll();

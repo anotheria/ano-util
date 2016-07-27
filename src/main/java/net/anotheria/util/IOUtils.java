@@ -69,7 +69,7 @@ public final class IOUtils {
         	StringBuilder result = new StringBuilder();
 	        char[] buffer = new char[2048];
 
-	        int len = 0;
+	        int len;
 	        do {
 	         len = in.read(buffer);
 	         if(len > 0)
