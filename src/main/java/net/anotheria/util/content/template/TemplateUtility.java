@@ -130,7 +130,7 @@ public final class TemplateUtility {
 		List<String> stringIndex = StringUtils.indexSuperTags(myS, TAG_START, TAG_END);
 		List<ContentElement> ret = new ArrayList<>(stringIndex.size());
 		for (String s : stringIndex)
-			ret.add(createContentElementInDynamic(s, TAG_START, TAG_END));
+			ret.add(createContentElementInDynamic(s, TAG_START));
 		return ret;
 	}
 
@@ -139,10 +139,9 @@ public final class TemplateUtility {
 	 *
 	 * @param elementText	 text
 	 * @param dynamicTagStart char
-	 * @param dynamicTagEnd   char
 	 * @return created ContentElement
 	 */
-	private static ContentElement createContentElementInDynamic(String elementText, char dynamicTagStart, char dynamicTagEnd) {
+	private static ContentElement createContentElementInDynamic(String elementText, char dynamicTagStart) {
 		if (elementText.charAt(0) != dynamicTagStart)
 			return new StaticElement(elementText);
 		String varName = StringUtils.strip(elementText, 1, 1);

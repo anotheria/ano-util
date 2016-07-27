@@ -11,10 +11,6 @@ abstract class AbstractIdBasedLockManager<T> {
 		return getLockMap().toString();
 	}
 	
-	public static void out(Object message){
-		//System.out.println(Thread.currentThread().getName()+" "+message);
-	}
-	
 	protected abstract Map<T, IdBasedLock<T>> getLockMap();
 
 }
