@@ -31,9 +31,9 @@ public class DebugUtilities {
 	public static String listToString(List<?> l) {
 		StringBuilder result = new StringBuilder();
 		if( l!= null) {
-			if(l.size() > 0) {
+			if(!l.isEmpty()) {
 				for (int i=0; i<l.size(); i++){
-					result.append(i + 1).append(" ").append(l.get(i));
+					result.append(i + 1).append(' ').append(l.get(i));
 				}
 			} else {
 				return "empty";

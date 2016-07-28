@@ -189,7 +189,7 @@ public final class NumberUtils {
 	}
 
 	public static long parseDateString(String str){
-		if (str.length()==0)
+		if (str.isEmpty())
 			return 0;
 		String[] t = StringUtils.tokenize(str, '.');
 		int d = Integer.parseInt(t[0]);

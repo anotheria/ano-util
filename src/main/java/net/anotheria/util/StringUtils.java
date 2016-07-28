@@ -339,7 +339,7 @@ public final class StringUtils {
     }
 
     public static String concat(String a, String b, String delimiter) {
-        return (a == null || a.length() == 0) ? b : (b == null || b.length() == 0) ? a : a + delimiter + b;
+        return (a == null || a.isEmpty()) ? b : (b == null || b.isEmpty()) ? a : a + delimiter + b;
     }
 
     public static String combineStrings(String[] strings, char delimiter) {
@@ -709,7 +709,7 @@ public final class StringUtils {
     //Added 6.02.08
 
     public static boolean isSurroundedWith(String src, char starting, char ending) {
-        return src.length() > 0 && (src.charAt(0) == starting) && (src.charAt(src.length() - 1) == ending);
+        return !src.isEmpty() && (src.charAt(0) == starting) && (src.charAt(src.length() - 1) == ending);
     }
 
     public static String removeSurround(String src) {
@@ -717,7 +717,7 @@ public final class StringUtils {
     }
 
     public static String surroundWith(String src, char starting, char ending) {
-        String ret = String.valueOf(starting) +
+        String ret = starting +
                 src +
                 ending;
         return ret;
@@ -875,7 +875,7 @@ public final class StringUtils {
         for (T pT : tokens) {
             String t = pT instanceof String ? (String) pT : String.valueOf(pT);
             t = t.trim();
-            if (t.length() == 0)
+            if (t.isEmpty())
                 continue;
             if (!begin)
                 ret.append(delimiter);
@@ -891,7 +891,7 @@ public final class StringUtils {
         for (T pT : tokens) {
             String t = pT instanceof String ? (String) pT : String.valueOf(pT);
             t = t.trim();
-            if (t.length() == 0)
+            if (t.isEmpty())
                 continue;
             if (!begin)
                 ret.append(delimiterSequence);
@@ -982,7 +982,7 @@ public final class StringUtils {
     }
 
     public static String normalize(String s) {
-        if (s == null || s.trim().length() == 0)
+        if (s == null || s.trim().isEmpty())
             return s;
 
         s = s.trim();
@@ -1002,7 +1002,7 @@ public final class StringUtils {
     }
 
     public static boolean isEmpty(String src) {
-        return src == null || src.trim().length() == 0;
+        return src == null || src.trim().isEmpty();
     }
 
     /**

@@ -99,7 +99,7 @@ public final class TemplateUtility {
 	 * @return text with replaced expressions
 	 */
 	public static String replaceVariables(TemplateReplacementContext context, String src, Map<String, TemplateProcessor> processors) {
-		if (src == null || src.length() == 0)
+		if (src == null || src.isEmpty())
 			return src;
 		List<ContentElement> index = indexSource(src);
 		return replaceVariables(context, index, processors);

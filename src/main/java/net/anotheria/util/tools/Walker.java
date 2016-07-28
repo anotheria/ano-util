@@ -2,7 +2,7 @@ package net.anotheria.util.tools;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 public class Walker {
 	
@@ -35,7 +35,7 @@ public class Walker {
 	}
 	
 	public void start(){
-		List<String> toDo = new ArrayList<>(1);
+		Collection<String> toDo = new ArrayList<>(1);
 		toDo.add(".");
 		start(toDo);
 	}

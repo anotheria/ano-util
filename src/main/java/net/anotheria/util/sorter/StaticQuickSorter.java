@@ -65,7 +65,7 @@ public final class StaticQuickSorter {
         return ret;
     }
 
-    private static <T extends IComparable> boolean isSorted(Collection<T> src, SortType type){
+    private static <T extends IComparable> boolean isSorted(Iterable<T> src, SortType type){
         boolean wanted = (type.getSortOrder() == SortType.ASC);
         int sortAfter = type.getSortBy();
         Iterator<T> elements = src.iterator();

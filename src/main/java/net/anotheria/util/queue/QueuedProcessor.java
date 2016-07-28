@@ -337,7 +337,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 
 	public String getStatsString() {
-		return "QueuedProcessor "+name+ ": "+counter + " elements worked, queue: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
+		return "QueuedProcessor "+name+ ": "+counter + " elements worked, queue: " + queue + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
 	}
 
 	public void logOutInfo() {

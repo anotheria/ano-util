@@ -35,7 +35,7 @@ public class CryptToolTest {
 
         assertFalse(message.equals(crypted));
         assertFalse(crypted == null);
-        assertFalse(crypted.length() == 0);
+        assertFalse(crypted.isEmpty());
 
         String decrypted = new String(crypt.decryptFromHex(crypted)).trim();
         String decryptedTrim = new String(crypt.decryptFromHexTrim(crypted));
@@ -56,11 +56,11 @@ public class CryptToolTest {
 
         String crypted = crypt.encryptParameterMap(parameters);
         assertFalse(crypted == null);
-        assertFalse(crypted.length() == 0);
+        assertFalse(crypted.isEmpty());
 
         Map<String, String> decrypted = crypt.decryptParameterMap(crypted);
         assertFalse(decrypted == null);
-        assertFalse(decrypted.size() == 0);
+        assertFalse(decrypted.isEmpty());
 
         assertEquals(size, decrypted.size());
         assertEquals(v1, decrypted.get(k1));

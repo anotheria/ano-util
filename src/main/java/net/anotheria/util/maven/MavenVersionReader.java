@@ -64,7 +64,7 @@ public class MavenVersionReader {
 		for (String line: lines){
 			if (line!=null)
 				line = line.trim();
-			if (line==null || line.length()==0 || line.startsWith("#") )
+			if (line==null || line.isEmpty() || line.startsWith("#") )
 				continue;
 			String[] tokens = StringUtils.tokenize(line, '=');
 			if (tokens!=null && tokens.length==2)

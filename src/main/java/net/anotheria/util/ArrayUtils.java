@@ -1,7 +1,9 @@
 package net.anotheria.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -51,25 +53,25 @@ public class ArrayUtils {
 	 * This utility have to be accomplished with asList methods for each primitive arrays!!!
 	 * 
 	 */
-	public static <T> List<T> asList(T... array){
+	public static <T> Iterable<T> asList(T... array){
 		return Arrays.asList(array);
 	}
 	
-	public static List<Integer> asList(int[] array){
+	public static Iterable<Integer> asList(int[] array){
 		List<Integer> ret = new ArrayList<>(array.length);
 		for(int a:array)
 			ret.add(a);
 		return ret;
 	}
 	
-	public static List<Long> asList(long[] array){
+	public static Iterable<Long> asList(long[] array){
 		List<Long> ret = new ArrayList<>(array.length);
 		for(long a:array)
 			ret.add(a);
 		return ret;
 	}
 	
-	public static List<Float> asList(float[] array){
+	public static Iterable<Float> asList(float[] array){
 		List<Float> ret = new ArrayList<>(array.length);
 		for(float a:array)
 			ret.add(a);
@@ -119,7 +121,7 @@ public class ArrayUtils {
 	 * @return list where each incoming object converted to string.
 	 */
 	@Deprecated
-	public static List<String> toStringList(List<?> list){
+	public static List<String> toStringList(Collection<?> list){
 		List<String> ret = new ArrayList<>(list.size());
 		for(Object el: list)
 			ret.add(el.toString());
@@ -215,7 +217,7 @@ public class ArrayUtils {
 
 
 	public static <T> T[] createInstance(T[] a, int size){
-		 return (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+		 return (T[]) Array.newInstance(a.getClass().getComponentType(), size);
 	}
 	
 }

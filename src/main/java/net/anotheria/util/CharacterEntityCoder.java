@@ -239,12 +239,11 @@ public class CharacterEntityCoder {
 	* returns encoded String for HTML use
 	**/
 	public static String htmlEncodeString(String s) {
-		for (int i=0; i<HTML_ENTITIES.size(); i++) {
-			String[] sa = HTML_ENTITIES.get(i);
-			char o = sa[0].charAt(0);
-			String n = sa[1];
-			s = StringUtils.replace(s, o, n);
-		}
+        for (String[] sa : HTML_ENTITIES) {
+            char o = sa[0].charAt(0);
+            String n = sa[1];
+            s = StringUtils.replace(s, o, n);
+        }
 		return s;
 	}
 
@@ -275,25 +274,24 @@ public class CharacterEntityCoder {
 	* returns dencoded String from HTML
 	**/
 	public static String decodeHtmlString(String s) {
-		for (int k=0; k<HTML_ENTITIES.size(); k++) {
-			String[] sa = HTML_ENTITIES.get(k);
-			char o = sa[0].charAt(0);
-			String n = sa[1];
-			int j = n.length();
-			String s1 ="";
-			int lastI=0;
-			for (int i=0; i<s.length()-j; i++) {
-				//System.out.println("##:"+s.substring(i,i+j)+"  >>> "+n);
-				if (s.substring(i,i+j).equals(n)) {
-					s1=s1+s.substring(lastI, i)+o;
-					//System.out.println("###:"+s1);
-					lastI = i+j;
-					i=lastI;
-				}
-			}
-			if(!s1.isEmpty())
-				s=s1;
-		}
+        for (String[] sa : HTML_ENTITIES) {
+            char o = sa[0].charAt(0);
+            String n = sa[1];
+            int j = n.length();
+            String s1 = "";
+            int lastI = 0;
+            for (int i = 0; i < s.length() - j; i++) {
+                //System.out.println("##:"+s.substring(i,i+j)+"  >>> "+n);
+                if (s.substring(i, i + j).equals(n)) {
+                    s1 = s1 + s.substring(lastI, i) + o;
+                    //System.out.println("###:"+s1);
+                    lastI = i + j;
+                    i = lastI;
+                }
+            }
+            if (!s1.isEmpty())
+                s = s1;
+        }
 		return s;
 	}
 

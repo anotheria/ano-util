@@ -111,7 +111,7 @@ public class NameAnalyzer {
 		for (int i=0; i<s.length(); i++){
 			char c = s.charAt(i);
 			if (!inCamelCase && Character.isUpperCase(c)){
-				if (current.length()>0 &&(!previousCamelCase))
+				if (!current.isEmpty() &&(!previousCamelCase))
 					list.add(current);
 				current = String.valueOf(c);
 				previousCamelCase = true;
@@ -122,7 +122,7 @@ public class NameAnalyzer {
 			}
 		}
 		
-		if (current!=null && current.length()>0)
+		if (current!=null && !current.isEmpty())
 			list.add(current);
 			
 		return list;
@@ -145,13 +145,13 @@ public class NameAnalyzer {
 			}
 		}
 		
-		if (current!=null && current.length()>0)
+		if (current!=null && !current.isEmpty())
 			list.add(current);
 			
 		return list;
 	}
 
-	private static List<String> uncamelCase(String s){
+	private static List<String> uncamelCase(CharSequence s){
 		List<String> ret = new ArrayList<>();
 		ret.addAll(uncamelCase1(s));
 		ret.addAll(uncamelCase2(s));

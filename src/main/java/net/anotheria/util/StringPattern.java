@@ -22,7 +22,7 @@ public class StringPattern {
 	public StringPattern(String pattern, char wildCard) {
 		this.wildCard = wildCard;
 		List<Integer> wildCards = searchWildcards(pattern);
-		if(wildCards.size() == 0) {
+		if(wildCards.isEmpty()) {
 			equals = pattern;
 			return;
 		}

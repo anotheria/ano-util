@@ -81,7 +81,7 @@ public final class WC {
 					}
 					
 					if (c=='\n'){
-						if (currentLine.length()>0 && 
+						if (!currentLine.isEmpty() &&
 								(!currentLine.startsWith("import")) && 
 								(!currentLine.startsWith("package")))
 							lines++;

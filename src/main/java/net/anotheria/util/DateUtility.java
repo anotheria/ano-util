@@ -138,8 +138,8 @@ public final class DateUtility {
 	 */
 	public static String toDateOnly(Date d) {
 		String ret = "";
-		ret += (d.day < 10 ? "0" + d.day : "" + d.day) + ".";
-		ret += (d.month < 10 ? "0" + d.month : "" + d.month) + ".";
+		ret += (d.day < 10 ? "0" + d.day : String.valueOf(d.day)) + '.';
+		ret += (d.month < 10 ? "0" + d.month : String.valueOf(d.month)) + '.';
 		ret += d.year;
 		return ret;
 	}

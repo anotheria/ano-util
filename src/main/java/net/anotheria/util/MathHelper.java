@@ -17,7 +17,7 @@ public class MathHelper {
      * @deprecated use {@link #getFormattedStrings(Iterable, int)} instead
      */
     @Deprecated
-    public static List<String> getFormattedStringVector(List<Double> values, int precision) {
+    public static List<String> getFormattedStringVector(Iterable<Double> values, int precision) {
         return  getFormattedStrings(values, precision);
     }
 
@@ -85,7 +85,7 @@ public class MathHelper {
         }
 
         if (right.length() > precision && precision > 0){
-            int round = (int)(0.5 + Double.parseDouble("0." + String.valueOf(right.charAt(precision))) +  Integer.parseInt(String.valueOf(right.charAt(precision-1))));
+            int round = (int)(0.5 + Double.parseDouble("0." + right.charAt(precision)) +  Integer.parseInt(String.valueOf(right.charAt(precision-1))));
             right = right.substring(0,precision-1) + round;
         }
 

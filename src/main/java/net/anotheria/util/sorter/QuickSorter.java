@@ -1,7 +1,6 @@
 package net.anotheria.util.sorter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -73,7 +72,7 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
         return ret;
     }
 
-    private boolean isSorted(Collection<T> src, SortType type){
+    private boolean isSorted(Iterable<T> src, SortType type){
         boolean wanted = (type.getSortOrder() == SortType.ASC);
         int sortAfter = type.getSortBy();
         Iterator<T> elements = src.iterator();

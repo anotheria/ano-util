@@ -101,23 +101,23 @@ public class XMLNode {
 	}
 	
 	public void setContent(boolean aContent){
-        this.content = ""+aContent;
+        this.content = String.valueOf(aContent);
     }
 	
 	public void setContent(float aContent){
-        this.content = ""+aContent;
+        this.content = String.valueOf(aContent);
     }
 
 	public void setContent(double aContent){
-        this.content = ""+aContent;
+        this.content = String.valueOf(aContent);
     }
 
 	public void setContent(long aContent){
-        this.content = ""+aContent;
+        this.content = String.valueOf(aContent);
     }
 
 	public void setContent(int aContent){
-        this.content = ""+aContent;
+        this.content = String.valueOf(aContent);
     }
 	
 	public void setContent(List<Object> aL){
@@ -133,7 +133,7 @@ public class XMLNode {
 	 */
 	private String createAttributeString(){
 		String ret = "";
-		if (attributes == null || attributes.size()==0)
+		if (attributes == null || attributes.isEmpty())
 			return ret;
 		
 		for (XMLAttribute a : attributes){

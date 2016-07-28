@@ -112,7 +112,7 @@ public class UrlHelper {
 		newParameter.setName(paramName);
 		newParameter.setValue(paramValue);
 		
-		if(paramValue != null && paramValue.length() >0) {
+		if(paramValue != null && !paramValue.isEmpty()) {
 			int i = params.indexOf(newParameter);
 			if(i>=0)
 				params.set(i, newParameter);
@@ -184,13 +184,13 @@ public class UrlHelper {
 			result.append(path);
 		}
 
-		if(params.size()>0) {
+		if(!params.isEmpty()) {
 			result.append('?');
 		}
 		
 		result.append(parametersToString());
 		
-		if(reference != null && reference.length()>0) {
+		if(reference != null && !reference.isEmpty()) {
 			result.append('#');
 			result.append(reference);
 		}
