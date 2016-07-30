@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 public class CryptToolTest {
@@ -55,11 +56,11 @@ public class CryptToolTest {
         int size = parameters.size();
 
         String crypted = crypt.encryptParameterMap(parameters);
-        assertFalse(crypted == null);
+        assertNotNull(crypted);
         assertFalse(crypted.isEmpty());
 
         Map<String, String> decrypted = crypt.decryptParameterMap(crypted);
-        assertFalse(decrypted == null);
+        assertNotNull(decrypted);
         assertFalse(decrypted.isEmpty());
 
         assertEquals(size, decrypted.size());

@@ -2,9 +2,14 @@ package net.anotheria.util.crypt;
 
 import net.anotheria.util.NumberUtils;
 import net.anotheria.util.StringUtils;
-import net.sourceforge.blowfishj.crypt.BlowfishECB;
 
-import java.io.UnsupportedEncodingException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,10 +20,10 @@ import java.util.Map;
  *
  */
 public class CryptTool {
-	/**
-	 * The underlying blowfish implementation.
-	 */
-	private final BlowfishECB cipher;
+	public static final String TRANSFORMATION = "Blowfish/ECB/NoPadding";
+
+	private final Cipher decryptCipher;
+	private Cipher encryptCipher;
 
 	/**
 	 * Create a new crypttool with the given key.
@@ -33,22 +38,27 @@ public class CryptTool {
 	 * @param key the key to use for en- and decode.
 	 */
 	public CryptTool(byte... key) {
-		cipher = new BlowfishECB(key, 0, key.length);
+		SecretKeySpec secretKey = new SecretKeySpec(key, "Blowfish");
+		try {
+			encryptCipher = Cipher.getInstance(TRANSFORMATION);
+			encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+			decryptCipher = Cipher.getInstance(TRANSFORMATION);
+			decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	/**
 	 * Returns a byte array containing the encrypted version of the string.
 	 */
 	public byte[] encrypt(String toEncrypt) {
-		toEncrypt = padMod(toEncrypt, 8);
-		byte[] toEncryptB;
-		try{
-			toEncryptB = toEncrypt.getBytes("UTF-8");
-		}catch(UnsupportedEncodingException e){
-			toEncryptB = toEncrypt.getBytes();
+		byte[] bytes = padMod(toEncrypt, 8).getBytes();
+		try {
+			return encryptCipher.doFinal(bytes);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
 		}
-		cipher.encrypt(toEncryptB, 0, toEncryptB, 0, toEncryptB.length);
-		return toEncryptB;
 	}
 
 	/**
@@ -61,8 +71,11 @@ public class CryptTool {
 	}
 
 	public byte[] decrypt(byte... toDecrypt) {
-		cipher.decrypt(toDecrypt, 0, toDecrypt, 0, toDecrypt.length);
-		return toDecrypt;
+		try {
+			return decryptCipher.doFinal(toDecrypt);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	public String decryptFromHex(String toDecrypt) {
@@ -185,7 +198,12 @@ public class CryptTool {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		cipher.encrypt(buffer, 0, buffer, 0, buffer.length);
+		try {
+			byte[] encrypted = encryptCipher.doFinal(buffer);
+			System.arraycopy(encrypted, 0, buffer, 0, encrypted.length);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	/**
@@ -196,6 +214,11 @@ public class CryptTool {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		cipher.decrypt(buffer, 0, buffer, 0, buffer.length);
+		try {
+			byte[] decrypted = decryptCipher.doFinal(buffer);
+			System.arraycopy(decrypted, 0, buffer, 0, decrypted.length);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 }
