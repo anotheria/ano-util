@@ -44,7 +44,7 @@ public final class StringUtils {
     }
 
     public static List<String> tokenize2list(String source, char delimiter, char escapeChar) {
-        List<String> ret = new ArrayList<>(1);
+        List<String> ret = new ArrayList<>();
         StringBuilder currentS = new StringBuilder(source.length());
         boolean skipNext = false;
         for (int i = 0; i < source.length(); i++) {
