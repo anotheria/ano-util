@@ -1,13 +1,14 @@
 package net.anotheria.util.crypt;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.fail;
+import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.fail;
 
 public class CryptToolTest {
 
@@ -16,6 +17,8 @@ public class CryptToolTest {
 	@Test public void encryptAndDecrypt(){
 		String message = "I Love You!";
 		byte[] crypted = crypt.encrypt(message);
+
+		System.out.println(Arrays.toString(crypted));
 
 		assertFalse(message.equals(crypted));
 		assertFalse(crypted==null);
@@ -85,7 +88,6 @@ public class CryptToolTest {
 		assertFalse(crypted.length==0);
 
 		String decrypted = new String(crypt.decrypt(crypted)).trim();
-		System.out.println("Trying to check whether "+message+" is equal to "+decrypted);
 		assertEquals(message, decrypted);
 
 	}
