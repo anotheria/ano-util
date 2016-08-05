@@ -93,7 +93,6 @@ public class CryptToolTest {
         assertFalse(crypted.length == 0);
 
         String decrypted = new String(crypt.decrypt(crypted)).trim();
-        System.out.println("Trying to check whether " + message + " is equal to " + decrypted);
         assertEquals(message, decrypted);
 
     }
@@ -110,8 +109,7 @@ public class CryptToolTest {
         try {
             HexDecoder.fromHexString("XX");
             fail("Illegal chars are not tested");
-        } catch (IllegalArgumentException e) {
-        }
+		}catch(IllegalArgumentException e){}
     }
 
     @Test
