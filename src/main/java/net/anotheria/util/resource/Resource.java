@@ -78,7 +78,7 @@ public class Resource {
 	public Resource(String aName, ResourceLoader aResourceLoader, boolean watch) {
 		name = aName;
 		resourceLoader = aResourceLoader;
-		listeners = new ArrayList<ResourceListener>();
+		listeners = new ArrayList<>();
 		lastChangeTimestamp = System.currentTimeMillis();
 		reloadContent();
 		if (watch)
@@ -100,7 +100,6 @@ public class Resource {
 	/**
 	 * Removes the listener from this Resource
 	 * 
-	 * @param listener
 	 */
 	public void removeListener(ResourceListener listener) {
 		synchronized (listeners) {
@@ -110,13 +109,13 @@ public class Resource {
 
 	@Override
 	public String toString() {
-		return "Resource " + name + ", listeners: " + listeners.size() + ", " + NumberUtils.makeISO8601TimestampString(getLastChangeTimestamp());
+
+        return "Resource " + name + ", listeners: " + listeners.size() + ", " + NumberUtils.makeISO8601TimestampString(lastChangeTimestamp);
 	}
 
 	/**
 	 * Return the last change timestamp of this Resource in millis
 	 * 
-	 * @return
 	 */
 	public long getLastChangeTimestamp() {
 		return lastChangeTimestamp;
@@ -126,7 +125,6 @@ public class Resource {
 	/**
 	 * Returns the name of this Resource
 	 * 
-	 * @return
 	 */
 	public String getName() {
 		return name;
@@ -135,7 +133,6 @@ public class Resource {
 	/**
 	 * Returns the content of this Resource
 	 * 
-	 * @return
 	 */
 	public String getContent() {
 		return content;
@@ -145,8 +142,6 @@ public class Resource {
 	 * Returns true if this Resource's change timestamp is older as the given
 	 * timestamp
 	 * 
-	 * @param resourceChangeTimestamp
-	 * @return
 	 */
 	protected boolean isOlderAs(long resourceChangeTimestamp) {
 		return lastChangeTimestamp < resourceChangeTimestamp;
@@ -156,17 +151,16 @@ public class Resource {
 	 * Called by the WatchDog if a change in the underlying
 	 * Resource is detected.
 	 * 
-	 * @param timestamp
 	 */
 	protected void fireUpdateEvent(long timestamp) {
 		reloadContent();
 		synchronized (listeners) {
 			for (ResourceListener listener : listeners) {
 				try {
-					log.debug("Calling configurationSourceUpdated on " + listener);
+					log.debug("Calling configurationSourceUpdated on {}", listener);
 					listener.resourceUpdated(this);
 				} catch (Exception e) {
-					log.error("Error in notifying configuration source listener:" + listener, e);
+					log.error("Error in notifying configuration source listener: " + listener, e);
 				}
 			}
 		}
@@ -178,7 +172,7 @@ public class Resource {
 	}
 
 	private void reloadContent() {
-		content = getResourceLoader().getContent(getName());
+        content = resourceLoader.getContent(name);
 	}
 
 }

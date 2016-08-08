@@ -40,7 +40,6 @@ public enum TimeUnit {
 	
 	/**
 	 * Creates a new TimeUnit with given factor.
-	 * @param aInMills
 	 */
 	private TimeUnit(long aInMills){
 		this.inMills = aInMills;
@@ -48,7 +47,6 @@ public enum TimeUnit {
 	
 	/**
 	 * Returns the duration of the unit in milliseconds.
-	 * @return
 	 */
 	public long getMillis(){
 		return getMillis(1);
@@ -56,7 +54,6 @@ public enum TimeUnit {
 	
 	/**
 	 * Returns the duration of units in milliseconds.
-	 * @return
 	 */
 	public long getMillis(int unitsCount){
 		return inMills * unitsCount;

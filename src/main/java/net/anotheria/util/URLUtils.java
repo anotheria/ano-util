@@ -13,7 +13,7 @@ public class URLUtils {
 	public static final Map<String,String> ENCODING;
 	
 	static {
-		ENCODING = new HashMap<String, String>();
+		ENCODING = new HashMap<>();
 		ENCODING.put(" ", "%20");
 		ENCODING.put("<", "%3C");
 		ENCODING.put(">", "%3E");
@@ -41,7 +41,6 @@ public class URLUtils {
 	
 	/**
 	 * Encodes unsafe characters in a URL
-	 * @param url
 	 * @return mostly (in current implementation) safe URL
 	 */
 	public static String encode(String url){

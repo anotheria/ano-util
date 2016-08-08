@@ -2,7 +2,7 @@ package net.anotheria.util.tools;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 public class Walker {
 	
@@ -19,14 +19,14 @@ public class Walker {
 	
 	public Walker(Worker aWorker){
 		this();
-		setWorker(aWorker);
-	}
+        worker = aWorker;
+    }
 	
 	public void setWorker(Worker aWorker){
 		worker = aWorker;
 	}
 
-	public void start(List<String> directories){
+	public void start(Iterable<String> directories){
 		if (worker==null)
 			throw new IllegalStateException("No worker configured!");
 		for (String directory : directories)
@@ -35,7 +35,7 @@ public class Walker {
 	}
 	
 	public void start(){
-		ArrayList<String> toDo = new ArrayList<String>(1);
+		Collection<String> toDo = new ArrayList<>(1);
 		toDo.add(".");
 		start(toDo);
 	}
@@ -57,7 +57,7 @@ public class Walker {
 	
 	private void processDir(File f){
 		dirs++;
-		File ff[] = f.listFiles();
+		File[] ff = f.listFiles();
 		for (File file : ff)
 			process(file);
 	}

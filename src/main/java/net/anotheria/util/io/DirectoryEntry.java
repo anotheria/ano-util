@@ -14,15 +14,13 @@ public class DirectoryEntry extends Entry{
 	private List<Entry> entries;
 	/**
 	 * Creates a new directory entry.
-	 * @param name
 	 */
 	public DirectoryEntry(String name){
 		super(name);
-		entries = new ArrayList<Entry>();
+		entries = new ArrayList<>();
 	}
 	/**
 	 * Adds a sub entry.
-	 * @param anEntry
 	 */
 	public void addEntry(Entry anEntry){
 		entries.add(anEntry);
@@ -30,14 +28,12 @@ public class DirectoryEntry extends Entry{
 	/**
 	 * Returns the size of the entry.
 	 */
+	@Override
 	public long getSize(){
 		long ret = 0;
 		for (Entry e : entries)
 			ret += e.getSize();
 		return ret;
 	}
-	
-	public String toOut(int tab){
-		return super.toOut(tab);
-	}
+
 }

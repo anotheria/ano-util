@@ -3,11 +3,11 @@ package net.anotheria.util.concurrency;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The lock class.
- * @param <K>
  */
 public class IdBasedLock<K> implements Serializable {
     /**
@@ -21,7 +21,7 @@ public class IdBasedLock<K> implements Serializable {
 	/**
 	 * The underlying lock object.
 	 */
-    private final ReentrantLock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 	/**
 	 * My manager.
 	 */
@@ -71,7 +71,7 @@ public class IdBasedLock<K> implements Serializable {
 
     @Override
     public String toString() {
-        return "(" + id + ", " + refCount + ")";
+        return "(" + id + ", " + refCount + ')';
     }
 
     K getId() {

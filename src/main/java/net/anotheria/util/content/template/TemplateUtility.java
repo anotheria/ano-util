@@ -13,7 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.anotheria.util.content.TextReplaceConstants.*;
+import static net.anotheria.util.content.TextReplaceConstants.LINE_DELIMITER;
+import static net.anotheria.util.content.TextReplaceConstants.QUOTE;
+import static net.anotheria.util.content.TextReplaceConstants.TAG_END;
+import static net.anotheria.util.content.TextReplaceConstants.TAG_START;
 
 
 /**
@@ -28,12 +31,9 @@ public final class TemplateUtility {
 	/**
 	 * Map with pre-configured  template processors.
 	 */
-	private static final Map<String, TemplateProcessor> defaultProcessors = new HashMap<String, TemplateProcessor>();
+	private static final Map<String, TemplateProcessor> defaultProcessors = new HashMap<>();
 
 
-	/**
-	 * Default Processors init.
-	 */
 	static {
 		defaultProcessors.put(ConstantsTemplateProcessor.PREFIX, new ConstantsTemplateProcessor());
 
@@ -71,11 +71,9 @@ public final class TemplateUtility {
 	/**
 	 * Return pre configured processors.
 	 *
-	 * @return collection
 	 */
 	public static Map<String, TemplateProcessor> getDefaultProcessors() {
-		HashMap<String, TemplateProcessor> ret = new HashMap<String, TemplateProcessor>();
-		ret.putAll(defaultProcessors);
+		Map<String, TemplateProcessor> ret = new HashMap<>(defaultProcessors);
 		return ret;
 	}
 
@@ -101,7 +99,7 @@ public final class TemplateUtility {
 	 * @return text with replaced expressions
 	 */
 	public static String replaceVariables(TemplateReplacementContext context, String src, Map<String, TemplateProcessor> processors) {
-		if (src == null || src.length() == 0)
+		if (src == null || src.isEmpty())
 			return src;
 		List<ContentElement> index = indexSource(src);
 		return replaceVariables(context, index, processors);
@@ -115,7 +113,7 @@ public final class TemplateUtility {
 	 * @param processors TemplateProcessor collection
 	 * @return replaced text
 	 */
-	private static String replaceVariables(TemplateReplacementContext context, List<ContentElement> index, Map<String, TemplateProcessor> processors) {
+	private static String replaceVariables(TemplateReplacementContext context, Iterable<ContentElement> index, Map<String, TemplateProcessor> processors) {
 		StringBuilder ret = new StringBuilder();
 		for (ContentElement el : index)
 			ret.append(replaceContentElement(context, el, processors));
@@ -126,14 +124,13 @@ public final class TemplateUtility {
 	 * Creates List of <a>ContentElement</a> from incoming string.
 	 *
 	 * @param src text
-	 * @return collection
 	 */
 	private static List<ContentElement> indexSource(String src) {
 		String myS = StringUtils.removeChar(src, '\r');
 		List<String> stringIndex = StringUtils.indexSuperTags(myS, TAG_START, TAG_END);
-		List<ContentElement> ret = new ArrayList<ContentElement>(stringIndex.size());
+		List<ContentElement> ret = new ArrayList<>(stringIndex.size());
 		for (String s : stringIndex)
-			ret.add(createContentElementInDynamic(s, TAG_START, TAG_END));
+			ret.add(createContentElementInDynamic(s, TAG_START));
 		return ret;
 	}
 
@@ -142,10 +139,9 @@ public final class TemplateUtility {
 	 *
 	 * @param elementText	 text
 	 * @param dynamicTagStart char
-	 * @param dynamicTagEnd   char
 	 * @return created ContentElement
 	 */
-	private static ContentElement createContentElementInDynamic(String elementText, char dynamicTagStart, char dynamicTagEnd) {
+	private static ContentElement createContentElementInDynamic(String elementText, char dynamicTagStart) {
 		if (elementText.charAt(0) != dynamicTagStart)
 			return new StaticElement(elementText);
 		String varName = StringUtils.strip(elementText, 1, 1);

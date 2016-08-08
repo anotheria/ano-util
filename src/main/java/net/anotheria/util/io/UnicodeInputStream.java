@@ -1,32 +1,3 @@
-/**
-This code was pasted to ano-web project as workaround for java bug:
-http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4508058
-
-The original source is:
-http://koti.mbnet.fi/akini/java/unicodereader/UnicodeInputStream.java.txt
-
-Any license or restriction of using weren't found either as way to contact with authors.
-So we assume that do not restrict any legal aspects of the copy rights by using, modifying and, possibly, selling
-this code.
-
-
- version: 1.1 / 2007-01-25
- - changed BOM recognition ordering (longer boms first)
-
- Original pseudocode   : Thomas Weidenfeller
- Implementation tweaked: Aki Nieminen
-
- http://www.unicode.org/unicode/faq/utf_bom.html
- BOMs in byte length ordering:
-   00 00 FE FF    = UTF-32, big-endian
-   FF FE 00 00    = UTF-32, little-endian
-   EF BB BF       = UTF-8,
-   FE FF          = UTF-16, big-endian
-   FF FE          = UTF-16, little-endian
-
- Win2k Notepad:
-   Unicode format = UTF-16LE
-***/
 package net.anotheria.util.io;
 
 import java.io.IOException;
@@ -69,9 +40,7 @@ public class UnicodeInputStream extends InputStream {
          try {
             init();
          } catch (IOException ex) {
-            IllegalStateException ise = new IllegalStateException("Init method failed.");
-            ise.initCause(ise);
-            throw ise;
+            throw new IllegalStateException("Init method failed.", ex);
          }
       }
       return encoding;
@@ -84,11 +53,11 @@ public class UnicodeInputStream extends InputStream {
    protected void init() throws IOException {
       if (isInited) return;
 
-      byte bom[] = new byte[BOM_SIZE];
-      int n, unread;
-      n = internalIn.read(bom, 0, bom.length);
+      byte[] bom = new byte[BOM_SIZE];
+       int n = internalIn.read(bom, 0, bom.length);
 
-      if ( (bom[0] == (byte)0x00) && (bom[1] == (byte)0x00) &&
+       int unread;
+       if ( (bom[0] == (byte)0x00) && (bom[1] == (byte)0x00) &&
                   (bom[2] == (byte)0xFE) && (bom[3] == (byte)0xFF) ) {
          encoding = "UTF-32BE";
          unread = n - 4;
@@ -118,12 +87,14 @@ public class UnicodeInputStream extends InputStream {
       isInited = true;
    }
 
+   @Override
    public void close() throws IOException {
       //init();
       isInited = true;
       internalIn.close();
    }
 
+   @Override
    public int read() throws IOException {
       //init();
       isInited = true;

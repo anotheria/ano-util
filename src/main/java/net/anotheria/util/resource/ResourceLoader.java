@@ -16,19 +16,17 @@ public interface ResourceLoader {
 
 	/**
 	 * Returns timestamp of last resource modification
-	 * @param resourceName
 	 * @return timestamp of last resource modification
 	 * @throws IllegalArgumentException
 	 *             if resource with such name is not available
 	 */
-	long getLastChangeTimestamp(String resourceName) throws IllegalArgumentException;
+	long getLastChangeTimestamp(String resourceName);
 
 	/**
 	 * Returns text content of a resource 
-	 * @param resourceName
 	 * @return text content
 	 * @throws IllegalArgumentException
 	 *             if resource with such name is not available
 	 */
-	String getContent(String resourceName) throws IllegalArgumentException;
+	String getContent(String resourceName);
 }

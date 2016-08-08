@@ -1,6 +1,5 @@
 package net.anotheria.util.resource;
 
-import net.anotheria.util.IOUtils;
 import net.anotheria.util.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,33 +27,28 @@ public class FileResourceLoader implements ResourceLoader{
 	@Override
 	public long getLastChangeTimestamp(String fileName){
 		File f = new File(fileName);
-		log.debug("Checking timestamp for file: "+f.getAbsolutePath());
+		log.debug("Checking timestamp for file: {}", f.getAbsolutePath());
 		long ret =  f.lastModified();
-		log.debug("file "+f.getAbsolutePath()+" last modified is: "+NumberUtils.makeISO8601TimestampString(ret));
+		log.debug("File {} last modified is: {}", f.getAbsolutePath(), NumberUtils.makeISO8601TimestampString(ret));
 		return ret;
 	}
 	
 	@Override
 	public String getContent(String fileName){
-		Reader reader = null;
-		try{
-			File f = new File(fileName);
-			reader = new BufferedReader(new FileReader(f));
+		File f = new File(fileName);
+		try (Reader reader = new BufferedReader(new FileReader(f))) {
 			StringBuilder ret = new StringBuilder();
-			int c ; 
-			while((c=reader.read())!=-1)
-				ret.append((char)c);
+			int c;
+			while ((c = reader.read()) != -1)
+				ret.append((char) c);
 			return ret.toString();
-		}catch(IOException e){
-			log.error("getContent("+fileName+")", e);
-			throw new RuntimeException("can't read source: "+fileName, e);
-		}finally{
-			IOUtils.closeIgnoringException(reader);
+		} catch (IOException e) {
+			log.error("getContent(" + fileName + ')', e);
+			throw new RuntimeException("can't read source: " + fileName, e);
 		}
 	}
-//*/
 	
-	public static void main(String[] args) throws Exception{
+	public static void main(String... args) throws Exception{
 		ResourceLoader loader = new FileResourceLoader();
 		System.out.println("Current base dir: " + new File("").getAbsolutePath());
 		String testFile = "test.txt";

@@ -40,7 +40,7 @@ public class TemplateReplacementContext {
 	 * Constructor by default.
 	 */
 	public TemplateReplacementContext() {
-		this.attributes = new HashMap<String, Object>();
+		this.attributes = new HashMap<>();
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class TemplateReplacementContext {
 	public TemplateReplacementContext(String aUserId, String aLanguage) {
 		this.userId = aUserId;
 		this.language = aLanguage;
-		this.attributes = new HashMap<String, Object>();
+		this.attributes = new HashMap<>();
 	}
 
 	public Map<String, Object> getAttributes() {

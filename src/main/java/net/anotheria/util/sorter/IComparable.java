@@ -6,7 +6,7 @@ package net.anotheria.util.sorter;
  * @see com.eqs.fi.shared.common.util.Sorter.html
  */
 public interface IComparable <T>{
-   public int compareTo(IComparable<? extends T> anotherObject, int method);
+   int compareTo(IComparable<? extends T> anotherObject, int method);
 }
 
  

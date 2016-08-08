@@ -1,13 +1,13 @@
 package net.anotheria.util.concurrency;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import java.util.ConcurrentModificationException;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class ObjectConfinementSyncTestik {
 
@@ -49,17 +49,17 @@ public class ObjectConfinementSyncTestik {
 
 		@Override
 		public String toString() {
-			return "TestObject [id=" + id + "]";
+			return "TestObject [id=" + id + ']';
 		}
 	}
 	
 	private static ConcurrentHashMap<TestObject, ReentrantLock> objectConfinementLocks;
 	
 	@BeforeClass public static void init(){
-		objectConfinementLocks = new ConcurrentHashMap<TestObject, ReentrantLock>();
+		objectConfinementLocks = new ConcurrentHashMap<>();
 	}
 	
-	private void acquireObjectConfinmenetLock(TestObject testObject){
+	private static void acquireObjectConfinmenetLock(TestObject testObject){
 		ReentrantLock lock = objectConfinementLocks.get(testObject);
 		if(lock == null){
 			ReentrantLock newLock = new ReentrantLock();
@@ -70,7 +70,7 @@ public class ObjectConfinementSyncTestik {
 		lock.lock();
 	}
 	
-	private void releaseObjectConfinmenetLock(TestObject testObject){
+	private static void releaseObjectConfinmenetLock(TestObject testObject){
 		ReentrantLock lock = objectConfinementLocks.get(testObject);
 		if(lock == null)
 			throw new AssertionError("Has lock was acquired?");
@@ -92,13 +92,13 @@ public class ObjectConfinementSyncTestik {
 	
 	@Test public void concurrencyTest(){
 		int objCount = 3;
-		int threadsCount = 100; 
 		Random rnd = new Random(System.currentTimeMillis());
 		TestObject[] testObjects = new TestObject[objCount];
 		for(int i = 0; i < objCount; i++){
-			testObjects[i] = new TestObject(i + "");
+			testObjects[i] = new TestObject(String.valueOf(i));
 		}
-		
+
+		int threadsCount = 100;
 		for(int j = 0; j < threadsCount; j++){
 			for(final TestObject obj: testObjects){
 				try {

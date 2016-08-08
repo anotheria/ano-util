@@ -7,7 +7,7 @@ package net.anotheria.util.queue;
  */
 public class StandardQueueFactory<T> implements IQueueFactory<T> {
 	@Override public IQueue<T> createQueue(int size){
-		return new QueueImpl<T>(size);
+		return new QueueImpl<>(size);
 	}
 	
 }

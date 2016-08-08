@@ -1,9 +1,9 @@
 package net.anotheria.util.datatable;
 
+import net.anotheria.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.anotheria.util.StringUtils;
 
 /**
  * A header of the table.
@@ -17,11 +17,11 @@ public class DataHeader {
 	private List<String> headers;
 	
 	public DataHeader(){
-		headers = new ArrayList<String>();
+		headers = new ArrayList<>();
 	}
 	
 	public String[] getHeaders(){
-		return headers.toArray(new String[0]);
+		return headers.toArray(new String[headers.size()]);
 	}
 	
 	public String getHeader(int index){

@@ -1,28 +1,32 @@
 package net.anotheria.util.tools;
 
+import net.anotheria.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.anotheria.util.StringUtils;
-
 /**
  * Wordcount utility. Walks recursively through a directory and counts all lines/words/chars in all files which matches the extension (for now .java). 
  * @author lrosenberg
- * @created 25.06.2004
+ * @since 25.06.2004
  */
 public final class WC {
 	/**
 	 * Default extension. Files with another extension will be ignored.
 	 */
 	private static final String EXT = ".java";
-	
+
+	private static final Logger log = LoggerFactory.getLogger(WC.class);
+
 	private static int totalLines, totalWords, totalChars;
 	private static int totalFiles;
 	
-	public static void main(String a[]){
+	public static void main(String... a){
 		
 		totalLines = totalWords = totalChars = 0;
 		totalFiles = 0;
@@ -35,7 +39,7 @@ public final class WC {
 		List<String> toCheck = Arrays.asList(a);
 		new Walker(new WCWorker()).start(toCheck);
 		
-		System.out.println("Total files:"+totalFiles+" C:"+totalChars+", W:"+totalWords+" L:"+totalLines);
+		System.out.println("Total files:"+totalFiles+" total chars: "+totalChars+", total words: "+totalWords+", total length: "+totalLines);
 	}
 	
 	private static class WCWorker implements Worker{
@@ -44,39 +48,26 @@ public final class WC {
 		public void processFile(File file) {
 			if (!file.getName().endsWith(EXT))
 				return;
-			FileInputStream fIn = null;
-			System.out.print("Checking "+file.getAbsolutePath()+" ");
-			try{	
-				fIn = new FileInputStream(file);
-				byte d[] = new byte[fIn.available()];
+			try (FileInputStream fIn = new FileInputStream(file)) {
+				byte[] d = new byte[fIn.available()];
 				fIn.read(d);
 				String s = new String(d);
-				//s = StringUtils.r
-				//System.out.print(s.length());
-				
-				//System.out.println();
-				
-				//System.out.println(s);
-				//System.out.println("=========================");
-				
+
 				s = StringUtils.removeChar(s, '\r');
 				s = StringUtils.removeCComments(s);
 				s = StringUtils.removeCPPComments(s);
-				
-				char c;
-				int i =0 ;
-				
-				int words, lines, chars;
-				boolean inWord = false;
-				
-				words = lines = chars = 0;
-				
+
+				int lines, chars;
+
+				int words = lines = chars = 0;
+
 				String currentLine = "";
-				
+
+				boolean inWord = false;
+				int i = 0;
 				while( i<s.length()){
-					c = s.charAt(i);
-					//System.out.print(c);
-					
+					char c = s.charAt(i);
+
 					if (c==' ' || c=='\t' || c=='\n'){
 						if (inWord)
 							inWord = false;
@@ -90,12 +81,11 @@ public final class WC {
 					}
 					
 					if (c=='\n'){
-						if (currentLine.length()>0 && 
+						if (!currentLine.isEmpty() &&
 								(!currentLine.startsWith("import")) && 
-								(!currentLine.startsWith("package")) /*&&
-								/*(!currentLine.equals("}"))*/)
+								(!currentLine.startsWith("package")))
 							lines++;
-						currentLine = new String("");
+						currentLine = "";
 					}
 					
 					i++;
@@ -110,18 +100,9 @@ public final class WC {
 				totalWords += words;
 				totalChars += chars;
 				totalFiles++;
-				
-				
-				//System.exit(0);
-				
+
 			}catch(IOException e){
-				e.printStackTrace();		
-			}finally{
-				if (fIn!=null){
-					try{
-						fIn.close();
-					}catch(IOException ignored){}
-				}
+				log.error(e.getMessage(), e);
 			}
 		}
 		

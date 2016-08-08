@@ -50,7 +50,7 @@ public class ExecutionTimer {
 	 * Creates a new ExecutionTimer.
 	 */
     public ExecutionTimer(String aName) {
-		timers = new ConcurrentHashMap<String, TimerEntry>();
+		timers = new ConcurrentHashMap<>();
 		this.name = aName;
     }
 
@@ -72,13 +72,12 @@ public class ExecutionTimer {
 	}
 	/**
 	 * Continues previously stoped(paused) execution of the key.
-	 * @param aKey
 	 */
 	public void continueExecution(String aKey){
 		try{
 			TimerEntry entry = getTimerEntry(aKey);
 			entry.continueExecution();
-		}catch(Exception e){
+		}catch(RuntimeException e){
 			startExecution(aKey);
 		}
 	}
@@ -153,13 +152,12 @@ public class ExecutionTimer {
 
 	/**
 	 * Prints execution times in the given sort order.
-	 * @param method
 	 */
 	private void printExecutionTimes(Method method){
 	    List<TimerEntry> v = sortEntries(getTimerEntries(), method);
 		System.out.println("============= "+name+" =============");
-		for (int i=0; i<v.size(); i++){
-		    System.out.println( v.get(i).toString(method) );
+		for (TimerEntry aV : v) {
+			System.out.println(aV.toString(method));
 		}
 		System.out.print("=============");
 		for (int t=0;t<name.length()+2;t++)
@@ -201,23 +199,20 @@ public class ExecutionTimer {
 	}
 	/**
 	 * Returns all contained timer entries.
-	 * @return
 	 */
 	private List<TimerEntry> getTimerEntries(){
-		List<TimerEntry> ret = new ArrayList<TimerEntry>();
-		ret.addAll(timers.values());
-		return ret;
+		List<TimerEntry> ret = new ArrayList<>(timers.values());
+        return ret;
 	}
 	
 	/**
 	 * Returns the timer entry with given key.
 	 * @param aKey the key.
-	 * @return
 	 */
 	private TimerEntry getTimerEntry(String aKey){
 	    TimerEntry entry = timers.get(aKey);
 		if (entry==null)
-			throw new RuntimeException("No such key:\""+aKey+"\"");
+			throw new RuntimeException("No such key:\""+aKey+ '"');
 		return entry;
 	}
 
@@ -309,11 +304,11 @@ public class ExecutionTimer {
 		}
 
 		private String toStringCreation(){
-		    return id+"\t"+key+"\t"+getTime();
+		    return id+"\t"+key+ '\t' +getTime();
 		}
 
 		private String toStringKey(){
-		    return key+"\t"+getTime();
+		    return key+ '\t' +getTime();
 		}
 
 		/**

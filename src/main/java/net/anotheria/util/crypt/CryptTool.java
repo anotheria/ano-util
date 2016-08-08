@@ -1,13 +1,18 @@
 package net.anotheria.util.crypt;
 
-import java.io.UnsupportedEncodingException;
+import net.anotheria.util.NumberUtils;
+import net.anotheria.util.StringUtils;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import net.anotheria.util.NumberUtils;
-import net.anotheria.util.StringUtils;
-import BlowfishJ.BlowfishECB;
 
 /***
  * A tool to encrypt and decrypt strings using Blowfish algorithm.
@@ -15,10 +20,10 @@ import BlowfishJ.BlowfishECB;
  *
  */
 public class CryptTool {
-	/**
-	 * The underlying blowfish implementation.
-	 */
-	private final BlowfishECB cipher;
+	public static final String TRANSFORMATION = "Blowfish/ECB/NoPadding";
+
+	private final Cipher decryptCipher;
+	private Cipher encryptCipher;
 
 	/**
 	 * Create a new crypttool with the given key.
@@ -32,40 +37,45 @@ public class CryptTool {
 	 * Create a new crypttool with the binary given key.
 	 * @param key the key to use for en- and decode.
 	 */
-	public CryptTool(byte[] key) {
-		cipher = new BlowfishECB(key);
+	public CryptTool(byte... key) {
+		SecretKeySpec secretKey = new SecretKeySpec(key, "Blowfish");
+		try {
+			encryptCipher = Cipher.getInstance(TRANSFORMATION);
+			encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+			decryptCipher = Cipher.getInstance(TRANSFORMATION);
+			decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	/**
 	 * Returns a byte array containing the encrypted version of the string.
-	 * @param toEncrypt
-	 * @return
 	 */
 	public byte[] encrypt(String toEncrypt) {
-		toEncrypt = padMod(toEncrypt, 8);
-		byte[] toEncryptB;
-		try{
-			toEncryptB = toEncrypt.getBytes("UTF-8");
-		}catch(UnsupportedEncodingException e){
-			toEncryptB = toEncrypt.getBytes();
+		byte[] bytes = padMod(toEncrypt, 8).getBytes();
+		try {
+			return encryptCipher.doFinal(bytes);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
 		}
-		cipher.encrypt(toEncryptB);
-		return toEncryptB;
 	}
 
 	/**
 	 * Returns a HEX version of the encrypted string.
 	 * @param toEncrypt the string to encrypt.
-	 * @return
 	 */
 	public String encryptToHex(String toEncrypt) {
 		byte[] encrypted = encrypt(toEncrypt);
 		return HexDecoder.toHexString(encrypted);
 	}
 
-	public byte[] decrypt(byte[] toDecrypt) {
-		cipher.decrypt(toDecrypt);
-		return toDecrypt;
+	public byte[] decrypt(byte... toDecrypt) {
+		try {
+			return decryptCipher.doFinal(toDecrypt);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	public String decryptFromHex(String toDecrypt) {
@@ -117,10 +127,10 @@ public class CryptTool {
 	public Map<String,String> decryptParameterMap(String str){
 		String decrypted = decryptFromHex(str);
 		decrypted = decrypted.trim();
-		HashMap<String,String> map = new HashMap<String,String>();
-		String tokens[] = StringUtils.tokenize(decrypted, '&');
-		for (int i=0; i<tokens.length; i++){
-			String t[] = StringUtils.tokenize(tokens[i], '=');
+		Map<String, String> map = new HashMap<>();
+		String[] tokens = StringUtils.tokenize(decrypted, '&');
+		for (String token : tokens) {
+			String[] t = StringUtils.tokenize(token, '=');
 			if (t.length == 2) {
 				map.put(t[0], t[1]);
 			} else {
@@ -136,7 +146,6 @@ public class CryptTool {
 	/**
 	 * Converts Numerical ID to Chiffre: string from letters and digits 8 symbols length.
 	 * @param id to convert
-	 * @return
 	 */
 	public static String idToChiffre(String id) {
 		int normalizedId = Integer.parseInt(id) + NUMERATION_BASE_NUMBER;
@@ -161,8 +170,6 @@ public class CryptTool {
 
 	/**
 	 * Restore Numerical ID from Chiffre.
-	 * @param chiffre
-	 * @return
 	 */
 	public static String chiffreToId(String chiffre) {
 
@@ -180,28 +187,38 @@ public class CryptTool {
 			ret += n;
 		}
 		ret -= NUMERATION_BASE_NUMBER;
-		return ret + "";
+		return String.valueOf(ret);
 	}
 
 	/**
 	 * Encrypts specified byte array. Size must be aligned to 8-bytes boundary.
 	 * @param buffer byte array to encrypt.
 	 */
-	public void encryptBuffer(byte[] buffer) {
+	public void encryptBuffer(byte... buffer) {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		cipher.encrypt(buffer);
+		try {
+			byte[] encrypted = encryptCipher.doFinal(buffer);
+			System.arraycopy(encrypted, 0, buffer, 0, encrypted.length);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	/**
 	 * Decrypts specified byte array. Size must be aligned to 8-bytes boundary.
 	 * @param buffer byte array to decrypt.
 	 */
-	public void decryptBuffer(byte[] buffer) {
+	public void decryptBuffer(byte... buffer) {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		cipher.decrypt(buffer);
+		try {
+			byte[] decrypted = decryptCipher.doFinal(buffer);
+			System.arraycopy(decrypted, 0, buffer, 0, decrypted.length);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 }

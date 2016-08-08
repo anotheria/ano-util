@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -30,7 +29,7 @@ public enum WatchDog {
 	private volatile long pause;
 
 	private WatchDog(long aPause) {
-		watchingRegistry = new ConcurrentHashMap<String, Resource>();
+		watchingRegistry = new ConcurrentHashMap<>();
 		pause = aPause;
 		new WatcherThread().start();
 	}
@@ -67,15 +66,14 @@ public enum WatchDog {
 			try {
 				while (!Thread.interrupted()) {
 					Thread.sleep(getPause());
-					Set<Resource> watchedResources = new HashSet<Resource>(watchingRegistry.values());
+					Iterable<Resource> watchedResources = new HashSet<>(watchingRegistry.values());
 					for (Resource source : watchedResources) {
 						ResourceLoader loader = source.getResourceLoader();
 						try {
 							long lastUpdate = loader.getLastChangeTimestamp(source.getName());
-							log.debug("Checking source: " + source + ", lastUpdateFromLoader= " + NumberUtils.makeISO8601TimestampString(lastUpdate) + ", storedLastUpdate=" + NumberUtils.makeISO8601TimestampString(source.getLastChangeTimestamp()));
+							log.debug("Checking source: {}, lastUpdateFromLoader: {}, storedLastUpdate: {}", source, NumberUtils.makeISO8601TimestampString(lastUpdate), NumberUtils.makeISO8601TimestampString(source.getLastChangeTimestamp()));
 							if (source.isOlderAs(lastUpdate)) {
-								log.debug("firing update event: " + source);
-								// System.out.println("firing update on source: "+source);
+								log.debug("Firing update event: {}", source);
 								source.fireUpdateEvent(lastUpdate);
 							}
 						} catch (IllegalArgumentException e) {
@@ -85,6 +83,7 @@ public enum WatchDog {
 					}
 				}
 			} catch (InterruptedException e) {
+				// ignored
 			}
 		}
 	}

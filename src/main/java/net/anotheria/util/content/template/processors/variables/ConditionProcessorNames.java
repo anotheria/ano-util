@@ -33,7 +33,7 @@ public enum ConditionProcessorNames {
 	present(ConditionPrefixes.PREFIX_PRESENT) {
 		@Override
 		public String executeReplacement(String variable, String defVal) {
-			return variable.length() > 0 ? defVal : "";
+			return !variable.isEmpty() ? defVal : "";
 		}},
 	/**
 	 * @see ConditionProcessorNames constructor
@@ -41,7 +41,7 @@ public enum ConditionProcessorNames {
 	notPresent(ConditionPrefixes.PREFIX_NOT_PRESENT) {
 		@Override
 		public String executeReplacement(String variable, String defVal) {
-			return !(variable.length() > 0) ? defVal : "";
+			return !(!variable.isEmpty()) ? defVal : "";
 		}},
 	/**
 	 * @see ConditionProcessorNames constructor

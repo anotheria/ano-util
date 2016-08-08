@@ -22,7 +22,7 @@ public class StringUtilsTest {
 
 	@Test public void concatenate(){
 		System.out.println("TESTING concatenateTokens():");
-		List<String> hellos = new ArrayList<String>(4);
+		List<String> hellos = new ArrayList<>(4);
 		hellos.add("Hello, World!");
 		hellos.add("Hello, People!");
 		hellos.add("Hello, Aliens!");
@@ -123,29 +123,19 @@ public class StringUtilsTest {
 		String source = "{if:{equals:{mp:persons_size}:2}:Gender{mp:gender2}Age{mp:age2}}";
 		char tagStart = '{';
 		char tagEnd = '}';
-		char escapeChar = '\\';
-		List<String> tags = StringUtils.extractSuperTags(source, tagStart, tagEnd, escapeChar);
+		List<String> tags = StringUtils.extractSuperTags(source, tagStart, tagEnd);
 		for(String t: tags)
 			System.out.println(t);
-		
-//		String src = "{if:true:mumu|:bubu}";
-//		MatchedProfilesProcessor p = new MatchedProfilesProcessor();
-//		p.setAccountId("267");
-//		VariablesUtility.addProcessor(MatchedProfilesProcessor.PREFIX, p);
-//		System.out.println(VariablesUtility.replaceVariables(null, src));
-//		List<String> t = StringUtils.extractSuperTags(src,'{','}','|');
-//		for(String s:t)
-//			System.out.println(s);
 	}
-	
-	@SuppressWarnings("unchecked")
+
+
 	@Test public void concatenateTokens(){
 		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", "t1","t2","t3"));
-		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", new String[]{"t1","t2","t3"}));
+		assertEquals("t1||t2||t3", StringUtils.concatenateTokens("||", "t1","t2","t3"));
 		
 		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,2,3));
 		assertEquals("1||2||3", StringUtils.concatenateTokens("||", new int[]{1,2,3}));
-		assertEquals("1||2||3", StringUtils.concatenateTokens("||", new Integer[]{1,2,3}));
+		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,2,3));
 		
 		assertEquals("1||2||3", StringUtils.concatenateTokens("||", 1,"2",3));
 	}
@@ -162,7 +152,7 @@ public class StringUtilsTest {
 	@Test public void replace(){
 		String src = "fuubar";
 		assertEquals("foobar", StringUtils.replace(src, 'u', 'o'));
-		Map<String,String> replacement = new HashMap<String, String>();
+		Map<String,String> replacement = new HashMap<>();
 		replacement.put("u", "o");
 		replacement.put("o", "u");
 		replacement.put("b", "B");

@@ -1,6 +1,5 @@
 package net.anotheria.util.resource;
 
-import net.anotheria.util.IOUtils;
 import net.anotheria.util.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,36 +42,33 @@ public class ClassPathResourceLoader implements ResourceLoader{
 		}
 		
 		File f = new File(u.getFile());
-		log.debug("Checking timestamp for file: "+f.getAbsolutePath());
+		log.debug("Checking timestamp for file: {}", f.getAbsolutePath());
 		long ret =  f.lastModified();
-		log.debug("file "+f.getAbsolutePath()+" last modified is: "+NumberUtils.makeISO8601TimestampString(ret));
+		log.debug("File {}. Last modified: {}", f.getAbsolutePath(), NumberUtils.makeISO8601TimestampString(ret));
 		return ret;
 	}
-	
+
 	@Override
-	public String getContent(String fileName){
+	public String getContent(String fileName) {
 		//ensure an exception is thrown if we are not file.
 		ClassLoader myLoader = getClassPathLoader();
 
 		URL u = myLoader.getResource(fileName);
-		if (u==null){
-			throw new IllegalArgumentException("File: "+fileName+" doesn't exists (URL is null)");
+		if (u == null) {
+			throw new IllegalArgumentException("File: " + fileName + " doesn't exists (URL is null)");
 		}
-		Reader reader = null;
-		try{
-			File f = new File(u.getFile());
-			reader = new BufferedReader(new FileReader(f));
+
+		File f = new File(u.getFile());
+		try (Reader reader = new BufferedReader(new FileReader(f));) {
 			StringBuilder ret = new StringBuilder();
-			int c ; 
-			while((c=reader.read())!=-1)
-				ret.append((char)c);
+			int c;
+			while ((c = reader.read()) != -1)
+				ret.append((char) c);
 			return ret.toString();
-		}catch(IOException e){
-			log.error("getContent("+fileName+")", e);
-			throw new RuntimeException("can't read source: "+fileName, e);
-		}finally{
-			IOUtils.closeIgnoringException(reader);
+		} catch (IOException e) {
+			log.error("getContent("+fileName+ ')', e);
+			throw new RuntimeException("can't read source: " + fileName, e);
 		}
 	}
-//*/
+
 }

@@ -9,23 +9,21 @@ public final class HexDecoder {
 		char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'A', 'B', 'C', 'D', 'E', 'F' };
 		int high = ((b & 0xf0) >> 4);
-		int low = (b & 0x0f);
 
 		buf.append(hexChars[high]);
+		int low = (b & 0x0f);
 		buf.append(hexChars[low]);
 	}
 
 	/**
 	 * Converts a byte array to hex string
 	 */
-	public static String toHexString(byte[] block) {
+	public static String toHexString(byte... block) {
 		StringBuilder buf = new StringBuilder();
 
-		int len = block.length;
-
-		for (int i = 0; i < len; i++) {
-			byte2hex(block[i], buf);
-		}
+        for (byte aBlock : block) {
+            byte2hex(aBlock, buf);
+        }
 		return buf.toString();
 	}
 
@@ -36,7 +34,8 @@ public final class HexDecoder {
 	public static byte[] fromHexString(String hex) {
 		if (hex == null) {
 			return null;
-		} else if ((hex.length() % 2) != 0) {
+		}
+		if ((hex.length() % 2) != 0) {
 			throw new IllegalArgumentException(
 					"Hex String length must be a multiple of 2.");
 		}
@@ -52,7 +51,7 @@ public final class HexDecoder {
 
 			if (index == -1) {
 				throw new IllegalArgumentException("Hex String can't contain '"
-						+ c + "'");
+						+ c + '\'');
 			}
 
 			int j = 16 * index;
@@ -61,7 +60,7 @@ public final class HexDecoder {
 			index = hits.indexOf(c);
 			if (index == -1) {
 				throw new IllegalArgumentException("Hex String can't contain '"
-						+ c + "'");
+						+ c + '\'');
 			}
 
 			j += index; 

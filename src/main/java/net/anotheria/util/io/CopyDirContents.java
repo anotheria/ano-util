@@ -1,5 +1,8 @@
 package net.anotheria.util.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,10 +13,12 @@ import java.io.IOException;
  */
 public class CopyDirContents {
 
+	private static final Logger log = LoggerFactory.getLogger(CopyDirContents.class);
+
 	/**
 	 * Buffer used for copies.
 	 */
-	private static byte[] buffer = new byte[1*1024*1024];
+	private static byte[] buffer = new byte[1024 * 1024];
 	/**
 	 * Counter for files and directories.
 	 */
@@ -31,12 +36,12 @@ public class CopyDirContents {
 	 */
 	private static int skipped = 0;
 
-	public static void main(String a[]) throws IOException{
+	public static void main(String... a) throws IOException{
 		File src = new File("/storage/BAK_EXT_DISK");
 		File dest = new File("/media/WD Passport");
 		
 		copy(src, dest);
-		System.out.println("Finished: ");
+		log.debug("Finished: ");
 		printInfo();
 	}
 	
@@ -48,7 +53,7 @@ public class CopyDirContents {
 		long duration = now - time;
 		double throughtput = (double)bytes/duration*1000;
 		double mbs = throughtput/1024/1024;
-		System.out.println("Copied dirs: "+dirs+", files: "+files+", bytes: "+bytes+" in "+duration+", throughtput: "+throughtput+" bytes/second, "+mbs+" MB/s, skiped: "+skipped);
+		log.info("Copied dirs: "+dirs+", files: "+files+", bytes: "+bytes+" in "+duration+", throughtput: "+throughtput+" bytes/second, "+mbs+" MB/s, skiped: "+skipped);
 	}
 	
 	public static void copy(File src, File dest) throws IOException{
@@ -60,9 +65,6 @@ public class CopyDirContents {
 	
 	/**
 	 * Copies two directories.
-	 * @param src
-	 * @param dest
-	 * @throws IOException
 	 */
 	private static void copyDir(File src, File dest) throws IOException{
 		dirs++;
@@ -80,11 +82,8 @@ public class CopyDirContents {
 
 	/**
 	 * Copies two files.
-	 * @param src
-	 * @param dest
-	 * @throws IOException
 	 */
-	private static void copyFile(File src, File dest) throws IOException{
+	private static void copyFile(File src, File dest) {
 		files++;
 		if (files/1000*1000==files)
 			printInfo();
@@ -96,32 +95,20 @@ public class CopyDirContents {
 				printInfo();
 			return;
 		}
-		System.out.println("Copying file: "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
-		FileInputStream fIn = new FileInputStream(src);
-		FileOutputStream fOut = new FileOutputStream(dest);
-		copy(fIn, fOut);
-		try{
-			fIn.close();
-		} catch(IOException ignored) {
-			System.out.println("Ignored exception: " + ignored.getMessage());
-		}
-		try{
-			fOut.close();
-		}catch(IOException e){
-			e.printStackTrace();
-			System.out.println("Couldn't copy "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
+		log.info("Copying file: "+src.getAbsolutePath()+" to "+dest.getAbsolutePath());
+		try(FileInputStream fIn = new FileInputStream(src);
+		FileOutputStream fOut = new FileOutputStream(dest)) {
+			copy(fIn, fOut);
+		} catch(IOException e){
+			log.error("Couldn't copy "+src.getAbsolutePath()+" to "+dest.getAbsolutePath(), e);
 		}
 	}
 	
 	/**
 	 * Copies from stream to stream.
-	 * @param src
-	 * @param dest
-	 * @throws IOException
 	 */
 	private static void copy(FileInputStream src, FileOutputStream dest) throws IOException{
 		while(src.available()>0){
-			int bytesToCopy = src.available()<buffer.length ? src.available() : buffer.length;
 			int copied = src.read(buffer);
 			dest.write(buffer, 0, copied);
 			bytes+= copied;

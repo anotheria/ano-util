@@ -12,8 +12,6 @@ public class FileEntry extends Entry{
 	private long size;
 	/**
 	 * Creates a new file entry with a name and file size.
-	 * @param aName
-	 * @param aSize
 	 */
 	public FileEntry(String aName, long aSize){
 		super(aName);
@@ -23,5 +21,6 @@ public class FileEntry extends Entry{
 	/**
 	 * Returns the size of the file.
 	 */
-	public long getSize(){ return size; }
+	@Override
+    public long getSize(){ return size; }
 }

@@ -23,17 +23,13 @@ public class XMLAttribute {
 	
 	/**
 	 * Creates a new XMLAttribute for a given name and value.
-	 * @param aName
-	 * @param aValue
 	 */
 	public XMLAttribute(String aName, int  aValue){
-		this(aName, ""+aValue);
+		this(aName, String.valueOf(aValue));
 	}
 
 	/**
 	 * Creates a new XMLAttribute for a given name and value.
-	 * @param aName
-	 * @param aValue
 	 */
 	public XMLAttribute(String aName, String aValue){
 		name = aName;
@@ -41,12 +37,11 @@ public class XMLAttribute {
 	}
 	
 	@Override public String toString(){
-		return name+"="+value;
+		return name+ '=' +value;
 	}
 
 	/**
 	 * Returns the name of the attribute.
-	 * @return
 	 */
 	public String getName() {
 		return name;
@@ -58,7 +53,6 @@ public class XMLAttribute {
 
 	/**
 	 * Returns the value of the attribute.
-	 * @return
 	 */
 	public String getValue() {
 		return value;
@@ -69,6 +63,6 @@ public class XMLAttribute {
 	}
 
 	public String toXMLString(){
-		return getName()+"="+XMLHelper.quote(getValue());
+        return name + '=' +XMLHelper.quote(value);
 	}
 }

@@ -1,12 +1,12 @@
 package net.anotheria.util.network;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PlainIPFilterTest {
 
@@ -26,7 +26,7 @@ public class PlainIPFilterTest {
 		assertTrue(filter.mayPass("192.168.100.100"));
 		assertFalse(filter.mayPass("192.169.100.100"));
 		
-		List<IPRange> ranges = new ArrayList<IPRange>();
+		List<IPRange> ranges = new ArrayList<>();
 		ranges.add(new IPRange("10.0.0.0", 8));
 		ranges.add(new IPRange("172.16.0.0", 12));
 		ranges.add(new IPRange("192.168.0.0", 16));

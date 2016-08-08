@@ -6,23 +6,23 @@ import java.util.Random;
  * A simple utility for creation of safe passwords.
  */
 public class PasswordGenerator {
-	
-	private final static int RANGE_BEGIN[] = {
-		33,
-		65,
-		97, 
+
+	private final static int[] RANGE_BEGIN = {
+			33,
+			65,
+			97,
 	};
-	
-	private final static int RANGE_END[] = {
-		59,
-		90,
-		122, 
+
+	private final static int[] RANGE_END = {
+			59,
+			90,
+			122,
 	};
 
 	/**
 	 * Internal holder for useable characters.
 	 */
-	private final static char CHARS[];
+	private final static char[] CHARS;
 
 	static{
 		int sum = 0;
@@ -57,7 +57,4 @@ public class PasswordGenerator {
 		
 	}
 
-	public static void main(String[] a){
-		System.out.println(generate(10));
-	}
 }

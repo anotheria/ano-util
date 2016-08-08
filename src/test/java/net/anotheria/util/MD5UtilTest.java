@@ -1,9 +1,10 @@
 package net.anotheria.util;
 
 import net.anotheria.util.crypt.MD5Util;
-
 import org.junit.Test;
-import static junit.framework.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class MD5UtilTest {
 	@Test public void test(){

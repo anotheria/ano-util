@@ -2,15 +2,19 @@ package net.anotheria.util;
 
 import net.anotheria.util.mapper.DestinationClass;
 import net.anotheria.util.mapper.DestinationExcludedClass;
-import net.anotheria.util.mapper.ValueObjectMapperUtil;
 import net.anotheria.util.mapper.SourceClass;
-import org.dozer.*;
+import net.anotheria.util.mapper.ValueObjectMapperUtil;
+import org.dozer.CustomConverter;
+import org.dozer.CustomFieldMapper;
+import org.dozer.DozerBeanMapper;
+import org.dozer.DozerConverter;
+import org.dozer.Mapper;
 import org.dozer.classmap.ClassMap;
 import org.dozer.fieldmap.FieldMap;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +33,7 @@ public class ValueMapperTest {
 	public void shouldMapSameField() {
 		//given
 		SourceClass source = new SourceClass(12);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 		source.setIntMap(intMap);
@@ -45,9 +49,9 @@ public class ValueMapperTest {
 	@Test
 	public void shouldMapHashMapValueToField() {
 		//given
-		Map<String, Object> source = new HashMap<String, Object>();
+		Map<String, Object> source = new HashMap<>();
 		source.put("step", 2);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 
@@ -64,15 +68,15 @@ public class ValueMapperTest {
 
 
 
-	public void shouldMapConfigurableField() {
+	public static void shouldMapConfigurableField() {
 		//given
 		SourceClass source = new SourceClass(12);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 		source.setIntMap(intMap);
-		DozerBeanMapper mapper = new DozerBeanMapper(Arrays.asList("testDozerBeanMapping.xml"));
-		Map<String, CustomConverter> converterMap = new HashMap<String, CustomConverter>();
+		DozerBeanMapper mapper = new DozerBeanMapper(Collections.singletonList("testDozerBeanMapping.xml"));
+		Map<String, CustomConverter> converterMap = new HashMap<>();
 		converterMap.put("testConverter", new DozerConverter<String, Integer>(String.class, Integer.class) {
 
 			@Override
@@ -101,7 +105,7 @@ public class ValueMapperTest {
 	public void shouldMapCustomField() {
 		//given
 		SourceClass source = new SourceClass(12);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 		source.setIntMap(intMap);
@@ -127,16 +131,16 @@ public class ValueMapperTest {
 	}
 
 	
-	public void shouldMapCustomFieldConverter() {
+	public static void shouldMapCustomFieldConverter() {
 		//given
 		SourceClass source = new SourceClass(12);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 		source.setIntMap(intMap);
-		DozerBeanMapper mapper = new DozerBeanMapper(Arrays.asList("testDozerBeanMapping.xml"));
+		DozerBeanMapper mapper = new DozerBeanMapper(Collections.singletonList("testDozerBeanMapping.xml"));
 
-		Map<String, CustomConverter> converterMap = new HashMap<String, CustomConverter>();
+		Map<String, CustomConverter> converterMap = new HashMap<>();
 		converterMap.put("testConverter", new DozerConverter<String, Integer>(String.class, Integer.class) {
 
 			@Override
@@ -166,7 +170,7 @@ public class ValueMapperTest {
 	public void shouldMapAnnotatedField() {
 		//given
 		SourceClass source = new SourceClass(12);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 		source.setIntMap(intMap);
@@ -183,7 +187,7 @@ public class ValueMapperTest {
 	public void shouldNotMapAnnotatedClass() {
 		//given
 		SourceClass source = new SourceClass(12);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 		source.setIntMap(intMap);
@@ -200,7 +204,7 @@ public class ValueMapperTest {
 	public void shouldPopulateAllExceptDontFields() {
 		//given
 		SourceClass source = new SourceClass(12);
-		HashMap<String, Integer> intMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> intMap = new HashMap<>(2);
 		intMap.put("testVal", 1);
 		intMap.put("testVal2", 2);
 		source.setIntMap(intMap);
@@ -218,7 +222,7 @@ public class ValueMapperTest {
 	@Test
 	public void shouldMapDictionaryToAnnotatedField() {
 		//given
-		HashMap<String, Integer> sourceMap = new HashMap<String, Integer>(2);
+		HashMap<String, Integer> sourceMap = new HashMap<>(2);
 		sourceMap.put("step", 1);
 		sourceMap.put("stepToConvert", 5);
 		DestinationClass destination = new DestinationClass();

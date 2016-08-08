@@ -12,16 +12,14 @@ import java.util.List;
 public class DebugUtilities {
 	/**
 	 * Prints out an array to the stdout.
-	 * @param arr
 	 */
-	public static final void printArray(Object[] arr){
+	public static final void printArray(Object... arr){
 		for (int i=0; i<arr.length; i++){
-			System.out.println(""+(i+1)+" "+arr[i]);
+			System.out.println((i + 1) + " " + arr[i]);
 		}
 	}
 	/**
 	 * Prints out a list to the stdout.
-	 * @param l
 	 */
 	public static final void printList(List<?>  l){
 		System.out.println(listToString(l));
@@ -33,9 +31,9 @@ public class DebugUtilities {
 	public static String listToString(List<?> l) {
 		StringBuilder result = new StringBuilder();
 		if( l!= null) {
-			if(l.size() > 0) {
+			if(!l.isEmpty()) {
 				for (int i=0; i<l.size(); i++){
-					result.append(""+(i+1)+" "+l.get(i));
+					result.append(i + 1).append(' ').append(l.get(i));
 				}
 			} else {
 				return "empty";
@@ -48,15 +46,14 @@ public class DebugUtilities {
 	
 	/**
 	 * Prints out a list to the stdout.
-	 * @param l
 	 */
 	public static final void printBinaryList(List<?>  l){
 		for (int i=0; i<l.size(); i++){
-			System.out.println(""+(i+1)+"\t"+Long.toBinaryString(Long.parseLong(l.get(i).toString())));
+			System.out.println((i + 1) + "\t" + Long.toBinaryString(Long.parseLong(l.get(i).toString())));
 		}
 	}
 
-	public static void main(String a[]){
+	public static void main(String... a){
 		System.out.println("1372299300 "+ NumberUtils.makeISO8601TimestampString(1372299300));
 	}
 }

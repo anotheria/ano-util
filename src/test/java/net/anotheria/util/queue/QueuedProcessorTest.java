@@ -23,9 +23,9 @@ public class QueuedProcessorTest {
 	
 	@Test public void test() throws InterruptedException{
 		
-		long start = System.nanoTime(), end1, end2;
-		final Worker worker = new Worker();
-		QueuedProcessor<Integer> processor = new QueuedProcessor<Integer>("test", worker, QUEUE_SIZE, LoggerFactory.getLogger(QueuedProcessorTest.class));
+		long start = System.nanoTime();
+        final Worker worker = new Worker();
+		QueuedProcessor<Integer> processor = new QueuedProcessor<>("test", worker, QUEUE_SIZE, LoggerFactory.getLogger(QueuedProcessorTest.class));
 		processor.start();
 		
 		for (int i=0; i<FILLER_COUNT; i++){
@@ -34,15 +34,15 @@ public class QueuedProcessorTest {
 		
 		startLatch.countDown();
 		stopLatch.await();
-		end1 = System.nanoTime();
-		System.out.println("CPT Overflow count: "+overflowCount+", elementCount:" +elementCount+", Sum: "+elementSum);
+        long end1 = System.nanoTime();
+        System.out.println("CPT Overflow count: "+overflowCount+", elementCount:" +elementCount+", Sum: "+elementSum);
 		while(processor.getQueueSize()!=0){
 			try{
 				Thread.sleep(100);
 			}catch(InterruptedException e){}
 		}
-		end2 = System.nanoTime();
-		System.out.println("CPT Worker: count: "+worker.elementCount+", sum: "+worker.elementSum);
+        long end2 = System.nanoTime();
+        System.out.println("CPT Worker: count: "+worker.elementCount+", sum: "+worker.elementSum);
 		assertEquals("ElementCount should be similar", elementCount.get(), worker.elementCount);
 		assertEquals("ElementSum should be similar", elementSum.get(), worker.elementSum);
 		System.out.println("CPT Time1 "+(end1-start)/1000/1000+" ms");
@@ -85,7 +85,7 @@ public class QueuedProcessorTest {
 		}
 	}
 	
-	class Worker implements IQueueWorker<Integer>{
+	static class Worker implements IQueueWorker<Integer>{
 
 		private long elementCount = 0;
 		private long elementSum = 0; 

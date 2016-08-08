@@ -7,7 +7,6 @@ package net.anotheria.util.resource;
 public interface ResourceListener {
 	/**
 	 * Called as soon as a Resource change is detected.
-	 * @param target
 	 */
 	void resourceUpdated(Resource target);
 }

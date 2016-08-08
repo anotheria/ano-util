@@ -57,7 +57,7 @@ public class TestComparable implements IComparable{
 	}
 	
 	public String toString(){
-		return getName()+", "+getIntValue()+", "+getDoubleValue();
+        return name +", "+ intValue +", "+ doubleValue;
 	}
 
 }

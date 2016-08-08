@@ -16,7 +16,7 @@ public class PlainIPFilter {
 	 * Creates a new filter.
 	 */
 	public PlainIPFilter() {
-		ranges = new ArrayList<IPRange>();
+		ranges = new ArrayList<>();
 	}
 
 	/**
@@ -40,9 +40,8 @@ public class PlainIPFilter {
 	 * @param ranges 
 	 * 			to pass through
 	 * 
-	 * @return
 	 */
-	public static boolean mayPass(String ipAddress, List<IPRange> ranges) {
+	public static boolean mayPass(String ipAddress, Iterable<IPRange> ranges) {
 		for (IPRange r : ranges)
 			if (r.mayPass(ipAddress))
 				return true;
@@ -55,7 +54,6 @@ public class PlainIPFilter {
 	 * 
 	 * @param ipAdress
 	 *            the adress to check.
-	 * @return
 	 */
 	public boolean mayPass(String ipAddress) {
 		return mayPass(ipAddress, ranges);

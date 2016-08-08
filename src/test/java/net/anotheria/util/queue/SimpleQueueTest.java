@@ -1,10 +1,10 @@
 package net.anotheria.util.queue;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import org.junit.Test;
 
 public class SimpleQueueTest {
 	@Test public void testReadWrite(){

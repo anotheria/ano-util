@@ -20,7 +20,7 @@ public class DataRow  implements Iterable<DataCell> {
 	}
 
 	public DataRow(int initialCapacity){
-		cells = new ArrayList<DataCell>(initialCapacity);
+		cells = new ArrayList<>(initialCapacity);
 	}
 	
 	public DataCell getCell(int index){
@@ -50,7 +50,6 @@ public class DataRow  implements Iterable<DataCell> {
 	
 	@Override
 	public String toString(){
-		String ret = cells.toString();
-		return ret;
+		return cells.toString();
 	}
 }

@@ -1,7 +1,9 @@
 package net.anotheria.util;
 
 import org.junit.Test;
-import static junit.framework.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class NumberUtilsTest {
 	@Test public void testItoa(){
@@ -12,7 +14,7 @@ public class NumberUtilsTest {
 		assertEquals(NumberUtils.itoa(0), "00");
 	}
 	
-	private void testAnItoa(int number){
+	private static void testAnItoa(int number){
 		String a = NumberUtils.itoa(number, number);
 		assertNotNull(a);
 		assertEquals(a.length(), number);
@@ -34,7 +36,7 @@ public class NumberUtilsTest {
 	
 	@Test public void testDate(){
 		long reference = new Date(10,10,2004, 12,12).toMill();
-		long reference2 = new Date(29,02,2004, 23, 12).toMill();
+		long reference2 = new Date(29, 2,2004, 23, 12).toMill();
 		assertEquals("10.10.2004", NumberUtils.makeDigitalDateStringLong(reference));
 		//assertEquals("10.10.04", NumberUtils.makeDigitalDateString(reference.toMill()));
 
@@ -47,11 +49,11 @@ public class NumberUtilsTest {
 	
 	@Test public void testFractionRound(){
 		double value = 3.1945;
-		assertEquals(3.1945d, NumberUtils.fractionRound(value, 4));
-		assertEquals(3.195d, NumberUtils.fractionRound(value, 3));
-		assertEquals(3.19d, NumberUtils.fractionRound(value, 2));
-		assertEquals(3.2d, NumberUtils.fractionRound(value, 1));
-		assertEquals(3d, NumberUtils.fractionRound(value, 0));
+		assertEquals(3.1945d, NumberUtils.fractionRound(value, 4), 0.0);
+		assertEquals(3.195d, NumberUtils.fractionRound(value, 3), 0.0);
+		assertEquals(3.19d, NumberUtils.fractionRound(value, 2), 0.0);
+		assertEquals(3.2d, NumberUtils.fractionRound(value, 1), 0.0);
+		assertEquals(3d, NumberUtils.fractionRound(value, 0), 0.0);
 	}
 	
 	@Test public void testFormat(){

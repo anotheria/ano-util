@@ -21,8 +21,9 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 	 *@param  sType   how you want to sort
 	 *@return         a sorted Vector containing the Objects of the Enumeration
 	 */
+	@Override
 	public List<T> sort(Enumeration<T> source, SortType sType) {
-		List<T> ret = new ArrayList<T>();
+		List<T> ret = new ArrayList<>();
 		while (source.hasMoreElements()) {
 			ret.add(source.nextElement());
 		}
@@ -37,6 +38,7 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 	 *@param  sType   SortType  ...  how you wanna sort the Vector
 	 *@return         the sorted Vector
 	 */
+	@Override
 	public List<T> sort(List<T> source, SortType sType) {
 		boolean sortOrder = sType.getSortOrder();
 		int sortAfter = sType.getSortBy();
@@ -53,10 +55,9 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 	}
 
 	private void sort(List<T> source, int start, int end, boolean wanted, int sortAfter) {
-		int mid;
-		if (start < end) {
-			mid = partition(source, start, end, wanted, sortAfter);
-			sort(source, start, mid - 1, wanted, sortAfter);
+        if (start < end) {
+            int mid = partition(source, start, end, wanted, sortAfter);
+            sort(source, start, mid - 1, wanted, sortAfter);
 			sort(source, mid + 1, end, wanted, sortAfter);
 		}
 	}
@@ -64,24 +65,24 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
     private List<T> upsideDown(List<T> src){
         if(src == null)
             return null;
-        List<T> ret = new ArrayList<T>(src.size());
+        List<T> ret = new ArrayList<>(src.size());
         for(int i = src.size()-1; i >= 0; i--){
             ret.add(src.get(i));
 		}
         return ret;
     }
 
-    private boolean isSorted(List<T> src, SortType type){
+    private boolean isSorted(Iterable<T> src, SortType type){
         boolean wanted = (type.getSortOrder() == SortType.ASC);
         int sortAfter = type.getSortBy();
         Iterator<T> elements = src.iterator();
-        T comp, comp2;
+        T comp;
         if(elements.hasNext())
             comp = elements.next();
         else
             return true;
         while(elements.hasNext()){
-            comp2 = elements.next();
+            T comp2 = elements.next();
             if(wanted ? compare(comp,comp2,sortAfter) > 0 : compare(comp,comp2,sortAfter) < 0)
                 return false;
             comp = comp2;
@@ -90,12 +91,10 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
     }
 
 	private int partition(List<T> source, int start, int end, boolean wanted, int sortAfter) {
-		int left;
-		int right;
-		T partElement = source.get(end);
-		left = start - 1;
-		right = end;
-		while(true) {
+        T partElement = source.get(end);
+        int left = start - 1;
+        int right = end;
+        while(true) {
 			while (wanted ? compare(partElement, source.get(++left), sortAfter) > 0 : compare(partElement, source.get(++left), sortAfter) < 0) {
 				if (left == end) {
 					break;

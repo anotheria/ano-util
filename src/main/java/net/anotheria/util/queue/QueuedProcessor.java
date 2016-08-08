@@ -65,7 +65,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	/**
 	 * The default queue factory.
 	 */
-	private final IQueueFactory<T> DEF_QUEUE_FACTORY = new StandardQueueFactory<T>();
+	private final IQueueFactory<T> DEF_QUEUE_FACTORY = new StandardQueueFactory<>();
 	/**
 	 * The factory for creating queues.
 	 */
@@ -196,14 +196,15 @@ public class QueuedProcessor<T extends Object> extends Thread {
 				return;
 			}catch(QueueOverflowException e){
 				overflowCount++;
+				log.error("Queue overflow", e);
 				try {
 					synchronized(queue) {
 						long waitStart = System.currentTimeMillis();
 						queue.wait();
 						waitingTime.addAndGet(System.currentTimeMillis() - waitStart);
 					}
-				} catch(InterruptedException ignored) {
-					log.warn("Ignored exception: " + ignored.getMessage(), ignored);
+				} catch(InterruptedException exception) {
+					log.warn("Interruption during waiting for queue access", exception);
 				}
 			}
 		}
@@ -211,7 +212,6 @@ public class QueuedProcessor<T extends Object> extends Thread {
 
 	/**
 	 * Default method to add an element to the queue. Calls addToQueueDontWait internally.
-	 * @param aElement
 	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
 	 */
 	public void addToQueue(T aElement) throws UnrecoverableQueueOverflowException {
@@ -221,13 +221,13 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	/**
 	 * Inserts the specified element at the tail of the processing queue if the queue is not full
      * 
-	 * @param aElement
 	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
 	 */
-	public void addToQueueDontWait(T aElement) throws UnrecoverableQueueOverflowException {
+	public void addToQueueDontWait(T element) throws UnrecoverableQueueOverflowException {
 		try {
-			queue.putElement(aElement);
+			queue.putElement(element);
 		} catch (QueueOverflowException e1) {
+			log.error("Queue overflow", e1);
 			overflowCount++;
 			// ok, first exception, we try to recover
 			synchronized (this) {
@@ -235,15 +235,16 @@ public class QueuedProcessor<T extends Object> extends Thread {
 					long waitStart = System.currentTimeMillis();
 					Thread.sleep(100);
 					waitingTime.addAndGet(System.currentTimeMillis() - waitStart);
-				} catch (Exception ignored) {
+				} catch (Exception exception) {
+					log.warn("Interruption during waiting for queue access", exception);
 				}
 			}
 			try {
-				queue.putElement(aElement);
+				queue.putElement(element);
 			} catch (QueueOverflowException e2) {
 				throwAwayCount.incrementAndGet();
-				log.error("couldn't recover from queue overflow, throwing away " + aElement);
-				throw new UnrecoverableQueueOverflowException("Element: " + aElement + ", stats:" + getStatsString());
+				log.error("couldn't recover from queue overflow, throwing away element '"+element+"'{}", e2);
+				throw new UnrecoverableQueueOverflowException("Element: " + element + ", stats:" + getStatsString(), e2);
 			}
 		}
 	}
@@ -263,7 +264,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 					}
 				} catch (InterruptedException ignored) {}
 				log.info("Processor is shutted down!");
-				log.info("Stats: " + getStatsString());
+				log.info("Stats: {}", getStatsString());
 			}
 		});
 		try {
@@ -271,14 +272,11 @@ public class QueuedProcessor<T extends Object> extends Thread {
 			while (!stopImmediately.get()) {				
 				if (queue.hasElements()) {
 					counter++;
-//					if ((counter / 100 * 100) == counter) {
-//						logOutInfo();
-//					}
 					try {
-						T element = null;
+						T element;
 						synchronized (queue) {
 							element = queue.nextElement();
-							queue.notify();
+                            queue.notifyAll();
 						}
 						worker.doWork(element);
 					} catch (Exception e) {
@@ -288,7 +286,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 					if(shutdown.get()){
 						log.info("Queue is empty. Processing completed!");
 						synchronized (shutdown) {
-							shutdown.notify();						
+                            shutdown.notifyAll();
 						}
 						break;
 					}
@@ -323,7 +321,6 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 	
 	/**
-	 * @return
 	 */
 	public int getQueueOverflowCount() {
 		return overflowCount;
@@ -334,18 +331,17 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 
 	/**
-	 * @return
 	 */
 	public int getThrowAwayCount() {
 		return throwAwayCount.intValue();
 	}
 
 	public String getStatsString() {
-		return "QueuedProcessor "+name+ ": "+counter + " elements worked, queue: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
+		return "QueuedProcessor "+name+ ": "+counter + " elements worked, queue: " + queue + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
 	}
 
 	public void logOutInfo() {
-		log.info("QueuedProcessor "+name + ": " + counter + " elements worked, stat: " + queue.toString() + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount);
+		log.info("QueuedProcessor {}: {} elements processed. Stat: {}, overflow count: {}, waiting time: {}, throw-away count: {}", name, counter, queue, overflowCount, waitingTime, throwAwayCount);
 	}
 
 	public IQueueFactory<T> getQueueFactory() {

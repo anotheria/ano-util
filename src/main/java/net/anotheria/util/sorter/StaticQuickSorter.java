@@ -16,10 +16,9 @@ public final class StaticQuickSorter {
 	 * @param <T> extends IComparable
 	 * @param source collection to sort
 	 * @param sType the sort type (sort method and order).
-	 * @return
 	 */
 	public static <T extends IComparable> List<T> sort(Collection<T> source, SortType sType) {
-		ArrayList<T> tmp = new ArrayList<T>(source.size());
+		List<T> tmp = new ArrayList<>(source.size());
 		tmp.addAll(source);
 		return sort(tmp, sType);
 	}
@@ -49,10 +48,9 @@ public final class StaticQuickSorter {
 	}
 
 	private static <T extends IComparable> void sort(List<T> source, int start, int end, boolean wanted, int sortAfter) {
-		int mid;
-		if (start < end) {
-			mid = partition(source, start, end, wanted, sortAfter);
-			sort(source, start, mid - 1, wanted, sortAfter);
+        if (start < end) {
+            int mid = partition(source, start, end, wanted, sortAfter);
+            sort(source, start, mid - 1, wanted, sortAfter);
 			sort(source, mid + 1, end, wanted, sortAfter);
 		}
 	}
@@ -60,24 +58,24 @@ public final class StaticQuickSorter {
     private static <T extends IComparable> List<T> upsideDown(List<T> src){
         if(src == null)
             return null;
-        List<T> ret = new ArrayList<T>(src.size());
+        List<T> ret = new ArrayList<>(src.size());
         for(int i = src.size()-1; i >= 0; i--){
             ret.add(src.get(i));
 		}
         return ret;
     }
 
-    private static <T extends IComparable> boolean isSorted(List<T> src, SortType type){
+    private static <T extends IComparable> boolean isSorted(Iterable<T> src, SortType type){
         boolean wanted = (type.getSortOrder() == SortType.ASC);
         int sortAfter = type.getSortBy();
         Iterator<T> elements = src.iterator();
-        T comp, comp2;
+        T comp;
         if(elements.hasNext())
             comp = elements.next();
         else
             return true;
         while(elements.hasNext()){
-            comp2 = elements.next();
+            T comp2 = elements.next();
             if(wanted ? comp.compareTo(comp2,sortAfter) > 0 : comp.compareTo(comp2,sortAfter) < 0)
                 return false;
             comp = comp2;
@@ -86,12 +84,10 @@ public final class StaticQuickSorter {
     }
 
 	private static <T extends IComparable> int partition(List<T> source, int start, int end, boolean wanted, int sortAfter) {
-		int left;
-		int right;
-		T partElement = source.get(end);
-		left = start - 1;
-		right = end;
-		while(true) {
+        T partElement = source.get(end);
+        int left = start - 1;
+        int right = end;
+        while(true) {
 			while (wanted ? partElement.compareTo(source.get(++left), sortAfter) > 0 : partElement.compareTo(source.get(++left), sortAfter) < 0) {
 				if (left == end) {
 					break;

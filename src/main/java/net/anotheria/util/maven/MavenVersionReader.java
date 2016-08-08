@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
@@ -32,7 +33,7 @@ public class MavenVersionReader {
 					}
 					int size = (int)fromStream.getSize();
 					if (size>0 ) {
-					    byte b[]  = new byte[size];
+						byte[] b = new byte[size];
 					    input.read(b);
 					    String content = new String(b);
 					    return readVersionFromString(content, f.lastModified());
@@ -58,14 +59,14 @@ public class MavenVersionReader {
 		
 	}
 	public static final MavenVersion readVersionFromString(String content, long timestamp){
-		String lines[] = StringUtils.tokenize(StringUtils.removeChar(content, '\r'), '\n');
-		HashMap<String, String> properties = new HashMap<String, String>();
+		String[] lines = StringUtils.tokenize(StringUtils.removeChar(content, '\r'), '\n');
+		Map<String, String> properties = new HashMap<>();
 		for (String line: lines){
 			if (line!=null)
 				line = line.trim();
-			if (line==null || line.length()==0 || line.startsWith("#") )
+			if (line==null || line.isEmpty() || line.startsWith("#") )
 				continue;
-			String tokens[] = StringUtils.tokenize(line,'=');
+			String[] tokens = StringUtils.tokenize(line, '=');
 			if (tokens!=null && tokens.length==2)
 				properties.put(tokens[0], tokens[1]);
 		}
@@ -94,19 +95,18 @@ public class MavenVersionReader {
 			throw new IllegalArgumentException("Directory "+dir.getAbsolutePath()+" doesn't exists.");
 		if (!dir.isDirectory())
 			throw new IllegalArgumentException("Directory "+dir.getAbsolutePath()+" is not a directory.");
-		File files[] = dir.listFiles();
-		for (int i=0; i<files.length; i++){
-			if (files[i].getName().equals("pom.properties")){
-				return readVersionFromFile(files[i]);
+		File[] files = dir.listFiles();
+		for (File file : files) {
+			if (file.getName().equals("pom.properties")) {
+				return readVersionFromFile(file);
 			}
 		}
-		
-		for (int i=0; i<files.length; i++){
-			File aDir = files[i];
+
+		for (File aDir : files) {
 			if (!aDir.isDirectory())
 				continue;
 			MavenVersion v = findVersionInDirectory(aDir);
-			if (v!=null)
+			if (v != null)
 				return v;
 		}
 		
@@ -120,10 +120,10 @@ public class MavenVersionReader {
 			throw new IllegalArgumentException("Directory "+dir.getAbsolutePath()+" doesn't exists.");
 		if (!dir.isDirectory())
 			throw new IllegalArgumentException("Directory "+dir.getAbsolutePath()+" is not a directory.");
-		File files[] = dir.listFiles();
-		for (int i=0; i<files.length; i++){
-			if (files[i].getName().startsWith(artifactName)){
-				return readVersionFromJar(files[i]);
+		File[] files = dir.listFiles();
+		for (File file : files) {
+			if (file.getName().startsWith(artifactName)) {
+				return readVersionFromJar(file);
 			}
 		}
 		return null;
@@ -131,7 +131,7 @@ public class MavenVersionReader {
 		
 	}
 
-	public static void main(String[] args) {
+	public static void main(String... args) {
 
 		//System.out.println(readVersionFromJar(new File("/Users/another/.m2/repository/net/anotheria/moskito-webui/2.6.3/moskito-webui-2.6.3.jar")));
 		System.out.println(readVersionFromJar(new File("/Users/another/.m2/repository/net/anotheria/moskito-webui/2.7.0/moskito-webui-2.7.0.jar")));
