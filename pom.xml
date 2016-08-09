@@ -25,7 +25,7 @@
         <dependency>
             <groupId>net.anotheria</groupId>
             <artifactId>configureme</artifactId>
-            <version>2.3.3-SNAPSHOT</version>
+            <version>2.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
