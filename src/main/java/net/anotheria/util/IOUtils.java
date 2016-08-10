@@ -15,12 +15,18 @@ import static java.lang.System.in;
 
 /**
  * Utils for input output.
+ *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public final class IOUtils {
 
 	/**
 	 * Reads the contents of the file at once and returns the byte array.
+	 *
+	 * @param file a {@link java.io.File} object.
+	 * @return an array of byte.
+	 * @throws java.io.IOException if any.
 	 */
 	public static byte[] readFileAtOnce(File file) throws IOException{
         FileInputStream fIn = new FileInputStream(file);
@@ -29,7 +35,10 @@ public final class IOUtils {
 	
 	/**
 	 * Reads the contents of the file at once and returns the byte array.
+	 *
 	 * @param filename name of the file.
+	 * @return an array of byte.
+	 * @throws java.io.IOException if any.
 	 */
 	public static byte[] readFileAtOnce(String filename) throws IOException{
         FileInputStream fIn = new FileInputStream(filename);
@@ -46,16 +55,24 @@ public final class IOUtils {
         return ret;
 	}
     
-	/**
-	 * Reads a file and returns the contents as string.
-	 */
+    /**
+     * Reads a file and returns the contents as string.
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
+     */
     public static String readFileAtOnceAsString(String filename) throws IOException{
         return new String(readFileAtOnce(filename));
     }
     
-	/**
-	 * Reads a file and returns the contents as string.
-	 */
+    /**
+     * Reads a file and returns the contents as string.
+     *
+     * @param file a {@link java.io.File} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
+     */
     public static String readFileAtOnceAsString(File file) throws IOException{
         return new String(readFileAtOnce(file));
     }
@@ -63,6 +80,10 @@ public final class IOUtils {
     /**
      * Instead of reading the file at once, reads the file by reading 2K blocks. Useful for reading
      * special files, where the size of the file isn't determinable, for example /proc/xxx files on linux.
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
      */
     public static String readFileBufferedAsString(String filename) throws IOException{
     	try (FileReader in = new FileReader(filename)){
@@ -79,6 +100,14 @@ public final class IOUtils {
         }
     }
     
+    /**
+     * <p>readInputStreamBufferedAsString.</p>
+     *
+     * @param in a {@link java.io.InputStream} object.
+     * @param charset a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
+     */
     public static String readInputStreamBufferedAsString(InputStream in, String charset) throws IOException{
 		try (BufferedReader reader = new BufferedReader(new UnicodeReader(in, charset))) {
 			StringBuilder result = new StringBuilder();
@@ -90,12 +119,23 @@ public final class IOUtils {
 		}
     }
     
+    /**
+     * <p>readFileBufferedAsString.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @param charset a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
+     */
     public static String readFileBufferedAsString(File file, String charset) throws IOException{
 		return readInputStreamBufferedAsString(new FileInputStream(file), charset);
     }
     
     /**
      * Reads a line from standard input.
+     *
+     * @return a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
      */
     public static String readlineFromStdIn() throws IOException{
     	StringBuilder ret = new StringBuilder();
@@ -109,6 +149,7 @@ public final class IOUtils {
     
     /**
      * Closes Closeable instance ignoring IOException. Should be called from a finally block whenever Closeable is used.
+     *
      * @param closeable to close
      */
     public static void closeIgnoringException(Closeable closeable){
@@ -119,6 +160,13 @@ public final class IOUtils {
 				//We can do nothing if on close failure
 			}
     }
+	/**
+	 * <p>readBytes.</p>
+	 *
+	 * @param in a {@link java.io.InputStream} object.
+	 * @return an array of byte.
+	 * @throws java.io.IOException if any.
+	 */
 	public static byte[] readBytes(InputStream in) throws IOException {
 
 		try (final ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {

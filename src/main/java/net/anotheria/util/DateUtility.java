@@ -5,9 +5,18 @@ import java.util.GregorianCalendar;
 
 /**
  * A utility for operation with Date objects.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public final class DateUtility {
 
+	/**
+	 * <p>isAfterNow.</p>
+	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a boolean.
+	 */
 	public static boolean isAfterNow(Date d) {
 		return isAfter(d, new Date(System.currentTimeMillis()));
 	}
@@ -15,6 +24,9 @@ public final class DateUtility {
 	/**
 	 * Returns true if the first date is after second date.
 	 *
+	 * @param d1 a {@link net.anotheria.util.Date} object.
+	 * @param d2 a {@link net.anotheria.util.Date} object.
+	 * @return a boolean.
 	 */
 	public static boolean isAfter(Date d1, Date d2) {
 		if (d1.year < d2.year)
@@ -42,6 +54,12 @@ public final class DateUtility {
 		return false;
 	}
 
+	/**
+	 * <p>isBeforeNow.</p>
+	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a boolean.
+	 */
 	public static boolean isBeforeNow(Date d) {
 		return isBefore(d, new Date(System.currentTimeMillis()));
 	}
@@ -49,16 +67,19 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param d1 a {@link net.anotheria.util.Date} object.
+	 * @param d2 a {@link net.anotheria.util.Date} object.
+	 * @return a boolean.
 	 */
 	public static boolean isBefore(Date d1, Date d2) {
 		return isAfter(d2, d1);
 	}
 
 	/**
-	 * Return true if incoming {@link Date} is Today, false otherwise.
-	 * {@link IllegalArgumentException} will be thrown if incoming {@link Date} is {@code null}.
+	 * Return true if incoming {@link net.anotheria.util.Date} is Today, false otherwise.
+	 * {@link java.lang.IllegalArgumentException} will be thrown if incoming {@link net.anotheria.util.Date} is {@code null}.
 	 *
-	 * @param date {@link Date} to check
+	 * @param date {@link net.anotheria.util.Date} to check
 	 * @return boolean value
 	 */
 	public static boolean isToday(final Date date) {
@@ -71,6 +92,9 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param d1 a {@link net.anotheria.util.Date} object.
+	 * @param d2 a {@link net.anotheria.util.Date} object.
+	 * @return a boolean.
 	 */
 	public static boolean isSame(Date d1, Date d2) {
 		return !isAfter(d2, d1) && !isBefore(d2, d1);
@@ -79,6 +103,8 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a {@link net.anotheria.util.Date} object.
 	 */
 	public static Date nextDate(Date d) {
 		if (!Date.isValid(d))
@@ -100,6 +126,8 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a {@link net.anotheria.util.Date} object.
 	 */
 	public static Date previousDate(Date d) {
 		if (!Date.isValid(d))
@@ -121,6 +149,8 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param date a {@link java.util.GregorianCalendar} object.
+	 * @return a {@link java.util.GregorianCalendar} object.
 	 */
 	public static GregorianCalendar toLocalTime(GregorianCalendar date) {
 		GregorianCalendar calLOC = new GregorianCalendar();
@@ -135,6 +165,8 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String toDateOnly(Date d) {
 		String ret = "";
@@ -147,6 +179,8 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String toDayAndMonthOnly(Date d) {
 		String ret = "";
@@ -158,6 +192,8 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String toTimeOnly(Date d) {
 		return (d.hour < 10 ? "0" + d.hour : String.valueOf(d.hour)) + ':' + (d.min < 10 ?
@@ -167,6 +203,8 @@ public final class DateUtility {
 	/**
 	 * put your documentation comment here
 	 *
+	 * @param date a {@link net.anotheria.util.Date} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String dynamicString(Date date) {
 		int year = date.year;
@@ -194,6 +232,9 @@ public final class DateUtility {
 
 	/**
 	 * Returns the date which lies one week after given date.
+	 *
+	 * @param d a {@link net.anotheria.util.Date} object.
+	 * @return a {@link net.anotheria.util.Date} object.
 	 */
 	public static Date nextWeek(Date d) {
 		return new Date(d.toMill() + (7L * 24 * 60 * 60 * 1000));
@@ -204,6 +245,8 @@ public final class DateUtility {
 	 *
 	 * @since 28-10-00
 	 * bug with week calculation for days in november/december
+	 * @param date a {@link net.anotheria.util.Date} object.
+	 * @return a int.
 	 */
 	public static int getCalendarWeekForDate(Date date) {
 		while (true) {
@@ -247,6 +290,9 @@ public final class DateUtility {
 	/**
 	 * Returns the date for the first day of a "calendar week" for a given year.
 	 *
+	 * @param week a int.
+	 * @param year a int.
+	 * @return a {@link net.anotheria.util.Date} object.
 	 */
 	public static Date getFirstDayOfWeek(int week, int year) {
 		Date d = new Date(4, 1, year);
@@ -265,8 +311,8 @@ public final class DateUtility {
 	 * Returns age - a period of time, measured by years from fromDate till now
 	 *
 	 * @param fromDate start date in mills
+	 * @return a int.
 	 */
-
 	public static int getAge(long fromDate) {
 		return getAge(fromDate, System.currentTimeMillis());
 	}
@@ -275,6 +321,7 @@ public final class DateUtility {
 	 * Returns age - a period of time, measured by years from fromDate till now
 	 *
 	 * @param fromDate start date
+	 * @return a int.
 	 */
 	public static int getAge(Date fromDate) {
 		return getAge(fromDate, new Date(System.currentTimeMillis()));
@@ -285,6 +332,7 @@ public final class DateUtility {
 	 *
 	 * @param fromDate start date in mills
 	 * @param toDate   end date in mills
+	 * @return a int.
 	 */
 	public static int getAge(long fromDate, long toDate) {
 		Date _fromDate = new Date(fromDate);
@@ -297,6 +345,7 @@ public final class DateUtility {
 	 *
 	 * @param fromDate start date
 	 * @param toDate   end date
+	 * @return a int.
 	 */
 	public static int getAge(Date fromDate, Date toDate) {
 		int age = toDate.getYear() - fromDate.getYear();
@@ -316,44 +365,104 @@ public final class DateUtility {
 		return age > 0 ? age : 0;
 	}
 
+	/**
+	 * <p>getDays.</p>
+	 *
+	 * @param fromDate a {@link net.anotheria.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getDays(Date fromDate) {
 		return getDays(fromDate.toMill());
 	}
 
+	/**
+	 * <p>getDays.</p>
+	 *
+	 * @param fromDate a long.
+	 * @return a int.
+	 */
 	public static int getDays(long fromDate) {
 		return getDays(fromDate, System.currentTimeMillis());
 	}
 
+	/**
+	 * <p>getDays.</p>
+	 *
+	 * @param fromDate a {@link net.anotheria.util.Date} object.
+	 * @param toDate a {@link net.anotheria.util.Date} object.
+	 * @return a int.
+	 */
 	public static int getDays(Date fromDate, Date toDate) {
 		return getDays(fromDate.toMill(), toDate.toMill());
 	}
 
+	/**
+	 * <p>getDays.</p>
+	 *
+	 * @param fromDate a long.
+	 * @param toDate a long.
+	 * @return a int.
+	 */
 	public static int getDays(long fromDate, long toDate) {
 		return (int) ((toDate - fromDate) / TimeUnit.DAY.getMillis());
 	}
 
+	/**
+	 * <p>getHourBeginning.</p>
+	 *
+	 * @return a long.
+	 */
 	public static long getHourBeginning() {
 		return getHourBeginning(System.currentTimeMillis());
 	}
 
+	/**
+	 * <p>getHourBeginning.</p>
+	 *
+	 * @param date a long.
+	 * @return a long.
+	 */
 	public static long getHourBeginning(long date) {
 		Date d = new Date(date);
 		return new Date(d.getDay(), d.getMonth(), d.getYear(), d.getHour(), 0).toMill();
 	}
 
+	/**
+	 * <p>getNextHourBeginning.</p>
+	 *
+	 * @return a long.
+	 */
 	public static long getNextHourBeginning() {
 		return getHourBeginning() + TimeUnit.HOUR.getMillis();
 	}
 
+	/**
+	 * <p>getNextHourBeginning.</p>
+	 *
+	 * @param date a long.
+	 * @return a long.
+	 */
 	public static long getNextHourBeginning(long date) {
 		return getHourBeginning(date) + TimeUnit.HOUR.getMillis();
 	}
 
+	/**
+	 * <p>getDayBeginning.</p>
+	 *
+	 * @param date a long.
+	 * @return a long.
+	 */
 	public static long getDayBeginning(long date) {
 		Date d = new Date(date);
 		return new Date(d.getDay(), d.getMonth(), d.getYear(), 0, 0).toMill();
 	}
 
+	/**
+	 * <p>getDayEnding.</p>
+	 *
+	 * @param date a long.
+	 * @return a long.
+	 */
 	public static long getDayEnding(long date) {
 		return getDayBeginning(date) + TimeUnit.DAY.getMillis() - 1;
 	}

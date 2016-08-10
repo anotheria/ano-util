@@ -7,6 +7,9 @@ import java.io.Serializable;
  * It consist of a sortAfter parameter, which is passed to the IComparable,
  * and the sortOrder parameter, which instructs the Sorter if he must sort in ascending or
  * descending order.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class SortType implements Serializable{
 
@@ -33,6 +36,9 @@ public class SortType implements Serializable{
 
     /**
      * Creates a new SortType with given sortby method and order.
+     *
+     * @param aSortBy a int.
+     * @param aSortOrder a boolean.
      */
     public SortType(int aSortBy, boolean aSortOrder){
     	this.sortBy = aSortBy;
@@ -41,34 +47,44 @@ public class SortType implements Serializable{
 
     /**
      * Creates a new SortType with given aSortBy method and ascending sort order.
+     *
+     * @param aSortBy a int.
      */
     public SortType(int aSortBy){
     	this(aSortBy, ASC);
     }
 
-    /**
-     * Returns the sortAfter parameter.
-     */
+	/**
+	 * Returns the sortAfter parameter.
+	 *
+	 * @return a int.
+	 */
 	public int getSortBy(){
  		return sortBy;
   	}
 
    	/**
-     * Returns true if the ascending sort order is selected.
-     */
+   	 * Returns true if the ascending sort order is selected.
+   	 *
+   	 * @return a boolean.
+   	 */
    	public boolean isASC(){
     	return sortOrder==ASC;
     }
 
-    /**
-     * Returns true if the descending sort order is selected.
-     */
+   	/**
+   	 * Returns true if the descending sort order is selected.
+   	 *
+   	 * @return a boolean.
+   	 */
    	public boolean isDESC(){
     	return sortOrder==DESC;
     }
 
     /**
      * Returns the sort order.
+     *
+     * @return a boolean.
      */
     public boolean getSortOrder(){
     	return sortOrder;
@@ -76,12 +92,16 @@ public class SortType implements Serializable{
     
     /**
      * Returns a sorttype which is opposite to this sorttype (switched sort order).
+     *
+     * @return a {@link net.anotheria.util.sorter.SortType} object.
      */
     public SortType reverse(){
         return new SortType(sortBy, !sortOrder);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Returns the string representation of the object.
      */
     @Override public String toString(){

@@ -8,14 +8,18 @@ import java.util.List;
 
 /**
  *  just an implementation of the well known QuickSort Algorithm
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public final class StaticQuickSorter {
 
 	/**
 	 * Sorts a collection of comparables
-	 * @param <T> extends IComparable
+	 *
 	 * @param source collection to sort
 	 * @param sType the sort type (sort method and order).
+	 * @return a {@link java.util.List} object.
 	 */
 	public static <T extends IComparable> List<T> sort(Collection<T> source, SortType sType) {
 		List<T> tmp = new ArrayList<>(source.size());
@@ -29,6 +33,7 @@ public final class StaticQuickSorter {
 	 *@param  source  the vector you want to sort
 	 *@param  sType   SortType  ...  how you wanna sort the Vector
 	 *@return         the sorted Vector
+	 * @param <T> a T object.
 	 */
 	public static <T extends IComparable> List<T> sort(List<T> source, SortType sType) {
 		boolean sortOrder = sType.getSortOrder();

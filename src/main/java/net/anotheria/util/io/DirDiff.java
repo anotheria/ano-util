@@ -4,7 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * <p>DirDiff class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class DirDiff {
+	/**
+	 * <p>main.</p>
+	 *
+	 * @param a a {@link java.lang.String} object.
+	 * @throws java.io.IOException if any.
+	 */
 	public static void main(String... a) throws IOException{
 		String p2 = "/media/WD Passport";
 		String p1 = "/storage/BAK_EXT_DISK";
@@ -13,6 +25,10 @@ public class DirDiff {
 	
 	/**
 	 * Creates a diff between two pathes.
+	 *
+	 * @param path1 a {@link java.lang.String} object.
+	 * @param path2 a {@link java.lang.String} object.
+	 * @throws java.io.IOException if any.
 	 */
 	public static void diff(String path1, String path2) throws IOException{
 		File d1 = new File(path1);

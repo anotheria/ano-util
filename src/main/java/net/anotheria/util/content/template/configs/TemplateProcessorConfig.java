@@ -17,6 +17,7 @@ import java.util.Map;
  * Configuration for template functionality.
  *
  * @author Illya Bogatyrchuk
+ * @version $Id: $Id
  */
 @ConfigureMe(name = "ano-util-template-processor-config")
 public final class TemplateProcessorConfig implements Serializable {
@@ -55,6 +56,7 @@ public final class TemplateProcessorConfig implements Serializable {
 	/**
 	 * Returns configuration instance.
 	 *
+	 * @return a {@link net.anotheria.util.content.template.configs.TemplateProcessorConfig} object.
 	 */
 	public static TemplateProcessorConfig getInstance() {
 		if (instance != null)
@@ -77,10 +79,20 @@ public final class TemplateProcessorConfig implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>Getter for the field <code>customConstantVariables</code>.</p>
+	 *
+	 * @return an array of {@link net.anotheria.util.content.template.configs.CustomConstantVariableConfig} objects.
+	 */
 	public CustomConstantVariableConfig[] getCustomConstantVariables() {
 		return customConstantVariables;
 	}
 
+	/**
+	 * <p>Setter for the field <code>customConstantVariables</code>.</p>
+	 *
+	 * @param customConstantVariables a {@link net.anotheria.util.content.template.configs.CustomConstantVariableConfig} object.
+	 */
 	public void setCustomConstantVariables(CustomConstantVariableConfig... customConstantVariables) {
 		this.customConstantVariables = customConstantVariables;
 	}
@@ -88,7 +100,7 @@ public final class TemplateProcessorConfig implements Serializable {
 	/**
 	 * Returns custom constants variables map.
 	 *
-	 * @return {@link Map} with custom variable key/value pairs
+	 * @return {@link java.util.Map} with custom variable key/value pairs
 	 */
 	public Map<String, String> getCustomConstantVariablesMap() {
 		final Map<String, String> result = new HashMap<>();
@@ -106,6 +118,7 @@ public final class TemplateProcessorConfig implements Serializable {
 		return result;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return "TemplateProcessorConfig{" +

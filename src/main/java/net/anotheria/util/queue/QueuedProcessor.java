@@ -7,6 +7,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * <p>QueuedProcessor class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class QueuedProcessor<T extends Object> extends Thread {
 	/**
 	 * Name of the processor.
@@ -78,12 +84,13 @@ public class QueuedProcessor<T extends Object> extends Thread {
 
 	/**
 	 * Creates a new QueuedProcessor. This is the standard constructor used by all other constructors.
+	 *
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
 	 * @param aQueueFactory factory to create the underlying queue.
 	 * @param aQueueSize size of the queue.
 	 * @param aSleepTime sleep time in case of an overflow.
-	 * @param aLog logger for output. 
+	 * @param aLog logger for output.
 	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory, int aQueueSize, long aSleepTime, Logger aLog) {
 		super(aName);
@@ -107,10 +114,11 @@ public class QueuedProcessor<T extends Object> extends Thread {
 
 	/**
 	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_SIZE and DEF_SLEEP_TIME.
+	 *
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
 	 * @param aQueueFactory factory to create the underlying queue.
-	 * @param aLog logger for output. 
+	 * @param aLog logger for output.
 	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory, Logger aLog) {
 		this(aName, aWorker,  aQueueFactory, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, aLog);
@@ -118,11 +126,12 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	
 	/**
 	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_FACTORY.
+	 *
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
 	 * @param aQueueSize size of the queue.
 	 * @param aSleepTime sleep time in case of an overflow.
-	 * @param aLog logger for output. 
+	 * @param aLog logger for output.
 	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, long aSleepTime, Logger aLog) {
 		this(aName, aWorker,  null, aQueueSize, aSleepTime, aLog);
@@ -130,10 +139,11 @@ public class QueuedProcessor<T extends Object> extends Thread {
 
 	/**
 	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_FACTORY and DEF_SLEEP_TIME.
+	 *
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
 	 * @param aQueueSize size of the queue.
-	 * @param aLog logger for output. 
+	 * @param aLog logger for output.
 	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, int aQueueSize, Logger aLog) {
 		this(aName, aWorker,  aQueueSize, DEF_SLEEP_TIME, aLog);
@@ -141,9 +151,10 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	
 	/**
 	 * Creates a new QueuedProcessor. Uses DEF_QUEUE_FACTORY, DEF_QUEUE_SIZE and DEF_SLEEP_TIME.
+	 *
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
-	 * @param aLog logger for output. 
+	 * @param aLog logger for output.
 	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, Logger aLog) {
 		this(aName, aWorker, DEF_QUEUE_SIZE, DEF_SLEEP_TIME, aLog);
@@ -151,8 +162,10 @@ public class QueuedProcessor<T extends Object> extends Thread {
 
 	/**
 	 * Creates a new QueuedProcessor. Uses DEF_SLEEP_TIME, DEF_QUEUE_SIZE and default logger.
+	 *
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
+	 * @param aQueueFactory a {@link net.anotheria.util.queue.IQueueFactory} object.
 	 */
 	public QueuedProcessor(String aName, IQueueWorker<T> aWorker, IQueueFactory<T> aQueueFactory) {
 		this(aName, aWorker, aQueueFactory, defaultLog);
@@ -161,6 +174,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	
 	/**
 	 * Shortest queued processor constructor. Creates a new QueuedProcessor. Uses DEF_SLEEP_TIME, DEF_QUEUE_SIZE, DEF_QUEUE_FACTORY and default logger.
+	 *
 	 * @param aName name of the processor.
 	 * @param aWorker worker for the queued processor.
 	 */
@@ -185,10 +199,10 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	
 	/**
 	 * Inserts the specified element at the tail of the processing queue, waiting if
-     * necessary for space in the queue to become available 
+	 * necessary for space in the queue to become available
+	 *
 	 * @param element the element to add
 	 */
-
 	public void addToQueueAndWait(T element) {
 		while(true){
 			try{
@@ -212,7 +226,9 @@ public class QueuedProcessor<T extends Object> extends Thread {
 
 	/**
 	 * Default method to add an element to the queue. Calls addToQueueDontWait internally.
-	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
+	 *
+	 * @throws net.anotheria.util.queue.UnrecoverableQueueOverflowException if the processing queue is full.
+	 * @param aElement a T object.
 	 */
 	public void addToQueue(T aElement) throws UnrecoverableQueueOverflowException {
 		addToQueueDontWait(aElement);
@@ -220,8 +236,9 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	
 	/**
 	 * Inserts the specified element at the tail of the processing queue if the queue is not full
-     * 
-	 * @throws UnrecoverableQueueOverflowException if the processing queue is full.
+	 *
+	 * @throws net.anotheria.util.queue.UnrecoverableQueueOverflowException if the processing queue is full.
+	 * @param element a T object.
 	 */
 	public void addToQueueDontWait(T element) throws UnrecoverableQueueOverflowException {
 		try {
@@ -249,6 +266,7 @@ public class QueuedProcessor<T extends Object> extends Thread {
 		}
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void run() {
 		final AtomicBoolean shutdown = new AtomicBoolean(false);
@@ -314,6 +332,8 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 	
 	/**
+	 * <p>isStopped.</p>
+	 *
 	 * @return true if processing was stopped by calling stopAfterQueueProcessing() or stopImmediately().
 	 */
 	public boolean isStopped(){
@@ -321,33 +341,62 @@ public class QueuedProcessor<T extends Object> extends Thread {
 	}
 	
 	/**
+	 * <p>getQueueOverflowCount.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getQueueOverflowCount() {
 		return overflowCount;
 	}
 	
+	/**
+	 * <p>Getter for the field <code>queueSize</code>.</p>
+	 *
+	 * @return a int.
+	 */
 	public int getQueueSize(){
 		return queue.getElementCount();
 	}
 
 	/**
+	 * <p>Getter for the field <code>throwAwayCount</code>.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getThrowAwayCount() {
 		return throwAwayCount.intValue();
 	}
 
+	/**
+	 * <p>getStatsString.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getStatsString() {
 		return "QueuedProcessor "+name+ ": "+counter + " elements worked, queue: " + queue + ", OC:" + overflowCount +  ", WT:" + waitingTime +", TAC:" + throwAwayCount;
 	}
 
+	/**
+	 * <p>logOutInfo.</p>
+	 */
 	public void logOutInfo() {
 		log.info("QueuedProcessor {}: {} elements processed. Stat: {}, overflow count: {}, waiting time: {}, throw-away count: {}", name, counter, queue, overflowCount, waitingTime, throwAwayCount);
 	}
 
+	/**
+	 * <p>Getter for the field <code>queueFactory</code>.</p>
+	 *
+	 * @return a {@link net.anotheria.util.queue.IQueueFactory} object.
+	 */
 	public IQueueFactory<T> getQueueFactory() {
 		return queueFactory;
 	}
 
+	/**
+	 * <p>Setter for the field <code>queueFactory</code>.</p>
+	 *
+	 * @param queueFactory a {@link net.anotheria.util.queue.IQueueFactory} object.
+	 */
 	public void setQueueFactory(IQueueFactory<T> queueFactory) {
 		this.queueFactory = queueFactory;
 	}

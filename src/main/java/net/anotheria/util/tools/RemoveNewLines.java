@@ -7,14 +7,16 @@ import java.io.FileOutputStream;
 
 /**
  * A simple command line programm that removes all \r from the file submitted as argument.
- * @author lrosenberg
  *
+ * @author lrosenberg
+ * @version $Id: $Id
  */
 public final class RemoveNewLines {
 	/**
 	 * Removes empty lines from the file at a[0]
+	 *
 	 * @param a do you need a comment on that?
-	 * @throws Exception if something happens.
+	 * @throws java.lang.Exception if something happens.
 	 */
 	public static void main(String... a) throws Exception{
 		String s = IOUtils.readFileAtOnceAsString(a[0]);

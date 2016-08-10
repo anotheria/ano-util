@@ -11,6 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
+/**
+ * <p>FileResourceLoader class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class FileResourceLoader implements ResourceLoader{
 	
 	/**
@@ -18,12 +24,14 @@ public class FileResourceLoader implements ResourceLoader{
 	 */
 	private static Logger log = LoggerFactory.getLogger(FileResourceLoader.class);
 	
+	/** {@inheritDoc} */
 	@Override
 	public boolean isAvailable(String fileName){
 		File f = new File(fileName);
 		return f.exists();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public long getLastChangeTimestamp(String fileName){
 		File f = new File(fileName);
@@ -33,6 +41,7 @@ public class FileResourceLoader implements ResourceLoader{
 		return ret;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public String getContent(String fileName){
 		File f = new File(fileName);
@@ -48,6 +57,12 @@ public class FileResourceLoader implements ResourceLoader{
 		}
 	}
 	
+	/**
+	 * <p>main.</p>
+	 *
+	 * @param args a {@link java.lang.String} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static void main(String... args) throws Exception{
 		ResourceLoader loader = new FileResourceLoader();
 		System.out.println("Current base dir: " + new File("").getAbsolutePath());

@@ -5,6 +5,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * <p>UnsafeIdBasedLockManager class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class UnsafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
         implements IdBasedLockManager<K> {
     /**
@@ -13,6 +19,7 @@ public class UnsafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
     private static final long serialVersionUID = -4257919838109398407L;
     private ConcurrentMap<K, IdBasedLock<K>> locks = new ConcurrentHashMap<>();
 
+    /** {@inheritDoc} */
     @Override
     public IdBasedLock<K> obtainLock(K id) {
         IdBasedLock<K> lock = new IdBasedLock<>(id, this);
@@ -32,6 +39,7 @@ public class UnsafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
         return myLock;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void releaseLock(IdBasedLock<K> lock) {
         K id = lock.getId();
@@ -43,6 +51,7 @@ public class UnsafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
         lock.unlockWithoutRelease();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Map<K, IdBasedLock<K>> getLockMap() {
         return locks;

@@ -11,6 +11,11 @@ abstract class AbstractIdBasedLockManager<T> {
 		return getLockMap().toString();
 	}
 	
+	/**
+	 * <p>getLockMap.</p>
+	 *
+	 * @return a {@link java.util.Map} object.
+	 */
 	protected abstract Map<T, IdBasedLock<T>> getLockMap();
 
 }

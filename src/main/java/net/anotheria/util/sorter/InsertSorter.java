@@ -5,9 +5,13 @@ import java.util.List;
 
 /**
  * A sorter implementation which works by the insert sort algorithm.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class InsertSorter<T extends IComparable> extends AbstractSorter<T> {
 
+	/** {@inheritDoc} */
 	@Override
 	public List<T> sort(List<T> toSort, SortType how){
       	ListEntry<T> list = null;

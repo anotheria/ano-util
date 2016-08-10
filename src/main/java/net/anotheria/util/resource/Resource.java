@@ -12,7 +12,9 @@ import java.util.List;
  * identified by name. Depending on ResourceLoader (default is
  * ClassPathResourceLoader) name can be absolute or relative on File System, URL
  * etc. Acts as a proxy to hide all routine for a underlying resource loading and updating.
- * 
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class Resource {
 	/**
@@ -45,7 +47,7 @@ public class Resource {
 
 	/**
 	 * Creates a new Resource for its underlying in class path
-	 * 
+	 *
 	 * @param aName
 	 *            name of the Resource
 	 */
@@ -55,7 +57,7 @@ public class Resource {
 
 	/**
 	 * Creates a new Resource for its underlying in class path
-	 * 
+	 *
 	 * @param aName
 	 *            name of the Resource
 	 * @param aWatch
@@ -67,13 +69,12 @@ public class Resource {
 
 	/**
 	 * Creates a new Resource
-	 * 
+	 *
 	 * @param aName
 	 *            name of the Resource
-	 * @param aWatch
-	 *            must be this Resource up to date with its physical changes
 	 * @param aResourceLoader
 	 *            ResourceLoader that is used to load its underlying
+	 * @param watch a boolean.
 	 */
 	public Resource(String aName, ResourceLoader aResourceLoader, boolean watch) {
 		name = aName;
@@ -87,7 +88,7 @@ public class Resource {
 
 	/**
 	 * Adds a listener to this Resource.
-	 * 
+	 *
 	 * @param listener
 	 *            a listener to add
 	 */
@@ -99,7 +100,8 @@ public class Resource {
 
 	/**
 	 * Removes the listener from this Resource
-	 * 
+	 *
+	 * @param listener a {@link net.anotheria.util.resource.ResourceListener} object.
 	 */
 	public void removeListener(ResourceListener listener) {
 		synchronized (listeners) {
@@ -107,6 +109,7 @@ public class Resource {
 		}
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 
@@ -115,7 +118,8 @@ public class Resource {
 
 	/**
 	 * Return the last change timestamp of this Resource in millis
-	 * 
+	 *
+	 * @return a long.
 	 */
 	public long getLastChangeTimestamp() {
 		return lastChangeTimestamp;
@@ -124,7 +128,8 @@ public class Resource {
 
 	/**
 	 * Returns the name of this Resource
-	 * 
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String getName() {
 		return name;
@@ -132,7 +137,8 @@ public class Resource {
 
 	/**
 	 * Returns the content of this Resource
-	 * 
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String getContent() {
 		return content;
@@ -141,7 +147,9 @@ public class Resource {
 	/**
 	 * Returns true if this Resource's change timestamp is older as the given
 	 * timestamp
-	 * 
+	 *
+	 * @param resourceChangeTimestamp a long.
+	 * @return a boolean.
 	 */
 	protected boolean isOlderAs(long resourceChangeTimestamp) {
 		return lastChangeTimestamp < resourceChangeTimestamp;
@@ -150,7 +158,8 @@ public class Resource {
 	/**
 	 * Called by the WatchDog if a change in the underlying
 	 * Resource is detected.
-	 * 
+	 *
+	 * @param timestamp a long.
 	 */
 	protected void fireUpdateEvent(long timestamp) {
 		reloadContent();
@@ -167,6 +176,11 @@ public class Resource {
 		lastChangeTimestamp = timestamp;
 	}
 
+	/**
+	 * <p>Getter for the field <code>resourceLoader</code>.</p>
+	 *
+	 * @return a {@link net.anotheria.util.resource.ResourceLoader} object.
+	 */
 	protected ResourceLoader getResourceLoader() {
 		return resourceLoader;
 	}

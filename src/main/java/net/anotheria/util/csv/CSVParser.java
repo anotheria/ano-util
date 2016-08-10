@@ -9,27 +9,65 @@ import net.anotheria.util.datatable.DataTable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>CSVParser class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class CSVParser {
 	
+	/** Constant <code>DEFAULT_VALUES_SEPARATOR=','</code> */
 	public static final char DEFAULT_VALUES_SEPARATOR = ',';
+	/** Constant <code>DEFAULT_ROWS_SEPARATOR='\n'</code> */
 	public static final char DEFAULT_ROWS_SEPARATOR = '\n';
 	
 	private static String normalize(String csvSource){
 		return StringUtils.removeChar(csvSource, '\r');
 	}
 	
+	/**
+	 * <p>parse.</p>
+	 *
+	 * @param csvSource a {@link java.lang.String} object.
+	 * @return a {@link net.anotheria.util.datatable.DataTable} object.
+	 */
 	public static DataTable parse(String csvSource){
 		return parse(csvSource, true);
 	}
 	
+	/**
+	 * <p>parse.</p>
+	 *
+	 * @param csvSource a {@link java.lang.String} object.
+	 * @param hasHeader a boolean.
+	 * @return a {@link net.anotheria.util.datatable.DataTable} object.
+	 */
 	public static DataTable parse(String csvSource, boolean hasHeader){
 		return parse(normalize(csvSource),DEFAULT_VALUES_SEPARATOR, hasHeader);
 	}
 	
+	/**
+	 * <p>parse.</p>
+	 *
+	 * @param csvSource a {@link java.lang.String} object.
+	 * @param valuesSeparator a char.
+	 * @param hasHeader a boolean.
+	 * @return a {@link net.anotheria.util.datatable.DataTable} object.
+	 */
 	public static DataTable parse(String csvSource, char valuesSeparator, boolean hasHeader){
 		return parse(normalize(csvSource),valuesSeparator, DEFAULT_ROWS_SEPARATOR, hasHeader);
 	}
 	
+	/**
+	 * <p>parse.</p>
+	 *
+	 * @param csvSource a {@link java.lang.String} object.
+	 * @param valuesSeparator a char.
+	 * @param rowsSeparator a char.
+	 * @param hasHeader a boolean.
+	 * @return a {@link net.anotheria.util.datatable.DataTable} object.
+	 */
 	public static DataTable parse(String csvSource, char valuesSeparator, char rowsSeparator, boolean hasHeader){
 		String[] rows = StringUtils.tokenize(csvSource, rowsSeparator);
 		if(rows.length == 0)
@@ -98,6 +136,7 @@ public class CSVParser {
 	
 	/** We have to handle somehow situation with newlines in the values, 
 	 * for now - algorithm written below looks as simplest and quickest */
+	private static String[] normalizeEscapedNewlines(String... rows) {
 	private static String[] normalizeEscapedNewlines(String... rows) {
 		List<String> result = new ArrayList<>(rows.length);
 		for (int i = 0; i < rows.length; i++){

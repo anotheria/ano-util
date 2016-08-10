@@ -11,6 +11,9 @@ import java.lang.management.ManagementFactory;
 /**
  * Tools for obtaining and manipulation with Process Id (PID) of current JVM on
  * the family of *nix OS. Other OS are not supported and ignored.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public final class PidTools {
 
@@ -28,7 +31,7 @@ public final class PidTools {
 	/**
 	 * Returns PID for current JVM under *nix OS or -1 if PID could not
 	 * determine.
-	 * 
+	 *
 	 * @return PID of the current JVM
 	 */
 	public static final int getPid() {

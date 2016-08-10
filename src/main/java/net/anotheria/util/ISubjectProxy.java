@@ -1,8 +1,10 @@
 package net.anotheria.util;
 
 /**
- * @author another
+ * <p>ISubjectProxy interface.</p>
  *
+ * @author another
+ * @version $Id: $Id
  */
 public interface ISubjectProxy extends IObserver, ISubject{
 

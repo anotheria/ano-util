@@ -4,6 +4,12 @@ package net.anotheria.util.concurrency;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <p>SafeIdBasedLockManager class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class SafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
         implements IdBasedLockManager<K> {
     /**
@@ -12,6 +18,7 @@ public class SafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
     private static final long serialVersionUID = -7086955847344168761L;
     private Map<K, IdBasedLock<K>> locks = new HashMap<>();
 
+    /** {@inheritDoc} */
     @Override
     public IdBasedLock<K> obtainLock(K id) {
         synchronized (this) {
@@ -27,6 +34,7 @@ public class SafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void releaseLock(IdBasedLock<K> lock) {
         synchronized (this) {
@@ -38,6 +46,7 @@ public class SafeIdBasedLockManager<K> extends AbstractIdBasedLockManager<K>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Map<K, IdBasedLock<K>> getLockMap() {
         return locks;

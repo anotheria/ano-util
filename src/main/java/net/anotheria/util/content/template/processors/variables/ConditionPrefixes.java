@@ -4,6 +4,7 @@ package net.anotheria.util.content.template.processors.variables;
  * Contains Condition Prefixes.
  *
  * @author h3llka
+ * @version $Id: $Id
  */
 public final class ConditionPrefixes {
 	/**

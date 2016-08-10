@@ -9,11 +9,14 @@ import net.anotheria.util.content.template.processors.variables.ConstantVariable
  * Constants template processor.
  *
  * @author h3llka
+ * @version $Id: $Id
  */
 public class ConstantsTemplateProcessor implements TemplateProcessor {
 
+	/** Constant <code>PREFIX="c"</code> */
 	public static final String PREFIX = "c";
 
+	/** {@inheritDoc} */
 	@Override
 	public String replace(String aPrefix, String aVariable, String aDefValue, TemplateReplacementContext aContext) {
 		if (PREFIX.equals(aPrefix) && !StringUtils.isEmpty(aVariable)) {

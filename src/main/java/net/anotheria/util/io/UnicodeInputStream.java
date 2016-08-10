@@ -10,13 +10,16 @@ import java.io.PushbackInputStream;
  * before any of the read(...) methods.
  *
  * Usage pattern:
-     String enc = "ISO-8859-1"; // or NULL to use systemdefault
-     FileInputStream fis = new FileInputStream(file);
-     UnicodeInputStream uin = new UnicodeInputStream(fis, enc);
-     enc = uin.getEncoding(); // check and skip possible BOM bytes
-     InputStreamReader in;
-     if (enc == null) in = new InputStreamReader(uin);
-     else in = new InputStreamReader(uin, enc);
+ *     String enc = "ISO-8859-1"; // or NULL to use systemdefault
+ *     FileInputStream fis = new FileInputStream(file);
+ *     UnicodeInputStream uin = new UnicodeInputStream(fis, enc);
+ *     enc = uin.getEncoding(); // check and skip possible BOM bytes
+ *     InputStreamReader in;
+ *     if (enc == null) in = new InputStreamReader(uin);
+ *     else in = new InputStreamReader(uin, enc);
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class UnicodeInputStream extends InputStream {
    PushbackInputStream internalIn;
@@ -31,10 +34,20 @@ public class UnicodeInputStream extends InputStream {
 		this.defaultEnc = aDefaultEnc;
 	}
 
+	/**
+	 * <p>getDefaultEncoding.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getDefaultEncoding() {
       return defaultEnc;
    }
 
+   /**
+    * <p>Getter for the field <code>encoding</code>.</p>
+    *
+    * @return a {@link java.lang.String} object.
+    */
    public String getEncoding() {
       if (!isInited) {
          try {
@@ -49,6 +62,8 @@ public class UnicodeInputStream extends InputStream {
    /**
     * Read-ahead four bytes and check for BOM marks. Extra bytes are
     * unread back to the stream, only BOM bytes are skipped.
+    *
+    * @throws java.io.IOException if any.
     */
    protected void init() throws IOException {
       if (isInited) return;
@@ -87,6 +102,7 @@ public class UnicodeInputStream extends InputStream {
       isInited = true;
    }
 
+   /** {@inheritDoc} */
    @Override
    public void close() throws IOException {
       //init();
@@ -94,6 +110,7 @@ public class UnicodeInputStream extends InputStream {
       internalIn.close();
    }
 
+   /** {@inheritDoc} */
    @Override
    public int read() throws IOException {
       //init();

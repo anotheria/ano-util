@@ -8,6 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <p>UrlHelper class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class UrlHelper {
 	/**
 	 * Url protocol.
@@ -31,15 +37,32 @@ public class UrlHelper {
 	private List<Parameter> params;
 	private String reference;
 	
+	/**
+	 * <p>Constructor for UrlHelper.</p>
+	 */
 	public UrlHelper() {
 		this(null, null, -1, "", null);
 	}
 	
+	/**
+	 * <p>Constructor for UrlHelper.</p>
+	 *
+	 * @param url a {@link java.net.URL} object.
+	 */
 	public UrlHelper(URL url) {
 		this(url.getProtocol(), url.getHost(), url.getPort(), url.getPath(), url.getRef());
 		setQuery(url.getQuery());
 	}
 	
+	/**
+	 * <p>Constructor for UrlHelper.</p>
+	 *
+	 * @param protocol a {@link java.lang.String} object.
+	 * @param host a {@link java.lang.String} object.
+	 * @param port a int.
+	 * @param path a {@link java.lang.String} object.
+	 * @param reference a {@link java.lang.String} object.
+	 */
 	public UrlHelper(String protocol, String host, int port, String path, String reference) {
 		this.protocol = protocol;
 		this.host = host;
@@ -49,6 +72,11 @@ public class UrlHelper {
 		params = new ArrayList<>();
 	}
 	
+	/**
+	 * <p>Constructor for UrlHelper.</p>
+	 *
+	 * @param url a {@link java.lang.String} object.
+	 */
 	public UrlHelper(String url) {
 		params = new ArrayList<>();
 		
@@ -95,6 +123,11 @@ public class UrlHelper {
 	
 	}
 	
+	/**
+	 * <p>setQuery.</p>
+	 *
+	 * @param query a {@link java.lang.String} object.
+	 */
 	public void setQuery(String query) {
 		if(query != null) {
 			if(query.startsWith("?") && query.length() > 1)
@@ -107,6 +140,12 @@ public class UrlHelper {
 		}
 	}
 	
+	/**
+	 * <p>addParameter.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @param paramValue a {@link java.lang.String} object.
+	 */
 	public void addParameter(String paramName, String paramValue) {
 		Parameter newParameter = new Parameter();
 		newParameter.setName(paramName);
@@ -123,6 +162,12 @@ public class UrlHelper {
 		}
 	}
 	
+	/**
+	 * <p>getParameter.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getParameter(String paramName) {
 		for (Parameter param : params) {
 			if(param.getName().equals(paramName)) {
@@ -132,14 +177,27 @@ public class UrlHelper {
 		return null;
 	}
 	
+	/**
+	 * <p>removeParameter.</p>
+	 *
+	 * @param paramName a {@link java.lang.String} object.
+	 */
 	public void removeParameter(String paramName) {
 		addParameter(paramName, null);
 	}
 	
+	/**
+	 * <p>removeParameters.</p>
+	 */
 	public void removeParameters() {
 		params = new ArrayList<>();
 	}
 	
+	/**
+	 * <p>addParameter.</p>
+	 *
+	 * @param paramString a {@link java.lang.String} object.
+	 */
 	public void addParameter(String paramString) {
 		String[] nameValuePair = StringUtils.tokenize(paramString, '=');
 		if(nameValuePair.length == 2) {
@@ -153,6 +211,11 @@ public class UrlHelper {
 		}
 	}
 	
+	/**
+	 * <p>addParameters.</p>
+	 *
+	 * @param parameters a {@link java.util.Map} object.
+	 */
 	public void addParameters(Map<String, String> parameters) {
 		for (Map.Entry<String, String> param : parameters.entrySet()) {
 			Object value = param.getValue();
@@ -164,6 +227,11 @@ public class UrlHelper {
 		}
 	}
 	
+	/**
+	 * <p>toString.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		
@@ -198,6 +266,11 @@ public class UrlHelper {
 		return result.toString();
 	}
 	
+	/**
+	 * <p>parametersToString.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String parametersToString() {
 		StringBuilder result = new StringBuilder();
 		Iterator<Parameter> allParams = params.iterator();
@@ -219,66 +292,91 @@ public class UrlHelper {
 	}
 
 	/**
+	 * <p>Getter for the field <code>host</code>.</p>
+	 *
 	 * @return Returns the host.
 	 */
 	public String getHost() {
 		return host;
 	}
 	/**
+	 * <p>Setter for the field <code>host</code>.</p>
+	 *
 	 * @param host The host to set.
 	 */
 	public void setHost(String host) {
 		this.host = host;
 	}
 	/**
+	 * <p>Getter for the field <code>path</code>.</p>
+	 *
 	 * @return Returns the path.
 	 */
 	public String getPath() {
 		return path;
 	}
 	/**
+	 * <p>Setter for the field <code>path</code>.</p>
+	 *
 	 * @param path The path to set.
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
 	/**
+	 * <p>Getter for the field <code>port</code>.</p>
+	 *
 	 * @return Returns the port.
 	 */
 	public int getPort() {
 		return port;
 	}
 	/**
+	 * <p>Setter for the field <code>port</code>.</p>
+	 *
 	 * @param port The port to set.
 	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 	/**
+	 * <p>Getter for the field <code>protocol</code>.</p>
+	 *
 	 * @return Returns the protocol.
 	 */
 	public String getProtocol() {
 		return protocol;
 	}
 	/**
+	 * <p>Setter for the field <code>protocol</code>.</p>
+	 *
 	 * @param protocol The protocol to set.
 	 */
 	public void setProtocol(String protocol) {
 		this.protocol = protocol;
 	}
 	/**
+	 * <p>Getter for the field <code>reference</code>.</p>
+	 *
 	 * @return Returns the reference.
 	 */
 	public String getReference() {
 		return reference;
 	}
 	/**
+	 * <p>Setter for the field <code>reference</code>.</p>
+	 *
 	 * @param reference The reference to set.
 	 */
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
 	
+	/**
+	 * <p>getQuery.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getQuery() {
 		StringBuilder result = new StringBuilder(); 
 		Iterator<Parameter> allParams = params.iterator();

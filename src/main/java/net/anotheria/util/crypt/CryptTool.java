@@ -13,10 +13,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/***
- * A tool to encrypt and decrypt strings using Blowfish algorithm.
- * @author lrosenberg
+/**
  *
+ * A tool to encrypt and decrypt strings using Blowfish algorithm.
+ *
+ * @author lrosenberg
+ * @version $Id: $Id
  */
 public class CryptTool {
 
@@ -25,6 +27,7 @@ public class CryptTool {
 
 	/**
 	 * Create a new crypttool with the given key.
+	 *
 	 * @param key the key to use for en- and decode.
 	 */
 	public CryptTool(String key) {
@@ -33,6 +36,7 @@ public class CryptTool {
 
 	/**
 	 * Create a new crypttool with the binary given key.
+	 *
 	 * @param key the key to use for en- and decode.
 	 */
 	public CryptTool(byte... key) {
@@ -43,6 +47,9 @@ public class CryptTool {
 
 	/**
 	 * Returns a byte array containing the encrypted version of the string.
+	 *
+	 * @param toEncrypt a {@link java.lang.String} object.
+	 * @return an array of byte.
 	 */
 	public byte[] encrypt(String toEncrypt) {
 		byte[] bytes = padMod(toEncrypt, 8).getBytes();
@@ -58,13 +65,21 @@ public class CryptTool {
 
 	/**
 	 * Returns a HEX version of the encrypted string.
+	 *
 	 * @param toEncrypt the string to encrypt.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String encryptToHex(String toEncrypt) {
 		byte[] encrypted = encrypt(toEncrypt);
 		return HexDecoder.toHexString(encrypted);
 	}
 
+	/**
+	 * <p>decrypt.</p>
+	 *
+	 * @param toDecrypt a byte.
+	 * @return an array of byte.
+	 */
 	public byte[] decrypt(byte... toDecrypt) {
 		byte[] out = new byte[decryptCipher.getOutputSize(toDecrypt.length)];
 		int len = decryptCipher.processBytes(toDecrypt, 0, toDecrypt.length, out, 0);
@@ -76,11 +91,23 @@ public class CryptTool {
 		}
 	}
 
+	/**
+	 * <p>decryptFromHex.</p>
+	 *
+	 * @param toDecrypt a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String decryptFromHex(String toDecrypt) {
 		byte[] decrypted = decrypt(HexDecoder.fromHexString(toDecrypt));
 		return new String(decrypted);
 	}
 
+	/**
+	 * <p>decryptFromHexTrim.</p>
+	 *
+	 * @param toDecrypt a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String decryptFromHexTrim(String toDecrypt) {
 		return decryptFromHex(toDecrypt).trim();
 	}
@@ -101,6 +128,7 @@ public class CryptTool {
 
 	/**
 	 * Encrypts a map of key value pairs to a single string to use as html parameter or similar.
+	 *
 	 * @param parameters a map with parameters.
 	 * @return a string version of the map.
 	 */
@@ -119,6 +147,7 @@ public class CryptTool {
 
 	/**
 	 * Decrypts a previously encoded parameter map and returns it as map of key-value pairs.
+	 *
 	 * @param str the string to decode.
 	 * @return a map with decrypted parameters.
 	 */
@@ -143,7 +172,9 @@ public class CryptTool {
 
 	/**
 	 * Converts Numerical ID to Chiffre: string from letters and digits 8 symbols length.
+	 *
 	 * @param id to convert
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String idToChiffre(String id) {
 		int normalizedId = Integer.parseInt(id) + NUMERATION_BASE_NUMBER;
@@ -168,6 +199,9 @@ public class CryptTool {
 
 	/**
 	 * Restore Numerical ID from Chiffre.
+	 *
+	 * @param chiffre a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String chiffreToId(String chiffre) {
 
@@ -190,6 +224,7 @@ public class CryptTool {
 
 	/**
 	 * Encrypts specified byte array. Size must be aligned to 8-bytes boundary.
+	 *
 	 * @param buffer byte array to encrypt.
 	 */
 	public void encryptBuffer(byte... buffer) {
@@ -206,6 +241,7 @@ public class CryptTool {
 
 	/**
 	 * Decrypts specified byte array. Size must be aligned to 8-bytes boundary.
+	 *
 	 * @param buffer byte array to decrypt.
 	 */
 	public void decryptBuffer(byte... buffer) {

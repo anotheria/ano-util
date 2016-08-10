@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * <p>StringPattern class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class StringPattern {
 
+	/** Constant <code>DEFAULT_WILDCARD='*'</code> */
 	public static final char DEFAULT_WILDCARD = '*';
 	
 	private char wildCard;
@@ -15,10 +22,21 @@ public class StringPattern {
 	private String endsWith;
 	private List<String> indexof;
 	
+	/**
+	 * <p>Constructor for StringPattern.</p>
+	 *
+	 * @param pattern a {@link java.lang.String} object.
+	 */
 	public StringPattern(String pattern) {
 		this(pattern, DEFAULT_WILDCARD);
 	}
 	
+	/**
+	 * <p>Constructor for StringPattern.</p>
+	 *
+	 * @param pattern a {@link java.lang.String} object.
+	 * @param wildCard a char.
+	 */
 	public StringPattern(String pattern, char wildCard) {
 		this.wildCard = wildCard;
 		List<Integer> wildCards = searchWildcards(pattern);
@@ -53,10 +71,23 @@ public class StringPattern {
 		return result;
 	}
 	
+	/**
+	 * <p>match.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @return a boolean.
+	 */
 	public boolean match(String aString) {
 		return match(aString, new ArrayList<String>());
 	}
 	
+	/**
+	 * <p>match.</p>
+	 *
+	 * @param aString a {@link java.lang.String} object.
+	 * @param matches a {@link java.util.Collection} object.
+	 * @return a boolean.
+	 */
 	public boolean match(String aString, Collection<String> matches) {
 		
 		if(equals != null) {
@@ -98,6 +129,11 @@ public class StringPattern {
 		return true;
 	}
 	
+	/**
+	 * <p>toString.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		if(equals != null) {

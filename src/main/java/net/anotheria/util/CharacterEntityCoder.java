@@ -8,6 +8,9 @@ import java.util.Map.Entry;
 
 /**
  * Performs html and xml encoding.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class CharacterEntityCoder {
 	private static final Map<Character, String> ENTITIES;
@@ -224,8 +227,11 @@ public class CharacterEntityCoder {
 	}
 
 	/**
-	* returns encoded String for XML use
-	**/
+	 * returns encoded String for XML use
+	 *
+	 * @param s a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String encodeString(String s) {
 		StringBuilder result = new StringBuilder("");
 		for (int i=0; i<s.length(); i++){
@@ -236,8 +242,11 @@ public class CharacterEntityCoder {
 		return result.toString();
 	}
 	/**
-	* returns encoded String for HTML use
-	**/
+	 * returns encoded String for HTML use
+	 *
+	 * @param s a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String htmlEncodeString(String s) {
         for (String[] sa : HTML_ENTITIES) {
             char o = sa[0].charAt(0);
@@ -248,8 +257,11 @@ public class CharacterEntityCoder {
 	}
 
 	/**
-	* returns dencoded String from XML
-	**/
+	 * returns dencoded String from XML
+	 *
+	 * @param s a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String decodeString(String s) {
 		for (Entry<Character, String> characterStringEntry : ENTITIES.entrySet()) {
 			String n = characterStringEntry.getValue();
@@ -271,8 +283,11 @@ public class CharacterEntityCoder {
 	}
 
 	/**
-	* returns dencoded String from HTML
-	**/
+	 * returns dencoded String from HTML
+	 *
+	 * @param s a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String decodeHtmlString(String s) {
         for (String[] sa : HTML_ENTITIES) {
             char o = sa[0].charAt(0);
@@ -295,6 +310,12 @@ public class CharacterEntityCoder {
 		return s;
 	}
 
+	/**
+	 * <p>htm2xml.</p>
+	 *
+	 * @param s a {@link java.lang.String} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String htm2xml(String s){
 		for (Map.Entry<String, String> stringStringEntry : HTML_2_XML_ENTITIES.entrySet()) {
 			String xmlString = stringStringEntry.getValue();

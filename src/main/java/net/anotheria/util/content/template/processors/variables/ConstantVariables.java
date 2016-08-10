@@ -9,6 +9,7 @@ import java.util.Map;
  * Contains constants for Template && Variable processors.
  *
  * @author h3llka
+ * @version $Id: $Id
  */
 public final class ConstantVariables {
 

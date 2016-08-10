@@ -7,6 +7,7 @@ import net.anotheria.util.StringUtils;
  * Actually for template Processor && for VariableProcessor.
  *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public enum ConditionProcessorNames {
 	/**
@@ -114,6 +115,11 @@ public enum ConditionProcessorNames {
 		this.prefixName = stringValue;
 	}
 
+	/**
+	 * <p>Getter for the field <code>prefixName</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getPrefixName() {
 		return prefixName;
 	}

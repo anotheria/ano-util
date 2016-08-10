@@ -5,7 +5,10 @@ import java.util.GregorianCalendar;
 
 /**
  * This class provide a simple date object.
- **/
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class Date implements Serializable{
     private static final long serialVersionUID = -8683008562899070994L;
 
@@ -38,10 +41,12 @@ public class Date implements Serializable{
     /** The array of day names in a week*/
     public static final String[] DAY   = {"Sun.","Mon.","Tue.","Wed.","Thu.","Fri.","Sat."};
 
-    /** Default constructor. Create a date
+    /**
+     * Default constructor. Create a date
      * without hour an minutes notification. The minuts and hours have
      * a value of -1 The day name will be
      * calculated automaticly ba the {@code calcDay()} function.
+     *
      * @param aDay the day
      * @param aMonth the month
      * @param aYear the year
@@ -50,11 +55,15 @@ public class Date implements Serializable{
         this(aDay, aMonth, aYear, -1,-1);
     }
 
-    /** Default constructor. Create a date object. The day name will be
+    /**
+     * Default constructor. Create a date object. The day name will be
      * calculated automaticly ba the {@code calcDay()} function.
+     *
      * @param aDay the day
      * @param aMonth the month
      * @param aYear the year
+     * @param aHour a int.
+     * @param aMin a int.
      */
     public Date(int aDay, int aMonth, int aYear, int aHour, int aMin){
         this.month = aMonth;
@@ -67,6 +76,8 @@ public class Date implements Serializable{
 
     /**
      * Creates a new date object which correspongs to the given time in millis since 01.01.1970.
+     *
+     * @param aMillis a long.
      */
     public Date(long aMillis){
         GregorianCalendar cal = new GregorianCalendar();
@@ -85,6 +96,8 @@ public class Date implements Serializable{
 
     /**
      * Create a Date object for this moment
+     *
+     * @return a {@link net.anotheria.util.Date} object.
      */
     public static Date currentDate(){
 		return new Date(System.currentTimeMillis());
@@ -107,7 +120,9 @@ public class Date implements Serializable{
         return DAY[dayOfWeek];
     }
 
-    /** Check date
+    /**
+     * Check date
+     *
      * @param aD1 the date object to check it
      * @return true if and only if the given data object is valid
      */
@@ -133,12 +148,16 @@ public class Date implements Serializable{
     
     /**
      * Returns true if this date is a valid date. For example 30 Februar is not a valid date.
+     *
+     * @return a boolean.
      */
     public boolean isValid(){
     	return isValid(this);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Returns the string representation of this date.
      */
     @Override public String toString(){
@@ -156,7 +175,9 @@ public class Date implements Serializable{
 
     /**
      * Parse date out from string
+     *
      * @param aDateStrg Source string to parse it
+     * @return a {@link net.anotheria.util.Date} object.
      */
     public static Date parse(String aDateStrg){
        if(aDateStrg.indexOf('.')!=-1&& aDateStrg.indexOf(':')==-1)
@@ -185,7 +206,10 @@ public class Date implements Serializable{
 
     /**
      * Parse date with hors and minutes out from string
+     *
      * @param aDateStrg Source string to parse it
+     * @param aCh a char.
+     * @return a {@link net.anotheria.util.Date} object.
      */
     public static Date parseLong(String aDateStrg, char aCh){
         int pFirst = aDateStrg.indexOf(aCh,0);
@@ -217,7 +241,10 @@ public class Date implements Serializable{
 
     /**
      * Parse date without hors and minutes out from string
+     *
      * @param aDateStrg source string to parse it
+     * @param aCh a char.
+     * @return a {@link net.anotheria.util.Date} object.
      */
     public static Date parseShort(String aDateStrg, char aCh){
         int pFirst = aDateStrg.indexOf(aCh,0);
@@ -243,6 +270,11 @@ public class Date implements Serializable{
         }
     }
 
+    /**
+     * <p>toMill.</p>
+     *
+     * @return a long.
+     */
     public long toMill(){
         GregorianCalendar cal;
         if(this.hour !=-1)
@@ -254,47 +286,69 @@ public class Date implements Serializable{
         return d.getTime();
     }
 
+	/** {@inheritDoc} */
 	@Override public boolean equals(Object o){
  		return (o instanceof Date) && ((Date) o).toMill() == toMill();
   	}
 
 	/**
+	 * <p>Getter for the field <code>day</code>.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getDay() {
 		return day;
 	}
 
-    /**
+	/**
+	 * <p>Getter for the field <code>dayOfWeek</code>.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getDayOfWeek() {
 		return dayOfWeek;
 	}
 
 	/**
+	 * <p>Getter for the field <code>hour</code>.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getHour() {
 		return hour;
 	}
 
 	/**
+	 * <p>Getter for the field <code>min</code>.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getMin() {
 		return min;
 	}
 
 	/**
+	 * <p>Getter for the field <code>month</code>.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getMonth() {
 		return month;
 	}
 
 	/**
+	 * <p>getW_day.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String getW_day() {
 		return wDay;
 	}
 
 	/**
+	 * <p>Getter for the field <code>year</code>.</p>
+	 *
+	 * @return a int.
 	 */
 	public int getYear() {
 		return year;
@@ -302,6 +356,8 @@ public class Date implements Serializable{
 	
 	/**
 	 * Returns the ISO8601 timestamp of this date.
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String toISO8601Timestamp(){
 		return NumberUtils.makeISO8601TimestampString(toMill());
@@ -309,6 +365,8 @@ public class Date implements Serializable{
 
 	/**
 	 * Returns this date as ISO8601 format.
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String toISO8601Date(){
 		return NumberUtils.makeISO8601DateString(toMill());

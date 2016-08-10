@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Set;
 /**
  * Simple utility to traverse a directory and analyze the file names.
- * @author lrosenberg
  *
+ * @author lrosenberg
+ * @version $Id: $Id
  */
 public class NameAnalyzer {
 
@@ -43,6 +44,8 @@ public class NameAnalyzer {
 	private static HashMap<String,ElementCount> elements = new HashMap<>();
 	/**
 	 * Main.
+	 *
+	 * @param a a {@link java.lang.String} object.
 	 */
 	public static void main(String... a) {
 		proceed(new File("."));

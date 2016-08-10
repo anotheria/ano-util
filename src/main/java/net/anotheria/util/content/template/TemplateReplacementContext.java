@@ -8,6 +8,7 @@ import java.util.Map;
  * variable replacement by TemplateProcessor.
  *
  * @author h3llka
+ * @version $Id: $Id
  */
 public class TemplateReplacementContext {
 	/**
@@ -55,6 +56,11 @@ public class TemplateReplacementContext {
 		this.attributes = new HashMap<>();
 	}
 
+	/**
+	 * <p>Getter for the field <code>attributes</code>.</p>
+	 *
+	 * @return a {@link java.util.Map} object.
+	 */
 	public Map<String, Object> getAttributes() {
 		return attributes;
 	}
@@ -70,18 +76,38 @@ public class TemplateReplacementContext {
 		this.attributes = attributes;
 	}
 
+	/**
+	 * <p>Getter for the field <code>language</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getLanguage() {
 		return language;
 	}
 
+	/**
+	 * <p>Setter for the field <code>language</code>.</p>
+	 *
+	 * @param language a {@link java.lang.String} object.
+	 */
 	public void setLanguage(String language) {
 		this.language = language;
 	}
 
+	/**
+	 * <p>Getter for the field <code>userId</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getUserId() {
 		return userId;
 	}
 
+	/**
+	 * <p>Setter for the field <code>userId</code>.</p>
+	 *
+	 * @param userId a {@link java.lang.String} object.
+	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}

@@ -1,8 +1,10 @@
 package net.anotheria.util;
 /**
  * Enumeration for timeunits used along ano-libs and applications. Allows recalculation in milliseconds.
+ *
  * @author lrosenberg
-  */
+ * @version $Id: $Id
+ */
 public enum TimeUnit {
 	/**
 	 * The milliseconds.
@@ -47,6 +49,8 @@ public enum TimeUnit {
 	
 	/**
 	 * Returns the duration of the unit in milliseconds.
+	 *
+	 * @return a long.
 	 */
 	public long getMillis(){
 		return getMillis(1);
@@ -54,6 +58,9 @@ public enum TimeUnit {
 	
 	/**
 	 * Returns the duration of units in milliseconds.
+	 *
+	 * @param unitsCount a int.
+	 * @return a long.
 	 */
 	public long getMillis(int unitsCount){
 		return inMills * unitsCount;

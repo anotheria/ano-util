@@ -5,7 +5,18 @@ import net.anotheria.util.IOUtils;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * <p>FindHeaders class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class FindHeaders {
+    /**
+     * <p>main.</p>
+     *
+     * @param a a {@link java.lang.String} object.
+     */
     public static void main(String... a) {
         Walker w = new Walker(new Worker() {
             private int counter = 0;

@@ -12,7 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * WatchDog is the singleton object that register Resources and updates it on
  * underlying resource changes in defined time periods. Currently the update
  * interval is 10 seconds.
- * 
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public enum WatchDog {
 	/**
@@ -34,6 +36,11 @@ public enum WatchDog {
 		new WatcherThread().start();
 	}
 
+	/**
+	 * <p>Getter for the field <code>pause</code>.</p>
+	 *
+	 * @return a long.
+	 */
 	public long getPause() {
 		return pause;
 	}
@@ -42,10 +49,20 @@ public enum WatchDog {
 	// pause = aPause;
 	// }
 
+	/**
+	 * <p>addResourceToWatch.</p>
+	 *
+	 * @param resource a {@link net.anotheria.util.resource.Resource} object.
+	 */
 	public void addResourceToWatch(Resource resource) {
 		watchingRegistry.put(resource.getName(), resource);
 	}
 
+	/**
+	 * <p>removeResourceFromWatch.</p>
+	 *
+	 * @param resource a {@link net.anotheria.util.resource.Resource} object.
+	 */
 	public void removeResourceFromWatch(Resource resource) {
 		watchingRegistry.remove(resource.getName());
 	}

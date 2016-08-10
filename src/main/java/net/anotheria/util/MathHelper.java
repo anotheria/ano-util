@@ -5,12 +5,15 @@ import java.util.List;
 
 /**
  * A helper class for double objects formatting.
- * @author another
  *
+ * @author another
+ * @version $Id: $Id
  */
 public class MathHelper {
 
     /**
+     * <p>getFormattedStringVector.</p>
+     *
      * @param values Double Vector
      * @param precision 1 - Integer.MaxValue
      * @return  rounded Double Vector with precision
@@ -21,6 +24,13 @@ public class MathHelper {
         return  getFormattedStrings(values, precision);
     }
 
+    /**
+     * <p>getFormattedStrings.</p>
+     *
+     * @param values a {@link java.lang.Iterable} object.
+     * @param precision a int.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> getFormattedStrings(Iterable<Double> values, int precision) {
         List<String> result = new ArrayList<>();
         for (Double value : values) {
@@ -31,6 +41,10 @@ public class MathHelper {
 
     /**
      * put your documentation comment here
+     *
+     * @param value a {@link java.lang.Double} object.
+     * @param precision a int.
+     * @return a {@link java.lang.String} object.
      */
     public static String getFormattedString(Double value, int precision) {
         boolean negativ = false;

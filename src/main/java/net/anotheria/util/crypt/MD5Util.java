@@ -5,12 +5,14 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * A utility to create MD5 hashes.
- * @author lrosenberg
  *
+ * @author lrosenberg
+ * @version $Id: $Id
  */
 public class MD5Util {
 	/**
 	 * Returns the MD5 hash of the given string.
+	 *
 	 * @param toHash the string to enhash.
 	 * @return the hash of the string.
 	 */
@@ -20,6 +22,7 @@ public class MD5Util {
 
 	/**
 	 * Returns the MD5 hash of the given string.
+	 *
 	 * @param toHash the stringbuilder to enhash.
 	 * @return the hash of the string in the stringbuilder.
 	 */
@@ -31,6 +34,7 @@ public class MD5Util {
 	 * Returns the MD5 hash of the given byte array. This method is synchronized.
 	 *
 	 * @param bytes the byte array containing the string to enhash.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static final String getMD5Hash(byte... bytes) {
 		synchronized (MD5Util.class) {

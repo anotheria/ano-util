@@ -4,6 +4,7 @@ package net.anotheria.util.content;
  * Constants for TemplateUtilityClass, and actually VariablesUtility (ano-site).
  *
  * @author h3llka
+ * @version $Id: $Id
  */
 public final class TextReplaceConstants {
 

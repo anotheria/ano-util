@@ -8,6 +8,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The lock class.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class IdBasedLock<K> implements Serializable {
     /**
@@ -44,6 +47,11 @@ public class IdBasedLock<K> implements Serializable {
         refCount.decrementAndGet();
     }
 
+    /**
+     * <p>getReferenceCount.</p>
+     *
+     * @return a int.
+     */
     public int getReferenceCount() {
         return refCount.get();
     }
@@ -52,23 +60,41 @@ public class IdBasedLock<K> implements Serializable {
         return refCount;
     }
 
+    /**
+     * <p>tryLock.</p>
+     *
+     * @param timeout a long.
+     * @param unit a {@link java.util.concurrent.TimeUnit} object.
+     * @return a boolean.
+     * @throws java.lang.InterruptedException if any.
+     */
     public boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException {
       return lock.tryLock(timeout, unit);
     }
 
+    /**
+     * <p>lock.</p>
+     */
     public void lock() {
         lock.lock();
     }
 
+    /**
+     * <p>unlockWithoutRelease.</p>
+     */
     public void unlockWithoutRelease() {
         lock.unlock();
     }
 
+    /**
+     * <p>unlock.</p>
+     */
     public void unlock() {
         lock.unlock();
         parent.releaseLock(this);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return "(" + id + ", " + refCount + ')';

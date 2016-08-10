@@ -11,6 +11,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
 
+/**
+ * <p>ClassPathResourceLoader class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class ClassPathResourceLoader implements ResourceLoader{
 	
 	/**
@@ -22,6 +28,7 @@ public class ClassPathResourceLoader implements ResourceLoader{
 		return getClass().getClassLoader();
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public boolean isAvailable(String fileName){
 		//ensure an exception is thrown if we are not file.
@@ -31,6 +38,7 @@ public class ClassPathResourceLoader implements ResourceLoader{
 		return u!=null;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public long getLastChangeTimestamp(String fileName){
 		//ensure an exception is thrown if we are not file.
@@ -48,6 +56,7 @@ public class ClassPathResourceLoader implements ResourceLoader{
 		return ret;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String getContent(String fileName) {
 		//ensure an exception is thrown if we are not file.

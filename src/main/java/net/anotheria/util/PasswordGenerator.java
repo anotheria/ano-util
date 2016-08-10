@@ -4,6 +4,9 @@ import java.util.Random;
 
 /**
  * A simple utility for creation of safe passwords.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class PasswordGenerator {
 
@@ -41,6 +44,7 @@ public class PasswordGenerator {
 	
 	/**
 	 * Generates a password of given length.
+	 *
 	 * @param length the length of the password.
 	 * @return a string of the given length.
 	 */

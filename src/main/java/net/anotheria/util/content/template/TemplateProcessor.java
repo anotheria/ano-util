@@ -5,6 +5,7 @@ package net.anotheria.util.content.template;
  * some values.
  *
  * @author h3llka
+ * @version $Id: $Id
  */
 public interface TemplateProcessor {
 	/**
@@ -14,6 +15,7 @@ public interface TemplateProcessor {
 	 * @param aVariable processor variable name
 	 * @param aDefValue default value
 	 * @param aContext  additional replacement parameters
+	 * @return a {@link java.lang.String} object.
 	 */
 	String replace(String aPrefix, String aVariable, String aDefValue, TemplateReplacementContext aContext);
 

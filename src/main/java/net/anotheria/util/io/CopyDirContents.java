@@ -9,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 /**
  * This utility class copies recursively everything from source directory to target directory.
+ *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public class CopyDirContents {
 
@@ -36,6 +38,12 @@ public class CopyDirContents {
 	 */
 	private static int skipped = 0;
 
+	/**
+	 * <p>main.</p>
+	 *
+	 * @param a a {@link java.lang.String} object.
+	 * @throws java.io.IOException if any.
+	 */
 	public static void main(String... a) throws IOException{
 		File src = new File("/storage/BAK_EXT_DISK");
 		File dest = new File("/media/WD Passport");
@@ -56,6 +64,13 @@ public class CopyDirContents {
 		log.info("Copied dirs: "+dirs+", files: "+files+", bytes: "+bytes+" in "+duration+", throughtput: "+throughtput+" bytes/second, "+mbs+" MB/s, skiped: "+skipped);
 	}
 	
+	/**
+	 * <p>copy.</p>
+	 *
+	 * @param src a {@link java.io.File} object.
+	 * @param dest a {@link java.io.File} object.
+	 * @throws java.io.IOException if any.
+	 */
 	public static void copy(File src, File dest) throws IOException{
 		if (src.isDirectory())
 			copyDir(src, dest);

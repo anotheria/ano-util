@@ -10,6 +10,9 @@ import java.nio.charset.Charset;
 /**
  * Generic unicode textreader, which will use BOM mark to identify the encoding
  * to be used. If BOM is not found then use a given default or system encoding.
+ *
+ * @author another
+ * @version $Id: $Id
  */
 public class UnicodeReader extends Reader {
 	PushbackInputStream internalIn;
@@ -20,7 +23,8 @@ public class UnicodeReader extends Reader {
 	private static final int BOM_SIZE = 4;
 
 	/**
-	 * 
+	 * <p>Constructor for UnicodeReader.</p>
+	 *
 	 * @param in
 	 *            inputstream to be read
 	 */
@@ -28,10 +32,22 @@ public class UnicodeReader extends Reader {
 		this(in, Charset.defaultCharset());
 	}
 
+	/**
+	 * <p>Constructor for UnicodeReader.</p>
+	 *
+	 * @param in a {@link java.io.InputStream} object.
+	 * @param charsetName a {@link java.lang.String} object.
+	 */
 	public UnicodeReader(InputStream in, String charsetName) {
 		this(in, Charset.forName(charsetName));
 	}
 
+	/**
+	 * <p>Constructor for UnicodeReader.</p>
+	 *
+	 * @param aIn a {@link java.io.InputStream} object.
+	 * @param aCharset a {@link java.nio.charset.Charset} object.
+	 */
 	public UnicodeReader(InputStream aIn, Charset aCharset) {
 		internalIn = new PushbackInputStream(aIn, BOM_SIZE);
 		this.charset = aCharset;
@@ -44,6 +60,8 @@ public class UnicodeReader extends Reader {
 	/**
 	 * Get stream encoding or NULL if stream is uninitialized. Call init() or
 	 * read() method to initialize it.
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public String getEncoding() {
 		if (internalIn2 == null)
@@ -54,6 +72,8 @@ public class UnicodeReader extends Reader {
 	/**
 	 * Read-ahead four bytes and check for BOM marks. Extra bytes are unread
 	 * back to the stream, only BOM bytes are skipped.
+	 *
+	 * @throws java.io.IOException if any.
 	 */
 	protected void init() throws IOException {
 		if (internalIn2 != null)
@@ -97,12 +117,14 @@ public class UnicodeReader extends Reader {
 		}
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void close() throws IOException {
 		init();
 		internalIn2.close();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int read(char[] cbuf, int off, int len) throws IOException {
 		init();

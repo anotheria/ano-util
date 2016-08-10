@@ -7,7 +7,9 @@ import java.util.Locale;
 
 /**
  * A collection of useful utility methods for handling numbers, dates and currencies.
+ *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public final class NumberUtils {
 
@@ -34,6 +36,10 @@ public final class NumberUtils {
 	 * Converts an integer number in a String with given number of chars;
 	 * fills in zeros if needed from the left side.
 	 * Example: itoa(23, 4) -> 0023.
+	 *
+	 * @param i a int.
+	 * @param limit a int.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String itoa(int i, int limit){
 		String a = String.valueOf(i);
@@ -44,6 +50,9 @@ public final class NumberUtils {
 	
 	/**
 	 * Calls itoa(i,2);
+	 *
+	 * @param i a int.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String itoa(int i){
 		return itoa(i,2);
@@ -53,6 +62,9 @@ public final class NumberUtils {
 	/**
 	 * Often needed by different packages
 	 * Return a time string in form of DD MMM YYYY (23 FEB 2002).
+	 *
+	 * @param time a long.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String makeDateStringLong(long time){
 		Date date = new Date(time);
@@ -64,6 +76,9 @@ public final class NumberUtils {
 	/**
 	 * Often needed by different packages
 	 * Return a time string in form of DD MMM YY (23 FEB 02).
+	 *
+	 * @param time a long.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String makeDateString(long time){
 		Date date = new Date(time);
@@ -75,6 +90,9 @@ public final class NumberUtils {
 	
 	/**
 	 * Returns a digital time string (23.02.2002).
+	 *
+	 * @param time a long.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String makeDigitalDateString(long time){
 		Date date = new Date(time);
@@ -83,6 +101,12 @@ public final class NumberUtils {
 				itoa(date.year);
 	}
 
+	/**
+	 * <p>makeDigitalDateStringLong.</p>
+	 *
+	 * @param time a long.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String makeDigitalDateStringLong(long time){
 		Date date = new Date(time);
 		return itoa(date.day)+ '.' +
@@ -93,6 +117,9 @@ public final class NumberUtils {
 	/**
 	 * Often needed by different packages
 	 * Return a time string in form of hh:mm.
+	 *
+	 * @param time a long.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String makeTimeString(long time){
 		Date date = new Date(time);
@@ -102,6 +129,9 @@ public final class NumberUtils {
 	/**
 	 * Often needed by different packages
 	 * Return a time string in form of hh:mm am/pm.
+	 *
+	 * @param time a long.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String makeTimeString12H(long time){
 		Date date = new Date(time);
@@ -116,6 +146,7 @@ public final class NumberUtils {
 
 	/**
 	 * Returns the given size in bytes as short string (Kb, Mb, B)...
+	 *
 	 * @param size the size in bytes
 	 * @return the corresponding string
 	 */
@@ -141,7 +172,8 @@ public final class NumberUtils {
 	}
 
 	/**
-	 * Returns a short date string in form of "YY.MM.DD" or "YYYY.MM.DD" depending on the year parameter.  
+	 * Returns a short date string in form of "YY.MM.DD" or "YYYY.MM.DD" depending on the year parameter.
+	 *
 	 * @param day day parameter.
 	 * @param month month parameter.
 	 * @param year year parameter.
@@ -152,7 +184,8 @@ public final class NumberUtils {
 	}
 
 	/**
-	 * Returns the ISO8601 confirmant date string for the given time. 
+	 * Returns the ISO8601 confirmant date string for the given time.
+	 *
 	 * @param millis the time in millis since 01.01.1970.
 	 * @return string in form of YYYY-MM-DD.
 	 */
@@ -163,6 +196,8 @@ public final class NumberUtils {
 
 	/**
 	 * Returns the ISO8601 date of now.
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String makeISO8601DateString(){
 		return makeISO8601DateString(System.currentTimeMillis());
@@ -170,6 +205,8 @@ public final class NumberUtils {
 	
 	/**
 	 * Returns the ISO8601 timestamp of now.
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String makeISO8601TimestampString(){
 		return makeISO8601TimestampString(System.currentTimeMillis());
@@ -177,6 +214,7 @@ public final class NumberUtils {
 	
 	/**
 	 * Creates an ISO8601 confirm timestamp string in form of YYYY-MM-DDTHH:MM:SS,zzz.
+	 *
 	 * @param millis time in millis.
 	 * @return string that represents the time parameter as iso8601 timestamp.
 	 */
@@ -188,6 +226,12 @@ public final class NumberUtils {
 		return ret; 
 	}
 
+	/**
+	 * <p>parseDateString.</p>
+	 *
+	 * @param str a {@link java.lang.String} object.
+	 * @return a long.
+	 */
 	public static long parseDateString(String str){
 		if (str.isEmpty())
 			return 0;
@@ -204,13 +248,20 @@ public final class NumberUtils {
 		return new Date(d, m, y).toMill();
 	}
 
+	/**
+	 * <p>getCurrencyValue.</p>
+	 *
+	 * @param aValue a float.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getCurrencyValue(float aValue){
 		return getCurrencyValue((double)aValue);
 	}
 
 	/**
-	 * Returns rounded value as currency value (2 digits precision). This method uses 
+	 * Returns rounded value as currency value (2 digits precision). This method uses
 	 * dot as separator regardless of the locale.
+	 *
 	 * @param aValue the value to convert.
 	 * @return a currency value like 20.02.
 	 */
@@ -228,8 +279,9 @@ public final class NumberUtils {
 	}
 	
 	/**
-	 * Returns true if the number parameter can pass a luhn check. 
+	 * Returns true if the number parameter can pass a luhn check.
 	 * see http://en.wikipedia.org/wiki/Luhn_check for details on luhn algorithm.
+	 *
 	 * @param aNumber the number to check.
 	 * @return true if the number passes the check or false otherwise.
 	 */
@@ -255,8 +307,9 @@ public final class NumberUtils {
 	}
 	
 	/**
-	 * Returns a string representation of the parameter in which each three digit part of the number is separated by a '.'. 
+	 * Returns a string representation of the parameter in which each three digit part of the number is separated by a '.'.
 	 * For example 123456 -> 123.456. 1234567 -> 1.234.567 and so on.
+	 *
 	 * @param number the number to transform.
 	 * @return transfored (doted) version of the parameter.
 	 */
@@ -264,6 +317,13 @@ public final class NumberUtils {
 		return getDotedNumber(number, '.');
 	}
 	
+	/**
+	 * <p>getDotedNumber.</p>
+	 *
+	 * @param number a long.
+	 * @param separatorChar a char.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getDotedNumber(long number, char separatorChar){
 		if (number<0)
 			return '-' +getDotedNumber(-1*number, separatorChar);
@@ -277,6 +337,13 @@ public final class NumberUtils {
 		return ret.toString();
 	}
 	
+	/**
+	 * <p>getDotedNumber.</p>
+	 *
+	 * @param number a long.
+	 * @param locale a {@link java.util.Locale} object.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getDotedNumber(long number, Locale locale){
 		if (locale.getLanguage()==null)
 			return getDotedNumber(number);
@@ -285,19 +352,47 @@ public final class NumberUtils {
 		return getDotedNumberUS(number);
 	}
 	
+	/**
+	 * <p>getDotedNumberUS.</p>
+	 *
+	 * @param number a long.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getDotedNumberUS(long number){
 		return getDotedNumber(number, ',');
 	}
 
+	/**
+	 * <p>getDotedNumberDE.</p>
+	 *
+	 * @param number a long.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String getDotedNumberDE(long number){
 		return getDotedNumber(number, '.');
 	}
 	
+	/**
+	 * <p>fractionRound.</p>
+	 *
+	 * @param value a double.
+	 * @param fraction a int.
+	 * @return a double.
+	 */
 	public static double fractionRound(double value, int fraction){
 		int shift = (int) StrictMath.pow(10, fraction);
 		return 1d * Math.round(value * shift)/shift;
 	}
 	
+	/**
+	 * <p>format.</p>
+	 *
+	 * @param value a double.
+	 * @param integral a int.
+	 * @param fraction a int.
+	 * @param delimiter a char.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String format(double value, int integral, int fraction, char delimiter){
 		String integralPattern = "#0";
 		if(integral > 0){
@@ -319,6 +414,13 @@ public final class NumberUtils {
 		return new DecimalFormat(integralPattern + '.' + fractionPattern, delimiterFormat).format(BigDecimal.valueOf(value));
 	}
 	
+	/**
+	 * <p>currencyFormat.</p>
+	 *
+	 * @param value a double.
+	 * @param delimiter a char.
+	 * @return a {@link java.lang.String} object.
+	 */
 	public static String currencyFormat(double value, char delimiter){
 		return format(value, -1, 2, delimiter);
 	}

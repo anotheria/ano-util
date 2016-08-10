@@ -6,8 +6,9 @@ import java.util.Map;
 
 /**
  * Utility class for preparing formalized log message from exception and current method with argument's.
- * 
+ *
  * @author Alexandr Bolbat
+ * @version $Id: $Id
  */
 public final class LogMessageUtil {
 
@@ -65,12 +66,12 @@ public final class LogMessageUtil {
 
 	/**
 	 * Prepare fail message.
-	 * 
+	 *
 	 * @param t
 	 *            - exception, cause of this message
 	 * @param objects
 	 *            - method argument's
-	 * @return {@link String} prepared message
+	 * @return {@link java.lang.String} prepared message
 	 */
 	public static String failMsg(final Throwable t, final Object... objects) {
 		String methodName = STR_UNKNOWN_METHOD;

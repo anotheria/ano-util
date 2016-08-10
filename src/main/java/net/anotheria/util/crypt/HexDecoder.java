@@ -1,9 +1,18 @@
 package net.anotheria.util.crypt;
 
+/**
+ * <p>HexDecoder class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public final class HexDecoder {
 
 	/**
 	 * Converts a byte to hex digit and writes to the supplied buffer
+	 *
+	 * @param b a byte.
+	 * @param buf a {@link java.lang.StringBuilder} object.
 	 */
 	public static void byte2hex(byte b, StringBuilder buf) {
 		char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -17,6 +26,9 @@ public final class HexDecoder {
 
 	/**
 	 * Converts a byte array to hex string
+	 *
+	 * @param block a byte.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String toHexString(byte... block) {
 		StringBuilder buf = new StringBuilder();
@@ -29,8 +41,10 @@ public final class HexDecoder {
 
 	/**
 	 * Converts a hex string to a byte array
+	 *
+	 * @param hex a {@link java.lang.String} object.
+	 * @return an array of byte.
 	 */
-
 	public static byte[] fromHexString(String hex) {
 		if (hex == null) {
 			return null;

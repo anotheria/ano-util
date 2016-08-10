@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  * ConditionTemplateProcessor as  TemplateProcessor.
  *
  * @author h3llka
+ * @version $Id: $Id
  */
 public class ConditionTemplateProcessor implements TemplateProcessor {
 	/**
@@ -17,6 +18,7 @@ public class ConditionTemplateProcessor implements TemplateProcessor {
 	 */
 	private final Logger log = LoggerFactory.getLogger(ConditionTemplateProcessor.class);
 
+	/** {@inheritDoc} */
 	@Override
 	public String replace(String aPrefix, String aVariable, String aDefValue, TemplateReplacementContext aContext) {
 		//sorry!  next If block -- is just the stupid hack!  due  to 'if' prefix name (

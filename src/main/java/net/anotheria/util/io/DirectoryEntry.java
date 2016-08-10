@@ -5,7 +5,9 @@ import java.util.List;
 
 /**
  * Represents a directory in the dif.
+ *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public class DirectoryEntry extends Entry{
 	/**
@@ -14,6 +16,8 @@ public class DirectoryEntry extends Entry{
 	private List<Entry> entries;
 	/**
 	 * Creates a new directory entry.
+	 *
+	 * @param name a {@link java.lang.String} object.
 	 */
 	public DirectoryEntry(String name){
 		super(name);
@@ -21,11 +25,15 @@ public class DirectoryEntry extends Entry{
 	}
 	/**
 	 * Adds a sub entry.
+	 *
+	 * @param anEntry a {@link net.anotheria.util.io.Entry} object.
 	 */
 	public void addEntry(Entry anEntry){
 		entries.add(anEntry);
 	}
 	/**
+	 * {@inheritDoc}
+	 *
 	 * Returns the size of the entry.
 	 */
 	@Override

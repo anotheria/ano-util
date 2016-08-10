@@ -25,6 +25,7 @@ import static net.anotheria.util.content.TextReplaceConstants.TAG_START;
  * Actually Similar to VariablesUtility from ano-site -  but uses different processors (TemplateProcessor).
  *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public final class TemplateUtility {
 
@@ -71,6 +72,7 @@ public final class TemplateUtility {
 	/**
 	 * Return pre configured processors.
 	 *
+	 * @return a {@link java.util.Map} object.
 	 */
 	public static Map<String, TemplateProcessor> getDefaultProcessors() {
 		Map<String, TemplateProcessor> ret = new HashMap<>(defaultProcessors);

@@ -14,8 +14,20 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 
+/**
+ * <p>MavenVersionReader class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class MavenVersionReader {
 	
+	/**
+	 * <p>readVersionFromJar.</p>
+	 *
+	 * @param f a {@link java.io.File} object.
+	 * @return a {@link net.anotheria.util.maven.MavenVersion} object.
+	 */
 	public static final MavenVersion readVersionFromJar(File f){
 		if (!f.exists())
 			throw new IllegalArgumentException("File doesn't exists");
@@ -58,6 +70,13 @@ public class MavenVersionReader {
 
 		
 	}
+	/**
+	 * <p>readVersionFromString.</p>
+	 *
+	 * @param content a {@link java.lang.String} object.
+	 * @param timestamp a long.
+	 * @return a {@link net.anotheria.util.maven.MavenVersion} object.
+	 */
 	public static final MavenVersion readVersionFromString(String content, long timestamp){
 		String[] lines = StringUtils.tokenize(StringUtils.removeChar(content, '\r'), '\n');
 		Map<String, String> properties = new HashMap<>();
@@ -78,6 +97,12 @@ public class MavenVersionReader {
 		return ret;
 	}
 		
+	/**
+	 * <p>readVersionFromFile.</p>
+	 *
+	 * @param f a {@link java.io.File} object.
+	 * @return a {@link net.anotheria.util.maven.MavenVersion} object.
+	 */
 	public static final MavenVersion readVersionFromFile(File f){
 		if (!f.exists())
 			throw new IllegalArgumentException("File doesn't exists");
@@ -90,6 +115,12 @@ public class MavenVersionReader {
 		}
 	}
 	
+	/**
+	 * <p>findVersionInDirectory.</p>
+	 *
+	 * @param dir a {@link java.io.File} object.
+	 * @return a {@link net.anotheria.util.maven.MavenVersion} object.
+	 */
 	public static final MavenVersion findVersionInDirectory(File dir){
 		if (!dir.exists())
 			throw new IllegalArgumentException("Directory "+dir.getAbsolutePath()+" doesn't exists.");
@@ -115,6 +146,13 @@ public class MavenVersionReader {
 		
 	}
 	
+	/**
+	 * <p>findJarInDirectory.</p>
+	 *
+	 * @param dir a {@link java.io.File} object.
+	 * @param artifactName a {@link java.lang.String} object.
+	 * @return a {@link net.anotheria.util.maven.MavenVersion} object.
+	 */
 	public static final MavenVersion findJarInDirectory(File dir, String artifactName){
 		if (!dir.exists())
 			throw new IllegalArgumentException("Directory "+dir.getAbsolutePath()+" doesn't exists.");
@@ -131,6 +169,11 @@ public class MavenVersionReader {
 		
 	}
 
+	/**
+	 * <p>main.</p>
+	 *
+	 * @param args a {@link java.lang.String} object.
+	 */
 	public static void main(String... args) {
 
 		//System.out.println(readVersionFromJar(new File("/Users/another/.m2/repository/net/anotheria/moskito-webui/2.6.3/moskito-webui-2.6.3.jar")));

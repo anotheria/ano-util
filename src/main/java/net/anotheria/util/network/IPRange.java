@@ -6,10 +6,10 @@ import net.anotheria.util.StringUtils;
  * Storage class for a single ip range. Ip range is specified by an ip
  * adress and a byte mask. 10.0.0.0/8, 192.168.0.0/16 or 127.0.0.1/8 are
  * examples for private networks.
- * 
+ *
  * @author lrosenberg
+ * @version $Id: $Id
  */
-
 public class IPRange {
 	
 	/**
@@ -24,6 +24,9 @@ public class IPRange {
 
 	/**
 	 * Creates new IPRange with given ipAdress and mask.
+	 *
+	 * @param ipAdress a {@link java.lang.String} object.
+	 * @param mask a int.
 	 */
 	public IPRange(String ipAdress, int mask) {
 		maskedIp = convertIp(ipAdress);
@@ -38,6 +41,7 @@ public class IPRange {
 
 	/**
 	 * Check whether or not ip param is in the current range.
+	 *
 	 * @param ip to check
 	 * @return true if ip param in the current range
 	 */
@@ -68,6 +72,7 @@ public class IPRange {
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return "nIP: " + maskedIp + ", nM: " + networkMask;

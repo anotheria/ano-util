@@ -16,11 +16,14 @@ import java.util.Map;
  * @author Leon Rosenberg
  * @version 1.3
  */
-
 public final class StringUtils {
 
     /**
      * Return a Vector with tokens from the source string tokenized using the delimiter char.
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param delimiter a char.
+     * @return a {@link java.util.List} object.
      */
     public static List<String> tokenize2vector(String source, char delimiter) {
         List<String> v = new ArrayList<>();
@@ -43,6 +46,14 @@ public final class StringUtils {
         return v;
     }
 
+    /**
+     * <p>tokenize2list.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param delimiter a char.
+     * @param escapeChar a char.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> tokenize2list(String source, char delimiter, char escapeChar) {
         List<String> ret = new ArrayList<>();
         StringBuilder currentS = new StringBuilder(source.length());
@@ -77,6 +88,13 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>tokenize2list.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param delimiter a char.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> tokenize2list(String source, char delimiter) {
         return Arrays.asList(tokenize(source, delimiter));
     }
@@ -84,6 +102,11 @@ public final class StringUtils {
     /**
      * Return a Map with entries from the source string tokenized on entries
      * using the entriesDelimiter and on key-value pair with keyValueDelimiter.
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param entriesDelimiter a char.
+     * @param keyValueDelimiter a char.
+     * @return a {@link java.util.Map} object.
      */
     public static final Map<String, String> tokenize2map(String source, char entriesDelimiter, char keyValueDelimiter) {
         String[] entryStrArray = tokenize(source, true, entriesDelimiter);
@@ -103,6 +126,10 @@ public final class StringUtils {
      * Returns an array of stringtokens from the source string.
      * The String "Leon Power Tools" with delimiter ' ' will return {"Leon","Power","Tools"}
      * Last change:  LR   15 Aug 98    4:23 pm
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param delimiter a char.
+     * @return an array of {@link java.lang.String} objects.
      */
     public static final String[] tokenize(String source, char delimiter) {
         List<String> v = tokenize2vector(source, delimiter);
@@ -113,6 +140,14 @@ public final class StringUtils {
         return ret;
     }/*end fun tokenize()*/
 
+    /**
+     * <p>tokenize.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param ignoreEmptyTokens a boolean.
+     * @param delimiter a char.
+     * @return an array of {@link java.lang.String} objects.
+     */
     public static final String[] tokenize(String source, boolean ignoreEmptyTokens, char delimiter) {
         List<String> v = new ArrayList<>();
         StringBuilder currentS = new StringBuilder();
@@ -132,11 +167,26 @@ public final class StringUtils {
     }
 
 
+    /**
+     * <p>tokenize.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param delimiter a char.
+     * @param escapeChar a char.
+     * @return an array of {@link java.lang.String} objects.
+     */
     public static String[] tokenize(String source, char delimiter, char escapeChar) {
         List<String> var = tokenize2list(source, delimiter, escapeChar);
         return var.toArray(new String[var.size()]);
     }
 
+    /**
+     * <p>removeCharAt.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param position a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeCharAt(String src, int position) {
         return new StringBuilder(src).deleteCharAt(position).toString();
     }
@@ -144,6 +194,10 @@ public final class StringUtils {
     /**
      * Returns a source String with all occurences of 'c' removed.
      * removeChar("Leon's Power Tools", ' ') will return "Leon'sPowerTools".
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param c a char.
+     * @return a {@link java.lang.String} object.
      */
     public static String removeChar(String src, char c) {
         StringBuilder ret = new StringBuilder(src.length());
@@ -153,9 +207,13 @@ public final class StringUtils {
         return ret.toString();
     }
 
-	/**
-	 * Removes all chars from the char array from the string.
-	 */
+    /**
+     * Removes all chars from the char array from the string.
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param c a char.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeChars(String src, char... c) {
         StringBuilder ret = new StringBuilder(src.length());
         for (int i = 0; i < src.length(); i++) {
@@ -174,7 +232,9 @@ public final class StringUtils {
 
 	/**
 	 * Removes line feeds (\r, \n) from string.
+	 *
 	 * @param src string to remove lines from.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String removeLines(String src){
 		return replace(removeChar(src, '\r'), '\n', ' ');
@@ -183,6 +243,9 @@ public final class StringUtils {
 
     /**
      * Returns first line of multi-lined String.
+     *
+     * @param source a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String getFirstLine(String source) {
         StringBuilder line = new StringBuilder(source.length());
@@ -198,15 +261,32 @@ public final class StringUtils {
     /**
      * Builds a hash table from the String like *(TYPE : MESSAGE + CR)
      * useful for http requests etc.
+     *
+     * @param source a {@link java.lang.String} object.
+     * @return a {@link java.util.Map} object.
      */
     public static Map<String, String> buildHashTable(String source) {
         return Collections.synchronizedMap(buildParameterMap(source, '\n', ':'));
     }
 
+    /**
+     * <p>buildParameterMap.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @return a {@link java.util.Map} object.
+     */
     public static Map<String, String> buildParameterMap(String source) {
         return buildParameterMap(source, '\n', '=');
     }
 
+    /**
+     * <p>buildParameterMap.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param lineDelimiter a char.
+     * @param parameterDelimiter a char.
+     * @return a {@link java.util.Map} object.
+     */
     public static Map<String, String> buildParameterMap(String source, char lineDelimiter, char parameterDelimiter) {
         source = removeChar(source, '\r');
         String[] lines = tokenize(source, lineDelimiter);
@@ -221,6 +301,10 @@ public final class StringUtils {
 
     /**
      * Returns the number of occurencies of the specified cha rin the given string.
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param toCount a char.
+     * @return a int.
      */
     public static int charCount(String source, char toCount) {
         int sum = 0;
@@ -238,7 +322,7 @@ public final class StringUtils {
      * @param insertion string to be inserted at the specified position
      * @param position  position in the source string to insert
      * @return the resulting string
-     * @throws IndexOutOfBoundsException if the
+     * @throws java.lang.IndexOutOfBoundsException if the
      *                                   {@code position} is negative, or
      *                                   {@code position} is larger than the length of
      *                                   source string
@@ -249,6 +333,11 @@ public final class StringUtils {
 
     /**
      * Returns a new String which equals source String
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param replaceChar a char.
+     * @param replaceWith a char.
+     * @return a {@link java.lang.String} object.
      */
     public static String _replace2(String source, char replaceChar, char replaceWith) {
         String dest = "";
@@ -259,6 +348,14 @@ public final class StringUtils {
         return dest;
     }
 
+    /**
+     * <p>replace.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param replaceChar a char.
+     * @param replaceWith a char.
+     * @return a {@link java.lang.String} object.
+     */
     public static String replace(String source, char replaceChar, char replaceWith) {
         StringBuilder dest = new StringBuilder(source.length());
         int i = 0;
@@ -268,6 +365,14 @@ public final class StringUtils {
         return dest.toString();
     }
 
+    /**
+     * <p>replace.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param replaceChar a char.
+     * @param replaceWith a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String replace(String source, char replaceChar, String replaceWith) {
         String dest = "";
         int i = 0;
@@ -285,7 +390,7 @@ public final class StringUtils {
      * @param source the source string
      * @param map    replace map
      * @return a source string where all chars that are members of map keys are replaced with the interlocking values
-     **/
+     */
     public static String replace(String source, Map<String, String> map) {
         String dest = "";
         int i = 0;
@@ -299,6 +404,13 @@ public final class StringUtils {
         return dest;
     }
 
+    /**
+     * <p>splitString.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param delimiter a char.
+     * @return a {@link net.anotheria.util.StringUtils.StringPair} object.
+     */
     public static StringPair splitString(String source, char delimiter) {
         int pDelPos = source.indexOf((int) delimiter);
         if (pDelPos == -1)
@@ -333,6 +445,9 @@ public final class StringUtils {
 
     /**
      * Reverses the order in the Vector.
+     *
+     * @param v a {@link java.util.List} object.
+     * @return a {@link java.util.List} object.
      */
     public static <T> List<T> reverse(List<T> v) {
         List<T> ret = new ArrayList<>(v.size());
@@ -341,14 +456,36 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>concat.</p>
+     *
+     * @param a a {@link java.lang.String} object.
+     * @param b a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String concat(String a, String b) {
         return concat(a, b, " ");
     }
 
+    /**
+     * <p>concat.</p>
+     *
+     * @param a a {@link java.lang.String} object.
+     * @param b a {@link java.lang.String} object.
+     * @param delimiter a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String concat(String a, String b, String delimiter) {
         return (a == null || a.isEmpty()) ? b : (b == null || b.isEmpty()) ? a : a + delimiter + b;
     }
 
+    /**
+     * <p>combineStrings.</p>
+     *
+     * @param strings an array of {@link java.lang.String} objects.
+     * @param delimiter a char.
+     * @return a {@link java.lang.String} object.
+     */
     public static String combineStrings(String[] strings, char delimiter) {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < strings.length; i++) {
@@ -360,11 +497,25 @@ public final class StringUtils {
     }
 
 
+    /**
+     * <p>capitalize.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String capitalize(String s) {
         char c = s.charAt(0);
         return Character.toUpperCase(c) + s.substring(1);
     }
 
+    /**
+     * <p>getStringAfter.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @param start a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringAfter(String src, String toSearch, int start) {
         int ind = src.indexOf(toSearch, start);
 //		lastIndex = ind;
@@ -373,10 +524,25 @@ public final class StringUtils {
         return src.substring(ind + toSearch.length());
     }
 
+    /**
+     * <p>getStringAfter.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringAfter(String src, String toSearch) {
         return getStringAfter(src, toSearch, 0);
     }
 
+    /**
+     * <p>getStringAfterIncl.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @param start a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringAfterIncl(String src, String toSearch, int start) {
         int ind = src.indexOf(toSearch, start);
 //		lastIndex = ind;
@@ -385,10 +551,25 @@ public final class StringUtils {
         return src.substring(ind);
     }
 
+    /**
+     * <p>getStringAfterIncl.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringAfterIncl(String src, String toSearch) {
         return getStringAfterIncl(src, toSearch, 0);
     }
 
+    /**
+     * <p>getStringWith.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @param start a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringWith(String src, String toSearch, int start) {
         //System.out.println("search:"+toSearch+"in:"+src);
         int ind = src.indexOf(toSearch, start);
@@ -398,10 +579,25 @@ public final class StringUtils {
         return src.substring(ind);
     }
 
+    /**
+     * <p>getStringWith.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringWith(String src, String toSearch) {
         return getStringWith(src, toSearch, 0);
     }
 
+    /**
+     * <p>getStringBefore.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @param start a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringBefore(String src, String toSearch, int start) {
         //System.out.println("search:"+toSearch+"in:"+src);
         int ind = src.indexOf(toSearch, start);
@@ -411,10 +607,25 @@ public final class StringUtils {
         return src.substring(start, ind);
     }
 
+    /**
+     * <p>getStringBefore.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringBefore(String src, String toSearch) {
         return getStringBefore(src, toSearch, 0);
     }
 
+    /**
+     * <p>getStringBeforeIncl.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @param start a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringBeforeIncl(String src, String toSearch, int start) {
         //System.out.println("search:"+toSearch+"in:"+src);
         int ind = src.indexOf(toSearch, start);
@@ -424,22 +635,54 @@ public final class StringUtils {
         return src.substring(start, ind + toSearch.length());
     }
 
+    /**
+     * <p>getStringBeforeIncl.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toSearch a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getStringBeforeIncl(String src, String toSearch) {
         return getStringBeforeIncl(src, toSearch, 0);
     }
 
+    /**
+     * <p>removeImgTag.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeImgTag(String s) {
         return removeTag(s, "img");
     }
 
+    /**
+     * <p>removeAnchorTag.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeAnchorTag(String s) {
         return removeTag(s, "a");
     }
 
+    /**
+     * <p>removeAnchorEndTag.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeAnchorEndTag(String s) {
         return removeTag(s, "/a");
     }
 
+    /**
+     * <p>removeTag.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @param tag a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeTag(String s, String tag) {
         tag = '<' + tag;
         int index;
@@ -452,6 +695,13 @@ public final class StringUtils {
     }
 
 
+    /**
+     * <p>removeString.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @param toRemove a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeString(String s, String toRemove) {
         int index;
         while ((index = s.indexOf(toRemove)) != -1) {
@@ -471,7 +721,7 @@ public final class StringUtils {
      * @param beginIndex the beginning index, inclusive
      * @param length     the length of characters sequence to remove
      * @return the resulting string
-     * @throws IndexOutOfBoundsException if the
+     * @throws java.lang.IndexOutOfBoundsException if the
      *                                   {@code beginIndex} or <code>length</code> are negative, or
      *                                   {@code beginIndex} or <code>beginIndex</code> + <code>length</code>
      *                                   are larger than the length of source string
@@ -480,6 +730,14 @@ public final class StringUtils {
         return new StringBuilder(source).delete(beginIndex, beginIndex + length).toString();
     }
 
+    /**
+     * <p>replaceOnce.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toReplace a {@link java.lang.String} object.
+     * @param with a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String replaceOnce(String src, String toReplace, String with) {
         int index = src.indexOf(toReplace);
         if (index == -1)
@@ -498,6 +756,7 @@ public final class StringUtils {
      * @param src       source text.
      * @param toReplace string to replace.
      * @param with      string to replace with.
+     * @return a {@link java.lang.String} object.
      */
     public static String replace(String src, String toReplace, String with) {
         int index;
@@ -510,6 +769,14 @@ public final class StringUtils {
         return src;
     }
 
+    /**
+     * <p>replace.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param toReplace a {@link java.lang.String} object.
+     * @param with a char.
+     * @return a {@link java.lang.String} object.
+     */
     public static String replace(String src, String toReplace, char with) {
         int index;
         while ((index = src.indexOf(toReplace)) > -1) {
@@ -521,6 +788,12 @@ public final class StringUtils {
     }
 
 
+    /**
+     * <p>removeCComments.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeCComments(String src) {
         StringBuilder ret = new StringBuilder();
 
@@ -549,6 +822,12 @@ public final class StringUtils {
         return ret.toString();
     }
 
+    /**
+     * <p>removeCPPComments.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeCPPComments(String src) {
         StringBuilder ret = new StringBuilder();
 
@@ -580,6 +859,12 @@ public final class StringUtils {
         return ret.toString();
     }
 
+    /**
+     * <p>removeBashComments.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeBashComments(String src) {
         StringBuilder ret = new StringBuilder();
 
@@ -607,6 +892,12 @@ public final class StringUtils {
         return ret.toString();
     }
 
+    /**
+     * <p>reverseString.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String reverseString(String src) {
         String ret = "";
         for (int i = src.length() - 1; i >= 0; i--)
@@ -614,6 +905,14 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>makeDelimitedString.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param delimiter a {@link java.lang.String} object.
+     * @param interval a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String makeDelimitedString(String src, String delimiter, int interval) {
         String ret = "";
         int t = 0;
@@ -630,6 +929,11 @@ public final class StringUtils {
     /**
      * Prefills the given string with the string as long as the size of the resulting string is less then desiredLength;
      * Example: prefill("1", 4, "0") -> 0001.
+     *
+     * @param s a {@link java.lang.String} object.
+     * @param desiredLength a int.
+     * @param fillString a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String prefill(String s, int desiredLength, String fillString) {
         while (s.length() < desiredLength)
@@ -640,6 +944,11 @@ public final class StringUtils {
     /**
      * Postfills (appends) the given string with the string as long as the size of the resulting string is less then desiredLength;
      * Example: prefill("1", 4, "0") -> 0001.
+     *
+     * @param s a {@link java.lang.String} object.
+     * @param desiredLength a int.
+     * @param fillString a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String postfill(String s, int desiredLength, String fillString) {
         while (s.length() < desiredLength)
@@ -648,6 +957,14 @@ public final class StringUtils {
     }
 
 
+    /**
+     * <p>extractTags.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param tagStart a char.
+     * @param tagEnd a char.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> extractTags(String source, char tagStart, char tagEnd) {
         List<String> ret = new ArrayList<>();
 
@@ -673,6 +990,15 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>extractTagsWithEscapeChar.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param tagStart a char.
+     * @param tagEnd a char.
+     * @param escapeChar a char.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> extractTagsWithEscapeChar(String source, char tagStart, char tagEnd, char escapeChar) {
         List<String> ret = new ArrayList<>();
 
@@ -709,20 +1035,50 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>strip.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param fromBeginn a int.
+     * @param fromEnd a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String strip(String src, int fromBeginn, int fromEnd) {
         return src.substring(fromBeginn, src.length() - fromEnd);
     }
 
     //Added 6.02.08
 
+    /**
+     * <p>isSurroundedWith.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param starting a char.
+     * @param ending a char.
+     * @return a boolean.
+     */
     public static boolean isSurroundedWith(String src, char starting, char ending) {
         return !src.isEmpty() && (src.charAt(0) == starting) && (src.charAt(src.length() - 1) == ending);
     }
 
+    /**
+     * <p>removeSurround.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String removeSurround(String src) {
         return StringUtils.strip(src, 1, 1);
     }
 
+    /**
+     * <p>surroundWith.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param starting a char.
+     * @param ending a char.
+     * @return a {@link java.lang.String} object.
+     */
     public static String surroundWith(String src, char starting, char ending) {
         String ret = starting +
                 src +
@@ -731,13 +1087,29 @@ public final class StringUtils {
     }
 
     /**
+     * <p>extractSuperTags.</p>
+     *
      * @deprecated escapeChar is ignored, use {@link #extractSuperTags(String, char, char)} instead
+     * @param source a {@link java.lang.String} object.
+     * @param tagStart a char.
+     * @param tagEnd a char.
+     * @param escapeChar a char.
+     * @return a {@link java.util.List} object.
      */
     @Deprecated
     public static List<String> extractSuperTags(String source, char tagStart, char tagEnd, char escapeChar) {
         return extractSuperTags(source, tagStart, tagEnd);
     }
 
+    /**
+     * <p>extractSuperTags.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param tagStart a char.
+     * @param tagEnd a char.
+     * @return a {@link java.util.List} object.
+     * @since 2.1.6
+     */
     public static List<String> extractSuperTags(String source, char tagStart, char tagEnd) {
         List<String> index = indexSuperTags(source, tagStart, tagEnd);
         List<String> ret = new ArrayList<>();
@@ -747,6 +1119,14 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>indexSuperTags.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param tagStart a char.
+     * @param tagEnd a char.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> indexSuperTags(String source, char tagStart, char tagEnd) {
         List<String> ret = new ArrayList<>();
         StringBuilder currentTag = new StringBuilder();
@@ -783,6 +1163,15 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>tokenize.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param escapeStart a char.
+     * @param escapeEnd a char.
+     * @param delimiters a char.
+     * @return a {@link java.util.List} object.
+     */
     public static final List<String> tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
         Collection<Character> delimitersHash = new HashSet<>(delimiters.length);
         for (char del : delimiters)
@@ -825,10 +1214,29 @@ public final class StringUtils {
 	  Original tokenize method is used in VariableProcessor so any changes in it must be well tested before go to life. That's why this duplication method was created.
 	 */
 
+    /**
+     * <p>_tokenize.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param escapeStart a char.
+     * @param escapeEnd a char.
+     * @param delimiters a char.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> _tokenize(String source, char escapeStart, char escapeEnd, char... delimiters) {
         return _tokenize(source, escapeStart, escapeEnd, true, delimiters);
     }
 
+    /**
+     * <p>_tokenize.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     * @param escapeStart a char.
+     * @param escapeEnd a char.
+     * @param skipEmptyTokens a boolean.
+     * @param delimiters a char.
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> _tokenize(String source, char escapeStart, char escapeEnd, boolean skipEmptyTokens, char... delimiters) {
         Collection<Character> delimitersHash = new HashSet<>(delimiters.length);
 
@@ -869,6 +1277,13 @@ public final class StringUtils {
         return ret;
     }
 
+    /**
+     * <p>substringFromEnd.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @param indexFromEnd a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String substringFromEnd(String src, int indexFromEnd) {
         if (src.length() <= indexFromEnd)
             return "";
@@ -876,6 +1291,16 @@ public final class StringUtils {
         return src.substring(0, end);
     }
 
+    /**
+     * <p>concatenateTokens.</p>
+     *
+     * @param tokens a {@link java.lang.Iterable} object.
+     * @param delimiter a char.
+     * @param tokenStartingTag a char.
+     * @param tokenEndingTag a char.
+     * @param <T> a T object.
+     * @return a {@link java.lang.String} object.
+     */
     public static <T> String concatenateTokens(Iterable<T> tokens, char delimiter, char tokenStartingTag, char tokenEndingTag) {
         StringBuilder ret = new StringBuilder();
         boolean begin = true;
@@ -892,6 +1317,14 @@ public final class StringUtils {
         return ret.toString();
     }
 
+    /**
+     * <p>concatenateTokens.</p>
+     *
+     * @param tokens a {@link java.lang.Iterable} object.
+     * @param delimiterSequence a {@link java.lang.String} object.
+     * @param <T> a T object.
+     * @return a {@link java.lang.String} object.
+     */
     public static <T> String concatenateTokens(Iterable<T> tokens, String delimiterSequence) {
         StringBuilder ret = new StringBuilder();
         boolean begin = true;
@@ -914,23 +1347,54 @@ public final class StringUtils {
      * NOTE: vararg of parameterized types (here @param array) for primitive arrays doesn't work properly.
      * This utility have to be accomplished with concatenateTokens methods for each primitive arrays!!!
      *
+     * @param delimiterSequence a {@link java.lang.String} object.
+     * @param tokens a T object.
+     * @return a {@link java.lang.String} object.
      */
     public static <T> String concatenateTokens(String delimiterSequence, T... tokens) {
         return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
     }
 
+    /**
+     * <p>concatenateTokens.</p>
+     *
+     * @param delimiterSequence a {@link java.lang.String} object.
+     * @param tokens an array of int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String concatenateTokens(String delimiterSequence, int[] tokens) {
         return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
     }
 
+    /**
+     * <p>concatenateTokens.</p>
+     *
+     * @param delimiterSequence a {@link java.lang.String} object.
+     * @param tokens an array of long.
+     * @return a {@link java.lang.String} object.
+     */
     public static String concatenateTokens(String delimiterSequence, long[] tokens) {
         return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
     }
 
+    /**
+     * <p>concatenateTokens.</p>
+     *
+     * @param delimiterSequence a {@link java.lang.String} object.
+     * @param tokens an array of float.
+     * @param <T> a T object.
+     * @return a {@link java.lang.String} object.
+     */
     public static <T> String concatenateTokens(String delimiterSequence, float[] tokens) {
         return concatenateTokens(ArrayUtils.asList(tokens), delimiterSequence);
     }
 
+    /**
+     * <p>replaceUmlauts.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String replaceUmlauts(String src) {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < src.length(); i++) {
@@ -988,6 +1452,12 @@ public final class StringUtils {
         return ret.toString();
     }
 
+    /**
+     * <p>normalize.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String normalize(String s) {
         if (s == null || s.trim().isEmpty())
             return s;
@@ -1008,6 +1478,12 @@ public final class StringUtils {
         //prevent from instantiation
     }
 
+    /**
+     * <p>isEmpty.</p>
+     *
+     * @param src a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isEmpty(String src) {
         return src == null || src.trim().isEmpty();
     }

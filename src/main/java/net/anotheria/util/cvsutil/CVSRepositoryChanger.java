@@ -10,16 +10,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * @deprecated
+ * <p>CVSRepositoryChanger class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
  */
 @Deprecated
 public class CVSRepositoryChanger {
 	
 	private static final Logger STATIC_LOGGER = LoggerFactory.getLogger(CVSRepositoryChanger.class.getName());
 
+	/** Constant <code>TO_REPLACE="lro@"</code> */
 	public static final String TO_REPLACE = "lro@";
+	/** Constant <code>REPLACE_WITH="lrosenberg@"</code> */
 	public static final String REPLACE_WITH = "lrosenberg@";
 	
+	/**
+	 * <p>main.</p>
+	 *
+	 * @param a a {@link java.lang.String} object.
+	 */
 	public static void main(String... a){
 		String startpath = ".";
 		try {

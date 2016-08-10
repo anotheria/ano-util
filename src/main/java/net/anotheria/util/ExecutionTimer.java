@@ -8,8 +8,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A utility to measure execution of a task which consists of subtasks.  
+ * A utility to measure execution of a task which consists of subtasks.
+ *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public class ExecutionTimer {
 
@@ -46,9 +48,11 @@ public class ExecutionTimer {
 	 */
 	private String name;
 
-	/**
-	 * Creates a new ExecutionTimer.
-	 */
+    /**
+     * Creates a new ExecutionTimer.
+     *
+     * @param aName a {@link java.lang.String} object.
+     */
     public ExecutionTimer(String aName) {
 		timers = new ConcurrentHashMap<>();
 		this.name = aName;
@@ -65,6 +69,7 @@ public class ExecutionTimer {
 	 * Notifies timer that the execution of the process assigned with the given key started.
 	 * The key must be an unique identifier in one ExecutionTimer.
 	 *
+	 * @param aKey a {@link java.lang.String} object.
 	 */
 	public void startExecution(String aKey){
 		TimerEntry entry = new TimerEntry(aKey);
@@ -72,6 +77,8 @@ public class ExecutionTimer {
 	}
 	/**
 	 * Continues previously stoped(paused) execution of the key.
+	 *
+	 * @param aKey a {@link java.lang.String} object.
 	 */
 	public void continueExecution(String aKey){
 		try{
@@ -84,6 +91,8 @@ public class ExecutionTimer {
 
 	/**
 	 * Notifies the timer, that the execution of the process assigned with the given key stoped or paused.
+	 *
+	 * @param aKey a {@link java.lang.String} object.
 	 */
 	public void stopExecution(String aKey){
 		getTimerEntry(aKey).stop();
@@ -92,6 +101,9 @@ public class ExecutionTimer {
 	/**
 	 * Returns the execution time for the given process. If the process haven't been started,
 	 * an exception will be thrown. If the process is still running, the start time will be returned.
+	 *
+	 * @param aKey a {@link java.lang.String} object.
+	 * @return a long.
 	 */
 	public long getExecutionTime(String aKey){
 		return getTimerEntry(aKey).getTime();
@@ -99,6 +111,8 @@ public class ExecutionTimer {
 
 	/**
 	 * Returns the sum of the single execution times.
+	 *
+	 * @return a long.
 	 */
 	public long getTotalExecutionTime(){
 		Collection<TimerEntry> entries = timers.values();
@@ -111,6 +125,8 @@ public class ExecutionTimer {
 
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their keys.
+	 *
+	 * @return a {@link java.util.List} object.
 	 */
 	public List<TimerEntry> getExecutionTimerEntriesOrderedByKeys(){
 		return sortEntries(getTimerEntries(), Method.KEY);
@@ -118,6 +134,8 @@ public class ExecutionTimer {
 
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their creation order.
+	 *
+	 * @return a {@link java.util.List} object.
 	 */
 	public List<TimerEntry> getExecutionTimerEntriesOrderedByCreation(){
 		return sortEntries(getTimerEntries(), Method.CREATION);
@@ -125,6 +143,8 @@ public class ExecutionTimer {
 
 	/**
 	 * Returns a vector with all TimerEntries in this Timer sorted by their execution time (fastest first).
+	 *
+	 * @return a {@link java.util.List} object.
 	 */
 	public List<TimerEntry> getExecutionTimerEntriesOrderedByTime(){
 		return sortEntries(getTimerEntries(), Method.TIME);

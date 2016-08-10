@@ -16,10 +16,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <p>HistoDiffReader class.</p>
+ *
+ * @author another
+ * @version $Id: $Id
+ */
 public class HistoDiffReader {
 
 	private static final Logger log = LoggerFactory.getLogger(HistoDiffReader.class);
 
+	/**
+	 * <p>main.</p>
+	 *
+	 * @param a a {@link java.lang.String} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static void main(String... a) throws Exception{
 
 		String newP = "/Users/another/Documents/Projects/AYN/CRASH/2013-02-05/histo3.txt";
@@ -28,6 +40,13 @@ public class HistoDiffReader {
 		compare(oldP, newP);
 	}
 
+	/**
+	 * <p>compare.</p>
+	 *
+	 * @param oldPath a {@link java.lang.String} object.
+	 * @param newPath a {@link java.lang.String} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static final void compare(String oldPath, String newPath) throws Exception{
 		Histogramm oldH = readHistogram(oldPath);
 		Histogramm newH = readHistogram(newPath);
@@ -97,6 +116,13 @@ public class HistoDiffReader {
 
 	}
 
+	/**
+	 * <p>readHistogram.</p>
+	 *
+	 * @param path a {@link java.lang.String} object.
+	 * @return a {@link net.anotheria.util.debug.HistoDiffReader.Histogramm} object.
+	 * @throws java.lang.Exception if any.
+	 */
 	public static final Histogramm readHistogram(String path) throws Exception{
 		Histogramm h = new Histogramm(path);
 		String content = IOUtils.readFileAtOnceAsString(path);

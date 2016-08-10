@@ -11,15 +11,14 @@ import java.util.List;
  *
  *@author Chris Hoffmann
  *@since 21.10.2000
+ * @version $Id: $Id
  */
 public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 
 	/**
-	 *  sorts an Enumeration with the QuickSort Algorithm and returns a sorted Vector
+	 * {@inheritDoc}
 	 *
-	 *@param  source  the Enumeration you want to sort
-	 *@param  sType   how you want to sort
-	 *@return         a sorted Vector containing the Objects of the Enumeration
+	 *  sorts an Enumeration with the QuickSort Algorithm and returns a sorted Vector
 	 */
 	@Override
 	public List<T> sort(Enumeration<T> source, SortType sType) {
@@ -32,11 +31,9 @@ public class QuickSorter<T extends IComparable> extends AbstractSorter<T> {
 
 
 	/**
-	 *  sorts a List with the QuickSort Algorithm
+	 * {@inheritDoc}
 	 *
-	 *@param  source  the vector you want to sort
-	 *@param  sType   SortType  ...  how you wanna sort the Vector
-	 *@return         the sorted Vector
+	 *  sorts a List with the QuickSort Algorithm
 	 */
 	@Override
 	public List<T> sort(List<T> source, SortType sType) {

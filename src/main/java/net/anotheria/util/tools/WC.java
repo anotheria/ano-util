@@ -11,9 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Wordcount utility. Walks recursively through a directory and counts all lines/words/chars in all files which matches the extension (for now .java). 
+ * Wordcount utility. Walks recursively through a directory and counts all lines/words/chars in all files which matches the extension (for now .java).
+ *
  * @author lrosenberg
  * @since 25.06.2004
+ * @version $Id: $Id
  */
 public final class WC {
 	/**
@@ -26,6 +28,11 @@ public final class WC {
 	private static int totalLines, totalWords, totalChars;
 	private static int totalFiles;
 	
+	/**
+	 * <p>main.</p>
+	 *
+	 * @param a a {@link java.lang.String} object.
+	 */
 	public static void main(String... a){
 		
 		totalLines = totalWords = totalChars = 0;

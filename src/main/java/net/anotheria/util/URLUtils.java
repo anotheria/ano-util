@@ -5,11 +5,13 @@ import java.util.Map;
 
 /**
  * Small and simple utils to handle URLs
- * @author denis
  *
+ * @author denis
+ * @version $Id: $Id
  */
 public class URLUtils {
 	
+	/** Constant <code>ENCODING</code> */
 	public static final Map<String,String> ENCODING;
 	
 	static {
@@ -41,7 +43,9 @@ public class URLUtils {
 	
 	/**
 	 * Encodes unsafe characters in a URL
+	 *
 	 * @return mostly (in current implementation) safe URL
+	 * @param url a {@link java.lang.String} object.
 	 */
 	public static String encode(String url){
 		return StringUtils.replace(url, ENCODING);

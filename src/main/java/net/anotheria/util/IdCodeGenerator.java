@@ -4,7 +4,9 @@ import java.util.Random;
 
 /**
  * This class is an utility for generation of unique identification codes.
+ *
  * @author lrosenberg
+ * @version $Id: $Id
  */
 public final class IdCodeGenerator {
 	/**
@@ -27,6 +29,10 @@ public final class IdCodeGenerator {
 	
 	/**
 	 * Generates a code of given length from supplied chars.
+	 *
+	 * @param chars an array of char.
+	 * @param length a int.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String generateCustomCode(char[] chars, int length){
 		String ret = "";
@@ -38,6 +44,9 @@ public final class IdCodeGenerator {
 	
 	/**
 	 * Generates a code of given length.
+	 *
+	 * @param length a int.
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String generateCode(int length){
 		int interval = CODE_END - CODE_START+1;
@@ -49,6 +58,8 @@ public final class IdCodeGenerator {
 	
 	/**
 	 * Generates a code with default length (CODE_LENGTH).
+	 *
+	 * @return a {@link java.lang.String} object.
 	 */
 	public static String generateCode(){
 		return generateCode(CODE_LENGTH);
