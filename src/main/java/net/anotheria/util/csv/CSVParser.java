@@ -137,7 +137,6 @@ public class CSVParser {
 	/** We have to handle somehow situation with newlines in the values, 
 	 * for now - algorithm written below looks as simplest and quickest */
 	private static String[] normalizeEscapedNewlines(String... rows) {
-	private static String[] normalizeEscapedNewlines(String... rows) {
 		List<String> result = new ArrayList<>(rows.length);
 		for (int i = 0; i < rows.length; i++){
 			String row = rows[i];
