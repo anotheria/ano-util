@@ -2,14 +2,13 @@ package net.anotheria.util.crypt;
 
 import net.anotheria.util.NumberUtils;
 import net.anotheria.util.StringUtils;
+import org.bouncycastle.crypto.BufferedBlockCipher;
+import org.bouncycastle.crypto.CipherParameters;
+import org.bouncycastle.crypto.CryptoException;
+import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.engines.BlowfishEngine;
+import org.bouncycastle.crypto.params.KeyParameter;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,10 +19,9 @@ import java.util.Map;
  *
  */
 public class CryptTool {
-	public static final String TRANSFORMATION = "Blowfish/ECB/NoPadding";
 
-	private final Cipher decryptCipher;
-	private Cipher encryptCipher;
+	private BufferedBlockCipher encryptCipher = new BufferedBlockCipher(new BlowfishEngine());
+	private BufferedBlockCipher decryptCipher = new BufferedBlockCipher(new BlowfishEngine());
 
 	/**
 	 * Create a new crypttool with the given key.
@@ -38,15 +36,9 @@ public class CryptTool {
 	 * @param key the key to use for en- and decode.
 	 */
 	public CryptTool(byte... key) {
-		SecretKeySpec secretKey = new SecretKeySpec(key, "Blowfish");
-		try {
-			encryptCipher = Cipher.getInstance(TRANSFORMATION);
-			encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
-			decryptCipher = Cipher.getInstance(TRANSFORMATION);
-			decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
-			throw new IllegalStateException(e);
-		}
+		CipherParameters keyParameter = new KeyParameter(key);
+		encryptCipher.init(true, keyParameter);
+		decryptCipher.init(false, keyParameter);
 	}
 
 	/**
@@ -55,8 +47,11 @@ public class CryptTool {
 	public byte[] encrypt(String toEncrypt) {
 		byte[] bytes = padMod(toEncrypt, 8).getBytes();
 		try {
-			return encryptCipher.doFinal(bytes);
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			byte[] out = new byte[encryptCipher.getOutputSize(bytes.length)];
+			int len = encryptCipher.processBytes(bytes, 0, bytes.length, out, 0);
+			encryptCipher.doFinal(out, len);
+			return out;
+		} catch (CryptoException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -71,9 +66,12 @@ public class CryptTool {
 	}
 
 	public byte[] decrypt(byte... toDecrypt) {
+		byte[] out = new byte[decryptCipher.getOutputSize(toDecrypt.length)];
+		int len = decryptCipher.processBytes(toDecrypt, 0, toDecrypt.length, out, 0);
 		try {
-			return decryptCipher.doFinal(toDecrypt);
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			decryptCipher.doFinal(out, len);
+			return out;
+		} catch (InvalidCipherTextException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -199,9 +197,9 @@ public class CryptTool {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
 		try {
-			byte[] encrypted = encryptCipher.doFinal(buffer);
-			System.arraycopy(encrypted, 0, buffer, 0, encrypted.length);
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			int len = encryptCipher.processBytes(buffer, 0, buffer.length, buffer, 0);
+			encryptCipher.doFinal(buffer, len);
+		} catch (InvalidCipherTextException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -215,9 +213,9 @@ public class CryptTool {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
 		try {
-			byte[] decrypted = decryptCipher.doFinal(buffer);
-			System.arraycopy(decrypted, 0, buffer, 0, decrypted.length);
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			int len = decryptCipher.processBytes(buffer, 0, buffer.length, buffer, 0);
+			decryptCipher.doFinal(buffer, len);
+		} catch (InvalidCipherTextException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
