@@ -32,6 +32,7 @@ public abstract class AbstractSorter<T extends IComparable> implements Sorter<T>
  	 * The list should include only objects of type IComparable.
  	 *
  	 * @param src a {@link java.util.List} object.
+	 * @param <T> a T object.
  	 * @return an array of T objects.
  	 */
  	public static <T extends IComparable> T[] list2array(List<T> src){
@@ -43,6 +44,7 @@ public abstract class AbstractSorter<T extends IComparable> implements Sorter<T>
      * Transfers an array into Vector.
      *
      * @param src a T object.
+	 * @param <T> a T object.
      * @return a {@link java.util.List} object.
      */
     public static <T extends IComparable> List<T> array2vector(T... src){

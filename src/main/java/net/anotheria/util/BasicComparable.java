@@ -56,7 +56,7 @@ public abstract class BasicComparable implements IComparable{
 	 *
 	 * @param a first boolean to compare.
 	 * @param b second boolean to compare.
-	 * @return 0 if a==b, -1 if a & !b or +1 if !a & b.
+	 * @return 0 if a==b, -1 if a &amp; !b or +1 if !a &amp; b.
 	 */
 	public static final int compareBoolean(boolean a, boolean b){
 		return a==b ? 0 :
@@ -68,7 +68,7 @@ public abstract class BasicComparable implements IComparable{
 	 *
 	 * @param a first float to compare.
 	 * @param b second float to compare.
-	 * @return 0 if a==b, -1 if a&lt;b or +1 if a>b.
+	 * @return 0 if a==b, -1 if a&lt;b or +1 if a&gt;b.
 	 */
 	public static final int compareFloat(float a, float b){
 		return Float.compare(a, b);			

@@ -4,7 +4,7 @@ package net.anotheria.util.sorter;
  * This interface should be implemented by all classes which wish to be sorted
  * by the standart sorter.
  *
- * @see com.eqs.fi.shared.common.util.Sorter.html
+ * @see Sorter
  * @author another
  * @version $Id: $Id
  */

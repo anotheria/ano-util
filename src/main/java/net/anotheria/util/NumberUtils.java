@@ -35,7 +35,7 @@ public final class NumberUtils {
 	/**
 	 * Converts an integer number in a String with given number of chars;
 	 * fills in zeros if needed from the left side.
-	 * Example: itoa(23, 4) -> 0023.
+	 * Example: itoa(23, 4) -&gt; 0023.
 	 *
 	 * @param i a int.
 	 * @param limit a int.
@@ -308,7 +308,7 @@ public final class NumberUtils {
 	
 	/**
 	 * Returns a string representation of the parameter in which each three digit part of the number is separated by a '.'.
-	 * For example 123456 -> 123.456. 1234567 -> 1.234.567 and so on.
+	 * For example 123456 -&gt; 123.456. 1234567 -&gt; 1.234.567 and so on.
 	 *
 	 * @param number the number to transform.
 	 * @return transfored (doted) version of the parameter.

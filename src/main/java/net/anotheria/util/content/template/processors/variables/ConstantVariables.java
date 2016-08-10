@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Contains constants for Template && Variable processors.
+ * Contains constants for Template &amp; Variable processors.
  *
  * @author h3llka
  * @version $Id: $Id

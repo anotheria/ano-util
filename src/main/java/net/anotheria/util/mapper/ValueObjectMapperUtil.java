@@ -13,12 +13,8 @@ import java.util.Map;
 /**
  * VO mapper maps properties between objects.
  * Mapping can be configured with annotations, xml files, mapping by default.
- * <p/>
- * <p/>
- * <P>Mapping automatically performed for all fields with the same property
+ * Mapping automatically performed for all fields with the same property
  * name from the source object into the destination object.
- * <p/>
- * <p/>
  *
  * @author vitaliy
  * @version 1.0

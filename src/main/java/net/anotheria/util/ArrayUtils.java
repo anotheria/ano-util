@@ -96,6 +96,7 @@ public class ArrayUtils {
 	 * This utility have to be accomplished with asList methods for each primitive arrays!!!
 	 *
 	 * @param array a T object.
+	 * @param <T> a T object.
 	 * @return a {@link java.lang.Iterable} object.
 	 */
 	public static <T> Iterable<T> asList(T... array){

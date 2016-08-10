@@ -447,7 +447,8 @@ public final class StringUtils {
      * Reverses the order in the Vector.
      *
      * @param v a {@link java.util.List} object.
-     * @return a {@link java.util.List} object.
+	 * @param <T> pattern for list objects.
+	 * @return a {@link java.util.List} object.
      */
     public static <T> List<T> reverse(List<T> v) {
         List<T> ret = new ArrayList<>(v.size());
@@ -928,7 +929,7 @@ public final class StringUtils {
 
     /**
      * Prefills the given string with the string as long as the size of the resulting string is less then desiredLength;
-     * Example: prefill("1", 4, "0") -> 0001.
+     * Example: prefill("1", 4, "0") -&gt; 0001.
      *
      * @param s a {@link java.lang.String} object.
      * @param desiredLength a int.
@@ -943,7 +944,7 @@ public final class StringUtils {
 
     /**
      * Postfills (appends) the given string with the string as long as the size of the resulting string is less then desiredLength;
-     * Example: prefill("1", 4, "0") -> 0001.
+     * Example: prefill("1", 4, "0") -&gt; 0001.
      *
      * @param s a {@link java.lang.String} object.
      * @param desiredLength a int.
@@ -1349,6 +1350,7 @@ public final class StringUtils {
      *
      * @param delimiterSequence a {@link java.lang.String} object.
      * @param tokens a T object.
+	 * @param <T> pattern for tokens.
      * @return a {@link java.lang.String} object.
      */
     public static <T> String concatenateTokens(String delimiterSequence, T... tokens) {
@@ -1503,7 +1505,7 @@ public final class StringUtils {
 
     /**
      * Trims string to last index of delimiter which is situated before max size index and concatenates it with "...".
-     * If maxSize > value.length than value will be returned.
+     * If maxSize &gt; value.length than value will be returned.
      *
      * @param value     string to trim
      * @param delimiter delimiter for trimming

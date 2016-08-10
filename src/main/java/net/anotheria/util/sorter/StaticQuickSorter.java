@@ -32,8 +32,8 @@ public final class StaticQuickSorter {
 	 *
 	 *@param  source  the vector you want to sort
 	 *@param  sType   SortType  ...  how you wanna sort the Vector
+	 *@param <T> a T object.
 	 *@return         the sorted Vector
-	 * @param <T> a T object.
 	 */
 	public static <T extends IComparable> List<T> sort(List<T> source, SortType sType) {
 		boolean sortOrder = sType.getSortOrder();

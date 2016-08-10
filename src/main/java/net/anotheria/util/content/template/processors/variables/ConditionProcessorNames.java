@@ -4,7 +4,7 @@ import net.anotheria.util.StringUtils;
 
 /**
  * This helper class defines prefixes usable for variables in the variable processor.
- * Actually for template Processor && for VariableProcessor.
+ * Actually for template Processor &amp; for VariableProcessor.
  *
  * @author lrosenberg
  * @version $Id: $Id

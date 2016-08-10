@@ -134,8 +134,8 @@ public class Slice<T> {
 	}
 	
 	/**
-	 * Returns true if there is a previous pageable slice (i.e. this slice number >1)
-	 *
+	 * Returns true if there is a previous pageable slice (i.e. this slice number &gt;1)
+
 	 * @return true if this slice is not the first
 	 */
 	public boolean hasPrevSlice(){

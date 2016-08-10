@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * Mapper annotation
- * <p/>
  *
  * @author vitaliy
  * @version 1.0
