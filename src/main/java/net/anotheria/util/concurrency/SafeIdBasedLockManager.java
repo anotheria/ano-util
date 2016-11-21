@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>SafeIdBasedLockManager class.</p>
+ * SafeIdBasedLockManager - a thread safe implementation of the IdBasedLockManager.
  *
  * @author another
  * @version $Id: $Id

@@ -160,7 +160,10 @@ public class NameAnalyzer {
 		ret.addAll(uncamelCase2(s));
 		return ret;
 	}
-	
+
+	/**
+	 * Element counter for different types of files.
+	 */
 	public static class ElementCount implements IComparable{
 		String name;
 		int count;

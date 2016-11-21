@@ -236,6 +236,9 @@ public class ExecutionTimer {
 		return entry;
 	}
 
+	/**
+	 * A single entry in timer.
+	 */
 	private class TimerEntry{
 		/**
 		 * Start time of this entry.

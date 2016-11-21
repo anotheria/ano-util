@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * <p>UnsafeIdBasedLockManager class.</p>
+ * SafeIdBasedLockManager - an optimistic, mostly safe implementation, which is not 100% thread safe, but a little faster.
  *
  * @author another
  * @version $Id: $Id
