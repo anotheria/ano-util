@@ -9,6 +9,7 @@ import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.engines.BlowfishEngine;
 import org.bouncycastle.crypto.params.KeyParameter;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class CryptTool {
 	 */
 	public byte[] encrypt(String toEncrypt) {
 		synchronized (encryptCipher) {
-			byte[] bytes = padMod(toEncrypt, 8).getBytes();
+			byte[] bytes = padMod(toEncrypt, 8);
 			try {
 				byte[] out = new byte[encryptCipher.getOutputSize(bytes.length)];
 				int len = encryptCipher.processBytes(bytes, 0, bytes.length, out, 0);
@@ -116,18 +117,21 @@ public class CryptTool {
 		return decryptFromHex(toDecrypt).trim();
 	}
 
-	private static String padMod(String source, int length) {
-		int adder = length - (source.length() % length);
+	private static byte[] padMod(String source, int length) {
 
-		if (adder == length)
-			return source;
+		byte[] bytes = source.getBytes();
 
-		StringBuilder ret = new StringBuilder(source);
+		if (source.length() % length == 0)
+			return bytes;
 
-		for (int i = 0; i < adder; i++) {
-			ret.append(' ');
+		byte[] padded = new byte[bytes.length + 8 - (bytes.length % 8)];
+		Arrays.fill(padded, (byte) 32);
+
+		for (int i = 0; i < bytes.length; i++) {
+			padded[i] = bytes[i];
 		}
-		return ret.toString();
+
+		return padded;
 	}
 
 	/**
