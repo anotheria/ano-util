@@ -22,8 +22,8 @@ import java.util.Map;
  */
 public class CryptTool {
 
-	private BufferedBlockCipher encryptCipher = new BufferedBlockCipher(new BlowfishEngine());
-	private BufferedBlockCipher decryptCipher = new BufferedBlockCipher(new BlowfishEngine());
+	private final BufferedBlockCipher encryptCipher = new BufferedBlockCipher(new BlowfishEngine());
+	private final BufferedBlockCipher decryptCipher = new BufferedBlockCipher(new BlowfishEngine());
 
 	/**
 	 * Create a new crypttool with the given key.
@@ -52,14 +52,16 @@ public class CryptTool {
 	 * @return an array of byte.
 	 */
 	public byte[] encrypt(String toEncrypt) {
-		byte[] bytes = padMod(toEncrypt, 8).getBytes();
-		try {
-			byte[] out = new byte[encryptCipher.getOutputSize(bytes.length)];
-			int len = encryptCipher.processBytes(bytes, 0, bytes.length, out, 0);
-			encryptCipher.doFinal(out, len);
-			return out;
-		} catch (CryptoException e) {
-			throw new IllegalArgumentException(e);
+		synchronized (encryptCipher) {
+			byte[] bytes = padMod(toEncrypt, 8).getBytes();
+			try {
+				byte[] out = new byte[encryptCipher.getOutputSize(bytes.length)];
+				int len = encryptCipher.processBytes(bytes, 0, bytes.length, out, 0);
+				encryptCipher.doFinal(out, len);
+				return out;
+			} catch (CryptoException e) {
+				throw new IllegalArgumentException(e);
+			}
 		}
 	}
 
@@ -81,13 +83,15 @@ public class CryptTool {
 	 * @return an array of byte.
 	 */
 	public byte[] decrypt(byte... toDecrypt) {
-		byte[] out = new byte[decryptCipher.getOutputSize(toDecrypt.length)];
-		int len = decryptCipher.processBytes(toDecrypt, 0, toDecrypt.length, out, 0);
-		try {
-			decryptCipher.doFinal(out, len);
-			return out;
-		} catch (InvalidCipherTextException e) {
-			throw new IllegalArgumentException(e);
+		synchronized (decryptCipher) {
+			byte[] out = new byte[decryptCipher.getOutputSize(toDecrypt.length)];
+			int len = decryptCipher.processBytes(toDecrypt, 0, toDecrypt.length, out, 0);
+			try {
+				decryptCipher.doFinal(out, len);
+				return out;
+			} catch (InvalidCipherTextException e) {
+				throw new IllegalArgumentException(e);
+			}
 		}
 	}
 
@@ -255,4 +259,5 @@ public class CryptTool {
 			throw new IllegalArgumentException(e);
 		}
 	}
+
 }
