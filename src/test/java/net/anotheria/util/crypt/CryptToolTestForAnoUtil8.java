@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO comment this class
+ * Test for https://jira.opensource.anotheria.net/browse/ANOUTIL-8.
  *
  * @author lrosenberg
  * @since 03/10/2016 12:59
