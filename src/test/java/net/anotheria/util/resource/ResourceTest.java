@@ -74,7 +74,7 @@ public class ResourceTest {
 		
 		String newContent = "dummyContent";
 		changeFixtureContent(newContent);
-		resourceUpdated.await(15, TimeUnit.SECONDS);
+		resourceUpdated.await(18, TimeUnit.SECONDS);
 		//Resource is changed!
 		//Ensure that resourceUpdated was notified
 		assertTrue("Resource Listener wasn't notified about changes!", notified.get());
