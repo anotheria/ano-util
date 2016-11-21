@@ -86,7 +86,6 @@ public enum WatchDog {
 					Iterable<Resource> watchedResources = new HashSet<>(watchingRegistry.values());
 					for (Resource source : watchedResources) {
 						ResourceLoader loader = source.getResourceLoader();
-						System.out.println("chekc source: "+source);
 						try {
 							long lastUpdate = loader.getLastChangeTimestamp(source.getName());
 							log.debug("Checking source: {}, lastUpdateFromLoader: {}, storedLastUpdate: {}", source, NumberUtils.makeISO8601TimestampString(lastUpdate), NumberUtils.makeISO8601TimestampString(source.getLastChangeTimestamp()));
