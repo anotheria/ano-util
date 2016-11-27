@@ -28,5 +28,7 @@ public class FileEntry extends Entry{
 	 * Returns the size of the file.
 	 */
 	@Override
-    public long getSize(){ return size; }
+    public long getSize(){
+		return size;
+	}
 }
