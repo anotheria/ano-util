@@ -1,5 +1,6 @@
 package net.anotheria.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import net.anotheria.util.io.UnicodeReader;
 
 import java.io.BufferedReader;
@@ -19,6 +20,7 @@ import static java.lang.System.in;
  * @author lrosenberg
  * @version $Id: $Id
  */
+@SuppressFBWarnings("DM_DEFAULT_ENCODING")
 public final class IOUtils {
 
 	/**
