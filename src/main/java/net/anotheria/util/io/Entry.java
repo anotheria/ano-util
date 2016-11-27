@@ -24,14 +24,19 @@ public abstract class Entry {
 	 *
 	 * @return a {@link java.lang.String} object.
 	 */
-	public String getName(){ return name; }
+	public String getName(){
+		return name;
+	}
 	
 	/**
 	 * <p>Setter for the field <code>name</code>.</p>
 	 *
 	 * @param aName a {@link java.lang.String} object.
 	 */
-	public void setName(String aName){ name = aName; }
+	public void setName(String aName){
+		name = aName;
+	}
+
 	/**
 	 * Returns the size of the entry.
 	 *

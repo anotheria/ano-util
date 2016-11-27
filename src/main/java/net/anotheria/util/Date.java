@@ -233,9 +233,9 @@ public class Date implements Serializable{
             int hour  = Integer.parseInt(hrStrg);
             int min   = Integer.parseInt(minStrg);
             return new Date(day,month,year,hour,min);
-        } catch(NumberFormatException nfe){return null;}
-
-
+        } catch(NumberFormatException nfe){
+			return null;
+        }
     }
 
 
