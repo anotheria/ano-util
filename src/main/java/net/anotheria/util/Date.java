@@ -291,6 +291,17 @@ public class Date implements Serializable{
  		return (o instanceof Date) && ((Date) o).toMill() == toMill();
   	}
 
+	@Override
+	public int hashCode() {
+		int result = day;
+		result = 31 * result + month;
+		result = 31 * result + year;
+		result = 31 * result + hour;
+		result = 31 * result + min;
+		result = 31 * result + sec;
+		return result;
+	}
+
 	/**
 	 * <p>Getter for the field <code>day</code>.</p>
 	 *
