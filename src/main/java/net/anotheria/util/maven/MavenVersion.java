@@ -3,15 +3,27 @@ package net.anotheria.util.maven;
 import java.io.Serializable;
 
 /**
- * <p>MavenVersion class.</p>
+ * Represents a maven versiion.
  *
  * @author another
  * @version $Id: $Id
  */
 public class MavenVersion implements Serializable{
+	/**
+	 * Timestamp of the file.
+	 */
 	private String fileTimestamp;
+	/**
+	 * Artifact version.
+	 */
 	private String version;
+	/**
+	 * Artifact group.
+	 */
 	private String group;
+	/**
+	 * Artifact id.
+	 */
 	private String artifact;
 	
 	/** {@inheritDoc} */
