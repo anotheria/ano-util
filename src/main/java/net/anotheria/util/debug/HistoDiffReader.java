@@ -24,6 +24,9 @@ import java.util.Map;
  */
 public class HistoDiffReader {
 
+	/**
+	 * Logger.
+	 */
 	private static final Logger log = LoggerFactory.getLogger(HistoDiffReader.class);
 
 	/**
@@ -155,8 +158,17 @@ public class HistoDiffReader {
 		return h;
 	}
 
+	/**
+	 * Internal helper structure.
+	 */
 	public static class Histogramm{
+		/**
+		 * Entries of the histogram.
+		 */
 		private ArrayList<HistogramEntry> entries;
+		/**
+		 * Name of the histogram.
+		 */
 		private String name;
 
 		public Histogramm(String aName) {
@@ -196,11 +208,25 @@ public class HistoDiffReader {
 
 	}
 
-
+	/**
+	 * An entry in a histogram.
+	 */
 	public static class HistogramEntry implements IComparable{
+		/**
+		 * Name of the class.
+		 */
 		private String className;
+		/**
+		 * Position of the histogram.
+		 */
 		private int position;
+		/**
+		 * Occupied bytes.
+		 */
 		private long bytes;
+		/**
+		 * Number of instances.
+		 */
 		private int instanceCount;
 
 		public int getInstanceCount() {
