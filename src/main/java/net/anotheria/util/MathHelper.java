@@ -58,7 +58,7 @@ public class MathHelper {
         int indexE = start.indexOf('E');
 
         if(indexE!=-1){
-            int zeros = new Integer(start.substring(indexE + 1));
+            int zeros = Integer.parseInt(start.substring(indexE + 1));
             if(start.charAt(indexE - 1)=='-'){
                 zeros *= -1;
             }
