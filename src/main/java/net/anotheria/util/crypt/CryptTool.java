@@ -121,7 +121,7 @@ public class CryptTool {
 
 		byte[] bytes = source.getBytes();
 
-		if (source.length() % length == 0)
+		if (bytes.length % length == 0)
 			return bytes;
 
 		byte[] padded = new byte[bytes.length + 8 - (bytes.length % 8)];
@@ -130,6 +130,7 @@ public class CryptTool {
 		for (int i = 0; i < bytes.length; i++) {
 			padded[i] = bytes[i];
 		}
+
 
 		return padded;
 	}
