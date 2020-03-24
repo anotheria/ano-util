@@ -7,14 +7,12 @@ import net.anotheria.util.StringUtils;
 import net.anotheria.util.sorter.IComparable;
 import net.anotheria.util.sorter.SortType;
 import net.anotheria.util.sorter.StaticQuickSorter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>HistoDiffReader class.</p>
@@ -24,10 +22,6 @@ import java.util.Map;
  */
 public class HistoDiffReader {
 
-	/**
-	 * Logger.
-	 */
-	private static final Logger log = LoggerFactory.getLogger(HistoDiffReader.class);
 
 	/**
 	 * <p>main.</p>
@@ -36,9 +30,9 @@ public class HistoDiffReader {
 	 * @throws java.lang.Exception if any.
 	 */
 	public static void main(String... a) throws Exception{
-
-		String newP = "/Users/another/Documents/Projects/AYN/CRASH/2013-02-05/histo3.txt";
-		String oldP = "/Users/another/Documents/Projects/AYN/CRASH/2013-02-05/histo2.txt";
+		
+		String newP = "/Users/another/h2.txt";
+		String oldP = "/Users/another/h1.txt";
 
 		compare(oldP, newP);
 	}
@@ -68,7 +62,7 @@ public class HistoDiffReader {
 		List<HistogramEntry> newEntries = newH.getEntries();
 		List<HistogramEntry> oldEntries = oldH.getEntries();
 
-		Map<String,HistogramEntry> map = new HashMap<>(newEntries.size());
+		Map<String,HistogramEntry> map = new ConcurrentHashMap<>(newEntries.size());
 		//first put all new entries
 		for (HistogramEntry entry : newEntries){
 			map.put(entry.getClassName(), entry);
@@ -151,7 +145,7 @@ public class HistoDiffReader {
 //				}
 				h.addEntry(entry);
 			}catch(NumberFormatException e){
-				log.error("FAILED "+line, e);
+				//log.error("FAILED "+line, e);
 			}
 
 		}
