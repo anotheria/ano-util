@@ -222,7 +222,7 @@ public class ArrayUtilsTest {
 		longList.add(1L);
 		longList.add(2L);
 		longList.add(3L);
-		assertEquals(longList, ArrayUtils.asList(1L,2L,3L));
+		assertEquals(longList, ArrayUtils.asList(1L));
 		assertEquals(longList, ArrayUtils.asList(new long[]{1L,2L,3L}));
 		assertEquals(longList, ArrayUtils.asList(1L,2L,3L));
 		
@@ -236,4 +236,3 @@ public class ArrayUtilsTest {
 	}
 
 }
- 
