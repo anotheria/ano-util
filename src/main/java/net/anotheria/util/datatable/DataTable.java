@@ -140,4 +140,15 @@ public class DataTable implements Iterable<DataRow> {
 		}
 		return ret;
 	}
+
+	public String toCSV(){
+		StringBuilder ret = new StringBuilder();
+		ret.append(header.toCSV());
+		ret.append("\n");
+		for(DataRow r: this){
+			ret.append(r.toCSV());
+			ret.append("\n");
+		}
+		return ret.toString();
+	}
 }

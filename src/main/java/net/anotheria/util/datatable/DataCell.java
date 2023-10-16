@@ -1,6 +1,8 @@
 package net.anotheria.util.datatable;
 
 import net.anotheria.util.Date;
+import net.anotheria.util.StringUtils;
+
 /**
  * A single cell in the table which contains untyped data.
  *
@@ -105,5 +107,9 @@ public class DataCell {
 	@Override
 	public String toString(){
 		return getValueAsString();
+	}
+
+	public String toCSV(){
+		return StringUtils.replace(getValueAsString(), '\n', '|');
 	}
 }

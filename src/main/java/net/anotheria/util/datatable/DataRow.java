@@ -85,4 +85,16 @@ public class DataRow  implements Iterable<DataCell> {
 	public String toString(){
 		return cells.toString();
 	}
+
+	public String toCSV(){
+		StringBuilder ret = new StringBuilder();
+		for (DataCell cell : cells){
+			if (ret.length()>0)
+				ret.append(",");
+			String cell2CSV = cell.toCSV();
+			ret.append(cell2CSV.length()>0 ? "\""+cell.toCSV()+"\""
+					: cell2CSV);
+		}
+		return ret.toString();
+	}
 }

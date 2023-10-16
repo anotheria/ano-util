@@ -90,4 +90,15 @@ public class DataHeader {
 		ret += "]";
 		return ret;
 	}
+
+	public String toCSV() {
+		StringBuilder ret = new StringBuilder();
+		for (String h : headers) {
+			if (ret.length() > 0)
+				ret.append(',');
+			ret.append("\"" + h + "\"");
+		}
+
+		return ret.toString();
+	}
 }
