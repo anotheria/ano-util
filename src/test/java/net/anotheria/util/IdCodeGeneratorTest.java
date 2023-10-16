@@ -17,6 +17,12 @@ public class IdCodeGeneratorTest {
 		assertTrue("Code is not 20 chars long", code.length()==20);
 	}
 
+	@Test public void generate30Chars(){
+		String code = IdCodeGenerator.generateCode(30);
+		System.out.println(code);
+		assertTrue("Code is not 30 chars long", code.length()==30);
+	}
+
 	@Test public void randomLength(){
 		Random rnd = new Random(System.currentTimeMillis());
 		for (int i=0; i<100; i++){
