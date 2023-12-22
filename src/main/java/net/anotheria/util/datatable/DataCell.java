@@ -110,6 +110,9 @@ public class DataCell {
 	}
 
 	public String toCSV(){
-		return StringUtils.replace(getValueAsString(), '\n', '|');
+		String value = getValueAsString();
+		value = StringUtils.replace(value, '\"', '\'');
+		value = StringUtils.replace(value, "'", "\"\"");
+		return StringUtils.replace(value, '\n', '|');
 	}
 }
