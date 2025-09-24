@@ -1,5 +1,6 @@
 package net.anotheria.util.content.template;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ public class LoopTemplateProcessorTest {
         context.addAttribute("itemsData", list);
 
         String replacedText = replaceVariables(context, text);
-        System.out.println(replacedText);
+        Assert.assertNotNull("Should not be null", replacedText);
+        Assert.assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
 
     }
 
