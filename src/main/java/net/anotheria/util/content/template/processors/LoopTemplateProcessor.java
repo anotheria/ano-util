@@ -27,9 +27,10 @@ public class LoopTemplateProcessor implements TemplateProcessor {
             return "";
 
         StringBuilder result = new StringBuilder();
+
+        Pattern pattern = Pattern.compile(aVariable + "\\.([a-zA-Z0-9_]+)");
         for (Object item : collection) {
             String processed = aDefValue;
-            Pattern pattern = Pattern.compile(aVariable + "\\.([a-zA-Z0-9_]+)");
             Matcher matcher = pattern.matcher(processed);
 
             StringBuilder sb = new StringBuilder();
@@ -54,8 +55,7 @@ public class LoopTemplateProcessor implements TemplateProcessor {
             return value != null ? value.toString() : "";
         } catch (Exception e) {
             try {
-                Field field = item.getClass().getDeclaredField(fieldName);
-                field.setAccessible(true);
+                Field field = item.getClass().getField(fieldName);
                 Object value = field.get(item);
                 return value != null ? value.toString() : "";
             } catch (Exception ignore) {
