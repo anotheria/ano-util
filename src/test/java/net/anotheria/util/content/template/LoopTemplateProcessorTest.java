@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +13,7 @@ import java.util.Set;
 import static net.anotheria.util.content.template.TemplateUtility.replaceVariables;
 
 /**
- * LoopTemplateProcessorTest — TODO.
+ * LoopTemplateProcessorTest — tests for loop processor.
  *
  * @author ykalapusha
  * @since 24.09.2025
@@ -56,6 +57,31 @@ public class LoopTemplateProcessorTest {
         Assert.assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
     }
 
+    @Test
+    public void testLoopEmptyCollection(){
+        Collection<ItemData> collection = new ArrayList<>();
+
+        String replacementPart = "{loop:itemsData:Id->itemsData.id, Name->itemsData.name, Message->itemsData.message}";
+        String text = "Hello World!";
+
+        TemplateReplacementContext context = new TemplateReplacementContext();
+        context.addAttribute("itemsData", collection);
+
+        String replacedText = replaceVariables(context, text + replacementPart);
+        Assert.assertNotNull("Should not be null", replacedText);
+        Assert.assertEquals(text, replacedText);
+    }
+
+    @Test
+    public void testLoopNullCollection(){
+
+        String replacementPart = "{loop:itemsData:Id->itemsData.id, Name->itemsData.name, Message->itemsData.message}";
+        String text = "Hello World!";
+
+        String replacedText = replaceVariables(new TemplateReplacementContext(), text + replacementPart);
+        Assert.assertNotNull("Should not be null", replacedText);
+        Assert.assertEquals(text, replacedText);
+    }
 
     private static class ItemData{
         private int id;
