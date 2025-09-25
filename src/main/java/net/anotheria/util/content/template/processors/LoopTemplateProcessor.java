@@ -5,7 +5,7 @@ import net.anotheria.util.content.template.TemplateReplacementContext;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.List;
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,15 +19,15 @@ public class LoopTemplateProcessor implements TemplateProcessor {
     @Override
     public String replace(String aPrefix, String aVariable, String aDefValue, TemplateReplacementContext aContext) {
         Object data = aContext.getAttribute(aVariable);
-        if (!(data instanceof List))
+        if (!(data instanceof Collection))
             return "";
 
-        List<?> list = (List<?>) data;
-        if (list.isEmpty())
+        Collection<?> collection = (Collection<?>) data;
+        if (collection.isEmpty())
             return "";
 
         StringBuilder result = new StringBuilder();
-        for (Object item : list) {
+        for (Object item : collection) {
             String processed = aDefValue;
             Pattern pattern = Pattern.compile(aVariable + "\\.([a-zA-Z0-9_]+)");
             Matcher matcher = pattern.matcher(processed);

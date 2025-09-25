@@ -4,7 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import static net.anotheria.util.content.template.TemplateUtility.replaceVariables;
 
@@ -17,8 +20,8 @@ import static net.anotheria.util.content.template.TemplateUtility.replaceVariabl
 public class LoopTemplateProcessorTest {
 
     @Test
-    public void testLoop(){
-        List<ItemData>  list = new ArrayList<ItemData>();
+    public void testLoopAsList(){
+        List<ItemData> list = new ArrayList<>();
         list.add(new ItemData(101, "Name101", "Message101"));
         list.add(new ItemData(102, "Name102", "Message102"));
         list.add(new ItemData(103, "Name103", "Message103"));
@@ -33,6 +36,24 @@ public class LoopTemplateProcessorTest {
         Assert.assertNotNull("Should not be null", replacedText);
         Assert.assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
 
+    }
+
+    @Test
+    public void testLoopAsSet(){
+        Set<ItemData> set = new HashSet<>();
+        set.add(new ItemData(101, "Name101", "Message101"));
+        set.add(new ItemData(102, "Name102", "Message102"));
+        set.add(new ItemData(103, "Name103", "Message103"));
+
+        String replacementPart = "{loop:itemsData:Id->itemsData.id, Name->itemsData.name, Message->itemsData.message}";
+        String text = "Hello World!" +  replacementPart;
+
+        TemplateReplacementContext context = new TemplateReplacementContext();
+        context.addAttribute("itemsData", set);
+
+        String replacedText = replaceVariables(context, text);
+        Assert.assertNotNull("Should not be null", replacedText);
+        Assert.assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
     }
 
 
@@ -69,6 +90,18 @@ public class LoopTemplateProcessorTest {
 
         public void setMessage(String message) {
             this.message = message;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            ItemData itemData = (ItemData) o;
+            return id == itemData.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(id);
         }
     }
 }
