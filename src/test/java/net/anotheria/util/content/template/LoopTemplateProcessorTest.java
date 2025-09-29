@@ -83,7 +83,7 @@ public class LoopTemplateProcessorTest {
         Assert.assertEquals(text, replacedText);
     }
 
-    private static class ItemData{
+    public static class ItemData{
         private int id;
         private String name;
         private String message;
