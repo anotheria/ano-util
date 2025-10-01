@@ -51,8 +51,7 @@ public class LoopTemplateProcessor implements TemplateProcessor {
         return rawMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        e -> e.getValue() == null ? "" : e.getValue().toString(),
-                        (value1, value2) -> value1
+                        e -> e.getValue() == null ? "" : e.getValue().toString()
                 ));
     }
 }
