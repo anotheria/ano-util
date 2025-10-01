@@ -51,6 +51,10 @@ public final class ConditionPrefixes {
 	 * Prefix less - equal.
 	 */
 	public static final String PREFIX_LESSEQUAL = "lessEqual";
+    /**
+     * Prefix loop.
+     */
+    public static final String PREFIX_LOOP = "loop";
 
 	/**
 	 * Constructor.

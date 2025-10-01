@@ -6,6 +6,7 @@ import net.anotheria.util.content.element.DynamicElement;
 import net.anotheria.util.content.element.StaticElement;
 import net.anotheria.util.content.template.processors.ConditionTemplateProcessor;
 import net.anotheria.util.content.template.processors.ConstantsTemplateProcessor;
+import net.anotheria.util.content.template.processors.LoopTemplateProcessor;
 import net.anotheria.util.content.template.processors.variables.ConditionPrefixes;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public final class TemplateUtility {
 		defaultProcessors.put(ConditionPrefixes.PREFIX_LESSTHAN, p);
 		defaultProcessors.put(ConditionPrefixes.PREFIX_LESSEQUAL, p);
 
+        defaultProcessors.put(ConditionPrefixes.PREFIX_LOOP, new LoopTemplateProcessor());
 	}
 
 	/**
