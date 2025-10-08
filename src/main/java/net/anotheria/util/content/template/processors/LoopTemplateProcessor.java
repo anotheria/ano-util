@@ -1,6 +1,9 @@
 package net.anotheria.util.content.template.processors;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import net.anotheria.util.content.template.TemplateProcessor;
 import net.anotheria.util.content.template.TemplateReplacementContext;
 
@@ -19,7 +22,14 @@ public class LoopTemplateProcessor implements TemplateProcessor {
     /**
      * Utility instance for mapping different collection instances to map.
      */
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER;
+
+    static {
+        MAPPER = new ObjectMapper();
+        MAPPER.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    }
 
     @Override
     public String replace(String aPrefix, String aVariable, String aDefValue, TemplateReplacementContext aContext) {
