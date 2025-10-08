@@ -7,8 +7,12 @@ import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.CryptoException;
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.engines.BlowfishEngine;
+import org.bouncycastle.crypto.modes.CBCBlockCipher;
+import org.bouncycastle.crypto.paddings.PKCS7Padding;
+import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
 
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,8 +27,8 @@ import java.util.Map;
  */
 public class CryptTool {
 
-	private final BufferedBlockCipher encryptCipher = new BufferedBlockCipher(new BlowfishEngine());
-	private final BufferedBlockCipher decryptCipher = new BufferedBlockCipher(new BlowfishEngine());
+	private final BufferedBlockCipher encryptCipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new BlowfishEngine()), new PKCS7Padding());;
+	private final BufferedBlockCipher decryptCipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new BlowfishEngine()), new PKCS7Padding());
 
 	/**
 	 * Create a new crypttool with the given key.
@@ -32,7 +36,7 @@ public class CryptTool {
 	 * @param key the key to use for en- and decode.
 	 */
 	public CryptTool(String key) {
-		this(key.getBytes());
+		this(normalizeKey(key));
 	}
 
 	/**
@@ -265,4 +269,13 @@ public class CryptTool {
 		}
 	}
 
+    public static byte[] normalizeKey(String key) {
+        try {
+            MessageDigest sha = MessageDigest.getInstance("SHA-256");
+            byte[] hash = sha.digest(key.getBytes("UTF-8"));
+            return Arrays.copyOf(hash, 32);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

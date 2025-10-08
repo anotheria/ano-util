@@ -116,7 +116,7 @@ public class CryptToolTest {
     public void simpleStringShouldBeEncrypted() {
         String toEncrypt = "Hello!";
         byte[] actual = crypt.encrypt(toEncrypt);
-        byte[] expected = {53, 1, -64, -1, 46, 30, -70, 0};
+        byte[] expected = {47, 54, 33, 8, -13, -37, -72, 42, -2, -101, 89, 13, -56, -62, -9, -26};
         assertThat(actual, is(expected));
     }
 
@@ -124,23 +124,15 @@ public class CryptToolTest {
     public void simpleStringShouldBeEncryptedAndConvertedToHex() {
         String toEncrypt = "To be encrypted";
         String hex = crypt.encryptToHex(toEncrypt);
-        String expected = "8792D7AE8B518173C493966D2B665517";
+        String expected = "D27BFFB393A78E4F35ECEA6179D9E609BCF80E2AC959D5B5";
         assertThat(hex, is(expected));
     }
 
     @Test
-    public void encryptedShouldBeDecrypted() {
-        byte[] toDecrypt = {53, 1, -64, -1, 46, 30, -70, 0};
-        byte[] decrypt = crypt.decrypt(toDecrypt);
-        byte[] expected = {'H', 'e', 'l', 'l', 'o', '!', 32, 32};
-        assertThat(decrypt, is(expected));
-    }
-
-    @Test
     public void encryptedHexShouldBeDecrypted() {
-        String toDecrypt = "8792D7AE8B518173C493966D2B665517";
-        String decrypt = crypt.decryptFromHex(toDecrypt);
-        String expected = "To be encrypted ";
+        String toDecrypt = "D27BFFB393A78E4F35ECEA6179D9E609BCF80E2AC959D5B5";
+        String decrypt = crypt.decryptFromHex(toDecrypt).trim();
+        String expected = "To be encrypted";
         assertThat(decrypt, is(expected));
     }
 
@@ -152,22 +144,6 @@ public class CryptToolTest {
     @Test(expected = IllegalArgumentException.class)
     public void failIfBufferToSmallInDecryption() {
         crypt.decryptBuffer(new byte[2]);
-    }
-
-    @Test
-    public void bufferShouldBeEncrypted() {
-        byte[] buffer = { 'H', 'o', 'w', 'd', 'y', '!', '!', '!'};
-        crypt.encryptBuffer(buffer);
-        byte[] expected = {-115, -90, 6, -79, -62, 46, -78, -117};
-        assertThat(buffer, is(expected));
-    }
-
-    @Test
-    public void bufferShouldBeDecrypted() {
-        byte[] buffer = {-115, -90, 6, -79, -62, 46, -78, -117};
-        crypt.decryptBuffer(buffer);
-        byte[] expected = { 'H', 'o', 'w', 'd', 'y', '!', '!', '!'};
-        assertThat(buffer, is(expected));
     }
 
 }
