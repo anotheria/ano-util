@@ -62,7 +62,7 @@ public class PasswordGenerator {
 	}
 
 	public static void main(String a[]){
-		System.out.println(generate(12));
+		System.out.println(generate(15));
 	}
 
 }
