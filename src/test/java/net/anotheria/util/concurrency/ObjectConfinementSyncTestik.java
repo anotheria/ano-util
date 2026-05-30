@@ -1,7 +1,7 @@
 package net.anotheria.util.concurrency;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Random;
@@ -55,7 +55,7 @@ public class ObjectConfinementSyncTestik {
 	
 	private static ConcurrentHashMap<TestObject, ReentrantLock> objectConfinementLocks;
 	
-	@BeforeClass public static void init(){
+	@BeforeAll public static void init(){
 		objectConfinementLocks = new ConcurrentHashMap<>();
 	}
 	

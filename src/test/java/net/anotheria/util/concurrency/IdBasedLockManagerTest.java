@@ -1,15 +1,15 @@
 package net.anotheria.util.concurrency;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class IdBasedLockManagerTest {
 	
@@ -107,7 +107,7 @@ public class IdBasedLockManagerTest {
 
 	private HashMap<String, Counter> counters = null;
 	
-	@Before public void init(){
+	@BeforeEach public void init(){
 		counters = new HashMap<>();
 		for (int i=0; i<COUNTERS; i++)
 			counters.put(String.valueOf(i), new Counter());
@@ -229,7 +229,7 @@ public class IdBasedLockManagerTest {
 		assertFalse(workersAdded==countersCounted);
 		assertEquals(0, ((AbstractIdBasedLockManager)lockManager).getLockSize());
 		//System.out.println(unsynchedErrors+" "+unsynchedErrors/100);
-		assertTrue("expected "+unsynchedErrors/100+" errors, got "+(workersAdded-countersCounted),(workersAdded-countersCounted)<(unsynchedErrors/100));
+		assertTrue((workersAdded-countersCounted)<(unsynchedErrors/100), "expected "+unsynchedErrors/100+" errors, got "+(workersAdded-countersCounted));
 
 	}
 

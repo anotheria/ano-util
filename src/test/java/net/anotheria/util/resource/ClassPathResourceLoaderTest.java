@@ -1,25 +1,27 @@
 package net.anotheria.util.resource;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ClassPathResourceLoaderTest {
 
-	@Test (expected=IllegalArgumentException.class) public void checkNonExistingFile(){
-		ResourceLoader loader = new ClassPathResourceLoader();
-		assertFalse(loader.isAvailable("foo"));
-		loader.getLastChangeTimestamp("foo");
-		fail("An exception should have been thrown.");
+	@Test public void checkNonExistingFile(){
+		assertThrows(IllegalArgumentException.class, () -> {
+			ResourceLoader loader = new ClassPathResourceLoader();
+			assertFalse(loader.isAvailable("foo"));
+			loader.getLastChangeTimestamp("foo");
+		});
 	}
 
-	@Test (expected=IllegalArgumentException.class) public void loadNonExistingFile(){
-		ResourceLoader loader = new ClassPathResourceLoader();
-		assertFalse(loader.isAvailable("foo"));
-		loader.getContent("foo");
-		fail("An exception should have been thrown.");
+	@Test public void loadNonExistingFile(){
+		assertThrows(IllegalArgumentException.class, () -> {
+			ResourceLoader loader = new ClassPathResourceLoader();
+			assertFalse(loader.isAvailable("foo"));
+			loader.getContent("foo");
+		});
 	}
 
 }

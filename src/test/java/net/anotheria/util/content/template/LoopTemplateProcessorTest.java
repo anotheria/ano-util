@@ -1,7 +1,6 @@
 package net.anotheria.util.content.template;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +10,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import static net.anotheria.util.content.template.TemplateUtility.replaceVariables;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * LoopTemplateProcessorTest — tests for loop processor.
@@ -34,8 +36,8 @@ public class LoopTemplateProcessorTest {
         context.addAttribute("itemsData", list);
 
         String replacedText = replaceVariables(context, text);
-        Assert.assertNotNull("Should not be null", replacedText);
-        Assert.assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
+        assertNotNull(replacedText, "Should not be null");
+        assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
 
     }
 
@@ -53,8 +55,8 @@ public class LoopTemplateProcessorTest {
         context.addAttribute("itemsData", set);
 
         String replacedText = replaceVariables(context, text);
-        Assert.assertNotNull("Should not be null", replacedText);
-        Assert.assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
+        assertNotNull(replacedText, "Should not be null");
+        assertTrue(replacedText.contains("Id->101, Name->Name101, Message->Message101"));
     }
 
     @Test
@@ -68,8 +70,8 @@ public class LoopTemplateProcessorTest {
         context.addAttribute("itemsData", collection);
 
         String replacedText = replaceVariables(context, text + replacementPart);
-        Assert.assertNotNull("Should not be null", replacedText);
-        Assert.assertEquals(text, replacedText);
+        assertNotNull(replacedText, "Should not be null");
+        assertEquals(text, replacedText);
     }
 
     @Test
@@ -79,8 +81,8 @@ public class LoopTemplateProcessorTest {
         String text = "Hello World!";
 
         String replacedText = replaceVariables(new TemplateReplacementContext(), text + replacementPart);
-        Assert.assertNotNull("Should not be null", replacedText);
-        Assert.assertEquals(text, replacedText);
+        assertNotNull(replacedText, "Should not be null");
+        assertEquals(text, replacedText);
     }
 
     public static class ItemData{

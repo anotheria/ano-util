@@ -1,26 +1,26 @@
 package net.anotheria.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class IdCodeGeneratorTest {
-	
+
 	@Test public void generate20Chars(){
 		String code = IdCodeGenerator.generateCode(20);
-		assertTrue("Code is not 20 chars long", code.length()==20);
+		assertTrue(code.length()==20, "Code is not 20 chars long");
 	}
 
 	@Test public void generate30Chars(){
 		String code = IdCodeGenerator.generateCode(30);
 		System.out.println(code);
-		assertTrue("Code is not 30 chars long", code.length()==30);
+		assertTrue(code.length()==30, "Code is not 30 chars long");
 	}
 
 	@Test public void randomLength(){
@@ -30,9 +30,9 @@ public class IdCodeGeneratorTest {
 			String code = IdCodeGenerator.generateCode(l);
 			assertEquals(l, code.length());
 		}
-			
+
 	}
-	
+
 	@Test public void testZeroAndNegative(){
 		String code = IdCodeGenerator.generateCode(-1);
 		assertEquals("", code);
@@ -40,7 +40,7 @@ public class IdCodeGeneratorTest {
 		code = IdCodeGenerator.generateCode(0);
 		assertEquals("", code);
 	}
-	
+
 	@Test public void aaaaaaaaaa(){
 		String code = IdCodeGenerator.generateCustomCode(new char[]{'a'}, 10);
 		assertEquals(10, code.length());
@@ -57,11 +57,11 @@ public class IdCodeGeneratorTest {
 			assertFalse(pattern.indexOf(code.charAt(i))==-1);
 		}
 	}
-	
+
 	@Test public void defaultLength(){
 		String code = IdCodeGenerator.generateCode();
-		assertEquals("Default length is broken", IdCodeGenerator.CODE_LENGTH, code.length());
-		assertTrue("Default length is null", code!=null);
-		assertTrue("Default length is zero", !code.isEmpty());
+		assertEquals(IdCodeGenerator.CODE_LENGTH, code.length(), "Default length is broken");
+		assertTrue(code!=null, "Default length is null");
+		assertTrue(!code.isEmpty(), "Default length is zero");
 	}
 }

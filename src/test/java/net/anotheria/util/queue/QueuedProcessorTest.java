@@ -1,13 +1,13 @@
 package net.anotheria.util.queue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QueuedProcessorTest {
 	
@@ -43,8 +43,8 @@ public class QueuedProcessorTest {
 		}
         long end2 = System.nanoTime();
         System.out.println("CPT Worker: count: "+worker.elementCount+", sum: "+worker.elementSum);
-		assertEquals("ElementCount should be similar", elementCount.get(), worker.elementCount);
-		assertEquals("ElementSum should be similar", elementSum.get(), worker.elementSum);
+		assertEquals(elementCount.get(), worker.elementCount, "ElementCount should be similar");
+		assertEquals(elementSum.get(), worker.elementSum, "ElementSum should be similar");
 		System.out.println("CPT Time1 "+(end1-start)/1000/1000+" ms");
 		System.out.println("CPT Time2 "+(end2-start)/1000/1000+" ms");
 		System.out.println("CPT Time2-1 "+(end2-end1)/1000/1000+" ms");

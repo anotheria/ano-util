@@ -1,9 +1,11 @@
 package net.anotheria.util.content.template;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static net.anotheria.util.content.template.TemplateUtility.replaceVariables;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Junit for TemplateUtility.
@@ -23,28 +25,28 @@ public class TemplateUtilityTest {
 		String language = "ua";
 
 		String testReplaceVAR1 = replaceVariables(new TemplateReplacementContext(userID, language), text);
-		Assert.assertNotNull("Should not be null", testReplaceVAR1);
-		Assert.assertEquals("Should not be null",  "I'm text for replace! "  + SimpleTestProcessor.var1Value + language, testReplaceVAR1);
+		assertNotNull(testReplaceVAR1, "Should not be null");
+		assertEquals("I'm text for replace! "  + SimpleTestProcessor.var1Value + language, testReplaceVAR1, "Should not be null");
 
         String text2 = "TEST 2 " + replacePart2;
         String testReplaceToDefault = replaceVariables(new TemplateReplacementContext(userID, language), text2);
-		Assert.assertNotNull("Should not be null", testReplaceToDefault);
-		Assert.assertEquals("Should not be null", "TEST 2 " + "default___" + userID, testReplaceToDefault);
+		assertNotNull(testReplaceToDefault, "Should not be null");
+		assertEquals("TEST 2 " + "default___" + userID, testReplaceToDefault, "Should not be null");
 
         String staticText = "I'm static {::::>>>>>}}}}}";
         String testReplaceStaticContent = replaceVariables(new TemplateReplacementContext(userID, language), staticText);
-		Assert.assertNotNull("Should not be null", testReplaceStaticContent);
-		Assert.assertEquals("Should not be null", staticText, testReplaceStaticContent);
+		assertNotNull(testReplaceStaticContent, "Should not be null");
+		assertEquals(staticText, testReplaceStaticContent, "Should not be null");
 
 		String replaceEmpty = replaceVariables(null, "");
-		Assert.assertTrue("Should be empty", replaceEmpty.isEmpty());
+		assertTrue(replaceEmpty.isEmpty(), "Should be empty");
 	}
 
 	@Test
 	public void testProcessorOperations() {
 		TemplateUtility.addProcessor(SimpleTestProcessor.PREFIX, new SimpleTestProcessor());
-		Assert.assertNotNull(TemplateUtility.getDefaultProcessors().get(SimpleTestProcessor.PREFIX));
-		Assert.assertTrue(TemplateUtility.getDefaultProcessors().get(SimpleTestProcessor.PREFIX) instanceof SimpleTestProcessor);
+		assertNotNull(TemplateUtility.getDefaultProcessors().get(SimpleTestProcessor.PREFIX));
+		assertTrue(TemplateUtility.getDefaultProcessors().get(SimpleTestProcessor.PREFIX) instanceof SimpleTestProcessor);
 	}
 
 	/**

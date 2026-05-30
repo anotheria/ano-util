@@ -3,9 +3,9 @@ package net.anotheria.util.csv;
 import net.anotheria.util.datatable.DataRow;
 import net.anotheria.util.datatable.DataTable;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CSVParserTest {
 
@@ -36,7 +36,7 @@ public class CSVParserTest {
 		csv.deleteCharAt(csv.length() - 1);
 		DataRow dr = CSVParser.parse(csv.toString(), ',', '\uFFFF', false).getRow(0);
 		
-		assertEquals("CSVParser has found incorrect number of tokens!", tests.length, dr.getRowSize());
+		assertEquals(tests.length, dr.getRowSize(), "CSVParser has found incorrect number of tokens!");
 		for (int i = 0; i < dr.getRowSize(); i++) {
 			assertEquals(tests[i], dr.getCell(i).toString());
 		}

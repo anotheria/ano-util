@@ -1,16 +1,17 @@
 package net.anotheria.util.crypt;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CryptToolTest {
 
@@ -71,9 +72,6 @@ public class CryptToolTest {
 
     }
 
-    /**
-     * Test specifically for 8-byte long messages
-     */
     @Test
     public void testPad() {
         testCrypt("12345678");
@@ -144,14 +142,14 @@ public class CryptToolTest {
         assertThat(decrypt, is(expected));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void failIfBufferToSmallInEncryption() {
-        crypt.encryptBuffer(new byte[2]);
+        assertThrows(IllegalArgumentException.class, () -> crypt.encryptBuffer(new byte[2]));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void failIfBufferToSmallInDecryption() {
-        crypt.decryptBuffer(new byte[2]);
+        assertThrows(IllegalArgumentException.class, () -> crypt.decryptBuffer(new byte[2]));
     }
 
     @Test
