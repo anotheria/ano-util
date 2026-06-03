@@ -239,11 +239,13 @@ public class CryptTool {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		try {
-			int len = encryptCipher.processBytes(buffer, 0, buffer.length, buffer, 0);
-			encryptCipher.doFinal(buffer, len);
-		} catch (InvalidCipherTextException e) {
-			throw new IllegalArgumentException(e);
+		synchronized (encryptCipher) {
+			try {
+				int len = encryptCipher.processBytes(buffer, 0, buffer.length, buffer, 0);
+				encryptCipher.doFinal(buffer, len);
+			} catch (InvalidCipherTextException e) {
+				throw new IllegalArgumentException(e);
+			}
 		}
 	}
 
@@ -256,11 +258,13 @@ public class CryptTool {
 		if (buffer.length % (Long.SIZE / Byte.SIZE) != 0) {
 			throw new IllegalArgumentException("Buffer size is not alligned to 8-bytes boundary");
 		}
-		try {
-			int len = decryptCipher.processBytes(buffer, 0, buffer.length, buffer, 0);
-			decryptCipher.doFinal(buffer, len);
-		} catch (InvalidCipherTextException e) {
-			throw new IllegalArgumentException(e);
+		synchronized (decryptCipher) {
+			try {
+				int len = decryptCipher.processBytes(buffer, 0, buffer.length, buffer, 0);
+				decryptCipher.doFinal(buffer, len);
+			} catch (InvalidCipherTextException e) {
+				throw new IllegalArgumentException(e);
+			}
 		}
 	}
 
