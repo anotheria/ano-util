@@ -6,7 +6,6 @@ import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.CryptoException;
 import org.bouncycastle.crypto.InvalidCipherTextException;
-import org.bouncycastle.crypto.engines.BlowfishEngine;
 import org.bouncycastle.crypto.params.KeyParameter;
 
 import java.util.Arrays;
@@ -23,8 +22,8 @@ import java.util.Map;
  */
 public class CryptTool {
 
-	private final BufferedBlockCipher encryptCipher = new BufferedBlockCipher(new BlowfishEngine());
-	private final BufferedBlockCipher decryptCipher = new BufferedBlockCipher(new BlowfishEngine());
+	private final BufferedBlockCipher encryptCipher = new BufferedBlockCipher(new LegacyBlowfishEngine());
+	private final BufferedBlockCipher decryptCipher = new BufferedBlockCipher(new LegacyBlowfishEngine());
 
 	/**
 	 * Create a new crypttool with the given key.

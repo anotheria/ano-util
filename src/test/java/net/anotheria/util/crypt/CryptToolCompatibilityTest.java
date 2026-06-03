@@ -17,6 +17,18 @@ public class CryptToolCompatibilityTest {
 
 	private CryptTool crypt = new CryptTool("01234567890abcdef");
 
+	// 64-byte key: exceeds the 448-bit (56-byte) limit added in BC post-1.68.
+	// This test ensures LegacyBlowfishEngine accepts and correctly round-trips it.
+	private CryptTool longKeyCrypt = new CryptTool(
+			"this-is-a-very-long-key-that-exceeds-56-bytes-in-total-length!!");
+
+	@Test
+	public void longKeyRoundTrip() {
+		String message = "PersonalData";
+		String encrypted = longKeyCrypt.encryptToHex(message);
+		assertEquals(message, longKeyCrypt.decryptFromHexTrim(encrypted));
+	}
+
 	@Test
 	public void testILoveYou(){
 		byte[] crypted = new byte[]{-108, -112, -41, 59, 1, 124, -53, -122, -41, -109, -56, -127, -122, -54, 72, 69};
