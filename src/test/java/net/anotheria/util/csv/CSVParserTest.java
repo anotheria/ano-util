@@ -42,6 +42,30 @@ public class CSVParserTest {
 		}
 	}
 	
+	/**
+	 * A row ending in a separator has a last field, and it is empty. The row tokenizer used to drop
+	 * it, so every row of a file whose last column is empty came back one cell short of the header —
+	 * which shows up as a column that silently does not exist rather than as an error.
+	 */
+	@Test public void testTrailingEmptyField() {
+		DataTable dt = CSVParser.parse("a,b,c\n1,2,\n");
+
+		assertEquals(3, dt.getHeader().getHeaders().length);
+		assertEquals(1, dt.getRowsSize());
+		assertEquals(3, dt.getRow(0).getRowSize(), "the empty third field is still a field");
+		assertEquals("1", dt.getRow(0).getCell(0).toString());
+		assertEquals("2", dt.getRow(0).getCell(1).toString());
+		assertEquals("", dt.getRow(0).getCell(2).toString());
+	}
+
+	@Test public void testSeveralTrailingEmptyFields() {
+		DataTable dt = CSVParser.parse("a,b,c,d\n1,,,\n");
+
+		assertEquals(4, dt.getRow(0).getRowSize());
+		assertEquals("1", dt.getRow(0).getCell(0).toString());
+		assertEquals("", dt.getRow(0).getCell(3).toString());
+	}
+
 	@Test public void testHandlingNewLinesInText() {
 		String[] rows = {"1a\n1b1c\n   1d", "2x\n2y", "sdfss\"dfs"};
 		StringBuilder csv = new StringBuilder();
