@@ -96,11 +96,34 @@ public class StringUtilsTest {
 
 		String srcComplex = "token0:\"token1:escaped\"::token3:";
 		ts = StringUtils._tokenize(srcComplex, '"','"',false,':');
-		assertEquals(4, ts.size(), "Array length is not 3 (tokenize doesn't work?)");
+		assertEquals(5, ts.size(), "The trailing delimiter leaves an empty token and it is not skipped");
 		assertEquals("token0", ts.get(0), "Wrong token 0 (tokenize doesn't work?)");
 		assertEquals("\"token1:escaped\"", ts.get(1), "Wrong token 1 (tokenize doesn't work?)");
-		assertEquals("", ts.get(2), "Wrong token 1 (tokenize doesn't work?)");
-		assertEquals("token3", ts.get(3), "Wrong token 2 (tokenize doesn't work?)");
+		assertEquals("", ts.get(2), "Wrong token 2 (tokenize doesn't work?)");
+		assertEquals("token3", ts.get(3), "Wrong token 3 (tokenize doesn't work?)");
+		assertEquals("", ts.get(4), "Wrong token 4 (tokenize doesn't work?)");
+	}
+
+	/**
+	 * The tail of the loop in _tokenize used to add its buffer only when it was non-empty, so a
+	 * source ending in a delimiter lost its last token however skipEmptyTokens was set. That is the
+	 * opposite of what the loop body does, and of what tokenize(String, boolean, char) has always
+	 * done for the same argument.
+	 */
+	@Test public void _tokenizeKeepsTheTrailingEmptyToken(){
+		assertEquals(List.of("a", "b", ""), StringUtils._tokenize("a:b:", '"', '"', false, ':'));
+		assertEquals(List.of("a", "", ""), StringUtils._tokenize("a::", '"', '"', false, ':'));
+		assertEquals(List.of("", ""), StringUtils._tokenize(":", '"', '"', false, ':'));
+		assertEquals(List.of(""), StringUtils._tokenize("", '"', '"', false, ':'));
+
+		// The same shape through the sibling method, which is the behaviour being matched.
+		assertArrayEquals(new String[]{"a", "b", ""}, StringUtils.tokenize("a:b:", false, ':'));
+	}
+
+	@Test public void _tokenizeStillSkipsEmptyTokensWhenAsked(){
+		assertEquals(List.of("a", "b"), StringUtils._tokenize("a:b:", '"', '"', true, ':'));
+		assertEquals(List.of("a", "b"), StringUtils._tokenize("a::b", '"', '"', ':'));
+		assertEquals(List.of(), StringUtils._tokenize(":", '"', '"', true, ':'));
 	}
 
 	@Test public void testSurrounding(){

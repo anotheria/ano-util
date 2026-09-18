@@ -1234,7 +1234,10 @@ public final class StringUtils {
      * @param source a {@link java.lang.String} object.
      * @param escapeStart a char.
      * @param escapeEnd a char.
-     * @param skipEmptyTokens a boolean.
+     * @param skipEmptyTokens when false, an empty token between two delimiters is returned, and so
+     *                        is the empty token a trailing delimiter leaves behind — so
+     *                        {@code "a:b:"} is three tokens, the same as
+     *                        {@link #tokenize(String, boolean, char)} returns.
      * @param delimiters a char.
      * @return a {@link java.util.List} object.
      */
@@ -1273,7 +1276,9 @@ public final class StringUtils {
                     inEscape--;
             }
         }
-        if (currentTag.length() > 0)
+        // Same rule as inside the loop: with skipEmptyTokens off, an empty token is still a token.
+        // Without this, a source ending in a delimiter loses its last, empty token.
+        if (currentTag.length() > 0 || !skipEmptyTokens)
             ret.add(currentTag.toString());
         return ret;
     }
