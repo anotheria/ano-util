@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # The jackson artifacts are released together and version managed by jackson-bom,
+      # so they belong in one pull request rather than one per artifact.
+      jackson:
+        patterns:
+          - "com.fasterxml.jackson*"
+      # Everything else: collect patch level bumps into a single pull request,
+      # leave minor and major updates as individual ones so they get a real review.
+      maven-patches:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
