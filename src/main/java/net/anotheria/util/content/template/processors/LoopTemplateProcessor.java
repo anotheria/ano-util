@@ -34,16 +34,19 @@ public class LoopTemplateProcessor implements TemplateProcessor {
      */
     private static final Logger log = LoggerFactory.getLogger(LoopTemplateProcessor.class);
     /**
-     * Utility instance for mapping different collection instances to map.
+     * Holds the mapper in its own class, so jackson is only loaded once a loop element is actually mapped.
+     * TemplateUtility instantiates this processor by default, a mapper held in a static field of this class
+     * would make every user of TemplateUtility depend on the optional jackson.
      */
-    private static final ObjectMapper MAPPER;
-
-    static {
-        MAPPER = new ObjectMapper();
-        // Property inclusion stays at the default (ALWAYS) on purpose: NON_NULL drops null valued
-        // properties from the converted map, which leaks their placeholders into the rendered output.
-        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    private static final class MapperHolder {
+        /**
+         * Utility instance for mapping different collection instances to map.
+         */
+        private static final ObjectMapper MAPPER = new ObjectMapper()
+                // Property inclusion stays at the default (ALWAYS) on purpose: NON_NULL drops null valued
+                // properties from the converted map, which leaks their placeholders into the rendered output.
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
     @Override
@@ -103,7 +106,7 @@ public class LoopTemplateProcessor implements TemplateProcessor {
 
         Map<?, ?> rawMap;
         try {
-            rawMap = MAPPER.convertValue(obj, Map.class);
+            rawMap = MapperHolder.MAPPER.convertValue(obj, Map.class);
         } catch (IllegalArgumentException e) {
             log.warn("Loop element of type {} has no properties to flatten, rendering empty values.",
                     obj.getClass().getName(), e);
